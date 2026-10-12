@@ -1,0 +1,2161 @@
+{
+ "built_at": "2026-10-12T06:38:18+00:00",
+ "campus": "Ohio State",
+ "term": "Autumn 2026",
+ "campusClosedDates": [],
+ "buildings": {
+  "Ag. Admin.": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "AA",
+   "address": "2120 Fyffe Road",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      18
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      18
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      18
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Ag. Engineering": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "AE",
+   "address": "590 Woody Hayes Drive",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Animal Science": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "AS",
+   "address": "2029 Fyffe Road",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      17.0
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      18.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Arps Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "AP",
+   "address": "1945 N. High Street",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      21.5
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      21.5
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      21.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17
+     ]
+    ],
+    "saturday": [
+     [
+      8.5,
+      16
+     ]
+    ],
+    "sunday": []
+   }
+  },
+  "Baker Systems Engineering": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "BE",
+   "address": "1971 Neil Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Biological Sciences Building": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "BI",
+   "address": "484 W. 12th Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      18.5
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      18.5
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      18.5
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      18.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Bolz Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "BO",
+   "address": "2036 Neil Avenue Mall",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Bricker Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "BK",
+   "address": "190 N. Oval Mall",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      18
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      18
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      18
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      18
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      18
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Caldwell Lab": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "CL",
+   "address": "2024 Neil Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      22
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      22
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      22
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      22
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      21
+     ]
+    ],
+    "saturday": [],
+    "sunday": [
+     [
+      12,
+      22
+     ]
+    ]
+   }
+  },
+  "Campbell Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "CM",
+   "address": "1787 Neil Ave Columbus",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "CBEC": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "CB",
+   "address": "151 W. Woodruff Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      17
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Cockins Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "CH",
+   "address": "1958 Neil Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      18.5
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      18
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      18.5
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17
+     ]
+    ],
+    "saturday": [],
+    "sunday": [
+     [
+      12.5,
+      16.5
+     ]
+    ]
+   }
+  },
+  "Cunz Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "CZ",
+   "address": "1841 Neil Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      6.5,
+      20
+     ]
+    ],
+    "tuesday": [
+     [
+      6.5,
+      18
+     ]
+    ],
+    "wednesday": [
+     [
+      6.5,
+      19
+     ]
+    ],
+    "thursday": [
+     [
+      6.5,
+      19.5
+     ]
+    ],
+    "friday": [
+     [
+      6.5,
+      19
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Denney Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "DE",
+   "address": "164 Annie & John Glenn Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Derby Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "DB",
+   "address": "154 N. Oval Mall",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      18.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Dreese Lab": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "DL",
+   "address": "2015 Neil Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      21
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      21
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Dulles Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "DU",
+   "address": "230 Annie & John Glenn Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "wednesday": [
+     [
+      6.5,
+      17.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Eighteenth Avenue, 209 W": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "EA",
+   "address": "209 W. 18th Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      18.5
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      18.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      18.5
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Enarson Classroom": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "EC",
+   "address": "2009 Millikin Road",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "saturday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "sunday": [
+     [
+      7,
+      23
+     ]
+    ]
+   }
+  },
+  "Evans Lab": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "EL",
+   "address": "88 W. 18th Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Fontana Lab": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "FL",
+   "address": "140 W 19th Ave",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      18.5
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      18
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Hagerty Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "HH",
+   "address": "1775 College Road",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": [
+     [
+      18,
+      20.5
+     ]
+    ]
+   }
+  },
+  "Hayes Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "HA",
+   "address": "108 N. Oval Mall",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      6,
+      18
+     ]
+    ],
+    "tuesday": [
+     [
+      6,
+      19
+     ]
+    ],
+    "wednesday": [
+     [
+      6,
+      19
+     ]
+    ],
+    "thursday": [
+     [
+      6,
+      19
+     ]
+    ],
+    "friday": [
+     [
+      6,
+      19
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Hitchcock Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "HI",
+   "address": "2070 Neil Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "saturday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "sunday": [
+     [
+      7,
+      23
+     ]
+    ]
+   }
+  },
+  "Hopkins Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "HC",
+   "address": "128 N. Oval Mall",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      18.5
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      18.5
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      18.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      18.5
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Independence Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "IH",
+   "address": "1923 Neil Avenue Mall",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "wednesday": [
+     [
+      6.5,
+      23
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "saturday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "sunday": [
+     [
+      7,
+      23
+     ]
+    ]
+   }
+  },
+  "Jennings Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "JE",
+   "address": "1735 Neil Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      21
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      22.5
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      21.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      21
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      21.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Journalism Building": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "JR",
+   "address": "242 W. 18th Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      24
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      24
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      24
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      24
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Knowlton Architecture Building": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "KN",
+   "address": "275 W. Woodruff Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "wednesday": [
+     [
+      5.5,
+      19.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      18
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Kottman Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "KH",
+   "address": "2021 Coffey Road",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      22
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Lazenby Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "LZ",
+   "address": "1827 Neil Avenue Mall",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "McPherson Lab": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "MP",
+   "address": "140 W. 18th Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      21
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      18.5
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Mendenhall Lab": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "ML",
+   "address": "125 S. Oval Mall",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Orton Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "OR",
+   "address": "155 S. Oval Mall",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17
+     ]
+    ],
+    "saturday": [],
+    "sunday": [
+     [
+      14,
+      18
+     ]
+    ]
+   }
+  },
+  "Page Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "PA",
+   "address": "1810 College Road",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      18.5
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Physical Activity and Educational Services": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "PE",
+   "address": "305 Annie & John Glenn Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      5,
+      22.5
+     ]
+    ],
+    "tuesday": [
+     [
+      5,
+      22.5
+     ]
+    ],
+    "wednesday": [
+     [
+      5,
+      22.5
+     ]
+    ],
+    "thursday": [
+     [
+      5,
+      22.5
+     ]
+    ],
+    "friday": [
+     [
+      5,
+      20.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": [
+     [
+      10,
+      22.5
+     ]
+    ]
+   }
+  },
+  "Pomerene Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "PO",
+   "address": "1760 Neil Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      21.5
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      21.5
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      21.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      21.5
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      21.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": [
+     [
+      16,
+      21.5
+     ]
+    ]
+   }
+  },
+  "Psychology Building": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "PS",
+   "address": "1835 Neil Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      18
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      18
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      18
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Ramseyer Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "RA",
+   "address": "29 W. Woodruff Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      9,
+      20
+     ]
+    ],
+    "tuesday": [
+     [
+      9,
+      20
+     ]
+    ],
+    "wednesday": [
+     [
+      9,
+      20
+     ]
+    ],
+    "thursday": [
+     [
+      9,
+      20
+     ]
+    ],
+    "friday": [
+     [
+      9,
+      20
+     ]
+    ],
+    "saturday": [],
+    "sunday": [
+     [
+      14,
+      18
+     ]
+    ]
+   }
+  },
+  "Schoenbaum Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "SB",
+   "address": "210 Woodruff Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      21
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      21
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      21
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Scott Lab": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "SO",
+   "address": "201 W. 19th Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      21
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Smith Lab": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "SM",
+   "address": "174 W. 18th Avenue",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      22
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      22
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Stillman Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "SH",
+   "address": "1947 College Road",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      20.5
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": [
+     [
+      14,
+      20
+     ]
+    ]
+   }
+  },
+  "Sullivant Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "SU",
+   "address": "1813 N. High Street",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      21
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      19.5
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17.5
+     ]
+    ],
+    "saturday": [
+     [
+      12.5,
+      17
+     ]
+    ],
+    "sunday": [
+     [
+      12.5,
+      17
+     ]
+    ]
+   }
+  },
+  "Theatre, Film & Media Arts Building": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "TFM",
+   "address": "1932 College Road",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      18.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Townshend Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "TO",
+   "address": "1885 Neil Avenue Mall",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      18
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "University Hall": {
+   "source": "Ohio State registrar classroom pool building schedule",
+   "sourceUrl": "https://registrar.osu.edu/staff-resources/class-catalog-and-space/classroom-pool-building-schedule/autumn-2026-classroom-pool-building-schedule/",
+   "code": "UH",
+   "address": "230 N. Oval Mall",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      19
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      17
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  }
+ }
+}

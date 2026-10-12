@@ -21,10 +21,25 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT_FILE = ROOT / "data" / "basemap.json"
+# Areas match CAMPUS_SITES[...].area in app.js. Illinois is the default so the
+# existing weekly rerun keeps working untouched; --campus osu builds Columbus
+# into data/osu/basemap.json, which is where that campus loads it from.
+CAMPUSES = {
+    "uiuc": {"out": ROOT / "data" / "basemap.json",
+             "bbox": (-88.33, 40.06, -88.16, 40.16)},
+    "osu":  {"out": ROOT / "data" / "osu" / "basemap.json",
+             "bbox": (-83.0802, 39.9906, -83.0073, 40.0746)},
+}
 
-# Same area as the map (Champaign–Urbana)
-WEST, SOUTH, EAST, NORTH = -88.33, 40.06, -88.16, 40.16
+_campus = "uiuc"
+for _i, _a in enumerate(sys.argv):
+    if _a == "--campus" and _i + 1 < len(sys.argv):
+        _campus = sys.argv[_i + 1]
+if _campus not in CAMPUSES:
+    sys.exit(f"unknown campus {_campus!r}; known: {', '.join(CAMPUSES)}")
+
+OUT_FILE = CAMPUSES[_campus]["out"]
+WEST, SOUTH, EAST, NORTH = CAMPUSES[_campus]["bbox"]
 SCALE = 1e6   # coordinates stored as integer 1e-6 degree steps (~10 cm), so lines stay straight up close
 
 MIRRORS = [
@@ -172,6 +187,7 @@ def join_rings(pieces):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--input", help="use a saved Overpass JSON instead of downloading")
+    parser.add_argument("--campus", default="uiuc", help="uiuc (default) or osu")
     args = parser.parse_args()
 
     raw = json.load(open(args.input)) if args.input else download()

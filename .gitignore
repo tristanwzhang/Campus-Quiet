@@ -12,3 +12,7 @@ data/raw/
 # Never commit private keys (SerpApi lives in the shell or CI secrets)
 .env
 *.key
+
+# Raw API pages cached by build_osu_class_estimates.py so a failed run resumes
+# instead of re-fetching ~500 requests. Large (GBs) and rebuildable.
+data/osu/.cache/

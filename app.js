@@ -92,7 +92,61 @@ Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZS
 // Opening hours are NOT set here: they come only from official published
 // hours in data/building_hours.json (scripts/build_hours.py).
 
-const BUILDINGS = {
+// ─── Campuses ─────────────────────────────────────────────────────────────────
+// Everything that differs between campuses lives here. The rest of this file
+// reads the plain constants below it (AREA, CAMPUS_TZ, BUILDINGS …), which are
+// resolved from the selected campus, so adding a campus never means touching
+// the map, the estimates or the picks.
+//
+// ?campus=osu switches campus. Illinois stays the default: the link people have
+// is the Illinois map, and a stray query string must never change what it shows.
+const CAMPUS_SITES = {
+  uiuc: {
+    id: 'uiuc',
+    title: 'UIUC Spaces',
+    subtitle: 'University of Illinois Urbana-Champaign',
+    disclaimer: 'A student project · not affiliated with the University of Illinois',
+    tz: 'America/Chicago',
+    dataDir: 'data',
+    area: { west: -88.33, south: 40.06, east: -88.16, north: 40.16 },
+    center: { lon: -88.2270, lat: 40.1065, height: 220 },
+  },
+  osu: {
+    id: 'osu',
+    title: 'Ohio State Spaces',
+    subtitle: 'The Ohio State University — Columbus',
+    disclaimer: 'A student project · not affiliated with The Ohio State University',
+    // Columbus is Eastern, Champaign is Central. Getting this wrong shifts every
+    // estimate by an hour and reads as bad data rather than a config mistake.
+    tz: 'America/New_York',
+    dataDir: 'data/osu',
+    // Bounds are OpenStreetMap's own "The Ohio State University" relation, and
+    // the centre is The Oval — both read from OSM rather than eyeballed. The
+    // box is slightly smaller than the Illinois one, so the drawn basemap costs
+    // no more to download.
+    area: { west: -83.0802, south: 39.9906, east: -83.0073, north: 40.0746 },
+    center: { lon: -83.0127, lat: 39.9995, height: 220 },
+  },
+};
+
+const CAMPUS = CAMPUS_SITES[new URLSearchParams(location.search).get('campus')] ?? CAMPUS_SITES.uiuc;
+
+// The page ships with the Illinois name in the markup so the default view and
+// its search listing need no JavaScript to read correctly; only a non-default
+// campus rewrites them.
+// The subtitle is left alone: updateHeader() rewrites it on every refresh and
+// now falls back to CAMPUS.subtitle, so setting it here would only be undone.
+if (CAMPUS.id !== 'uiuc') {
+  document.title = CAMPUS.title;
+  const h1 = document.querySelector('#header h1');
+  if (h1) h1.textContent = CAMPUS.title;
+  // Naming the wrong university in a non-affiliation notice is worse than
+  // having none, so this follows the campus too.
+  const note = document.querySelector('#header .disclaimer');
+  if (note) note.textContent = CAMPUS.disclaimer;
+}
+
+const BUILDINGS_UIUC = {
   "Main Library":                     { type: "library", peakFullness: 0.95 },
   "Grainger Engineering Library":     { type: "library", peakFullness: 0.95 },
 
@@ -274,7 +328,7 @@ const CHECKIN_SURPRISE_STRENGTH = 2.5;  // how hard a lone report against the us
 // From https://registrar.illinois.edu/fall-2026-academic-calendar/
 // Class-schedule estimates only apply on instruction days. On other days the
 // building-type patterns (and Google data) are scaled by CALENDAR_EFFECTS.
-const ACADEMIC_CALENDAR = {
+const ACADEMIC_CALENDAR_UIUC = {
   term: 'Fall 2026',
   classesStart: '2026-08-24',
   classesEnd:   '2026-12-09',
@@ -300,7 +354,7 @@ const CALENDAR_EFFECTS = {
   offterm: { library: 0.2, study: 0.2, union: 0.2, dining: 0.2, rec: 0.3, atrium: 0.1 },
 };
 
-const CAMPUS_TZ = 'America/Chicago';
+const CAMPUS_TZ = CAMPUS.tz;
 const DAY_NAMES = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
 
 // ─── Data loading ─────────────────────────────────────────────────────────────
@@ -765,7 +819,7 @@ function knownBuildings() {
 // flat weight ranks purely on emptiness, and the type profiles put the
 // libraries at 62-86% all day against 0-46% for classroom buildings, so a
 // library could then never be recommended at any hour.
-const STUDY_SPOTS = {
+const STUDY_SPOTS_UIUC = {
   'Grainger Engineering Library': 1,
   'Main Library': 1,
   'Funk Library': 1,
@@ -788,12 +842,52 @@ const PICK_COUNT = 6;
 // wrap to three lines each in a column this narrow, which made six picks taller
 // than the whole card was before. These are the forms already in use on campus
 // and in this file (BIF, SDRP), not invented abbreviations.
-const PICK_LABELS = {
+const PICK_LABELS_UIUC = {
   'Grainger Engineering Library': 'Grainger Library',
   'Campus Instructional Facility': 'CIF',
   'Electrical and Computer Engineering Building': 'ECEB',
   'University of Illinois College of Law': 'College of Law',
 };
+
+// ─── Ohio State content ───────────────────────────────────────────────────────
+// Deliberately thin. Illinois' lists were built from local knowledge — which
+// buildings are really study spots, which names to shorten — and the same pass
+// has to happen for Columbus before the picks card can say anything useful.
+// Leaving these empty makes the card show nothing, which is the right answer
+// until someone who knows the campus fills them in. Guessing would put students
+// in front of a locked door.
+const BUILDINGS_OSU = {};
+const STUDY_SPOTS_OSU = {};
+const PICK_LABELS_OSU = {};
+
+// Term dates are read off Ohio State's own class API (every Autumn 2026 meeting
+// runs 2026-08-25 to 2026-12-09), so they are measured rather than typed from a
+// calendar page. `periods` is empty because the holidays, breaks, reading days
+// and finals week have not been confirmed from an official source yet; an empty
+// list means every day is treated as a normal class day, which is wrong on
+// Thanksgiving but not invented.
+const ACADEMIC_CALENDAR_OSU = {
+  term: 'Autumn 2026',
+  classesStart: '2026-08-25',
+  classesEnd:   '2026-12-09',
+  termEnd:      '2026-12-09',
+  periods: [],
+};
+
+// Resolve the campus-specific content. Everything below this point uses the
+// plain names, exactly as it did when there was only one campus.
+const CAMPUS_CONTENT = {
+  uiuc: { buildings: BUILDINGS_UIUC, studySpots: STUDY_SPOTS_UIUC,
+          pickLabels: PICK_LABELS_UIUC, calendar: ACADEMIC_CALENDAR_UIUC },
+  osu:  { buildings: BUILDINGS_OSU,  studySpots: STUDY_SPOTS_OSU,
+          pickLabels: PICK_LABELS_OSU,  calendar: ACADEMIC_CALENDAR_OSU },
+}[CAMPUS.id];
+
+const BUILDINGS = CAMPUS_CONTENT.buildings;
+const STUDY_SPOTS = CAMPUS_CONTENT.studySpots;
+const PICK_LABELS = CAMPUS_CONTENT.pickLabels;
+const ACADEMIC_CALENDAR = CAMPUS_CONTENT.calendar;
+
 
 function pickLabel(name) {
   return PICK_LABELS[name] ?? BUILDINGS[name]?.label ?? name;
@@ -870,10 +964,29 @@ function busyWord(occ) {
 // number here is not load-bearing. Buildings that fail it keep their own
 // typical-pattern estimate if they have one, and are left out entirely if they
 // don't, rather than being recommended on a number that means nothing.
-const CLASS_COVERAGE_MIN = 30;
+//
+// The cutoff is the campus's own MEDIAN peak rather than a fixed count, because
+// the scale is campus-specific: Illinois peaks run to 143.5 with a median of
+// 28.5, Ohio State's run to 32.8 with a median of 5. The old fixed 30 happened
+// to sit near the Illinois median, but on Ohio State it would have passed 1
+// building in 101 and silently emptied the picks card. Taking the median keeps
+// the Illinois behaviour and carries to any campus.
+let classCoverageMin = null;
+
+function classCoverageThreshold() {
+  if (classCoverageMin !== null) return classCoverageMin;
+  const peaks = Object.values(data.classActivity?.buildings || {})
+    .map(b => b.peak)
+    .filter(p => typeof p === 'number' && p > 0)
+    .sort((a, b) => a - b);
+  if (!peaks.length) return (classCoverageMin = Infinity);   // no data: trust nothing
+  const mid = Math.floor(peaks.length / 2);
+  classCoverageMin = peaks.length % 2 ? peaks[mid] : (peaks[mid - 1] + peaks[mid]) / 2;
+  return classCoverageMin;
+}
 
 function classDriven(name) {
-  return (data.classActivity?.buildings?.[name]?.peak ?? 0) >= CLASS_COVERAGE_MIN;
+  return (data.classActivity?.buildings?.[name]?.peak ?? 0) >= classCoverageThreshold();
 }
 
 /**
@@ -940,7 +1053,7 @@ const SOURCE_LABELS = {
 };
 
 // ─── Map area: Champaign–Urbana only ──────────────────────────────────────────
-const AREA = { west: -88.33, south: 40.06, east: -88.16, north: 40.16 };
+const AREA = CAMPUS.area;
 const AREA_RECT = Cesium.Rectangle.fromDegrees(AREA.west, AREA.south, AREA.east, AREA.north);
 
 // ─── Basemap: drawn in the browser from OpenStreetMap data ─────────────────────
@@ -992,7 +1105,7 @@ class VectorBasemapProvider {
   }
 }
 
-const BASEMAP_URL = 'data/basemap.json';
+const BASEMAP_URL = `${CAMPUS.dataDir}/basemap.json`;
 // Version tag so browsers pick up new worker code (matches the ?v= in index.html)
 const BASEMAP_VERSION = new URL(document.querySelector('script[src*="basemap-render.js"]').src).search;
 
@@ -1097,7 +1210,8 @@ applyPixelRatio();
 window.addEventListener('resize', applyPixelRatio);
 
 // ─── Camera ───────────────────────────────────────────────────────────────────
-const CAMPUS_CENTER = Cesium.Cartesian3.fromDegrees(-88.2270, 40.1065, 220);
+const CAMPUS_CENTER = Cesium.Cartesian3.fromDegrees(
+  CAMPUS.center.lon, CAMPUS.center.lat, CAMPUS.center.height);
 const HOME_VIEW = new Cesium.HeadingPitchRange(
   0,
   Cesium.Math.toRadians(-25),
@@ -1905,7 +2019,7 @@ function updateHeader() {
   const period = calendarPeriod(campusNow().date);
   const base = sources.length
     ? `Live estimates from ${sources.join(' + ')}`
-    : 'University of Illinois Urbana-Champaign';
+    : CAMPUS.subtitle;
   document.getElementById('header-sub').textContent = period.label ? `${base} · ${period.label}` : base;
 }
 
@@ -2066,9 +2180,9 @@ function refresh({ keepThanks = false } = {}) {
   // data arrives.
   const buildingsLoading = loadBuildings();
   const [classActivity, popularTimes, hours, drawTile] = await Promise.all([
-    loadJson('data/class_activity.json'),
-    loadJson('data/popular_times.json'),
-    loadJson('data/building_hours.json'),
+    loadJson(`${CAMPUS.dataDir}/class_activity.json`),
+    loadJson(`${CAMPUS.dataDir}/popular_times.json`),
+    loadJson(`${CAMPUS.dataDir}/building_hours.json`),
     startBasemap(),
   ]);
   performance.mark('data-and-basemap-ready');
