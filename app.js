@@ -2094,7 +2094,21 @@ function renderPicks() {
   markZoomedPick();
   pickNote.hidden = true;
   publishSheetHeight();   // the list just changed shape; the credits sit on it
+
+  // Someone who reads the sheet and leaves looks exactly like someone who
+  // bounced: both open no building. Recording that the list was on screen, and
+  // whether it was open, is the only way to tell a satisfied visit from a
+  // wasted one. Once per visit — it re-renders every five minutes.
+  if (!picksSeenLogged) {
+    picksSeenLogged = true;
+    track('picks_seen', {
+      count: picks.length,
+      collapsed: pickCard.classList.contains('is-collapsed'),
+      device: deviceKind(),
+    });
+  }
 }
+let picksSeenLogged = false;
 
 function refresh({ keepThanks = false } = {}) {
   updateHeader();
