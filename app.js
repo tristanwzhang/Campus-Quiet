@@ -33,11 +33,16 @@ function analyticsExcluded() {
   try { return localStorage.getItem(NOSTATS_KEY) === '1'; } catch (e) { return false; }
 }
 
+// Which of the two designs this page is. Every event carries it, so "did the
+// people who saw the new look come back more" is answerable, and so is "did
+// anyone who switched to the old one stay there".
+const DESIGN = 'new';
+
 /** Record an event, e.g. track('checkin_submitted', { building, level }). */
 function track(event, properties = {}) {
   if (!ANALYTICS.key || analyticsExcluded()) return;
-  if (!analyticsReady) { analyticsQueue.push([event, properties]); return; }
-  try { window.posthog?.capture(event, properties); } catch (e) { /* never break the map */ }
+  if (!analyticsReady) { analyticsQueue.push([event, { design: DESIGN, ...properties }]); return; }
+  try { window.posthog?.capture(event, { design: DESIGN, ...properties }); } catch (e) { /* never break the map */ }
 }
 
 function startAnalytics() {
@@ -65,6 +70,9 @@ function startAnalytics() {
       capture_pageview: true,
       capture_pageleave: true,       // gives time-on-site
       person_profiles: 'never',
+      // Registered here rather than on each call so the automatic pageview and
+      // pageleave carry it too — those are the events the comparison rests on.
+      loaded: ph => ph.register({ design: DESIGN }),
     });
     analyticsReady = true;
     for (const [event, props] of analyticsQueue.splice(0)) track(event, props);
@@ -1098,10 +1106,15 @@ window.addEventListener('resize', applyPixelRatio);
 
 // ─── Camera ───────────────────────────────────────────────────────────────────
 const CAMPUS_CENTER = Cesium.Cartesian3.fromDegrees(-88.2270, 40.1065, 220);
+// A phone held upright sees a tall, narrow slice of the map, and at a shallow
+// angle most of that slice is sky and distant town. Looking down more steeply
+// and standing closer puts campus itself in the part of the screen the picks
+// sheet doesn't cover.
+const NARROW = window.matchMedia('(max-width: 640px)').matches;
 const HOME_VIEW = new Cesium.HeadingPitchRange(
   0,
-  Cesium.Math.toRadians(-25),
-  2200
+  Cesium.Math.toRadians(NARROW ? -42 : -25),
+  NARROW ? 1700 : 2200
 );
 
 function goHome() {
@@ -1434,7 +1447,12 @@ function placeLabels() {
       const w = Math.max(...label.lines.map(l => l.length)) * 7.2 * scale + 10;
       const h = label.lines.length * 16 * scale + 14;
       const box = [win.x - w / 2, win.y - h, win.x + w / 2, win.y + 4];
-      show = !taken.some(b => box[0] < b[2] && box[2] > b[0] && box[1] < b[3] && box[3] > b[1]);
+      // A name sliced by the edge of the screen reads as a different building
+      // ("Astronomy B", "Campus Recreation Cent"), which is worse than no name
+      // at all. It can't be nudged inwards either, because the dot under it is
+      // what says which building this is.
+      show = box[0] > 2 && box[2] < width - 2;
+      show = show && !taken.some(b => box[0] < b[2] && box[2] > b[0] && box[1] < b[3] && box[3] > b[1]);
       if (show) taken.push(box);
     }
     if (show) {
@@ -1498,6 +1516,30 @@ function labelOverlays() {
     addLabel(name, lon, lat, 0, cfg.shape.topM + 2);
   }
 }
+
+// The picks sheet covers the bottom of a phone screen, including where the map
+// credits sit. They have to stay visible, so its height is published to CSS
+// rather than guessed at — it changes when the list does and when it collapses.
+let publishSheetHeight = () => {};
+(function trackSheetHeight() {
+  const sheet = document.getElementById('pick');
+  if (!sheet) return;
+  const publish = () => document.documentElement.style.setProperty(
+    '--sheet-h', `${Math.round(sheet.getBoundingClientRect().height)}px`);
+  // A ResizeObserver alone reported 0 forever: it starts on a sheet that is
+  // still `hidden`, and the first real layout didn't reach it. The explicit
+  // triggers are the ones that actually change the height.
+  if (window.ResizeObserver) new ResizeObserver(publish).observe(sheet);
+  window.addEventListener('resize', publish);
+  publishSheetHeight = publish;
+  publish();
+})();
+
+// Which way people move between the two designs, and — because every event
+// carries `design` — whether they stay where they went.
+document.getElementById('old-look')?.addEventListener('click', () => {
+  track('design_switched', { to: 'classic', device: deviceKind() });
+});
 
 // ─── Tooltip ──────────────────────────────────────────────────────────────────
 const tooltip  = document.getElementById('tooltip');
@@ -1937,6 +1979,7 @@ function setPicksCollapsed(collapsed) {
 function applyPicksCollapsed() {
   const collapsed = picksCollapsed();
   pickCard.classList.toggle('is-collapsed', collapsed);
+  publishSheetHeight();
   pickToggle.setAttribute('aria-expanded', String(!collapsed));
   pickToggle.title = collapsed ? 'Show study picks' : 'Hide study picks';
   pickToggle.setAttribute('aria-label', pickToggle.title);
@@ -1994,7 +2037,7 @@ function markZoomedPick() {
 
 function renderPicks() {
   if (!pickCard) return;
-  if (!picksEnabled()) { pickCard.hidden = true; return; }
+  if (!picksEnabled()) { pickCard.hidden = true; publishSheetHeight(); return; }
 
   const picks = studyPicks();
   pickCard.hidden = false;
@@ -2050,6 +2093,7 @@ function renderPicks() {
   if (zoomedPick && !picks.some(p => p.name === zoomedPick)) zoomedPick = null;
   markZoomedPick();
   pickNote.hidden = true;
+  publishSheetHeight();   // the list just changed shape; the credits sit on it
 }
 
 function refresh({ keepThanks = false } = {}) {

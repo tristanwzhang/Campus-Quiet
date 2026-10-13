@@ -274,6 +274,26 @@
   /* ── Study picks ──
      Sits under the summary chips so the answer is on screen without anyone
      having to find and tap a building first. */
+  /* The way back to the design people already know. Quiet on a computer,
+     where nobody asked for it; a real target on a phone. */
+  #old-look {
+    align-self: flex-start;
+    flex: none;
+    /* The header itself ignores the pointer so the map can be dragged through
+       it; the one thing in it you can click has to opt back in. */
+    pointer-events: auto;
+    /* Clears the compass button, which is pinned to the same corner. */
+    margin-right: 58px;
+    font-size: 11px;
+    color: #6b7589;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 999px;
+    padding: 5px 10px;
+    white-space: nowrap;
+  }
+  #old-look:hover, #old-look:focus-visible { color: #aab3c4; border-color: rgba(255,255,255,0.2); }
+
   #pick {
     position: absolute;
     top: calc(128px + var(--safe-top));
@@ -383,6 +403,29 @@
   .pick-note { font-size: 11.5px; color: #8a94a8; padding: 2px 7px 1px; }
 
   /* ── Compass ── */
+  /* Shown only in the phone layout, where the floating legend is in the way
+     of the sheet. Same scale, one line, inside the thing you're already reading. */
+  #pick-key { display: none; }
+  #pick-key .key-bar {
+    display: block;
+    height: 5px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #22c55e, #eab308, #ef4444);
+  }
+  #pick-key .key-ends {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #6b7589;
+    margin-top: 3px;
+  }
+  #pick-key .key-note {
+    display: block;
+    font-size: 10px;
+    color: #4a5365;
+    margin-top: 6px;
+  }
+
   #compass {
     position: absolute;
     top: calc(20px + var(--safe-top));
@@ -830,20 +873,73 @@
     #header .disclaimer { font-size: 10px; margin-top: 1px; }
     #stats { top: calc(52px + var(--safe-top)); left: 16px; right: 16px; flex-wrap: wrap; gap: 6px; }
     #compass { top: calc(92px + var(--safe-top)); right: 16px; width: 44px; height: 44px; }
-    /* Stops short of the right edge so it clears the compass button rather
-       than sliding underneath it. */
+    /* The compass sits lower down here, so the link can have the corner. */
+    #old-look { margin-right: 0; font-size: 12px; padding: 7px 12px; }
+
+    /* The picks sit at the bottom of a phone screen. The old card floated over
+       the top third of the map and was see-through, so it both hid the
+       buildings it was naming — CIF, the Illini Union and BIF were all
+       underneath it — and was hard to read against them. Down here it is
+       within reach of a thumb, opaque, and over empty foreground. */
     #pick {
-      top: calc(88px + var(--safe-top));
-      left: 16px; right: 72px;
+      top: auto;
+      bottom: 0;
+      left: 0; right: 0;
       width: auto; max-width: none;
-      padding: 9px 10px 7px;
+      background: rgba(9,13,19,0.97);
+      border: 0;
+      border-top: 1px solid rgba(255,255,255,0.09);
+      border-radius: 14px 14px 0 0;
+      padding: 0 14px calc(12px + var(--safe-bottom));
+      box-shadow: 0 -14px 34px rgba(0,0,0,0.5);
+      transition: transform 0.22s ease;
     }
-    .pick-item { padding: 7px; }
-    /* Matches the 44px minimum used for the compass button — the header row is
-       the only way to get the card back once it's collapsed. */
-    #pick-toggle { min-height: 44px; }
+
+    /* A grab bar, because a sheet at the bottom of a phone reads as something
+       you pull, and the old card gave no sign it did anything at all. */
+    #pick-toggle {
+      min-height: 48px;
+      padding: 15px 1px 9px;
+      position: relative;
+    }
+    #pick-toggle::before {
+      content: '';
+      position: absolute;
+      top: 7px; left: 50%;
+      transform: translateX(-50%);
+      width: 34px; height: 4px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.18);
+    }
+
+    /* Two rows and the top of a third: enough to show the list continues,
+       little enough that the sheet stays near a fifth of the screen rather
+       than the two fifths a full list would take. */
+    #pick-list {
+      max-height: 15vh;
+      /* The list is cut mid-row on purpose, to show it continues — but a hard
+         edge against the colour key below just looks broken, so it fades. */
+      -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 22px), transparent);
+      mask-image: linear-gradient(to bottom, #000 calc(100% - 22px), transparent);
+    }
+    .pick-item { padding: 9px 8px; }
+
+    /* The full disclaimer wrapped to a second line here and was clipped by the
+       chips. The short form stays in the header; the whole sentence is in the
+       sheet, where there is room for it. */
+    #header .disclaimer .d-rest { display: none; }
+    #pick.is-collapsed { padding-bottom: calc(8px + var(--safe-bottom)); }
+
+    /* The colour key moves inside the sheet; a floating legend would sit
+       underneath it. */
+    #pick-key { display: block; margin-top: 10px; }
+    #legend { display: none; }
+
+    /* Opening a building, or being asked a survey question, means you are
+       reading that — so the sheet gets out of its way rather than stacking. */
+    body.panel-open #pick, body.survey-open #pick { transform: translateY(100%); }
     .chip { padding: 5px 10px; font-size: 11.5px; }
-    #legend { left: 16px; bottom: calc(40px + var(--safe-bottom)); }
+    #panel { bottom: calc(24px + var(--safe-bottom)); }
     #hint { display: none; }
     /* Tucked into the bottom corner rather than spanning the screen, so the
        map stays visible behind it and there's less of it under your thumb. */
@@ -854,7 +950,31 @@
     /* The survey is centred and nearly full-width down here, so it also
        needs the legend's own corner clear rather than just avoiding it. */
     #survey { bottom: calc(96px + var(--safe-bottom)); }
-    .cesium-widget-credits { font-size: 9px !important; }
+    /* The sheet would otherwise cover the map attribution, which has to stay
+       visible. The element to move is Cesium's own bottom bar: it sits at
+       left:50%/right:50% with no width, so anything positioned on the credits
+       inside it simply overflowed the screen. --sheet-h is kept current by
+       app.js as the sheet opens, closes and its list changes. */
+    .cesium-viewer-bottom {
+      left: 8px !important;
+      right: 8px !important;
+      bottom: calc(var(--sheet-h, 0px) + 4px) !important;
+      /* Cesium centres this bar with a translateX, which dragged it back off
+         the left edge however the offsets were set. */
+      transform: none !important;
+    }
+    .cesium-widget-credits {
+      display: flex !important;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 2px 8px;
+      font-size: 9px !important;
+      line-height: 1.4;
+      background: rgba(9,13,19,0.7);
+      border-radius: 6px;
+      padding: 3px 6px;
+    }
 
     /* Thumbs need ~44px. Measured before this: the close button was 18x21
        and the check-in buttons 32 tall, so both were being missed. */
@@ -973,8 +1093,9 @@
   <div>
     <h1>UIUC Spaces</h1>
     <div class="sub" id="header-sub">University of Illinois Urbana-Champaign</div>
-    <div class="disclaimer">A student project · not affiliated with the University of Illinois</div>
+    <div class="disclaimer">A student project<span class="d-rest"> · not affiliated with the University of Illinois</span></div>
   </div>
+  <a id="old-look" href="classic.html">Old look</a>
 </div>
 
 <div id="stats">
@@ -1003,6 +1124,11 @@
   <div id="pick-body">
     <ol id="pick-list"></ol>
     <div class="pick-note" id="pick-note" hidden></div>
+    <div id="pick-key" aria-hidden="true">
+      <span class="key-bar"></span>
+      <span class="key-ends"><span>Empty</span><span>Full</span></span>
+      <span class="key-note">Not affiliated with the University of Illinois</span>
+    </div>
   </div>
 </div>
 
@@ -1070,6 +1196,6 @@
 </div>
 
 <script defer src="basemap-render.js?v=35"></script>
-<script defer src="app.js?v=71"></script>
+<script defer src="app.js?v=75"></script>
 </body>
 </html>
