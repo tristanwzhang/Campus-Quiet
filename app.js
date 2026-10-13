@@ -110,6 +110,10 @@ const CAMPUS_SITES = {
     dataDir: 'data',
     area: { west: -88.33, south: 40.06, east: -88.16, north: 40.16 },
     center: { lon: -88.2270, lat: 40.1065, height: 220 },
+    view: { pitchDeg: -25, range: 2200 },
+    // Ellipsoid height of the ground, sampled from Cesium's terrain at the
+    // campus centre. Not sea level — Cesium works in ellipsoid heights.
+    groundM: 190,
   },
   osu: {
     id: 'osu',
@@ -120,12 +124,27 @@ const CAMPUS_SITES = {
     // estimate by an hour and reads as bad data rather than a config mistake.
     tz: 'America/New_York',
     dataDir: 'data/osu',
-    // Bounds are OpenStreetMap's own "The Ohio State University" relation, and
-    // the centre is The Oval — both read from OSM rather than eyeballed. The
-    // box is slightly smaller than the Illinois one, so the drawn basemap costs
-    // no more to download.
-    area: { west: -83.0802, south: 39.9906, east: -83.0073, north: 40.0746 },
-    center: { lon: -83.0127, lat: 39.9995, height: 220 },
+    // Centred on the median of the buildings we actually hold data for
+    // (-83.0152, 40.0004 — essentially the Oval), not on a landmark picked by
+    // hand. An earlier version used OpenStreetMap's "The Ohio State University"
+    // relation for the bounds; that is the university's PROPERTY, including the
+    // medical centre, research park and airfield, and the academic campus filled
+    // only 5.5% of it, so the map was mostly grey city.
+    //
+    // AREA clamps the CAMERA, not the point it looks at. At HOME_VIEW's -25°
+    // pitch and 2200 m range the camera sits ~0.018° of latitude behind the
+    // target (0.018° of latitude, 0.023° of longitude), so the box has to reach
+    // that far past the OUTERMOST buildings on every side — otherwise panning to
+    // look at an edge building shoves the view back, which is what made the map
+    // stop dead at the bottom of the screen.
+    area: { west: -83.063, south: 39.974, east: -82.984, north: 40.025 },
+    center: { lon: -83.0152, lat: 40.0004, height: 220 },
+    // Steeper and closer than Illinois. Ohio State's academic core is compact
+    // and sits in a dense city grid, so the Illinois angle spent the top fifth
+    // of the screen on sky and the right half on blocks of Columbus that will
+    // never have data. Looking down harder fills the frame with campus.
+    view: { pitchDeg: -38, range: 1700 },
+    groundM: 196,
   },
 };
 
@@ -358,7 +377,7 @@ const CAMPUS_TZ = CAMPUS.tz;
 const DAY_NAMES = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
 
 // ─── Data loading ─────────────────────────────────────────────────────────────
-const data = { classActivity: null, popularTimes: null, hours: null, checkins: loadLocalCheckins() };
+const data = { classActivity: null, popularTimes: null, hours: null, gis: null, checkins: loadLocalCheckins() };
 
 async function loadJson(path) {
   try {
@@ -620,9 +639,16 @@ function googleBusyness(name, day, hour) {
 
 function classBusyness(name, day, hour) {
   const building = data.classActivity?.buildings?.[name];
-  if (!building || !building.peak) return null;
-  const value = building.hours?.[day]?.[hour];
-  return value == null ? null : value / building.peak;
+  if (!building) return null;
+  // Seats scheduled, where the campus publishes room capacity. A full lecture
+  // hall and a seminar room are not the same amount of building in use, and a
+  // count of meetings can't tell them apart. Illinois' course explorer carries
+  // no capacity, so it falls back to the meeting count.
+  const grid = building.seats ?? building.hours;
+  const peak = building.seats ? building.seatsPeak : building.peak;
+  if (!peak) return null;
+  const value = grid?.[day]?.[hour];
+  return value == null ? null : value / peak;
 }
 
 // A described pattern ("quiet 6–9:30, busy 10:30–3:30, …") as a fullness value,
@@ -793,7 +819,30 @@ function knownBuildings() {
   const names = new Set(Object.keys(BUILDINGS));
   for (const name of Object.keys(data.classActivity?.buildings || {})) names.add(name);
   for (const name of Object.keys(data.popularTimes?.places || {})) names.add(name);
-  return [...names];
+  const away = offMap(names);
+  return away.size ? [...names].filter(name => !away.has(name)) : [...names];
+}
+
+// Buildings the university's own register places outside the area this map
+// covers: Ohio State's airport terminal, a research lab out on west campus, a
+// clinic three miles east. They can't be drawn or flown to, so counting them in
+// the legend claims the map knows about places it never shows. A building the
+// register doesn't carry is left alone — not in the register is not evidence.
+const NONE = new Set();
+let offMapNames = null;
+function offMap(names) {
+  if (offMapNames) return offMapNames;
+  if (!data.gis) return NONE;          // decide once the register has loaded
+  const byCode = gisByCode();
+  offMapNames = new Set();
+  for (const name of names) {
+    const b = byCode.get(codeFor(name));
+    if (!b) continue;
+    if (b.lon < AREA.west || b.lon > AREA.east || b.lat < AREA.south || b.lat > AREA.north) {
+      offMapNames.add(name);
+    }
+  }
+  return offMapNames;
 }
 
 // ─── Study picks ──────────────────────────────────────────────────────────────
@@ -856,22 +905,50 @@ const PICK_LABELS_UIUC = {
 // Leaving these empty makes the card show nothing, which is the right answer
 // until someone who knows the campus fills them in. Guessing would put students
 // in front of a locked door.
-const BUILDINGS_OSU = {};
-const STUDY_SPOTS_OSU = {};
+// Only the two libraries that are buildings in their own right and publish
+// their own hours. Calling a library a library is not a judgement call; which
+// classroom buildings students treat as study spots is, and that still needs
+// someone who knows the campus.
+// Keyed on the name Ohio State's class data uses, because that is what the
+// scheduling code joins to; the label is what students call it.
+const BUILDINGS_OSU = {
+  'Library, Wm Oxley Thompson': { type: 'library', label: 'Thompson Library' },
+  '18th Avenue Library':        { type: 'library', label: '18th Ave Library' },
+  'Ohio Union, New':            { type: 'union',   label: 'Ohio Union' },
+};
+
+// Weight 1, the same tier Illinois gives its libraries.
+const STUDY_SPOTS_OSU = {
+  'Library, Wm Oxley Thompson': 1,
+  '18th Avenue Library': 1,
+  'Ohio Union, New': 0.75,   // same tier Illinois gives the Illini Union
+};
+
 const PICK_LABELS_OSU = {};
 
-// Term dates are read off Ohio State's own class API (every Autumn 2026 meeting
-// runs 2026-08-25 to 2026-12-09), so they are measured rather than typed from a
-// calendar page. `periods` is empty because the holidays, breaks, reading days
-// and finals week have not been confirmed from an official source yet; an empty
-// list means every day is treated as a normal class day, which is wrong on
-// Thanksgiving but not invented.
+// From the registrar's own five-year calendar:
+// https://registrar.osu.edu/academic-calendar/academic-calendar-5-year-view-2023-2028/
+// The term dates match what Ohio State's class API reports for every Autumn 2026
+// meeting (2026-08-25 to 2026-12-09), so the two sources agree.
+//
+// Each period is exactly what the calendar names, not a day longer. The
+// weekends either side of Autumn and Thanksgiving break are left as ordinary
+// weekends: the registrar doesn't call them break days, and the weekend
+// profiles already make Saturday and Sunday quieter.
+//
+// December 10 needs no entry — it falls between the last class and the first
+// exam, and calendarPeriod() already treats anything after classesEnd as finals.
 const ACADEMIC_CALENDAR_OSU = {
   term: 'Autumn 2026',
   classesStart: '2026-08-25',
   classesEnd:   '2026-12-09',
-  termEnd:      '2026-12-09',
-  periods: [],
+  termEnd:      '2026-12-17',   // last day of final examinations
+  periods: [
+    { start: '2026-09-07', end: '2026-09-07', kind: 'holiday', label: 'Labor Day — no classes' },
+    { start: '2026-10-15', end: '2026-10-16', kind: 'break',   label: 'Autumn Break — no classes' },
+    { start: '2026-11-11', end: '2026-11-11', kind: 'holiday', label: 'Veterans Day — no classes' },
+    { start: '2026-11-25', end: '2026-11-27', kind: 'break',   label: 'Thanksgiving Break — no classes' },
+  ],
 };
 
 // Resolve the campus-specific content. Everything below this point uses the
@@ -1191,6 +1268,12 @@ scene.skyAtmosphere.show = true;
 scene.fog.enabled = true;
 scene.fog.density = 0.0002;
 scene.postProcessStages.fxaa.enabled = true;
+// The map is almost entirely flat colour meeting flat colour, and it renders
+// below native resolution (see RENDER_PIXEL_RATIO), so every building edge is a
+// hard staircase that FXAA alone doesn't clear up. MSAA does. Phones get half
+// the samples, on the same reasoning that dropped their resolution: this is the
+// kind of work they have least of. (WebGL2 only; ignored where it's missing.)
+scene.msaaSamples = deviceKind() === 'phone' ? 2 : 4;
 
 viewer.clock.currentTime = Cesium.JulianDate.fromIso8601('2026-09-15T19:00:00Z');
 viewer.clock.shouldAnimate = false;
@@ -1214,8 +1297,8 @@ const CAMPUS_CENTER = Cesium.Cartesian3.fromDegrees(
   CAMPUS.center.lon, CAMPUS.center.lat, CAMPUS.center.height);
 const HOME_VIEW = new Cesium.HeadingPitchRange(
   0,
-  Cesium.Math.toRadians(-25),
-  2200
+  Cesium.Math.toRadians(CAMPUS.view.pitchDeg),
+  CAMPUS.view.range
 );
 
 function goHome() {
@@ -1364,12 +1447,15 @@ async function loadBuildings() {
   try {
     buildingsTileset = scene.primitives.add(await Cesium.createOsmBuildingsAsync(BUILDING_TILESET_OPTIONS));
     performance.mark('buildings-tileset-ready');
-    buildingsTileset.tileLoad.addEventListener(labelTileBuildings);
+    buildingsTileset.tileLoad.addEventListener(claimTileBuildings);
     buildingsTileset.tileLoad.addEventListener(() => {
       if (!performance.getEntriesByName('buildings-first-tile').length) performance.mark('buildings-first-tile');
     });
     buildingsTileset.initialTilesLoaded.addEventListener(() => {
       performance.mark('buildings-all-in-view');
+      // Once the tiles have had their go at naming buildings, fill the gaps
+      // from the university's own coordinates.
+      placeMissingBuildings();
       document.getElementById('loading')?.classList.add('done');
       startAnalytics();
       track('map_ready', {
@@ -1393,7 +1479,6 @@ const overlays = new Map();
 // Solid, muted building colours in the style of a clean vector map.
 const NO_DATA_HEX = '#6f5c63';
 const CLOSED_HEX  = '#3a3f4f';
-const NO_DATA_COLOR = Cesium.Color.fromCssColorString(NO_DATA_HEX);
 
 function colorFor(occ) {
   if (!occ) return { hex: NO_DATA_HEX, alpha: 1 };
@@ -1406,30 +1491,66 @@ function createOverlays() {
   for (const [name, cfg] of Object.entries(BUILDINGS)) {
     const shape = cfg.shape;
     if (!shape) continue;
-    const entity = viewer.entities.add({
-      name,
-      polygon: {
-        hierarchy: Cesium.Cartesian3.fromDegreesArray(shape.outline.flat()),
-        height: shape.baseM,
-        extrudedHeight: shape.topM,
-        // One material we recolour in place. Replacing it would make Cesium
-        // rebuild the shape, which shows up as a flicker.
-        material: new Cesium.ColorMaterialProperty(NO_DATA_COLOR.clone()),
-      },
-      properties: { place: name },
-    });
-    overlays.set(name, entity);
+    overlays.set(name, { outline: shape.outline, baseM: shape.baseM, topM: shape.topM });
   }
+  drawOverlays();
+}
+
+// All of our shapes live in one primitive with a flat per-instance colour.
+// Entity polygons would be simpler, but Cesium lights and shades them, which
+// leaves them visibly darker than the building tiles standing next to them —
+// the tiles are styled flat. Flat here means our shapes and the tiles read as
+// the same colour, which is the whole point of colouring them.
+let overlayPrimitive = null;
+const overlayColors = new Map();
+
+function overlayInstance(name, shape) {
+  const { hex } = colorFor(buildingOccupancy(name));
+  overlayColors.set(name, hex);
+  return new Cesium.GeometryInstance({
+    id: name,
+    geometry: new Cesium.PolygonGeometry({
+      polygonHierarchy: new Cesium.PolygonHierarchy(Cesium.Cartesian3.fromDegreesArray(shape.outline.flat())),
+      height: shape.baseM,
+      extrudedHeight: shape.topM,
+      vertexFormat: Cesium.PerInstanceColorAppearance.FLAT_VERTEX_FORMAT,
+    }),
+    attributes: { color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.fromCssColorString(hex)) },
+  });
+}
+
+// Rebuilt whenever the set of shapes changes, which happens at most twice: once
+// at startup, once when the tiles have shown us what they don't carry.
+function drawOverlays() {
+  if (overlayPrimitive) scene.primitives.remove(overlayPrimitive);
+  overlayPrimitive = null;
+  overlayColors.clear();
+  if (!overlays.size) return;
+  const instances = [];
+  for (const [name, shape] of overlays) instances.push(overlayInstance(name, shape));
+  overlayPrimitive = scene.primitives.add(new Cesium.Primitive({
+    geometryInstances: instances,
+    appearance: new Cesium.PerInstanceColorAppearance({ flat: true, closed: true, translucent: false }),
+    asynchronous: false,
+  }));
+  scene.requestRender();
 }
 
 function applyOverlayColors() {
-  for (const [name, entity] of overlays) {
-    // Solid, so the building underneath doesn't tint it.
+  // Before it is ready the colours set at build time still stand, and the next
+  // refresh picks up anything that changed since.
+  if (!overlayPrimitive?.ready) return;
+  let changed = false;
+  for (const name of overlays.keys()) {
     const { hex } = colorFor(buildingOccupancy(name));
-    const colour = Cesium.Color.fromCssColorString(hex);
-    const current = entity.polygon.material.color;
-    if (!Cesium.Color.equals(current.getValue(), colour)) current.setValue(colour);
+    if (overlayColors.get(name) === hex) continue;
+    const attrs = overlayPrimitive.getGeometryInstanceAttributes(name);
+    if (!attrs) continue;
+    attrs.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.fromCssColorString(hex));
+    overlayColors.set(name, hex);
+    changed = true;
   }
+  if (changed) scene.requestRender();
 }
 
 let lastStyleSignature = null;
@@ -1459,7 +1580,11 @@ function applyStyle() {
     `\${feature['cesium#longitude']} > ${AREA.west} && \${feature['cesium#longitude']} < ${AREA.east} && ` +
     `\${feature['cesium#latitude']} > ${AREA.south} && \${feature['cesium#latitude']} < ${AREA.north}`;
 
-  buildingsTileset.style = new Cesium.Cesium3DTileStyle({ color: { conditions }, show: inArea });
+  // `hidden` is set on blocks standing where we draw our own (see claimTileBuildings).
+  buildingsTileset.style = new Cesium.Cesium3DTileStyle({
+    color: { conditions },
+    show: `(${inArea}) && \${hidden} !== 1`,
+  });
   scene.requestRender();
 }
 
@@ -1474,7 +1599,7 @@ const LABEL_RANGE_M = 2600;
 // Ellipsoid height of the ground on campus. Campus is flat (±3 m), so labels use
 // this instead of looking up terrain under every label (that cost dozens of
 // extra terrain downloads on page load).
-const APPROX_GROUND_M = 192;
+const APPROX_GROUND_M = CAMPUS.groundM;
 const labelLayer = document.getElementById('labels');
 
 // Places students go to study or hang out get their labels first.
@@ -1564,24 +1689,184 @@ function placeLabels() {
 
 scene.postRender.addEventListener(placeLabels);
 
-function labelTileBuildings(tile) {
-  if (!data.classActivity && !data.hours) {   // data not here yet — label later
-    pendingLabelTiles.push(tile);
+// ─── Buildings OpenStreetMap never named ──────────────────────────────────────
+// The 3D buildings are OSM data matched by name, and on this campus that misses
+// a lot: Thompson Library, the main library, has no name in OSM at all, so it
+// could never be labelled or flown to. Where the university's own register
+// (data/<campus>/buildings.json) knows a building we have data for, its
+// coordinates place a label even when no tile feature carries the name.
+//
+// Joined on the scheduling code, not the name — the name is exactly what the
+// two sources disagree about.
+function gisByCode() {
+  const out = new Map();
+  for (const b of Object.values(data.gis?.buildings || {})) {
+    if (b.code && b.lat != null) out.set(b.code, b);
+  }
+  return out;
+}
+
+function codeFor(name) {
+  return data.hours?.buildings?.[name]?.code
+      ?? data.classActivity?.buildings?.[name]?.code
+      ?? null;
+}
+
+// Draw a building the tiles don't carry, from the university's own footprint.
+// Same treatment Illinois gives Morrill Hall, just sourced rather than typed.
+function addGisOverlay(name, b) {
+  const base = CAMPUS.groundM;
+  overlays.set(name, {
+    outline: b.outline,
+    baseM: base,
+    fromGis: true,            // unlike the hand-drawn shapes, droppable
+    // No height is published for any Ohio State building, so heightM is storeys
+    // inferred from gross floor area over footprint area. It decides how tall
+    // the block looks and nothing else — never a number we show.
+    topM: base + (b.heightM ?? 12),
+  });
+}
+
+function placeMissingBuildings() {
+  if (!data.gis) return 0;
+  const byCode = gisByCode();
+  let drawn = 0, labelledNow = 0;
+  for (const name of knownBuildings()) {
+    if (labelled.has(name)) continue;          // the tiles already named it
+    const b = byCode.get(codeFor(name));
+    if (!b) continue;
+    if (b.outline && !overlays.has(name)) { addGisOverlay(name, b); drawn++; }
+    addLabel(name, b.lon, b.lat, 10);
+    labelledNow++;
+  }
+  if (drawn) {
+    drawOverlays();
+    applyStyle();
+    // The tiles loaded before we knew which shapes we'd be drawing, so give
+    // them a second pass to stand down where we now stand.
+    claimLoadedTiles();
+  }
+  return { drawn, labelled: labelledNow };
+}
+
+// The tiles and the university rarely agree on a name: "Knowlton Hall" in the
+// tiles, "Knowlton Architecture Building" in the class schedule. The register
+// publishes both, so join through it rather than guessing at the names.
+let registerNameIndex = null;
+function registerNames() {
+  if (registerNameIndex) return registerNameIndex;
+  registerNameIndex = new Map();
+  const ambiguous = new Set();
+  const byCode = new Map();
+  for (const name of knownBuildings()) {
+    const code = codeFor(name);
+    if (code) byCode.set(code, name);
+  }
+  for (const b of Object.values(data.gis?.buildings || {})) {
+    const ours = byCode.get(b.code);
+    if (!ours) continue;
+    for (const alias of [b.name, ...(b.aliases || [])]) {
+      const key = normaliseName(alias);
+      if (!key || ambiguous.has(key)) continue;
+      // Some aliases cover a whole complex ("COB" is four business-school
+      // buildings). A name that means more than one building means nothing.
+      if (registerNameIndex.has(key) && registerNameIndex.get(key) !== ours) {
+        registerNameIndex.delete(key);
+        ambiguous.add(key);
+        continue;
+      }
+      registerNameIndex.set(key, ours);
+    }
+  }
+  return registerNameIndex;
+}
+
+function normaliseName(name) {
+  return String(name)
+    .toLowerCase()
+    .replace(/\s*\(\d+\)\s*$/, '')   // the register suffixes its own file number
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+// The published footprints of the buildings we have data on, with a bounding
+// box each so a point test doesn't walk every outline.
+let footprintIndex = null;
+function knownFootprints() {
+  if (footprintIndex) return footprintIndex;
+  footprintIndex = [];
+  const byCode = gisByCode();
+  for (const name of knownBuildings()) {
+    const b = byCode.get(codeFor(name));
+    if (!b?.outline?.length) continue;
+    footprintIndex.push({ name, outline: b.outline, box: boundingBox(b.outline) });
+  }
+  return footprintIndex;
+}
+
+function footprintAt(lon, lat) {
+  for (const { name, outline, box } of knownFootprints()) {
+    if (lon < box.west || lon > box.east || lat < box.south || lat > box.north) continue;
+    if (pointInOutline(lon, lat, outline)) return name;
+  }
+  return null;
+}
+
+// Work out what each block in a tile is, and get out of our own way. Giving a
+// block the name the university uses lets the ordinary style colour it, which
+// is better than drawing a second block on top of it: the tiles' shapes are
+// more detailed than the footprints we extrude, and two blocks in one place
+// fight over every pixel they share.
+function claimTileBuildings(tile) {
+  if (!data.classActivity && !data.hours) {   // data not here yet — do it later
+    pendingTiles.push(tile);
     return;
   }
   const content = tile.content;
   if (!content?.featuresLength) return;
   const known = new Set(knownBuildings());
+  const join = registerNames();
+  let restyle = false, dropped = false;
+
   for (let i = 0; i < content.featuresLength; i++) {
     const feature = content.getFeature(i);
-    const name = feature.getProperty('name');
-    if (!name || !known.has(name) || labelled.has(name)) continue;
-    const [lon, lat] = BUILDINGS[name]?.labelAt ?? [
-      feature.getProperty('cesium#longitude'),
-      feature.getProperty('cesium#latitude'),
-    ];
-    addLabel(name, lon, lat, feature.getProperty('cesium#estimatedHeight') || 10);
+    const lon = feature.getProperty('cesium#longitude');
+    const lat = feature.getProperty('cesium#latitude');
+    const tileName = feature.getProperty('name');
+
+    let name = tileName && known.has(tileName) ? tileName : null;
+    if (!name && tileName) name = join.get(normaliseName(tileName)) ?? null;
+    // A block carrying no name of its own can't contradict one: if it stands
+    // inside a footprint the university publishes, that is what it is.
+    if (!name && !tileName && lon != null) name = footprintAt(lon, lat);
+
+    if (!name) {
+      // Still nothing, and it stands where we are drawing our own shape. Hide
+      // it rather than let the two fight over the same space.
+      if (lon != null && overlayCovering(lon, lat)) {
+        feature.setProperty('hidden', 1);
+        restyle = true;
+      }
+      continue;
+    }
+    if (name !== tileName) { feature.setProperty('name', name); restyle = true; }
+    // The tiles carry it after all, so our own shape is the duplicate.
+    if (overlays.get(name)?.fromGis) { overlays.delete(name); dropped = true; }
+    if (labelled.has(name)) continue;
+    const [labelLon, labelLat] = BUILDINGS[name]?.labelAt ?? [lon, lat];
+    addLabel(name, labelLon, labelLat, feature.getProperty('cesium#estimatedHeight') || 10);
   }
+
+  if (dropped) drawOverlays();
+  if (restyle) { buildingsTileset.makeStyleDirty(); scene.requestRender(); }
+}
+
+function claimLoadedTiles() {
+  (function walk(tile) {
+    if (!tile) return;
+    if (tile.content?.featuresLength) claimTileBuildings(tile);
+    for (const child of tile.children || []) walk(child);
+  })(buildingsTileset?.root);
 }
 
 // Centre of a polygon's area (not the average of its points, which leans
@@ -1599,9 +1884,9 @@ function areaCentre(outline) {
   return [ox + cx / (6 * area), oy + cy / (6 * area)];
 }
 
-const pendingLabelTiles = [];
-function labelPendingTiles() {
-  while (pendingLabelTiles.length) labelTileBuildings(pendingLabelTiles.pop());
+const pendingTiles = [];
+function claimPendingTiles() {
+  while (pendingTiles.length) claimTileBuildings(pendingTiles.pop());
 }
 
 function labelOverlays() {
@@ -1648,7 +1933,7 @@ function renderSpaces(container, spaces) {
 }
 
 function showTooltip(x, y, name, occ) {
-  ttName.textContent = name;
+  ttName.textContent = BUILDINGS[name]?.label ?? name;
   ttOcc.textContent = Math.round(occ.value * 100) + '%';
   const inactive = occ.source === 'closed' || occ.source === 'unknown';
   ttStatus.textContent = occ.source === 'closed' ? (occ.cardAccess ? 'Closed*' : 'Closed')
@@ -1687,10 +1972,29 @@ function overlayAt(position) {
   const carto = Cesium.Cartographic.fromCartesian(point);
   const lon = Cesium.Math.toDegrees(carto.longitude);
   const lat = Cesium.Math.toDegrees(carto.latitude);
-  for (const name of overlays.keys()) {
-    if (pointInOutline(lon, lat, BUILDINGS[name].shape.outline)) return name;
+  return overlayCovering(lon, lat);
+}
+
+// Which of our own shapes, if any, stands over this point on the ground. Asked
+// once per block in the tiles, so each shape keeps a box to be ruled out by.
+function overlayCovering(lon, lat) {
+  for (const [name, shape] of overlays) {
+    const box = shape.box ?? (shape.box = boundingBox(shape.outline));
+    if (lon < box.west || lon > box.east || lat < box.south || lat > box.north) continue;
+    if (pointInOutline(lon, lat, shape.outline)) return name;
   }
   return null;
+}
+
+function boundingBox(outline) {
+  let west = 180, east = -180, south = 90, north = -90;
+  for (const [lon, lat] of outline) {
+    if (lon < west) west = lon;
+    if (lon > east) east = lon;
+    if (lat < south) south = lat;
+    if (lat > north) north = lat;
+  }
+  return { west, east, south, north };
 }
 
 function pointInOutline(lon, lat, outline) {
@@ -1709,11 +2013,8 @@ function buildingNameAt(position) {
   const picked = scene.pick(position);
   if (!Cesium.defined(picked)) return null;
 
-  // Our own shapes (e.g. the dining hall) come back as entities.
-  if (picked.id instanceof Cesium.Entity) {
-    const place = picked.id.properties?.place?.getValue();
-    return place && knownBuildings().includes(place) ? place : null;
-  }
+  // Our own shapes (e.g. the dining hall) come back carrying their name.
+  if (typeof picked.id === 'string') return overlays.has(picked.id) ? picked.id : null;
 
   if (!picked.getProperty) return null;
   const name = picked.getProperty('name');
@@ -2179,10 +2480,13 @@ function refresh({ keepThanks = false } = {}) {
   // Buildings take longest, so start them first; they're coloured once our
   // data arrives.
   const buildingsLoading = loadBuildings();
-  const [classActivity, popularTimes, hours, drawTile] = await Promise.all([
+  const [classActivity, popularTimes, hours, gis, drawTile] = await Promise.all([
     loadJson(`${CAMPUS.dataDir}/class_activity.json`),
     loadJson(`${CAMPUS.dataDir}/popular_times.json`),
     loadJson(`${CAMPUS.dataDir}/building_hours.json`),
+    // The university's own building register. Only Ohio State has one; the
+    // 404 for Illinois is handled the same way popular_times.json is.
+    loadJson(`${CAMPUS.dataDir}/buildings.json`),
     startBasemap(),
   ]);
   performance.mark('data-and-basemap-ready');
@@ -2192,11 +2496,12 @@ function refresh({ keepThanks = false } = {}) {
   data.classActivity = classActivity;
   data.popularTimes = popularTimes;
   data.hours = hours;
+  data.gis = gis;
 
   updateHeader();
   createOverlays();
   labelOverlays();
-  labelPendingTiles();
+  claimPendingTiles();
   refresh();
   await buildingsLoading;
   refresh();

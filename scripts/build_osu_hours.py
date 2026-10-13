@@ -35,6 +35,48 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 OUT_FILE = ROOT / "data" / "osu" / "building_hours.json"
 
+LIB_URL = "https://library.osu.edu/hours"
+LIB_SOURCE = "Ohio State University Libraries hours"
+
+# Which published libraries are a BUILDING in their own right, and the scheduling
+# code the rest of the pipeline joins on. The others — Architecture, Geology,
+# Music & Dance, Fine Arts, FAES — are departments inside Knowlton, Orton,
+# Sullivant, the Wexner Center and Ag Admin, and their hours are NOT those
+# buildings' hours (Knowlton's doors are open an hour past its library), so they
+# are deliberately left out rather than overwriting a host building.
+LIBRARY_BUILDINGS = {
+    "Thompson Library": "LI",
+    "18th Avenue Library": "SE",
+}
+
+# Buildings that publish their own hours but aren't in the registrar's classroom
+# pool. Read off the official page by hand — the same approach Illinois uses for
+# Beckman — because each unit publishes in its own format on its own site and
+# there is no feed to scrape. Keep the sourceUrl: it's how the next person
+# re-checks these when the term turns over.
+HAND_ENTERED = {
+    "OU": {
+        "name": "Ohio Union",
+        "source": "Ohio Union published building hours",
+        "sourceUrl": "https://ohiounion.osu.edu/visiting/hours",
+        "weekly": {
+            "monday":    [[8, 23]], "tuesday": [[8, 23]], "wednesday": [[8, 23]],
+            "thursday":  [[8, 23]], "friday":  [[8, 23]],
+            "saturday":  [[10, 23]], "sunday": [[10, 23]],
+        },
+        # "Hours vary during holidays, academic breaks and the summer months":
+        # Academic Break and Summer Hours are 8am-8pm weekdays, 10am-8pm weekends.
+        # Applied only to the two spans the registrar actually calls a Break;
+        # single holidays like Labor Day aren't named as academic breaks.
+        "breakWeekly": {
+            "monday":    [[8, 20]], "tuesday": [[8, 20]], "wednesday": [[8, 20]],
+            "thursday":  [[8, 20]], "friday":  [[8, 20]],
+            "saturday":  [[10, 20]], "sunday": [[10, 20]],
+        },
+        "breaks": [("2026-10-15", "2026-10-16"), ("2026-11-25", "2026-11-27")],
+    },
+}
+
 SOURCE_NAME = "Ohio State registrar classroom pool building schedule"
 SOURCE_URL = (
     "https://registrar.osu.edu/staff-resources/class-catalog-and-space/"
@@ -78,6 +120,83 @@ def page_lines(url):
         else:
             merged.append(line)
     return merged
+
+
+# "9:00 a.m. - 4:30 p.m.", "7:30am - 11:30pm", "11:00am - 12:00am", "8:00am - 4:00am"
+LIB_RANGE_RE = re.compile(
+    r"(?P<h1>\d{1,2})(?::(?P<m1>\d{2}))?\s*(?P<s1>a\.?m\.?|p\.?m\.?)\s*[-–—]\s*"
+    r"(?P<h2>\d{1,2})(?::(?P<m2>\d{2}))?\s*(?P<s2>a\.?m\.?|p\.?m\.?)",
+    re.I,
+)
+
+
+def parse_library_cell(value):
+    """[[open, close]] | [] for closed | None when it can't be read exactly."""
+    v = re.sub(r"\s+", " ", (value or "")).strip()
+    if not v:
+        return None
+    low = v.lower()
+    if low.startswith("closed"):
+        return []
+    # "See <X> website for hours." and "<ID> Swipe Required" carry no times.
+    if "website for hours" in low or "swipe required" in low:
+        return None
+    # Appointment-only reading rooms are open to a booking, not to someone
+    # looking for a seat, so they are reported as unknown rather than open.
+    if "appointment only" in low:
+        return None
+    if low.startswith("24 hours"):
+        return [[0, 24]]
+    m = LIB_RANGE_RE.search(v)
+    if not m:
+        return None
+    start = to_decimal(m["h1"], m["m1"], m["s1"].replace(".", "")[:2])
+    end = to_decimal(m["h2"], m["m2"], m["s2"].replace(".", "")[:2])
+    if end <= start:
+        end += 24
+    return [[start, end]]
+
+
+def library_hours():
+    """-> ({code: {date: ranges}}, [notes]) for libraries that are buildings."""
+    req = urllib.request.Request(LIB_URL, headers={"User-Agent": "Mozilla/5.0 (UIUC Spaces hours build)"})
+    raw = urllib.request.urlopen(req, timeout=40).read().decode("utf-8", "replace")
+    rows = re.findall(r"<tr[^>]*>(.*?)</tr>", raw, re.S | re.I)
+
+    def cells(r):
+        return [html.unescape(re.sub(r"<[^>]+>", " ", c)).strip()
+                for c in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", r, re.S | re.I)]
+
+    if not rows:
+        return {}, ["library hours table not found"]
+    header = cells(rows[0])
+    dates = []
+    for c in header[2:9]:
+        m = re.search(r"(\d{1,2})/(\d{1,2})/(\d{2})", c)
+        dates.append(f"20{m.group(3)}-{int(m.group(1)):02d}-{int(m.group(2)):02d}" if m else None)
+
+    out, notes = {}, []
+    for r in rows[1:]:
+        c = cells(r)
+        if len(c) < 9:
+            continue
+        loc = re.sub(r"\s*Upcoming Hours\s*$", "", re.sub(r"\s+", " ", c[0])).strip()
+        svc = re.sub(r"\s+", " ", c[1]).strip()
+        if svc or loc not in LIBRARY_BUILDINGS:
+            continue                       # sub-spaces and in-building libraries
+        code = LIBRARY_BUILDINGS[loc]
+        byday = {}
+        for date, raw_cell in zip(dates, c[2:9]):
+            if not date:
+                continue
+            parsed = parse_library_cell(raw_cell)
+            if parsed is None:
+                notes.append(f"{loc} / {date}: {re.sub(chr(92)+'s+',' ',raw_cell).strip()!r}")
+            else:
+                byday[date] = parsed
+        if byday:
+            out[code] = {"name": loc, "dates": byday}
+    return out, notes
 
 
 def to_decimal(hour, minute, suffix):
@@ -165,6 +284,64 @@ def main():
             "weekly": {d: b["weekly"][d] for d in DAYS},
         }
 
+    # Key on whatever name the class data already uses for this code, so the two
+    # files join. Ohio State's class API calls the union "Ohio Union, New" and
+    # Thompson "Library, Wm Oxley Thompson"; the map shows a friendlier label
+    # from BUILDINGS_OSU rather than renaming here, because renaming would break
+    # the join the codes exist to guarantee.
+    class_names = {}
+    class_file = ROOT / "data" / "osu" / "class_activity.json"
+    if class_file.exists():
+        for n, v in json.loads(class_file.read_text())["buildings"].items():
+            if v.get("code"):
+                class_names.setdefault(v["code"], n)
+
+    # Libraries are published by the Libraries themselves, a week at a time, so
+    # they arrive as dated entries rather than a weekly pattern — the same shape
+    # Illinois' library feed produces. Outside that published week the map shows
+    # no data for them, which is why this has to run weekly.
+    try:
+        libs, lib_notes = library_hours()
+    except Exception as err:
+        libs, lib_notes = {}, [f"library fetch failed: {type(err).__name__}: {err}"]
+
+    for code, info in libs.items():
+        existing = next((k for k, v in out.items() if v.get("code") == code), None)
+        name = existing or class_names.get(code) or info["name"]
+        covered = sorted(info["dates"])
+        entry = out.get(name, {})
+        entry.update({
+            "source": LIB_SOURCE,
+            "sourceUrl": LIB_URL,
+            "code": code,
+            "dates": info["dates"],
+            # Only the published week is known. Anything else is left unknown
+            # rather than extrapolated from a single week that may contain a
+            # break — this week carries Autumn Break, and the libraries' hours
+            # on those days are not their normal ones.
+            "unknownDuring": [[TERM[0], covered[0]], [covered[-1], TERM[1]]],
+            "valid": list(TERM),
+        })
+        entry.setdefault("weekly", {d: [] for d in DAYS})
+        out[name] = entry
+
+    for code, info in HAND_ENTERED.items():
+        name = (next((k for k, v in out.items() if v.get("code") == code), None)
+                or class_names.get(code) or info["name"])
+        out[name] = {
+            "source": info["source"],
+            "sourceUrl": info["sourceUrl"],
+            "code": code,
+            "valid": list(TERM),
+            "weekly": info["weekly"],
+            "periods": [
+                {"start": a, "end": b, "weekly": info["breakWeekly"]}
+                for a, b in info.get("breaks", [])
+            ],
+        }
+    print(f"hand-entered buildings: {len(HAND_ENTERED)} "
+          f"({', '.join(v['name'] for v in HAND_ENTERED.values())})")
+
     OUT_FILE.parent.mkdir(parents=True, exist_ok=True)
     OUT_FILE.write_text(json.dumps({
         "built_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
@@ -180,6 +357,12 @@ def main():
         print(f"dropped (incomplete week): {len(dropped)}")
         for name, missing in dropped:
             print(f"   {name}: missing {', '.join(missing)}")
+    print(f"library buildings added: {len(libs)}  ({', '.join(sorted(libs)) or 'none'})")
+    if lib_notes:
+        print(f"library days not readable: {len(lib_notes)}")
+        if args.print_skipped:
+            for n in lib_notes:
+                print(f"   {n}")
     if skipped:
         print(f"unreadable day-entries: {len(skipped)}")
         if args.print_skipped:

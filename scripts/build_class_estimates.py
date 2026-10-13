@@ -160,7 +160,7 @@ def list_subjects(term):
 
 
 def subject_meetings(term, subject):
-    """Every meeting in a subject: (building, type, days, start, end)."""
+    """Every meeting in a subject: (building, room, type, days, start, end)."""
     try:
         xml = get(f"{BASE}/{term}/{subject}.xml?mode=cascade")
     except Exception as e:
@@ -170,13 +170,14 @@ def subject_meetings(term, subject):
     meetings = []
     for meeting in ET.fromstring(xml).iter("meeting"):
         building = (meeting.findtext("buildingName") or "").strip()
+        room = (meeting.findtext("roomNumber") or "").strip()
         days = (meeting.findtext("daysOfTheWeek") or "").strip()
         start = parse_time(meeting.findtext("start"))
         end = parse_time(meeting.findtext("end"))
         type_el = meeting.find("type")
         code = type_el.get("code") if type_el is not None else ""
         if building and days and start is not None and end is not None and end > start:
-            meetings.append((building, code, days, start, end))
+            meetings.append((building, room, code, days, start, end))
     return meetings
 
 
@@ -200,7 +201,14 @@ def main():
     hours = defaultdict(lambda: defaultdict(lambda: [0.0] * 24))
     unmatched = defaultdict(int)
 
-    for building, code, days, start, end in all_meetings:
+    # A room holds one thing at a time, so the same room at the same hour listed
+    # by two sections is one class cross-listed, not two classes. Count it once,
+    # at the heavier weight. Meetings with no room number can't be compared this
+    # way, so they are left alone.
+    slots = {}
+    loose = []
+    duplicates = 0
+    for building, room, code, days, start, end in all_meetings:
         mapped = BUILDING_ALIASES.get(building)
         if not mapped:
             unmatched[building] += 1
@@ -212,8 +220,23 @@ def main():
             day = DAY_LETTERS.get(letter)
             if not day:
                 continue
-            for hour in range(start // 60, min((end - 1) // 60 + 1, 24)):
-                hours[mapped][day][hour] += weight
+            if not room:
+                loose.append((mapped, day, start, end, weight))
+                continue
+            slot = (mapped, room, day, start, end)
+            if weight > slots.get(slot, (0,))[0]:
+                slots[slot] = (weight,)
+            else:
+                duplicates += 1
+
+    for (mapped, _room, day, start, end), (weight,) in slots.items():
+        for hour in range(start // 60, min((end - 1) // 60 + 1, 24)):
+            hours[mapped][day][hour] += weight
+    for mapped, day, start, end, weight in loose:
+        for hour in range(start // 60, min((end - 1) // 60 + 1, 24)):
+            hours[mapped][day][hour] += weight
+    print(f"room-hours kept: {len(slots)} (+{len(loose)} with no room number), "
+          f"dropped {duplicates} already taken by another section")
 
     out = {
         "term": args.term,
