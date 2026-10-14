@@ -2,43 +2,57 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>
+// The site moved to campusquiet.com. GitHub Pages and the new host deploy from
+// this same repository, so this checks where it is actually running rather than
+// redirecting unconditionally. Old links — the launch Reddit post, bookmarks,
+// anything shared in September — keep working, they just arrive at the new
+// address. It also stops one person being counted as two: the anonymous
+// analytics id lives in localStorage, and localStorage is per origin.
+(function () {
+  if (location.hostname !== 'tristanwzhang.github.io') return;
+  var path = location.pathname.replace(/^\/uiuc-spaces\/?/, '/');
+  location.replace('https://campusquiet.com' + path + location.search + location.hash);
+})();
+</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Classic · UIUC Spaces</title>
 <meta name="google-site-verification" content="2yHqqMcUZ2wneCB7bMSbk0u5ygMaqu72CmEDhTtyPKQ" />
 <meta name="description" content="A live 3D map of how busy UIUC campus buildings are right now — libraries, dining halls, the union, and more — built from class schedules, official hours, and student check-ins.">
-<link rel="canonical" href="https://tristanwzhang.github.io/uiuc-spaces/">
+<link rel="canonical" href="https://campusquiet.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="UIUC Spaces">
 <meta property="og:title" content="UIUC Spaces">
 <meta property="og:description" content="A live 3D map of how busy UIUC campus buildings are right now.">
-<meta property="og:url" content="https://tristanwzhang.github.io/uiuc-spaces/">
+<meta property="og:url" content="https://campusquiet.com/">
 <!-- Shared links show the map itself, which is the whole pitch. -->
-<meta property="og:image" content="https://tristanwzhang.github.io/uiuc-spaces/preview.png">
+<meta property="og:image" content="https://campusquiet.com/preview.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="A 3D map of the UIUC campus with buildings shaded green to red by how busy they are.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="UIUC Spaces">
 <meta name="twitter:description" content="A live 3D map of how busy UIUC campus buildings are right now.">
-<meta name="twitter:image" content="https://tristanwzhang.github.io/uiuc-spaces/preview.png">
+<meta name="twitter:image" content="https://campusquiet.com/preview.png">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "UIUC Spaces",
-  "url": "https://tristanwzhang.github.io/uiuc-spaces/",
+  "url": "https://campusquiet.com/",
   "applicationCategory": "BrowserApplication",
   "operatingSystem": "Any modern web browser",
   "isAccessibleForFree": true,
   "description": "A live 3D map of how busy study spaces are at the University of Illinois Urbana-Champaign, built from class schedules, official building hours and student check-ins.",
-  "image": "https://tristanwzhang.github.io/uiuc-spaces/preview.png",
+  "image": "https://campusquiet.com/preview.png",
   "about": { "@type": "CollegeOrUniversity", "name": "University of Illinois Urbana-Champaign" },
   "isPartOf": {
     "@type": "WebSite",
     "name": "UIUC Spaces",
-    "url": "https://tristanwzhang.github.io/uiuc-spaces/"
+    "url": "https://campusquiet.com/"
   }
 }
 </script>
@@ -1092,6 +1106,6 @@
 </div>
 
 <script defer src="basemap-render.js?v=35"></script>
-<script defer src="classic.js?v=2"></script>
+<script defer src="classic.js?v=3"></script>
 </body>
 </html>
