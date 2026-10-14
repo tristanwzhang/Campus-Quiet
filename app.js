@@ -921,16 +921,33 @@ const PICK_LABELS_UIUC = {
 // Keyed on the name Ohio State's class data uses, because that is what the
 // scheduling code joins to; the label is what students call it.
 const BUILDINGS_OSU = {
-  'Library, Wm Oxley Thompson': { type: 'library', label: 'Thompson Library' },
-  '18th Avenue Library':        { type: 'library', label: '18th Ave Library' },
-  'Ohio Union, New':            { type: 'union',   label: 'Ohio Union' },
+  'Library, Wm Oxley Thompson':    { type: 'library', label: 'Thompson Library' },
+  '18th Avenue Library':           { type: 'library', label: '18th Ave Library' },
+  'Ohio Union, New':               { type: 'union',   label: 'Ohio Union' },
+  // The register and the students call these something shorter than the class
+  // data does.
+  'Knowlton Architecture Building': { label: 'Knowlton Hall' },
+  'Drinko Hall, John Deaver':       { label: 'Drinko Hall' },
+  'Ag. Admin.':                     { label: 'Ag Admin' },
 };
 
-// Weight 1, the same tier Illinois gives its libraries.
+// Every entry here traces to Ohio State's own list of library locations
+// (library.osu.edu/locations), matched to a building through the register's
+// addresses — not to a guess about where people like to sit. The tiers mirror
+// Illinois: a library is a 1, the union and buildings that contain a library
+// are 0.75, and a building whose library we can't yet get hours for is a 0.5.
+//
+// This is still short. Illinois has twelve, and the rest of that list came from
+// knowing the campus — a sourced list can say where the libraries are, but not
+// which atrium people actually work in. That part needs an Ohio State student.
 const STUDY_SPOTS_OSU = {
-  'Library, Wm Oxley Thompson': 1,
-  '18th Avenue Library': 1,
-  'Ohio Union, New': 0.75,   // same tier Illinois gives the Illini Union
+  'Library, Wm Oxley Thompson': 1,     // Thompson, the main library
+  '18th Avenue Library': 1,            // also holds the Music & Dance Library
+  'Ohio Union, New': 0.75,             // same tier Illinois gives the Illini Union
+  'Knowlton Architecture Building': 0.75,  // Architecture Library
+  'Orton Hall': 0.75,                  // Geology Library
+  'Ag. Admin.': 0.75,                  // FAES Library & Student Success Center
+  'Drinko Hall, John Deaver': 0.5,     // Law Library — no published building hours yet
 };
 
 const PICK_LABELS_OSU = {};
