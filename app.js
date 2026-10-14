@@ -1579,6 +1579,20 @@ function renderSpaces(container, spaces) {
   container.hidden = !(spaces && spaces.length);
 }
 
+// For a building the map draws but has no hours or classes for: say so, rather
+// than show a percentage we don't have.
+function showBareTooltip(x, y, name) {
+  ttName.textContent = name;
+  ttOcc.textContent = '—';
+  ttStatus.textContent = 'No data';
+  ttStatus.style.color = '#5a6478';
+  ttSource.textContent = '';
+  ttNote.textContent = 'No hours published for this building';
+  renderSpaces(ttSpaces, null);
+  ttFill.style.width = '0%';
+  placeTooltip(x, y);
+}
+
 function showTooltip(x, y, name, occ) {
   ttName.textContent = name;
   ttOcc.textContent = Math.round(occ.value * 100) + '%';
@@ -1593,6 +1607,10 @@ function showTooltip(x, y, name, occ) {
   ttFill.style.width = (occ.value * 100) + '%';
   ttFill.style.background = cssColor(occ.value);
 
+  placeTooltip(x, y);
+}
+
+function placeTooltip(x, y) {
   let tx = x + 18, ty = y - 20;
   if (tx + 250 > window.innerWidth)  tx = x - 268;
   const height = tooltip.offsetHeight || 200;
@@ -1650,8 +1668,12 @@ function buildingNameAt(position) {
   if (!picked.getProperty) return null;
   const name = picked.getProperty('name');
   if (!name) return null;
-  const exact = knownBuildings().find(known => known === String(name).trim());
-  return exact || null;
+  // A building we have no data for used to come back as null, so tapping it did
+  // nothing at all. Someone on Reddit looked straight at Sherman Hall and asked
+  // where it was: it is drawn, it just never answered. Give the name back and
+  // let the caller say "no hours published" rather than ignoring the tap.
+  const trimmed = String(name).trim();
+  return knownBuildings().find(known => known === trimmed) || trimmed;
 }
 
 // Picking is expensive: at most once per frame, and never while dragging.
@@ -1687,7 +1709,11 @@ function pickUnderMouse() {
   pendingPick = null;
   const name = buildingNameAt(position);
   const occ = name ? buildingOccupancy(name) : null;
-  if (name && occ) {
+  if (name && !occ) {
+    showBareTooltip(position.x, position.y, name);
+    scene.canvas.style.cursor = 'pointer';
+    noteHover(null);
+  } else if (name && occ) {
     showTooltip(position.x, position.y, name, occ);
     // Closed buildings still show their tooltip on hover, but there's
     // nothing to click through to — no pointer cursor, no panel.
@@ -1765,14 +1791,20 @@ function openPanel(name, keepThanks = false) {
   renderSpacePicker(name);
   const occ = occupancyFor(panelTarget());
   const closed = occ?.source === 'closed';
+  // Nothing published for this one at all. Say that plainly and don't ask how
+  // busy it is — a report on a building with no hours has nothing to attach to.
+  const unmapped = !occ && !knownBuildings().includes(name);
   panelName.textContent = name;
-  panelNow.textContent = !occ ? 'No data yet'
+  panelNow.textContent = unmapped ? 'No hours published for this building'
+    : !occ ? 'No data yet'
     : closed ? (occ.cardAccess ? 'Public doors locked · i-card may work' : 'Closed right now')
     : occ.source === 'unknown' ? 'Hours not published — no estimate right now'
     : `${SOURCE_LABELS[occ.source]} · ${Math.round(occ.value * 100)}% full`;
-  panelQ.hidden = closed;
-  checkinRow.hidden = closed;
-  panelNote.textContent = closed
+  panelQ.hidden = closed || unmapped;
+  checkinRow.hidden = closed || unmapped;
+  panelNote.textContent = unmapped
+    ? "On the map, but nobody publishes hours for it — so there's nothing to show."
+    : closed
     ? "Check-ins are off while it's closed."
     : sharedCheckins()
     ? 'Shared with everyone using the map.'
@@ -1923,7 +1955,14 @@ handler.setInputAction((click) => {
   // so people aren't clicking through a popup that can't do anything.
   if (name && occ?.source !== 'closed') {
     openPanel(name);
-    track('building_opened', { building: name, device: deviceKind(), source: SOURCE_LABELS[occ?.source] || 'none' });
+    // Kept as its own event so "most-opened buildings" stays a list of places
+    // we actually cover — and so this becomes the list of buildings worth
+    // finding hours for next, the way Beckman was.
+    if (!occ && !knownBuildings().includes(name)) {
+      track('unmapped_building_opened', { building: name, device: deviceKind() });
+    } else {
+      track('building_opened', { building: name, device: deviceKind(), source: SOURCE_LABELS[occ?.source] || 'none' });
+    }
   } else {
     closePanel();
   }
