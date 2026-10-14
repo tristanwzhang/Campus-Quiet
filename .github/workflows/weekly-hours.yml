@@ -1,7 +1,8 @@
 name: Refresh building hours
 
-# Library and dining feeds only publish 7 days ahead, so the data goes stale
-# without this — most visibly around finals and breaks, when hours change.
+# Library and dining feeds publish about 7 days ahead, on both campuses, so the
+# data goes stale without this — most visibly around finals and breaks, when
+# hours change and people most want to know.
 on:
   schedule:
     - cron: "20 9 * * 1"     # Mondays, 4:20am campus time
@@ -20,8 +21,17 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Rebuild hours
+      - name: Rebuild hours — Illinois
         run: python3 scripts/build_hours.py
+
+      # Ohio State's libraries publish a rolling 7-day window, the same shape
+      # Illinois' feeds use, so this has exactly the same deadline: miss a week
+      # and Thompson and 18th Ave — the two best study spots on that campus —
+      # go to "hours unknown". A failure here must not stop Illinois being
+      # committed, so it is allowed to fail on its own.
+      - name: Rebuild hours — Ohio State
+        continue-on-error: true
+        run: python3 scripts/build_osu_hours.py
 
       # Refresh Google listing hours too, if a SERPAPI_KEY secret has been added.
       # (Checked in the shell: GitHub doesn't allow secrets in an `if:`.)
@@ -40,7 +50,7 @@ jobs:
         run: |
           git config user.name "hours bot"
           git config user.email "actions@github.com"
-          git add data/building_hours.json data/google_hours.json 2>/dev/null || true
+          git add data/building_hours.json data/google_hours.json data/osu/building_hours.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Hours unchanged."
           else
