@@ -295,6 +295,12 @@
   /* ── Study picks ──
      Sits under the summary chips so the answer is on screen without anyone
      having to find and tap a building first. */
+  /* The way back to the layout people already know. Hidden on a computer on
+     purpose: the refresh only changed the phone layout, so on a wide screen
+     this would be a control that visibly does nothing, which is what made the
+     first version of it feel pointless. */
+  #old-look { display: none; }
+
   #pick {
     position: absolute;
     top: calc(128px + var(--safe-top));
@@ -874,6 +880,20 @@
     #header .disclaimer { font-size: 10px; margin-top: 1px; }
     #stats { top: calc(52px + var(--safe-top)); left: 16px; right: 16px; flex-wrap: wrap; gap: 6px; }
     #compass { top: calc(92px + var(--safe-top)); right: 16px; width: 44px; height: 44px; }
+    #old-look {
+      display: block;
+      align-self: flex-start;
+      flex: none;
+      pointer-events: auto;
+      font-size: 12px;
+      color: #6b7589;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 999px;
+      padding: 7px 12px;
+      white-space: nowrap;
+    }
+
     /* The picks sit at the bottom of a phone screen. The old card floated over
        the top third of the map and was see-through, so it both hid the
        buildings it was naming — CIF, the Illini Union and BIF were all
@@ -1093,6 +1113,7 @@
     <div class="sub" id="header-sub">University of Illinois Urbana-Champaign</div>
     <div class="disclaimer">A student project<span class="d-rest"> · not affiliated with the University of Illinois</span></div>
   </div>
+  <a id="old-look" href="classic.html">Old look</a>
 </div>
 
 <div id="stats">
@@ -1193,6 +1214,6 @@
 </div>
 
 <script defer src="basemap-render.js?v=35"></script>
-<script defer src="app.js?v=79"></script>
+<script defer src="app.js?v=80"></script>
 </body>
 </html>

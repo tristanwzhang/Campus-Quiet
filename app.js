@@ -33,11 +33,16 @@ function analyticsExcluded() {
   try { return localStorage.getItem(NOSTATS_KEY) === '1'; } catch (e) { return false; }
 }
 
+// Which layout this page is. On every event, so "did the people who saw the
+// new one come back more" and "did anyone who switched back stay there" are
+// both answerable — the second needs the label to persist past the click.
+const DESIGN = 'new';
+
 /** Record an event, e.g. track('checkin_submitted', { building, level }). */
 function track(event, properties = {}) {
   if (!ANALYTICS.key || analyticsExcluded()) return;
-  if (!analyticsReady) { analyticsQueue.push([event, properties]); return; }
-  try { window.posthog?.capture(event, properties); } catch (e) { /* never break the map */ }
+  if (!analyticsReady) { analyticsQueue.push([event, { design: DESIGN, ...properties }]); return; }
+  try { window.posthog?.capture(event, { design: DESIGN, ...properties }); } catch (e) { /* never break the map */ }
 }
 
 function startAnalytics() {
@@ -65,6 +70,8 @@ function startAnalytics() {
       capture_pageview: true,
       capture_pageleave: true,       // gives time-on-site
       person_profiles: 'never',
+      // Registered so the automatic pageview and pageleave carry it too.
+      loaded: ph => ph.register({ design: DESIGN }),
     });
     analyticsReady = true;
     for (const [event, props] of analyticsQueue.splice(0)) track(event, props);
@@ -1533,6 +1540,10 @@ let publishSheetHeight = () => {};
   publishSheetHeight = publish;
   publish();
 })();
+
+document.getElementById('old-look')?.addEventListener('click', () => {
+  track('design_switched', { to: 'classic', device: deviceKind() });
+});
 
 // ─── Tooltip ──────────────────────────────────────────────────────────────────
 const tooltip  = document.getElementById('tooltip');
