@@ -157,7 +157,12 @@ const CAMPUS_SITES = {
   },
 };
 
-const CAMPUS = CAMPUS_SITES[new URLSearchParams(location.search).get('campus')] ?? CAMPUS_SITES.uiuc;
+// Each campus has its own page (osu.html, built by scripts/build_campus_pages.py)
+// which states which one it is, so the shareable URL is /osu rather than a query
+// string. ?campus= still works, for trying a campus out before it has a page.
+const CAMPUS = CAMPUS_SITES[document.documentElement.dataset.campus]
+  ?? CAMPUS_SITES[new URLSearchParams(location.search).get('campus')]
+  ?? CAMPUS_SITES.uiuc;
 
 // The page ships with the Illinois name in the markup so the default view and
 // its search listing need no JavaScript to read correctly; only a non-default
