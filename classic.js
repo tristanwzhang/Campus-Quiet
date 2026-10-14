@@ -89,7 +89,7 @@ function deviceKind() {
 Cesium.RequestScheduler.maximumRequestsPerServer = 40;
 
 // Restricted token: only terrain + OSM buildings, only from this site.
-Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6Im5KTEZpTm56ZjRjbkZBMDYiLCJqdGkiOiI1Mjc5NDQ0NC05OTQyLTQ4ODUtYTNkNy1hN2M3Yzc5ODBmMjgiLCJpZCI6NDkzNDU4LCJzdWIiOiJ0cmlzdGFueiIsImlzcyI6Imh0dHBzOi8vYXBpLmNlc2l1bS5jb20iLCJhdWQiOiJVSVVDIFNwYWNlcyBTaXRlIiwiaWF0IjoxNzkwMDI5MDY3fQ.DFrEgqK_Sw73hGJUAvsuML0Vmh3c-30XzQS-6Umoshg';
+Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6InA4R09NOEdDQ19oS19qby0iLCJqdGkiOiI1Mjc5NDQ0NC05OTQyLTQ4ODUtYTNkNy1hN2M3Yzc5ODBmMjgiLCJpZCI6NDkzNDU4LCJzdWIiOiJ0cmlzdGFueiIsImlzcyI6Imh0dHBzOi8vYXBpLmNlc2l1bS5jb20iLCJhdWQiOiJVSVVDIFNwYWNlcyBTaXRlIiwiaWF0IjoxNzkxOTU4NTI2fQ.y1DL5h3YE_hi8r4N6m6r7tCMOz8tnFcxg93VON1DwHU';
 
 // ─── Buildings we know something extra about ──────────────────────────────────
 // Keyed by the building's EXACT OpenStreetMap name.
