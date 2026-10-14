@@ -2,16 +2,16 @@ Course Explorer buildings with no confident match to a map building.
 Add real matches to BUILDING_ALIASES in scripts/build_class_estimates.py.
 
   603 meetings  n.a.
-  398 meetings  Location Pending
+  400 meetings  Location Pending
    50 meetings  1010 W Nevada
    29 meetings  Veterinary Teaching Hospital
-   25 meetings  Dance Studio
+   28 meetings  Dance Studio
    23 meetings  Illinois Street Residence Lng
    22 meetings  200 S Wacker
    18 meetings  1207 W Oregon
    16 meetings  901 W Oregon
    14 meetings  Library
-   13 meetings  Allen Residence Hall
+   14 meetings  Allen Residence Hall
    13 meetings  907 1/2 W Nevada
    13 meetings  Ceramics Kiln House
    12 meetings  Chemical and Life Sci Lab
@@ -23,11 +23,11 @@ Add real matches to BUILDING_ALIASES in scripts/build_class_estimates.py.
     9 meetings  Campus Recreation Center East
     9 meetings  Richmond Studio
     8 meetings  1205 W Oregon
-    8 meetings  Art-East Annex, Studio 2
     8 meetings  Plant Sciences Laboratory
     8 meetings  Outdoor Space
     7 meetings  Student Dining & Res Program
     7 meetings  Micro & Nanotechnology Lab
+    7 meetings  Art-East Annex, Studio 2
     5 meetings  Krannert Art Museum
     5 meetings  Irwin Doctoral Hall
     5 meetings  Child Development Laboratory
