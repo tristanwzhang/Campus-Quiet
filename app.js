@@ -566,9 +566,39 @@ function publishedRanges(entry, date) {
 }
 
 /** { state: 'open' | 'closed' | 'unknown', source } */
+// When nobody publishes a building's hours, its own class schedule still says
+// something: a room in it is timetabled from 8am to 6pm on a Monday, so on a
+// Monday the building is open across that window and almost certainly shut
+// outside it. That is the registrar's own schedule rather than a guess about
+// this building, and it is the safe direction to be wrong in — it can make the
+// map miss somewhere that is quietly open, but it will not send anyone to a
+// locked door. It is labelled `assumed` everywhere it shows, and published
+// hours always win.
+function assumedHours(id, day) {
+  const grid = data.classActivity?.buildings?.[id]?.hours?.[day];
+  if (!grid) return null;
+  let first = -1, last = -1;
+  for (let h = 0; h < grid.length; h++) {
+    if (grid[h] > 0) { if (first < 0) first = h; last = h; }
+  }
+  if (first < 0) return null;         // nothing timetabled: say nothing
+  return [first, last + 1];           // the last class runs to the end of its hour
+}
+
+function assumedStatus(id, date, time) {
+  const window = assumedHours(id, weekdayOf(date));
+  if (!window) return { state: 'unknown' };
+  const [open, close] = window;
+  return {
+    state: time >= open && time < close ? 'open' : 'closed',
+    source: 'assumed from the class timetable',
+    assumed: true,
+  };
+}
+
 function hoursStatus(id, date, time) {
   const entry = data.hours?.buildings?.[id];
-  if (!entry) return { state: 'unknown' };
+  if (!entry) return assumedStatus(id, date, time);
 
   // Still open from yesterday's late hours (e.g. until 2am)?
   const yesterday = publishedRanges(entry, shiftDate(date, -1));
@@ -577,7 +607,7 @@ function hoursStatus(id, date, time) {
   }
 
   const today = publishedRanges(entry, date);
-  if (today == null) return { state: 'unknown' };
+  if (today == null) return assumedStatus(id, date, time);
   const open = today.some(([o, c]) => time >= o && time < c);
   return {
     state: open ? 'open' : 'closed',
@@ -752,6 +782,17 @@ function estimateFor(name) {
   const hours = hoursStatus(name, date, time);
   if (hours.state === 'closed') {
     const from = hours.official ? ` · hours from ${hours.source}` : '';
+    // Never let an assumption read like a published fact. "Closed right now"
+    // is a claim; "probably closed" with the reason attached is what we can
+    // actually support.
+    if (hours.assumed) {
+      return {
+        value: 0,
+        source: 'closed',
+        assumed: true,
+        note: 'Probably closed · nobody publishes hours for it and no classes are scheduled now',
+      };
+    }
     return {
       value: 0,
       source: 'closed',
@@ -769,6 +810,12 @@ function estimateFor(name) {
   // patterns are guesses and would imply the building is open, so they don't count.
   if (estimate.source === 'estimated' && estimate.value >= 0.03) {
     return { ...estimate, note: `${estimate.note} · building hours not published` };
+  }
+  // Open only because its own timetable says a class runs through now.
+  if (hours.assumed) {
+    return estimate
+      ? { ...estimate, assumed: true, note: `${estimate.note} · hours assumed from the class timetable` }
+      : { value: 0, source: 'unknown', note: 'Opening hours not published for today' };
   }
   return { value: 0, source: 'unknown', note: 'Opening hours not published for today' };
 }
