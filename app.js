@@ -33,11 +33,16 @@ function analyticsExcluded() {
   try { return localStorage.getItem(NOSTATS_KEY) === '1'; } catch (e) { return false; }
 }
 
+// Which layout this page is. On every event, so "did the people who saw the
+// new one come back more" and "did anyone who switched back stay there" are
+// both answerable — the second needs the label to persist past the click.
+const DESIGN = 'new';
+
 /** Record an event, e.g. track('checkin_submitted', { building, level }). */
 function track(event, properties = {}) {
   if (!ANALYTICS.key || analyticsExcluded()) return;
-  if (!analyticsReady) { analyticsQueue.push([event, properties]); return; }
-  try { window.posthog?.capture(event, properties); } catch (e) { /* never break the map */ }
+  if (!analyticsReady) { analyticsQueue.push([event, { design: DESIGN, ...properties }]); return; }
+  try { window.posthog?.capture(event, { design: DESIGN, ...properties }); } catch (e) { /* never break the map */ }
 }
 
 function startAnalytics() {
@@ -65,6 +70,8 @@ function startAnalytics() {
       capture_pageview: true,
       capture_pageleave: true,       // gives time-on-site
       person_profiles: 'never',
+      // Registered so the automatic pageview and pageleave carry it too.
+      loaded: ph => ph.register({ design: DESIGN }),
     });
     analyticsReady = true;
     for (const [event, props] of analyticsQueue.splice(0)) track(event, props);
@@ -81,7 +88,7 @@ function deviceKind() {
 Cesium.RequestScheduler.maximumRequestsPerServer = 40;
 
 // Restricted token: only terrain + OSM buildings, only from this site.
-Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6Im5KTEZpTm56ZjRjbkZBMDYiLCJqdGkiOiI1Mjc5NDQ0NC05OTQyLTQ4ODUtYTNkNy1hN2M3Yzc5ODBmMjgiLCJpZCI6NDkzNDU4LCJzdWIiOiJ0cmlzdGFueiIsImlzcyI6Imh0dHBzOi8vYXBpLmNlc2l1bS5jb20iLCJhdWQiOiJVSVVDIFNwYWNlcyBTaXRlIiwiaWF0IjoxNzkwMDI5MDY3fQ.DFrEgqK_Sw73hGJUAvsuML0Vmh3c-30XzQS-6Umoshg';
+Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6InA4R09NOEdDQ19oS19qby0iLCJqdGkiOiI1Mjc5NDQ0NC05OTQyLTQ4ODUtYTNkNy1hN2M3Yzc5ODBmMjgiLCJpZCI6NDkzNDU4LCJzdWIiOiJ0cmlzdGFueiIsImlzcyI6Imh0dHBzOi8vYXBpLmNlc2l1bS5jb20iLCJhdWQiOiJVSVVDIFNwYWNlcyBTaXRlIiwiaWF0IjoxNzkxOTU4NTI2fQ.y1DL5h3YE_hi8r4N6m6r7tCMOz8tnFcxg93VON1DwHU';
 
 // ─── Buildings we know something extra about ──────────────────────────────────
 // Keyed by the building's EXACT OpenStreetMap name.
@@ -111,6 +118,7 @@ const CAMPUS_SITES = {
     area: { west: -88.33, south: 40.06, east: -88.16, north: 40.16 },
     center: { lon: -88.2270, lat: 40.1065, height: 220 },
     view: { pitchDeg: -25, range: 2200 },
+    viewNarrow: { pitchDeg: -42, range: 1700 },
     // Ellipsoid height of the ground, sampled from Cesium's terrain at the
     // campus centre. Not sea level — Cesium works in ellipsoid heights.
     groundM: 190,
@@ -144,6 +152,7 @@ const CAMPUS_SITES = {
     // of the screen on sky and the right half on blocks of Columbus that will
     // never have data. Looking down harder fills the frame with campus.
     view: { pitchDeg: -38, range: 1700 },
+    viewNarrow: { pitchDeg: -50, range: 1300 },
     groundM: 196,
   },
 };
@@ -1295,10 +1304,17 @@ window.addEventListener('resize', applyPixelRatio);
 // ─── Camera ───────────────────────────────────────────────────────────────────
 const CAMPUS_CENTER = Cesium.Cartesian3.fromDegrees(
   CAMPUS.center.lon, CAMPUS.center.lat, CAMPUS.center.height);
+// A phone held upright sees a tall, narrow slice of the map, and at a shallow
+// angle most of that slice is sky and distant town. Looking down more steeply
+// and standing closer puts campus itself in the part of the screen the picks
+// sheet doesn't cover. Each campus gives its own pair, because how much of a
+// campus fits on a phone depends on how spread out it is.
+const NARROW = window.matchMedia('(max-width: 640px)').matches;
+const HOME_SHOT = (NARROW && CAMPUS.viewNarrow) || CAMPUS.view;
 const HOME_VIEW = new Cesium.HeadingPitchRange(
   0,
-  Cesium.Math.toRadians(CAMPUS.view.pitchDeg),
-  CAMPUS.view.range
+  Cesium.Math.toRadians(HOME_SHOT.pitchDeg),
+  HOME_SHOT.range
 );
 
 function goHome() {
@@ -1448,15 +1464,22 @@ async function loadBuildings() {
     buildingsTileset = scene.primitives.add(await Cesium.createOsmBuildingsAsync(BUILDING_TILESET_OPTIONS));
     performance.mark('buildings-tileset-ready');
     buildingsTileset.tileLoad.addEventListener(claimTileBuildings);
+    // Waiting for every tile in view before admitting the map is here costs
+    // about a second of staring at a loading chip over a map that is already
+    // drawn: the basemap lands first, and buildings arrive roughly half way
+    // through. Clear it on the first tile and let the rest fill in, which is
+    // what the map does anyway as you pan.
     buildingsTileset.tileLoad.addEventListener(() => {
-      if (!performance.getEntriesByName('buildings-first-tile').length) performance.mark('buildings-first-tile');
+      if (performance.getEntriesByName('buildings-first-tile').length) return;
+      performance.mark('buildings-first-tile');
+      document.getElementById('loading')?.classList.add('done');
     });
     buildingsTileset.initialTilesLoaded.addEventListener(() => {
       performance.mark('buildings-all-in-view');
       // Once the tiles have had their go at naming buildings, fill the gaps
       // from the university's own coordinates.
       placeMissingBuildings();
-      document.getElementById('loading')?.classList.add('done');
+      document.getElementById('loading')?.classList.add('done');   // nothing loaded: still clear it
       startAnalytics();
       track('map_ready', {
         seconds_to_buildings: +(performance.now() / 1000).toFixed(1),
@@ -1673,7 +1696,12 @@ function placeLabels() {
       const w = Math.max(...label.lines.map(l => l.length)) * 7.2 * scale + 10;
       const h = label.lines.length * 16 * scale + 14;
       const box = [win.x - w / 2, win.y - h, win.x + w / 2, win.y + 4];
-      show = !taken.some(b => box[0] < b[2] && box[2] > b[0] && box[1] < b[3] && box[3] > b[1]);
+      // A name sliced by the edge of the screen reads as a different building
+      // ("Astronomy B", "Campus Recreation Cent"), which is worse than no name
+      // at all. It can't be nudged inwards either, because the dot under it is
+      // what says which building this is.
+      show = box[0] > 2 && box[2] < width - 2;
+      show = show && !taken.some(b => box[0] < b[2] && box[2] > b[0] && box[1] < b[3] && box[3] > b[1]);
       if (show) taken.push(box);
     }
     if (show) {
@@ -1898,6 +1926,28 @@ function labelOverlays() {
   }
 }
 
+// The picks sheet covers the bottom of a phone screen, including where the map
+// credits sit. They have to stay visible, so its height is published to CSS
+// rather than guessed at — it changes when the list does and when it collapses.
+let publishSheetHeight = () => {};
+(function trackSheetHeight() {
+  const sheet = document.getElementById('pick');
+  if (!sheet) return;
+  const publish = () => document.documentElement.style.setProperty(
+    '--sheet-h', `${Math.round(sheet.getBoundingClientRect().height)}px`);
+  // A ResizeObserver alone reported 0 forever: it starts on a sheet that is
+  // still `hidden`, and the first real layout didn't reach it. The explicit
+  // triggers are the ones that actually change the height.
+  if (window.ResizeObserver) new ResizeObserver(publish).observe(sheet);
+  window.addEventListener('resize', publish);
+  publishSheetHeight = publish;
+  publish();
+})();
+
+document.getElementById('old-look')?.addEventListener('click', () => {
+  track('design_switched', { to: 'classic', device: deviceKind() });
+});
+
 // ─── Tooltip ──────────────────────────────────────────────────────────────────
 const tooltip  = document.getElementById('tooltip');
 const ttName   = document.getElementById('tt-name');
@@ -1932,6 +1982,20 @@ function renderSpaces(container, spaces) {
   container.hidden = !(spaces && spaces.length);
 }
 
+// For a building the map draws but has no hours or classes for: say so, rather
+// than show a percentage we don't have.
+function showBareTooltip(x, y, name) {
+  ttName.textContent = name;
+  ttOcc.textContent = '—';
+  ttStatus.textContent = 'No data';
+  ttStatus.style.color = '#5a6478';
+  ttSource.textContent = '';
+  ttNote.textContent = 'No hours published for this building';
+  renderSpaces(ttSpaces, null);
+  ttFill.style.width = '0%';
+  placeTooltip(x, y);
+}
+
 function showTooltip(x, y, name, occ) {
   ttName.textContent = BUILDINGS[name]?.label ?? name;
   ttOcc.textContent = Math.round(occ.value * 100) + '%';
@@ -1946,6 +2010,10 @@ function showTooltip(x, y, name, occ) {
   ttFill.style.width = (occ.value * 100) + '%';
   ttFill.style.background = cssColor(occ.value);
 
+  placeTooltip(x, y);
+}
+
+function placeTooltip(x, y) {
   let tx = x + 18, ty = y - 20;
   if (tx + 250 > window.innerWidth)  tx = x - 268;
   const height = tooltip.offsetHeight || 200;
@@ -2019,8 +2087,12 @@ function buildingNameAt(position) {
   if (!picked.getProperty) return null;
   const name = picked.getProperty('name');
   if (!name) return null;
-  const exact = knownBuildings().find(known => known === String(name).trim());
-  return exact || null;
+  // A building we have no data for used to come back as null, so tapping it did
+  // nothing at all. Someone on Reddit looked straight at Sherman Hall and asked
+  // where it was: it is drawn, it just never answered. Give the name back and
+  // let the caller say "no hours published" rather than ignoring the tap.
+  const trimmed = String(name).trim();
+  return knownBuildings().find(known => known === trimmed) || trimmed;
 }
 
 // Picking is expensive: at most once per frame, and never while dragging.
@@ -2056,7 +2128,11 @@ function pickUnderMouse() {
   pendingPick = null;
   const name = buildingNameAt(position);
   const occ = name ? buildingOccupancy(name) : null;
-  if (name && occ) {
+  if (name && !occ) {
+    showBareTooltip(position.x, position.y, name);
+    scene.canvas.style.cursor = 'pointer';
+    noteHover(null);
+  } else if (name && occ) {
     showTooltip(position.x, position.y, name, occ);
     // Closed buildings still show their tooltip on hover, but there's
     // nothing to click through to — no pointer cursor, no panel.
@@ -2134,14 +2210,20 @@ function openPanel(name, keepThanks = false) {
   renderSpacePicker(name);
   const occ = occupancyFor(panelTarget());
   const closed = occ?.source === 'closed';
+  // Nothing published for this one at all. Say that plainly and don't ask how
+  // busy it is — a report on a building with no hours has nothing to attach to.
+  const unmapped = !occ && !knownBuildings().includes(name);
   panelName.textContent = name;
-  panelNow.textContent = !occ ? 'No data yet'
+  panelNow.textContent = unmapped ? 'No hours published for this building'
+    : !occ ? 'No data yet'
     : closed ? (occ.cardAccess ? 'Public doors locked · i-card may work' : 'Closed right now')
     : occ.source === 'unknown' ? 'Hours not published — no estimate right now'
     : `${SOURCE_LABELS[occ.source]} · ${Math.round(occ.value * 100)}% full`;
-  panelQ.hidden = closed;
-  checkinRow.hidden = closed;
-  panelNote.textContent = closed
+  panelQ.hidden = closed || unmapped;
+  checkinRow.hidden = closed || unmapped;
+  panelNote.textContent = unmapped
+    ? "On the map, but nobody publishes hours for it — so there's nothing to show."
+    : closed
     ? "Check-ins are off while it's closed."
     : sharedCheckins()
     ? 'Shared with everyone using the map.'
@@ -2292,7 +2374,14 @@ handler.setInputAction((click) => {
   // so people aren't clicking through a popup that can't do anything.
   if (name && occ?.source !== 'closed') {
     openPanel(name);
-    track('building_opened', { building: name, device: deviceKind(), source: SOURCE_LABELS[occ?.source] || 'none' });
+    // Kept as its own event so "most-opened buildings" stays a list of places
+    // we actually cover — and so this becomes the list of buildings worth
+    // finding hours for next, the way Beckman was.
+    if (!occ && !knownBuildings().includes(name)) {
+      track('unmapped_building_opened', { building: name, device: deviceKind() });
+    } else {
+      track('building_opened', { building: name, device: deviceKind(), source: SOURCE_LABELS[occ?.source] || 'none' });
+    }
   } else {
     closePanel();
   }
@@ -2352,6 +2441,7 @@ function setPicksCollapsed(collapsed) {
 function applyPicksCollapsed() {
   const collapsed = picksCollapsed();
   pickCard.classList.toggle('is-collapsed', collapsed);
+  publishSheetHeight();
   pickToggle.setAttribute('aria-expanded', String(!collapsed));
   pickToggle.title = collapsed ? 'Show study picks' : 'Hide study picks';
   pickToggle.setAttribute('aria-label', pickToggle.title);
@@ -2409,7 +2499,7 @@ function markZoomedPick() {
 
 function renderPicks() {
   if (!pickCard) return;
-  if (!picksEnabled()) { pickCard.hidden = true; return; }
+  if (!picksEnabled()) { pickCard.hidden = true; publishSheetHeight(); return; }
 
   const picks = studyPicks();
   pickCard.hidden = false;
@@ -2465,7 +2555,22 @@ function renderPicks() {
   if (zoomedPick && !picks.some(p => p.name === zoomedPick)) zoomedPick = null;
   markZoomedPick();
   pickNote.hidden = true;
+  publishSheetHeight();   // the list just changed shape; the credits sit on it
+
+  // Someone who reads the sheet and leaves looks exactly like someone who
+  // bounced: both open no building. Recording that the list was on screen, and
+  // whether it was open, is the only way to tell a satisfied visit from a
+  // wasted one. Once per visit — it re-renders every five minutes.
+  if (!picksSeenLogged) {
+    picksSeenLogged = true;
+    track('picks_seen', {
+      count: picks.length,
+      collapsed: pickCard.classList.contains('is-collapsed'),
+      device: deviceKind(),
+    });
+  }
 }
+let picksSeenLogged = false;
 
 function refresh({ keepThanks = false } = {}) {
   updateHeader();

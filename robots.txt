@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tristanwzhang.github.io/uiuc-spaces/sitemap.xml
+Sitemap: https://campusquiet.com/sitemap.xml
