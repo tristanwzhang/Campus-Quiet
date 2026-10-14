@@ -62,8 +62,15 @@
 <link rel="preconnect" href="https://assets.ion.cesium.com" crossorigin>
 <script defer src="https://cesium.com/downloads/cesiumjs/releases/1.111/Build/Cesium/Cesium.js"></script>
 <link href="https://cesium.com/downloads/cesiumjs/releases/1.111/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+<!-- The font used to be an @import inside the stylesheet below, which the
+     browser cannot see until it has downloaded and parsed that stylesheet —
+     two round trips in series before any text can be drawn. As a link up here
+     the preload scanner finds it immediately, and gstatic is where the font
+     files themselves come from. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
   [hidden] { display: none !important; }
@@ -288,26 +295,6 @@
   /* ── Study picks ──
      Sits under the summary chips so the answer is on screen without anyone
      having to find and tap a building first. */
-  /* The way back to the design people already know. Quiet on a computer,
-     where nobody asked for it; a real target on a phone. */
-  #old-look {
-    align-self: flex-start;
-    flex: none;
-    /* The header itself ignores the pointer so the map can be dragged through
-       it; the one thing in it you can click has to opt back in. */
-    pointer-events: auto;
-    /* Clears the compass button, which is pinned to the same corner. */
-    margin-right: 58px;
-    font-size: 11px;
-    color: #6b7589;
-    text-decoration: none;
-    border: 1px solid rgba(255,255,255,0.09);
-    border-radius: 999px;
-    padding: 5px 10px;
-    white-space: nowrap;
-  }
-  #old-look:hover, #old-look:focus-visible { color: #aab3c4; border-color: rgba(255,255,255,0.2); }
-
   #pick {
     position: absolute;
     top: calc(128px + var(--safe-top));
@@ -887,9 +874,6 @@
     #header .disclaimer { font-size: 10px; margin-top: 1px; }
     #stats { top: calc(52px + var(--safe-top)); left: 16px; right: 16px; flex-wrap: wrap; gap: 6px; }
     #compass { top: calc(92px + var(--safe-top)); right: 16px; width: 44px; height: 44px; }
-    /* The compass sits lower down here, so the link can have the corner. */
-    #old-look { margin-right: 0; font-size: 12px; padding: 7px 12px; }
-
     /* The picks sit at the bottom of a phone screen. The old card floated over
        the top third of the map and was see-through, so it both hid the
        buildings it was naming — CIF, the Illini Union and BIF were all
@@ -1109,7 +1093,6 @@
     <div class="sub" id="header-sub">University of Illinois Urbana-Champaign</div>
     <div class="disclaimer">A student project<span class="d-rest"> · not affiliated with the University of Illinois</span></div>
   </div>
-  <a id="old-look" href="classic.html">Old look</a>
 </div>
 
 <div id="stats">
@@ -1210,6 +1193,6 @@
 </div>
 
 <script defer src="basemap-render.js?v=35"></script>
-<script defer src="app.js?v=78"></script>
+<script defer src="app.js?v=79"></script>
 </body>
 </html>

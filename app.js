@@ -33,16 +33,11 @@ function analyticsExcluded() {
   try { return localStorage.getItem(NOSTATS_KEY) === '1'; } catch (e) { return false; }
 }
 
-// Which of the two designs this page is. Every event carries it, so "did the
-// people who saw the new look come back more" is answerable, and so is "did
-// anyone who switched to the old one stay there".
-const DESIGN = 'new';
-
 /** Record an event, e.g. track('checkin_submitted', { building, level }). */
 function track(event, properties = {}) {
   if (!ANALYTICS.key || analyticsExcluded()) return;
-  if (!analyticsReady) { analyticsQueue.push([event, { design: DESIGN, ...properties }]); return; }
-  try { window.posthog?.capture(event, { design: DESIGN, ...properties }); } catch (e) { /* never break the map */ }
+  if (!analyticsReady) { analyticsQueue.push([event, properties]); return; }
+  try { window.posthog?.capture(event, properties); } catch (e) { /* never break the map */ }
 }
 
 function startAnalytics() {
@@ -70,9 +65,6 @@ function startAnalytics() {
       capture_pageview: true,
       capture_pageleave: true,       // gives time-on-site
       person_profiles: 'never',
-      // Registered here rather than on each call so the automatic pageview and
-      // pageleave carry it too — those are the events the comparison rests on.
-      loaded: ph => ph.register({ design: DESIGN }),
     });
     analyticsReady = true;
     for (const [event, props] of analyticsQueue.splice(0)) track(event, props);
@@ -1264,12 +1256,19 @@ async function loadBuildings() {
     buildingsTileset = scene.primitives.add(await Cesium.createOsmBuildingsAsync(BUILDING_TILESET_OPTIONS));
     performance.mark('buildings-tileset-ready');
     buildingsTileset.tileLoad.addEventListener(labelTileBuildings);
+    // Waiting for every tile in view before admitting the map is here costs
+    // about a second of staring at a loading chip over a map that is already
+    // drawn: the basemap lands first, and buildings arrive roughly half way
+    // through. Clear it on the first tile and let the rest fill in, which is
+    // what the map does anyway as you pan.
     buildingsTileset.tileLoad.addEventListener(() => {
-      if (!performance.getEntriesByName('buildings-first-tile').length) performance.mark('buildings-first-tile');
+      if (performance.getEntriesByName('buildings-first-tile').length) return;
+      performance.mark('buildings-first-tile');
+      document.getElementById('loading')?.classList.add('done');
     });
     buildingsTileset.initialTilesLoaded.addEventListener(() => {
       performance.mark('buildings-all-in-view');
-      document.getElementById('loading')?.classList.add('done');
+      document.getElementById('loading')?.classList.add('done');   // nothing loaded: still clear it
       startAnalytics();
       track('map_ready', {
         seconds_to_buildings: +(performance.now() / 1000).toFixed(1),
@@ -1534,12 +1533,6 @@ let publishSheetHeight = () => {};
   publishSheetHeight = publish;
   publish();
 })();
-
-// Which way people move between the two designs, and — because every event
-// carries `design` — whether they stay where they went.
-document.getElementById('old-look')?.addEventListener('click', () => {
-  track('design_switched', { to: 'classic', device: deviceKind() });
-});
 
 // ─── Tooltip ──────────────────────────────────────────────────────────────────
 const tooltip  = document.getElementById('tooltip');
