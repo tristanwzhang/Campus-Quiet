@@ -600,6 +600,13 @@ function assumedHours(id, day) {
 function assumedStatus(id, date, time) {
   const window = assumedHours(id, weekdayOf(date));
   if (!window) return { state: 'unknown' };
+  // assumedHours is keyed by weekday, so on a Thursday in a break week it
+  // still returns the hours of an ordinary Thursday. The whole basis of this
+  // estimate is that classes are meeting; on a day the university says they
+  // are not, it cannot be read as open.
+  if (!calendarPeriod(date).classesMeet) {
+    return { state: 'closed', source: 'assumed from the class timetable', assumed: true };
+  }
   const [open, close] = window;
   return {
     state: time >= open && time < close ? 'open' : 'closed',
@@ -611,6 +618,20 @@ function assumedStatus(id, date, time) {
 function hoursStatus(id, date, time) {
   const entry = data.hours?.buildings?.[id];
   if (!entry) return assumedStatus(id, date, time);
+
+  // A schedule built from when classrooms can be booked says nothing on a day
+  // the university has said classes do not meet. Ohio State's registrar pool
+  // is the only such source; Illinois' hours are published building hours and
+  // already carry their own closure dates, so they are untouched by this.
+  const period = calendarPeriod(date);
+  if (entry.classDerived && !period.classesMeet) {
+    return {
+      state: 'closed',
+      source: entry.source,
+      assumed: true,
+      closedNote: `Probably closed · ${period.label || 'no classes today'}`,
+    };
+  }
 
   // Still open from yesterday's late hours (e.g. until 2am)?
   const yesterday = publishedRanges(entry, shiftDate(date, -1));
@@ -802,7 +823,8 @@ function estimateFor(name) {
         value: 0,
         source: 'closed',
         assumed: true,
-        note: 'Probably closed · nobody publishes hours for it and no classes are scheduled now',
+        note: hours.closedNote
+          ?? 'Probably closed · nobody publishes hours for it and no classes are scheduled now',
       };
     }
     return {

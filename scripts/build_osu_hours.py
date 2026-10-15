@@ -282,6 +282,14 @@ def main():
             "address": b["address"],
             "valid": list(TERM),
             "weekly": {d: b["weekly"][d] for d in DAYS},
+            # This schedule says when a classroom can be BOOKED, not when the
+            # doors are unlocked. On a day the university has said classes do
+            # not meet, it therefore describes nothing at all, and the map must
+            # not read it as an official claim that the building is open.
+            # Verified 2026-10-15: during Autumn Break the Architecture and
+            # Geology libraries cut to 10am-2pm, while this schedule still
+            # claimed their buildings were open into the evening.
+            "classDerived": True,
         }
 
     # Key on whatever name the class data already uses for this code, so the two
