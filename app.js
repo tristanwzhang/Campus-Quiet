@@ -1562,8 +1562,51 @@ async function loadBuildings() {
     console.error('OSM Buildings failed to load:', e);
     document.getElementById('loading')?.classList.add('done');
     startAnalytics();
-    track('map_failed', { reason: String(e).slice(0, 120) });
+    const cause = mapFailureCause(e);
+    track('map_failed', { reason: String(e).slice(0, 120), cause, device: deviceKind() });
+    showMapWarning(cause);
   }
+}
+
+/**
+ * Why the building tiles didn't arrive, in the only two flavours that have
+ * ever actually shown up in the analytics.
+ *
+ * Cesium ion answers 403 when the token is real but the request isn't allowed
+ * from where it came — in practice a browser that sent no Referer at all, so
+ * ion can't match it against the token's URL list. Verified by hand: every
+ * legitimate origin returns 200, and the identical request with the header
+ * removed returns 403.
+ *
+ * A 401 means ion rejected the token itself. That happens to someone running a
+ * cached copy of an older app.js whose token has since been regenerated, which
+ * is why the advice is to reload rather than to change a setting.
+ */
+function mapFailureCause(e) {
+  const msg = String(e);
+  if (msg.includes('403')) return 'blocked';
+  if (msg.includes('401')) return 'stale';
+  return 'other';
+}
+
+const MAP_WARNING_TEXT = {
+  blocked: 'A privacy setting in this browser is hiding which site made the request, '
+         + 'so the map service turned it down. Allowing this site in your tracking '
+         + 'protection, or opening it in a different browser, will bring the map back.',
+  stale:   'This page is running a cached copy of the site that\u2019s out of date. '
+         + 'A refresh should fix it.',
+  other:   'The map service didn\u2019t answer.',
+};
+
+function showMapWarning(cause) {
+  const box = document.getElementById('map-warning');
+  const why = document.getElementById('map-warning-why');
+  if (!box || !why) return;
+  why.textContent = MAP_WARNING_TEXT[cause] ?? MAP_WARNING_TEXT.other;
+  box.hidden = false;
+  document.getElementById('map-warning-close')?.addEventListener('click', () => {
+    box.hidden = true;
+  }, { once: true });
 }
 
 // Places drawn by us rather than coming from the building tiles.

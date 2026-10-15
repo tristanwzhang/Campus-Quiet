@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<!-- Cesium's token is restricted to this site's URLs, and ion matches that
+     against the Referer header: a request arriving without one is refused with
+     a 403 and the 3D buildings never load. Browsers that strip referrers (Edge
+     with strict tracking prevention, Chrome on iOS, Brave) were doing exactly
+     that — about 4% of visitors on 14 Oct saw an empty map and no explanation.
+     Asking for "origin" sends campusquiet.com and nothing more: enough for ion
+     to match, no path or query leaked. A hard privacy block still wins, which
+     is what the fallback in loadBuildings() is for. -->
+<meta name="referrer" content="origin">
 <title>Ohio State Spaces</title>
 <meta name="google-site-verification" content="2yHqqMcUZ2wneCB7bMSbk0u5ygMaqu72CmEDhTtyPKQ" />
 <meta name="description" content="A live 3D map of how busy Ohio State campus buildings are right now — Thompson Library, the 18th Avenue Library, the Ohio Union and more — built from class schedules and official building hours.">
@@ -148,6 +157,41 @@
   }
 
   #loading.done { opacity: 0; }
+
+  /* ── Map failure notice ──
+     Sits exactly where the loading chip was: dead centre, which is where the
+     eyes already are and, with no buildings drawn, the only thing worth
+     looking at. Wider than the chip because it has something to say. */
+  #map-warning {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 125;
+    /* An explicit width, not max-width: with left:50% and no right, the
+       shrink-to-fit width is capped at half the viewport, which squeezed
+       this into 187px on a phone. */
+    width: min(420px, calc(100vw - 32px));
+    box-sizing: border-box;
+    padding: 14px 16px 15px;
+    border-radius: 14px;
+    background: rgba(10,14,20,0.92);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #c9d1de;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  #map-warning[hidden] { display: none; }
+  #map-warning strong { display: block; color: #e8edf5; font-size: 13.5px; margin-bottom: 4px; }
+  #map-warning .mw-why  { display: block; }
+  #map-warning .mw-rest { display: block; margin-top: 7px; color: #8a94a8; font-size: 12px; }
+  #map-warning-close {
+    position: absolute;
+    top: 6px; right: 8px;
+    background: none; border: 0; padding: 4px 6px;
+    color: #6b7589; font-size: 16px; line-height: 1; cursor: pointer;
+  }
+  #map-warning-close:hover, #map-warning-close:focus-visible { color: #c9d1de; }
 
   .loading-dot {
     width: 8px; height: 8px;
@@ -1114,6 +1158,12 @@
 
 <div id="cesiumContainer"></div>
 <div id="loading"><span class="loading-dot"></span>Loading campus…</div>
+<div id="map-warning" hidden>
+  <button id="map-warning-close" type="button" aria-label="Dismiss">&times;</button>
+  <strong>The 3D buildings didn’t load.</strong>
+  <span class="mw-why" id="map-warning-why"></span>
+  <span class="mw-rest">The list of study spots below still works — it runs on this site’s own data.</span>
+</div>
 <div id="labels"></div>
 
 <div id="header">
@@ -1223,6 +1273,6 @@
 </div>
 
 <script defer src="basemap-render.js?v=35"></script>
-<script defer src="app.js?v=90"></script>
+<script defer src="app.js?v=91"></script>
 </body>
 </html>

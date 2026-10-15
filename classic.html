@@ -17,6 +17,15 @@
 </script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<!-- Cesium's token is restricted to this site's URLs, and ion matches that
+     against the Referer header: a request arriving without one is refused with
+     a 403 and the 3D buildings never load. Browsers that strip referrers (Edge
+     with strict tracking prevention, Chrome on iOS, Brave) were doing exactly
+     that — about 4% of visitors on 14 Oct saw an empty map and no explanation.
+     Asking for "origin" sends campusquiet.com and nothing more: enough for ion
+     to match, no path or query leaked. A hard privacy block still wins, which
+     is what the fallback in loadBuildings() is for. -->
+<meta name="referrer" content="origin">
 <title>Classic · UIUC Spaces</title>
 <meta name="google-site-verification" content="2yHqqMcUZ2wneCB7bMSbk0u5ygMaqu72CmEDhTtyPKQ" />
 <meta name="description" content="A live 3D map of how busy UIUC campus buildings are right now — libraries, dining halls, the union, and more — built from class schedules, official hours, and student check-ins.">
