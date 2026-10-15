@@ -2399,7 +2399,29 @@ const WISHES = {
   outlets:        'power outlets',
   quiet_vs_group: 'quiet vs group space',
   free_alert:     'an alert when a spot frees up',
+  // Added 2026-10-15 to test a PM's hypothesis that people want more than
+  // "what's generally busy" — specifically what's nearby and where their
+  // friends are. Phrased as questions this map can't answer today.
+  near_me:        'the closest open spot to me',
+  friends:        'where friends are studying',
 };
+
+// Order is shuffled on every page load. With five buttons in a wrapping row,
+// whichever sits first gets clicked more regardless of what it says, and the
+// three originals would otherwise have a permanent head start over the two
+// added later — which would make the comparison measure position, not want.
+// Each click records where the button actually sat, so the bias can be checked
+// rather than assumed away.
+(function shuffleWishes() {
+  const row = document.getElementById('wish-row');
+  if (!row) return;
+  const buttons = [...row.children];
+  for (let i = buttons.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [buttons[i], buttons[j]] = [buttons[j], buttons[i]];
+  }
+  buttons.forEach(b => row.appendChild(b));
+})();
 
 function clearWishlist() {
   document.querySelectorAll('#wishlist .wish-btn.picked').forEach(b => b.classList.remove('picked'));
@@ -2409,7 +2431,8 @@ function clearWishlist() {
 document.querySelectorAll('#wishlist .wish-btn').forEach(button => {
   button.addEventListener('click', () => {
     const feature = button.dataset.feature;
-    track('feature_interest', { feature, building: panelTarget(), device: deviceKind() });
+    const position = [...button.parentElement.children].indexOf(button) + 1;
+    track('feature_interest', { feature, position, building: panelTarget(), device: deviceKind() });
     button.classList.add('picked');
     wishThanks.textContent = `Noted: ${WISHES[feature]}. Not built yet — this just tells me to.`;
   });
