@@ -1073,6 +1073,15 @@ const PICK_LABELS = CAMPUS_CONTENT.pickLabels;
 const ACADEMIC_CALENDAR = CAMPUS_CONTENT.calendar;
 
 
+/**
+ * The reason half of an assumed-closure note, for showing under a heading that
+ * already says "Probably closed" — otherwise the panel says it twice.
+ */
+function closureReason(note) {
+  const reason = note.replace(/^Probably closed\s*·\s*/, '');
+  return reason.charAt(0).toUpperCase() + reason.slice(1) + '.';
+}
+
 function pickLabel(name) {
   return PICK_LABELS[name] ?? BUILDINGS[name]?.label ?? name;
 }
@@ -2357,7 +2366,8 @@ function openPanel(name, keepThanks = false) {
   panelName.textContent = name;
   panelNow.textContent = unmapped ? 'No hours published for this building'
     : !occ ? 'No data yet'
-    : closed ? (occ.cardAccess ? 'Public doors locked · i-card may work' : 'Closed right now')
+    : closed ? (occ.cardAccess ? 'Public doors locked · i-card may work'
+                : occ.assumed ? 'Probably closed' : 'Closed right now')
     : occ.source === 'unknown' ? 'Hours not published — no estimate right now'
     : `${SOURCE_LABELS[occ.source]} · ${Math.round(occ.value * 100)}% full`;
   panelQ.hidden = closed || unmapped;
@@ -2365,7 +2375,9 @@ function openPanel(name, keepThanks = false) {
   panelNote.textContent = unmapped
     ? "On the map, but nobody publishes hours for it — so there's nothing to show."
     : closed
-    ? "Check-ins are off while it's closed."
+    // An assumed closure has to show its working — otherwise "probably closed"
+    // is just as unexplained as the claim it replaced.
+    ? (occ.assumed && occ.note ? closureReason(occ.note) : "Check-ins are off while it's closed.")
     : sharedCheckins()
     ? 'Shared with everyone using the map.'
     : 'Saved on this device only — no server yet.';
