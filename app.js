@@ -38,6 +38,13 @@ function analyticsExcluded() {
 // both answerable — the second needs the label to persist past the click.
 const DESIGN = 'new';
 
+// Which school this deployment is. Every event carries it, so one PostHog
+// project can hold every school: filter a dashboard to `school = uiuc` for a
+// school-specific view, or leave it unfiltered (optionally broken down by
+// `school`) for a combined one across every campus. Change this one line
+// when this codebase is copied for the next school.
+const SCHOOL = 'uiuc';
+
 /** Record an event, e.g. track('checkin_submitted', { building, level }). */
 function track(event, properties = {}) {
   if (!ANALYTICS.key || analyticsExcluded()) return;
@@ -71,7 +78,7 @@ function startAnalytics() {
       capture_pageleave: true,       // gives time-on-site
       person_profiles: 'never',
       // Registered so the automatic pageview and pageleave carry it too.
-      loaded: ph => ph.register({ design: DESIGN }),
+      loaded: ph => ph.register({ design: DESIGN, school: SCHOOL }),
     });
     analyticsReady = true;
     for (const [event, props] of analyticsQueue.splice(0)) track(event, props);
