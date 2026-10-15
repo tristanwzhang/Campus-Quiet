@@ -48,6 +48,32 @@ Each insight then has a "Filter out internal and test users" toggle, on by defau
 Just one dashboard instead: open it → **Filters** (funnel icon) → **+ Add filter** →
 **Host** → **does not contain** → `localhost` → **Apply**, then save the dashboard.
 
+## Per-school + master dashboard (multi-school expansion)
+
+Every event carries a `school` property (`SCHOOL` constant in app.js, `"uiuc"` for now —
+one line to change per deployment). One PostHog project holds every school; **not**
+separate projects, which can't share funnels or combined charts.
+
+**Status: not built yet.** The reminder for this is tracked — just ask for it when
+you're ready, which doesn't need to be until a second school is close to launching.
+
+**Per-school dashboard** (do this one for UIUC now, if you want it before school #2):
+1. Open the existing "UIUC Spaces KPIs" dashboard → **Filters** → **+ Add filter** →
+   Event property → `school` → `is` → `uiuc` → Save.
+2. For each new school: duplicate this dashboard (⋯ → Duplicate), change the filter
+   value to that school's `SCHOOL` string. Same charts, no rebuilding.
+
+**Master dashboard** (combined across every school):
+1. New dashboard, **no** `school` filter.
+2. Single numbers (total visitors, total check-ins) sum across all schools automatically
+   with no filter.
+3. Comparison charts: add **Breakdown by** → `school` on an insight (e.g. visitors,
+   check-ins) to get one line/bar per campus instead of a blended total.
+
+This can only be driven by Claude in the Claude Browser pane if you log into PostHog
+there first (it's a separate, logged-out browser context from your normal Chrome) —
+otherwise it's faster to just follow these steps yourself in your own Chrome.
+
 ## Notes
 
 - Watch events arrive live under **Activity** in the left sidebar.
