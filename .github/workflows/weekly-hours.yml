@@ -5,6 +5,20 @@ name: Refresh building hours
 # hours change and people most want to know.
 on:
   schedule:
+    # Sunday AND Monday, 4:20am Illinois time.
+    #
+    # Sunday is not redundancy, it is a hole being closed. Ohio State's library
+    # and rec feeds publish a fixed Sunday-to-Saturday calendar week, so a
+    # window fetched on Monday ends the following Saturday and the next Sunday
+    # falls outside it — Thompson, 18th Ave, the RPAC and the ARC all read
+    # "hours unknown" every Sunday until the Monday run caught up, by which
+    # point the day was over. Illinois is unaffected either way: its feeds
+    # publish a rolling seven days from the day they are asked.
+    #
+    # The second run also covers a flaky source: recsports.osu.edu answers in
+    # under a second or not at all, and was measured failing three times in
+    # five on 2026-10-16.
+    - cron: "20 9 * * 0"     # Sundays, 4:20am campus time
     - cron: "20 9 * * 1"     # Mondays, 4:20am campus time
   workflow_dispatch:          # or run it by hand from the Actions tab
 

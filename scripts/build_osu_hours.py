@@ -241,10 +241,29 @@ def parse_rec_time(value, *, closing):
     return to_decimal(m.group("h"), m.group("m"), m.group("s")[0] + "m")
 
 
+def fetch_retrying(url, attempts=5, timeout=15):
+    """
+    GET a URL, retrying on failure.
+
+    Measured 2026-10-16: this host answers in under a second when it answers at
+    all, and otherwise hangs until the socket times out — about three failures
+    in five, back to back. One long attempt is therefore the worst shape for
+    it; several short ones almost always catch a good response, and the whole
+    thing still finishes faster than a single 40s timeout.
+    """
+    last = None
+    for attempt in range(attempts):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (UIUC Spaces hours build)"})
+            return urllib.request.urlopen(req, timeout=timeout).read().decode("utf-8", "replace")
+        except Exception as err:          # timeout, reset, 5xx — all worth another go
+            last = err
+    raise last
+
+
 def rec_hours():
     """-> ({name: {dates: {date: ranges}}}, [notes]) for rec centres."""
-    req = urllib.request.Request(REC_URL, headers={"User-Agent": "Mozilla/5.0 (UIUC Spaces hours build)"})
-    facilities = json.loads(urllib.request.urlopen(req, timeout=40).read().decode("utf-8", "replace"))
+    facilities = json.loads(fetch_retrying(REC_URL))
 
     out, notes = {}, []
     for f in facilities:
