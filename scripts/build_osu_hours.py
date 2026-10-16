@@ -38,6 +38,30 @@ OUT_FILE = ROOT / "data" / "osu" / "building_hours.json"
 LIB_URL = "https://library.osu.edu/hours"
 LIB_SOURCE = "Ohio State University Libraries hours"
 
+REC_URL = "https://recsports.osu.edu/fms/api/facilities"
+REC_SOURCE = "Ohio State Recreational Sports facility hours"
+
+# Recreational Sports publishes exact dated hours for its facilities as JSON,
+# a rolling week at a time — the same shape and the same weekly deadline as the
+# libraries feed. Each facility carries a campusBuildingID that joins to the
+# building register, which is how these two were confirmed.
+#
+# Only buildings that ARE the facility are listed. Several facilities are
+# tenants inside a larger building (the esports centre is in Lincoln Tower),
+# and a tenant's hours are not its building's hours — the same reason the
+# in-building libraries above are left out. Where one building holds several
+# facilities (the RPAC also contains the aquatic centre and the bike hub) the
+# hours are unioned: the doors are open if anything inside is open.
+#
+# The key is the name Ohio State's class data uses, because that is what the
+# map joins on. Building codes do NOT agree across these sources — the register
+# calls the RPAC "RP" and the class data calls it "RPB" — so matching on code
+# would silently create a second, separate building.
+REC_BUILDINGS = {
+    "211": "Adventure Recreation Center",
+    "246": "Recreation & Phys Activ Ctr",
+}
+
 # Which published libraries are a BUILDING in their own right, and the scheduling
 # code the rest of the pipeline joins on. The others — Architecture, Geology,
 # Music & Dance, Fine Arts, FAES — are departments inside Knowlton, Orton,
@@ -199,6 +223,67 @@ def library_hours():
     return out, notes
 
 
+REC_TIME_RE = re.compile(r"^(?P<h>\d{1,2})(?::(?P<m>\d{2}))?\s*(?P<s>a\.?m\.?|p\.?m\.?)$", re.I)
+
+
+def parse_rec_time(value, *, closing):
+    """'8 a.m.' | '5:30 a.m.' | 'noon' | 'midnight' -> hours since midnight."""
+    v = re.sub(r"\s+", " ", (value or "")).strip().lower()
+    if v == "noon":
+        return 12.0
+    if v == "midnight":
+        # Opening at midnight is hour 0; closing at midnight is the end of the
+        # day, which the map represents as 24 rather than wrapping to 0.
+        return 24.0 if closing else 0.0
+    m = REC_TIME_RE.match(v)
+    if not m:
+        return None
+    return to_decimal(m.group("h"), m.group("m"), m.group("s")[0] + "m")
+
+
+def rec_hours():
+    """-> ({name: {dates: {date: ranges}}}, [notes]) for rec centres."""
+    req = urllib.request.Request(REC_URL, headers={"User-Agent": "Mozilla/5.0 (UIUC Spaces hours build)"})
+    facilities = json.loads(urllib.request.urlopen(req, timeout=40).read().decode("utf-8", "replace"))
+
+    out, notes = {}, []
+    for f in facilities:
+        name = REC_BUILDINGS.get(str(f.get("campusBuildingID") or "").lstrip("0"))
+        if not name:
+            continue
+        for row in f.get("hours") or []:
+            raw = row.get("hourDate") or ""
+            m = re.match(r"(\d{1,2})/(\d{1,2})/(\d{4})$", raw.strip())
+            if not m:
+                notes.append(f"{f.get('label')}: unreadable date {raw!r}")
+                continue
+            date = f"{m.group(3)}-{int(m.group(1)):02d}-{int(m.group(2)):02d}"
+            byday = out.setdefault(name, {"dates": {}})["dates"]
+            if row.get("closedAllDay"):
+                byday.setdefault(date, [])
+                continue
+            start = parse_rec_time(row.get("open"), closing=False)
+            end = parse_rec_time(row.get("close"), closing=True)
+            if start is None or end is None or end <= start:
+                notes.append(f"{f.get('label')} / {date}: {row.get('open')!r}-{row.get('close')!r}")
+                continue
+            # A building holding several facilities is open if any of them is.
+            byday.setdefault(date, [])
+            byday[date] = merge_ranges(byday[date] + [[start, end]])
+    return out, notes
+
+
+def merge_ranges(ranges):
+    """Union overlapping or touching [open, close] pairs."""
+    merged = []
+    for start, end in sorted(ranges):
+        if merged and start <= merged[-1][1]:
+            merged[-1][1] = max(merged[-1][1], end)
+        else:
+            merged.append([start, end])
+    return merged
+
+
 def to_decimal(hour, minute, suffix):
     """12-hour clock -> hours since midnight. 12am = 0, 12pm = 12."""
     hour = int(hour) % 12
@@ -333,6 +418,32 @@ def main():
         entry.setdefault("weekly", {d: [] for d in DAYS})
         out[name] = entry
 
+    # Recreational Sports, same dated-week shape as the libraries above.
+    try:
+        recs, rec_notes = rec_hours()
+    except Exception as err:
+        recs, rec_notes = {}, [f"rec fetch failed: {type(err).__name__}: {err}"]
+
+    for name, info in recs.items():
+        covered = sorted(info["dates"])
+        if not covered:
+            continue
+        entry = out.get(name, {})
+        entry.update({
+            "source": REC_SOURCE,
+            "sourceUrl": REC_URL,
+            "dates": info["dates"],
+            # Only the published week is known; the rest of term is left
+            # unknown rather than extrapolated from a week that may hold a
+            # break. These buildings had no hours at all before this, so
+            # outside the window they fall back to the class timetable exactly
+            # as they used to.
+            "unknownDuring": [[TERM[0], covered[0]], [covered[-1], TERM[1]]],
+            "valid": list(TERM),
+        })
+        entry.setdefault("weekly", {d: [] for d in DAYS})
+        out[name] = entry
+
     for code, info in HAND_ENTERED.items():
         name = (next((k for k, v in out.items() if v.get("code") == code), None)
                 or class_names.get(code) or info["name"])
@@ -347,6 +458,11 @@ def main():
                 for a, b in info.get("breaks", [])
             ],
         }
+    print(f"rec buildings added: {len(recs)}  ({', '.join(sorted(recs)) or 'none'})")
+    if rec_notes:
+        print(f"rec days not readable: {len(rec_notes)}")
+        for n in rec_notes[:6]:
+            print(f"   {n}")
     print(f"hand-entered buildings: {len(HAND_ENTERED)} "
           f"({', '.join(v['name'] for v in HAND_ENTERED.values())})")
 
