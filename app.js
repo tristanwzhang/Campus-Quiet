@@ -923,11 +923,16 @@ let offMapNames = null;
 function offMap(names) {
   if (offMapNames) return offMapNames;
   if (!data.gis) return NONE;          // decide once the register has loaded
-  const byCode = gisByCode();
   offMapNames = new Set();
   for (const name of names) {
-    const b = byCode.get(codeFor(name));
-    if (!b) continue;
+    const b = gisFor(name);
+    // Not in the university's own register of this campus at all. The class
+    // schedule lists a few buildings that are not here — Ohio State teaches
+    // some Columbus-administered classes sixty miles away at Wooster — and
+    // without a register entry there is no sourced location to put them at.
+    // Showing them anyway risks a tile with a similar name claiming the label,
+    // which is a wrong location rather than a missing one.
+    if (!b) { offMapNames.add(name); continue; }
     if (b.lon < AREA.west || b.lon > AREA.east || b.lat < AREA.south || b.lat > AREA.north) {
       offMapNames.add(name);
     }
@@ -1033,6 +1038,26 @@ const STUDY_SPOTS_OSU = {
 
 const PICK_LABELS_OSU = {};
 
+// Ohio State's class schedule and its building register disagree on codes for
+// a handful of buildings: the schedule appends a wing letter (RP -> RPB,
+// TMV -> TMVN, HG -> HGG, PE -> PEA), and the Waterman complex has no code in
+// the register at all. The register's sparse codes are why — only 144 of its
+// 534 records carry one.
+//
+// Each of these was looked up by hand and matched on the register's own name,
+// keyed by its building number, rather than by a rule that strips a trailing
+// letter. A near-miss on a code is exactly how a building gets drawn in the
+// wrong place, and a wrong location is worse than no location.
+const GIS_ALIASES_OSU = {
+  'Howlett Greenhouses':            '0297',   // register: Howlett Greenhouses
+  'Phys Activ & Educ Srvs Bldg':    '0245',   // Physical Activity and Education Services - PAES
+  'Recreation & Phys Activ Ctr':    '0246',   // Recreation and Physical Activity Center
+  'Timashev Family Music Building': '1064',   // Timashev Family Music Building
+  'Waterman- Multispecies Animal':  '1321',   // Waterman - Multispecies Animal Learning Complex
+};
+
+const GIS_ALIASES_UIUC = {};   // Illinois publishes no register, so nothing to join
+
 // From the registrar's own five-year calendar:
 // https://registrar.osu.edu/academic-calendar/academic-calendar-5-year-view-2023-2028/
 // The term dates match what Ohio State's class API reports for every Autumn 2026
@@ -1062,15 +1087,18 @@ const ACADEMIC_CALENDAR_OSU = {
 // plain names, exactly as it did when there was only one campus.
 const CAMPUS_CONTENT = {
   uiuc: { buildings: BUILDINGS_UIUC, studySpots: STUDY_SPOTS_UIUC,
-          pickLabels: PICK_LABELS_UIUC, calendar: ACADEMIC_CALENDAR_UIUC },
+          pickLabels: PICK_LABELS_UIUC, calendar: ACADEMIC_CALENDAR_UIUC,
+          gisAliases: GIS_ALIASES_UIUC },
   osu:  { buildings: BUILDINGS_OSU,  studySpots: STUDY_SPOTS_OSU,
-          pickLabels: PICK_LABELS_OSU,  calendar: ACADEMIC_CALENDAR_OSU },
+          pickLabels: PICK_LABELS_OSU,  calendar: ACADEMIC_CALENDAR_OSU,
+          gisAliases: GIS_ALIASES_OSU },
 }[CAMPUS.id];
 
 const BUILDINGS = CAMPUS_CONTENT.buildings;
 const STUDY_SPOTS = CAMPUS_CONTENT.studySpots;
 const PICK_LABELS = CAMPUS_CONTENT.pickLabels;
 const ACADEMIC_CALENDAR = CAMPUS_CONTENT.calendar;
+const GIS_ALIASES = CAMPUS_CONTENT.gisAliases;
 
 
 /**
@@ -1890,6 +1918,13 @@ function codeFor(name) {
       ?? null;
 }
 
+/** The register's record for one of our buildings, or null if it has none. */
+function gisFor(name) {
+  const alias = GIS_ALIASES[name];
+  if (alias) return data.gis?.buildings?.[alias] ?? null;
+  return gisByCode().get(codeFor(name)) ?? null;
+}
+
 // Draw a building the tiles don't carry, from the university's own footprint.
 // Same treatment Illinois gives Morrill Hall, just sourced rather than typed.
 function addGisOverlay(name, b) {
@@ -1907,11 +1942,10 @@ function addGisOverlay(name, b) {
 
 function placeMissingBuildings() {
   if (!data.gis) return 0;
-  const byCode = gisByCode();
   let drawn = 0, labelledNow = 0;
   for (const name of knownBuildings()) {
     if (labelled.has(name)) continue;          // the tiles already named it
-    const b = byCode.get(codeFor(name));
+    const b = gisFor(name);
     if (!b) continue;
     if (b.outline && !overlays.has(name)) { addGisOverlay(name, b); drawn++; }
     addLabel(name, b.lon, b.lat, 10);
