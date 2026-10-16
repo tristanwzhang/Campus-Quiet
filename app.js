@@ -2420,6 +2420,7 @@ function openPanel(name, keepThanks = false) {
     clearWishlist();
   }
   if (freshOpen) armPanelLater();
+  if (freshOpen) noteBuildingOpened();
   panel.classList.add('show');
   // Lets the stylesheet clear the legend out of the panel's way on a phone.
   document.body.classList.add('panel-open');
@@ -2514,14 +2515,49 @@ document.querySelectorAll('#wishlist .wish-btn').forEach(button => {
 });
 document.getElementById('panel-close').addEventListener('click', closePanel);
 
-// ─── Returning-visitor survey ──────────────────────────────────────────────────
+// ─── Return-intent prompt ───────────────────────────────────────────
+// What this replaced and why: the first version asked *returning* visitors
+// "did this help you find a study spot?" — Yes / Not really, no text box. That
+// asks the people who did not churn, in a form that cannot produce a reason,
+// and three weeks of it yielded 8 answers, 6 of them a dismissal. Nobody on
+// the site can tell you why they stopped coming, because they are here. So
+// first-timers get the forward-looking version instead — would you open this
+// again, and if not, what is the actual reason — and the people who did come
+// back get asked what nearly stopped them.
+//
 // "Returning" is judged the same way the shared check-in id and the ?nostats
 // flag already are: a value kept in this browser's localStorage, never sent
 // anywhere. No accounts, no cookies, so a different day on the same browser is
 // the only signal available — good enough for "have they been here before?"
 const SURVEY_FIRST_SEEN_KEY = 'uiucSpacesFirstSeen';
-const SURVEY_DONE_KEY = 'uiucSpacesSurveyDone';
-const SURVEY_DELAY_MS = 8000;   // give them a moment to look around first
+const SURVEY_DONE_KEY = 'uiucSpacesSurveyDone';   // the old Yes / Not really survey
+const ASK_DONE_KEY = 'uiucSpacesAskDone';
+const ASK_IDLE_MS = 30000;        // opened nothing: ask before they leave
+const ASK_AFTER_OPEN_MS = 2500;   // found something: let them read it first
+
+// Each reason is a hypothesis someone has actually argued for, so even a dozen
+// taps separates them: habit (the map is a modest improvement over walking to
+// your usual spot), credibility (the estimates are wrong), or scope (busyness
+// was never the thing they wanted to know). "Other" is appended last on
+// purpose — it is an escape hatch, not a competing explanation.
+const ASK_REASONS = {
+  probably_not: [
+    ['habit', 'I already know my spots'],
+    ['distrust', "Don't trust the numbers"],
+    ['scope', 'Missing what I need'],
+  ],
+  yeah: [
+    ['late_night', 'Late at night'],
+    ['finals', 'Finals week'],
+    ['friends', 'Studying with friends'],
+  ],
+};
+
+const ASK_COPY = {
+  probably_not: { reason: "Fair enough — what's the main reason?", text: 'What would have to change?' },
+  yeah:         { reason: 'When would you reach for it?', text: 'What would make it worth opening?' },
+  returned:     { reason: null, text: 'You came back — what nearly stopped you?' },
+};
 
 try {
   if (!localStorage.getItem(SURVEY_FIRST_SEEN_KEY)) {
@@ -2536,46 +2572,165 @@ function isReturningVisitor() {
   } catch (e) { return false; }
 }
 
-function surveyDone() {
-  try { return localStorage.getItem(SURVEY_DONE_KEY) === '1'; } catch (e) { return false; }
+// Anyone who answered or dismissed the old survey counts as asked. They already
+// told us to leave them alone once; a new question is not a reason to re-ask.
+function askDone() {
+  try {
+    return localStorage.getItem(ASK_DONE_KEY) === '1'
+        || localStorage.getItem(SURVEY_DONE_KEY) === '1';
+  } catch (e) { return false; }
 }
 
-function markSurveyDone() {
-  try { localStorage.setItem(SURVEY_DONE_KEY, '1'); } catch (e) {}
+function markAskDone() {
+  try { localStorage.setItem(ASK_DONE_KEY, '1'); } catch (e) {}
 }
 
 const survey = document.getElementById('survey');
+const askReasonRow = document.getElementById('survey-reasons');
+const askTextBox = document.getElementById('survey-text');
+let askIntent = null;        // 'yeah' | 'probably_not' | 'returned'
+let askReason = null;
+let askStage = 'intent';
+let askVisitor = 'first';    // 'first' | 'returning'
+let askShown = false;
+let askTimer = null;
+
+function askTrack(stage, extra = {}) {
+  track('return_intent', {
+    stage,
+    intent: askIntent,
+    reason: askReason,
+    visitor: askVisitor,
+    device: deviceKind(),
+    ...extra,
+  });
+}
+
+function askStep(id) {
+  survey.querySelectorAll('.survey-step').forEach((step) => {
+    step.hidden = step.id !== id;
+  });
+}
 
 function dismissSurvey() {
   survey.classList.remove('show');
   document.body.classList.remove('survey-open');
 }
 
-function maybeShowSurvey() {
-  // Opting out of stats means opting out of this too — same signal either way.
-  if (analyticsExcluded() || surveyDone() || !isReturningVisitor()) return;
-  setTimeout(() => {
-    if (surveyDone() || panelBuilding) return;   // they may have answered or opened a building meanwhile
-    survey.classList.add('show');
-    // On a narrow screen the survey and the legend want the same corner —
-    // lets the stylesheet clear the legend out of its way, same as the panel.
-    document.body.classList.add('survey-open');
-  }, SURVEY_DELAY_MS);
+function renderAskReasons(intent) {
+  const options = [...ASK_REASONS[intent]];
+  // Shuffled for the same reason the wishlist row is: four chips wrap to two
+  // rows on a phone, so a fixed order would measure which chip sits first
+  // rather than which reason is true. Each chip reports where it was drawn.
+  for (let i = options.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [options[i], options[j]] = [options[j], options[i]];
+  }
+  options.push(['other', 'Other…']);
+  askReasonRow.replaceChildren(...options.map(([value, label], index) => {
+    const chip = document.createElement('button');
+    chip.className = 'survey-chip';
+    chip.textContent = label;
+    chip.dataset.reason = value;
+    chip.dataset.position = String(index + 1);
+    return chip;
+  }));
 }
 
-document.querySelectorAll('#survey .survey-btn').forEach(button => {
+// The panel hides the prompt in CSS, so showing it over an open building would
+// burn the one question we get on something nobody can see. Wait it out.
+function showAskWhenFree() {
+  if (askDone()) return;
+  if (panelBuilding) {
+    askTimer = setTimeout(showAskWhenFree, 1500);
+    return;
+  }
+  askShown = true;
+  survey.classList.add('show');
+  // On a narrow screen the prompt and the legend want the same corner —
+  // lets the stylesheet clear the legend out of its way, same as the panel.
+  document.body.classList.add('survey-open');
+  askTrack('shown');
+}
+
+function scheduleAsk(delay) {
+  if (askShown || askDone()) return;
+  clearTimeout(askTimer);
+  askTimer = setTimeout(showAskWhenFree, delay);
+}
+
+function maybeShowSurvey() {
+  // Opting out of stats means opting out of this too — same signal either way.
+  if (analyticsExcluded() || askDone()) return;
+  if (isReturningVisitor()) {
+    // They are the proof that coming back is possible, so skip the intent
+    // question and ask straight out what almost cost us the visit.
+    askVisitor = 'returning';
+    askIntent = 'returned';
+    askStage = 'text';
+    document.getElementById('survey-text-q').textContent = ASK_COPY.returned.text;
+    askTextBox.placeholder = 'A sentence is plenty';
+    askStep('survey-step-text');
+    scheduleAsk(8000);
+    return;
+  }
+  askStep('survey-step-intent');
+  scheduleAsk(ASK_IDLE_MS);
+}
+
+// Opening a building is this product working. Asking then beats asking at a
+// fixed 30 seconds, which on a phone at 11pm interrupts someone mid-search.
+function noteBuildingOpened() {
+  if (askVisitor !== 'first' || askShown || askDone()) return;
+  scheduleAsk(ASK_AFTER_OPEN_MS);
+}
+
+survey.querySelectorAll('[data-intent]').forEach((button) => {
   button.addEventListener('click', () => {
-    track('survey_helped', { answer: button.dataset.answer, device: deviceKind() });
-    markSurveyDone();
-    dismissSurvey();
+    askIntent = button.dataset.intent;
+    askStage = 'reason';
+    askTrack('intent');
+    document.getElementById('survey-reason-q').textContent = ASK_COPY[askIntent].reason;
+    renderAskReasons(askIntent);
+    askStep('survey-step-reason');
   });
 });
 
+askReasonRow.addEventListener('click', (event) => {
+  const chip = event.target.closest('.survey-chip');
+  if (!chip) return;
+  askReason = chip.dataset.reason;
+  askStage = 'text';
+  askTrack('reason', { position: Number(chip.dataset.position) });
+  // The box follows every chip, not just "Other": the chip says which
+  // hypothesis, a sentence says why, and whoever types is worth reading.
+  const other = askReason === 'other';
+  document.getElementById('survey-text-q').textContent =
+    other ? ASK_COPY[askIntent].text : 'Anything you want to add?';
+  askTextBox.placeholder = other ? 'A sentence is plenty' : 'Optional';
+  askStep('survey-step-text');
+  // Only "Other" owes us typing, so only "Other" is worth throwing a phone
+  // keyboard over the map for.
+  if (other) askTextBox.focus();
+});
+
+document.getElementById('survey-send').addEventListener('click', () => {
+  const text = askTextBox.value.trim().slice(0, 280);
+  if (text) askTrack('text', { text });
+  markAskDone();
+  askStep('survey-step-done');
+  setTimeout(dismissSurvey, 1500);
+});
+
 document.getElementById('survey-close').addEventListener('click', () => {
-  track('survey_helped', { answer: 'dismissed', device: deviceKind() });
-  markSurveyDone();
+  // Kept as an answer rather than silence: a dismissal at the first question
+  // means something different from one after three, and the old survey's 6
+  // dismissals out of 8 were the most informative thing it ever produced.
+  askTrack('dismissed', { at_stage: askStage });
+  markAskDone();
   dismissSurvey();
 });
+
 
 handler.setInputAction((click) => {
   const name = buildingNameAt(click.position);

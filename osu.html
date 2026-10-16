@@ -794,7 +794,7 @@
     line-height: 1.4;
   }
 
-  /* ── Returning-visitor survey ── */
+  /* ── Return-intent prompt ── */
   /* Bottom-centre: clear of the legend (left) and the building panel
      (right), and hidden along with the legend while a panel is open so it
      never fights the panel for the same corner. */
@@ -803,7 +803,7 @@
     bottom: calc(60px + var(--safe-bottom));
     left: 50%;
     z-index: 130;
-    width: min(300px, calc(100vw - 32px));
+    width: min(320px, calc(100vw - 32px));
     background: rgba(10,14,20,0.95);
     border: 1px solid rgba(255,255,255,0.09);
     border-radius: 12px;
@@ -859,6 +859,47 @@
   }
 
   .survey-btn:hover { background: rgba(255,255,255,0.11); color: #f0f4f8; }
+
+  .survey-step[hidden] { display: none; }
+
+  .survey-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+
+  .survey-chip {
+    font-family: inherit;
+    font-size: 11.5px;
+    color: #c9d1de;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 7px;
+    padding: 6px 9px;
+    cursor: pointer;
+    transition: background 0.12s ease, color 0.12s ease;
+  }
+
+  .survey-chip:hover { background: rgba(255,255,255,0.11); color: #f0f4f8; }
+
+  #survey-text {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 10px;
+    font-family: inherit;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #f0f4f8;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 7px;
+    padding: 8px 10px;
+    resize: none;
+  }
+
+  #survey-text::placeholder { color: #5a6478; }
+
+  #survey-text:focus { outline: none; border-color: rgba(255,255,255,0.22); }
+
+  .survey-send-row { display: flex; justify-content: flex-end; margin-top: 6px; }
+
+  .survey-send { flex: 0 0 auto; padding: 6px 15px; }
 
   /* ── Privacy note ── */
   #privacy-note {
@@ -1024,6 +1065,7 @@
     #panel-close { width: 44px; height: 44px; top: 2px; right: 2px; }
     #survey-close { width: 44px; height: 44px; top: 2px; right: 2px; }
     .survey-btn { min-height: 40px; font-size: 12.5px; }
+    .survey-chip { min-height: 36px; }
     #panel-name { padding-right: 46px; }
     .checkin-btn { min-height: 44px; font-size: 13px; }
     .wish-btn { min-height: 40px; font-size: 12px; }
@@ -1263,10 +1305,30 @@
 
 <div id="survey">
   <button id="survey-close" aria-label="Dismiss">×</button>
-  <div class="survey-q">Welcome back — did this help you find a study spot?</div>
-  <div class="survey-row">
-    <button class="survey-btn" data-answer="yes">Yes</button>
-    <button class="survey-btn" data-answer="no">Not really</button>
+
+  <div class="survey-step" id="survey-step-intent">
+    <div class="survey-q">Be honest — would you open this again next time you need a spot?</div>
+    <div class="survey-row">
+      <button class="survey-btn" data-intent="yeah">Yeah</button>
+      <button class="survey-btn" data-intent="probably_not">Probably not</button>
+    </div>
+  </div>
+
+  <div class="survey-step" id="survey-step-reason" hidden>
+    <div class="survey-q" id="survey-reason-q"></div>
+    <div class="survey-chips" id="survey-reasons"></div>
+  </div>
+
+  <div class="survey-step" id="survey-step-text" hidden>
+    <div class="survey-q" id="survey-text-q"></div>
+    <textarea id="survey-text" rows="2" maxlength="280" placeholder="A sentence is plenty"></textarea>
+    <div class="survey-send-row">
+      <button class="survey-btn survey-send" id="survey-send">Send</button>
+    </div>
+  </div>
+
+  <div class="survey-step" id="survey-step-done" hidden>
+    <div class="survey-q">Thanks — that genuinely helps.</div>
   </div>
 </div>
 
@@ -1275,6 +1337,6 @@
 </div>
 
 <script defer src="basemap-render.js?v=35"></script>
-<script defer src="app.js?v=95"></script>
+<script defer src="app.js?v=96"></script>
 </body>
 </html>
