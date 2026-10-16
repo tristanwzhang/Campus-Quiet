@@ -1,0 +1,259 @@
+{
+ "built_at": "2026-10-16T13:07:39+00:00",
+ "source": "University of Maryland Schedule of Classes building lookup",
+ "sourceUrl": "https://app.testudo.umd.edu/soc/buildings/",
+ "codes": {
+  "AJC": {
+   "name": "A James Clark Hall",
+   "number": "429"
+  },
+  "ANA": {
+   "name": "Anne Arundel Hall",
+   "number": "060"
+  },
+  "ANS": {
+   "name": "Animal Sciences Bldg.",
+   "number": "142"
+  },
+  "ARC": {
+   "name": "Architecture Bldg.",
+   "number": "145"
+  },
+  "ARM": {
+   "name": "Armory (Reckord)",
+   "number": "078"
+  },
+  "ASY": {
+   "name": "Parren J. Mitchell Art-Sociology Bldg.",
+   "number": "146"
+  },
+  "ATL": {
+   "name": "Atlantic Building",
+   "number": "224"
+  },
+  "AVW": {
+   "name": "A. V. Williams",
+   "number": "115"
+  },
+  "BPS": {
+   "name": "Biology Psychology Building",
+   "number": "144"
+  },
+  "BRB": {
+   "name": "Biosciences Research Building",
+   "number": "413"
+  },
+  "CBD": {
+   "name": "Cumberland Hall",
+   "number": "122"
+  },
+  "CCC": {
+   "name": "Cambridge Community Center",
+   "number": "097"
+  },
+  "CEN": {
+   "name": "Centreville Hall",
+   "number": "098"
+  },
+  "CHE": {
+   "name": "Chemical Engineering Bldg.",
+   "number": "090"
+  },
+  "CHM": {
+   "name": "Chemistry-Biochemistry Bldg.",
+   "number": "091"
+  },
+  "CSI": {
+   "name": "Computer Science Instructional Center",
+   "number": "406"
+  },
+  "DOR": {
+   "name": "Dorcester Hall",
+   "number": "064"
+  },
+  "EAF": {
+   "name": "E.A. Fernandez IDEA Factory",
+   "number": "228"
+  },
+  "EDU": {
+   "name": "Education Bldg (Benjamin)",
+   "number": "143"
+  },
+  "EGL": {
+   "name": "Engineering Laboratory Bldg. (Martin)",
+   "number": "089"
+  },
+  "EGR": {
+   "name": "Engineering Classroom Bldg. (Martin)",
+   "number": "088"
+  },
+  "ERC": {
+   "name": "Eppely Recreation Center",
+   "number": "068"
+  },
+  "ESJ": {
+   "name": "Edward St. John Learning and Teaching Center",
+   "number": "226"
+  },
+  "GEO": {
+   "name": "Geology Bldg.",
+   "number": "237"
+  },
+  "GLF": {
+   "name": "Golf Range Classroom",
+   "number": "165"
+  },
+  "GVC": {
+   "name": "Avrum Gudelsky Veterinary Center",
+   "number": "795"
+  },
+  "HBK": {
+   "name": "Undergraduate Library",
+   "number": "147"
+  },
+  "HJP": {
+   "name": "H.J. Patterson Hall",
+   "number": "073"
+  },
+  "IPT": {
+   "name": "Institute for Physical Sciences & Technology",
+   "number": "085"
+  },
+  "IRB": {
+   "name": "Brendan Iribe Center",
+   "number": "432"
+  },
+  "JMP": {
+   "name": "J. M. Patterson Building",
+   "number": "083"
+  },
+  "JMZ": {
+   "name": "Jimenez Bldg. (World Languages)",
+   "number": "034"
+  },
+  "KEB": {
+   "name": "Jeong H. Kim Engineering Building",
+   "number": "225"
+  },
+  "KEY": {
+   "name": "Francis Scott Key Hall",
+   "number": "048"
+  },
+  "KNI": {
+   "name": "Knight Hall",
+   "number": "417"
+  },
+  "LCC": {
+   "name": "Leonardtown Community Center",
+   "number": "250"
+  },
+  "LEF": {
+   "name": "LeFrak Hall (Social Sciences)",
+   "number": "038"
+  },
+  "LPA": {
+   "name": "LaPlata Hall",
+   "number": "259"
+  },
+  "MCB": {
+   "name": "Microbiology Bldg.",
+   "number": "231"
+  },
+  "MCK": {
+   "name": "McKeldin Library",
+   "number": "035"
+  },
+  "MMH": {
+   "name": "Marie Mount Hall",
+   "number": "046"
+  },
+  "MTH": {
+   "name": "William E. Kirwan Hall",
+   "number": "084"
+  },
+  "PAC": {
+   "name": "Clarice Smith Performing Arts Center",
+   "number": "386"
+  },
+  "PBR": {
+   "name": "Paint Branch Research Facility",
+   "number": "395"
+  },
+  "PFR": {
+   "name": "Prince Frederick Hall",
+   "number": "425"
+  },
+  "PHY": {
+   "name": "John S. Toll Physics Building",
+   "number": "082"
+  },
+  "PKT": {
+   "name": "Preinkert Field House",
+   "number": "054"
+  },
+  "PLS": {
+   "name": "Plant Sciences",
+   "number": "036"
+  },
+  "PSC": {
+   "name": "Physical Sciences Complex",
+   "number": "415"
+  },
+  "QAN": {
+   "name": "Queen Ann's Hall",
+   "number": "061"
+  },
+  "SHM": {
+   "name": "Shoemaker Bldg.",
+   "number": "037"
+  },
+  "SKN": {
+   "name": "Skinner Bldg.",
+   "number": "044"
+  },
+  "SOM": {
+   "name": "Somerset Hall",
+   "number": "063"
+  },
+  "SPH": {
+   "name": "School of Public Health",
+   "number": "255"
+  },
+  "SQH": {
+   "name": "Susquehanna Hall",
+   "number": "233"
+  },
+  "SYM": {
+   "name": "Symons Hall",
+   "number": "076"
+  },
+  "TLF": {
+   "name": "Taliaferro Hall",
+   "number": "043"
+  },
+  "TMH": {
+   "name": "Thurgood Marshall Hall",
+   "number": "433"
+  },
+  "TWS": {
+   "name": "Tawes Fine Arts Bldg.",
+   "number": "141"
+  },
+  "TYD": {
+   "name": "Tydings Hall",
+   "number": "042"
+  },
+  "VMH": {
+   "name": "Van Munching Hall",
+   "number": "039"
+  },
+  "WDS": {
+   "name": "Woods Hall",
+   "number": "047"
+  },
+  "YDH": {
+   "name": "Yahentamitsi Dining Hall",
+   "number": "436"
+  }
+ }
+}
