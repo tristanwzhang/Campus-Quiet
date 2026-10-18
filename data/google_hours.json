@@ -1,4 +1,334 @@
 {
- "buildings": {},
- "built_at": "2026-10-18T22:13:38+00:00"
+ "buildings": {
+  "Illini Union Bookstore": {
+   "google_title": "Illini Union Bookstore",
+   "weekly": {
+    "monday": [
+     [
+      8.0,
+      18.0
+     ]
+    ],
+    "tuesday": [
+     [
+      8.0,
+      18.0
+     ]
+    ],
+    "wednesday": [
+     [
+      8.0,
+      18.0
+     ]
+    ],
+    "thursday": [
+     [
+      8.0,
+      18.0
+     ]
+    ],
+    "friday": [
+     [
+      8.0,
+      18.0
+     ]
+    ],
+    "saturday": [
+     [
+      11.0,
+      16.0
+     ]
+    ],
+    "sunday": [
+     [
+      11.0,
+      16.0
+     ]
+    ]
+   }
+  },
+  "Illini Union": {
+   "google_title": "Illini Union",
+   "weekly": {
+    "monday": [
+     [
+      7.0,
+      23.0
+     ]
+    ],
+    "tuesday": [
+     [
+      7.0,
+      23.0
+     ]
+    ],
+    "wednesday": [
+     [
+      7.0,
+      23.0
+     ]
+    ],
+    "thursday": [
+     [
+      7.0,
+      23.0
+     ]
+    ],
+    "friday": [
+     [
+      7.0,
+      23.0
+     ]
+    ],
+    "saturday": [
+     [
+      7.0,
+      23.0
+     ]
+    ],
+    "sunday": [
+     [
+      7.0,
+      23.0
+     ]
+    ]
+   }
+  },
+  "Main Library": {
+   "google_title": "Main Library",
+   "weekly": {
+    "monday": [
+     [
+      8.5,
+      24.0
+     ]
+    ],
+    "tuesday": [
+     [
+      8.5,
+      24.0
+     ]
+    ],
+    "wednesday": [
+     [
+      8.5,
+      24.0
+     ]
+    ],
+    "thursday": [
+     [
+      8.5,
+      24.0
+     ]
+    ],
+    "friday": [
+     [
+      8.5,
+      18.0
+     ]
+    ],
+    "saturday": [
+     [
+      10.0,
+      17.0
+     ]
+    ],
+    "sunday": [
+     [
+      13.0,
+      24.0
+     ]
+    ]
+   }
+  },
+  "Grainger Engineering Library": {
+   "google_title": "Grainger Engineering Library Information Center",
+   "weekly": {
+    "monday": [
+     [
+      0,
+      24
+     ]
+    ],
+    "tuesday": [
+     [
+      0,
+      24
+     ]
+    ],
+    "wednesday": [
+     [
+      0,
+      24
+     ]
+    ],
+    "thursday": [
+     [
+      0,
+      24
+     ]
+    ],
+    "friday": [
+     [
+      0,
+      24
+     ]
+    ],
+    "saturday": [
+     [
+      10.0,
+      24.0
+     ]
+    ],
+    "sunday": [
+     [
+      10.0,
+      24.0
+     ]
+    ]
+   }
+  },
+  "Funk Library": {
+   "google_title": "Funk Agricultural, Consumer, and Environmental Sciences Library (Funk ACES)",
+   "weekly": {
+    "monday": [
+     [
+      8.5,
+      26.0
+     ]
+    ],
+    "tuesday": [
+     [
+      8.5,
+      26.0
+     ]
+    ],
+    "wednesday": [
+     [
+      8.5,
+      26.0
+     ]
+    ],
+    "thursday": [
+     [
+      8.5,
+      26.0
+     ]
+    ],
+    "friday": [
+     [
+      8.5,
+      18.0
+     ]
+    ],
+    "saturday": [
+     [
+      10.0,
+      20.0
+     ]
+    ],
+    "sunday": [
+     [
+      12.0,
+      26.0
+     ]
+    ]
+   }
+  },
+  "Activities and Recreation Center": {
+   "google_title": "Activities and Recreation Center",
+   "weekly": {
+    "monday": [
+     [
+      6.0,
+      23.0
+     ]
+    ],
+    "tuesday": [
+     [
+      6.0,
+      23.0
+     ]
+    ],
+    "wednesday": [
+     [
+      6.0,
+      23.0
+     ]
+    ],
+    "thursday": [
+     [
+      6.0,
+      23.0
+     ]
+    ],
+    "friday": [
+     [
+      6.0,
+      22.0
+     ]
+    ],
+    "saturday": [
+     [
+      9.0,
+      22.0
+     ]
+    ],
+    "sunday": [
+     [
+      9.0,
+      22.0
+     ]
+    ]
+   }
+  },
+  "Campus Recreation Center East": {
+   "google_title": "Campus Recreation Center East",
+   "weekly": {
+    "monday": [
+     [
+      7.0,
+      23.0
+     ]
+    ],
+    "tuesday": [
+     [
+      7.0,
+      23.0
+     ]
+    ],
+    "wednesday": [
+     [
+      7.0,
+      23.0
+     ]
+    ],
+    "thursday": [
+     [
+      7.0,
+      23.0
+     ]
+    ],
+    "friday": [
+     [
+      7.0,
+      21.0
+     ]
+    ],
+    "saturday": [
+     [
+      11.0,
+      18.0
+     ]
+    ],
+    "sunday": [
+     [
+      11.0,
+      18.0
+     ]
+    ]
+   }
+  }
+ },
+ "built_at": "2026-10-18T22:14:52+00:00"
 }
