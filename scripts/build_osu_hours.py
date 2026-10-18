@@ -29,7 +29,7 @@ import json
 import re
 import sys
 import urllib.request
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -133,6 +133,68 @@ RANGE_RE = re.compile(
     r"(?P<h2>\d{1,2})(?::(?P<m2>\d{2}))?\s*(?P<s2>am|pm)$",
     re.I,
 )
+
+# The same page heads its schedule with the term's calendar, and draws the
+# distinction the hours themselves cannot: a day with no classes is not
+# necessarily a day with locked doors.
+#
+#   University Holidays (no classes, offices closed):  September 7, November 11,
+#                                                      November 26-27, ...
+#   Academic Holidays  (no classes, offices open):     October 15-16, November 25
+#
+# Those two lists mean opposite things for a building, so they are read
+# separately. Everything else under a heading we don't recognise is ignored.
+CALENDAR_HEADINGS = {
+    "closed": re.compile(r"^University Holidays\b.*offices closed", re.I),
+    "classesOut": re.compile(r"^Academic Holidays\b.*offices open", re.I),
+}
+# "September 7" | "November 26-27" | "December 11 - 17"
+CAL_DATE_RE = re.compile(
+    r"^(?P<month>January|February|March|April|May|June|July|August|September"
+    r"|October|November|December)\s+(?P<first>\d{1,2})"
+    r"(?:\s*[-–—]\s*(?P<last>\d{1,2}))?$", re.I,
+)
+MONTHS = {m: i for i, m in enumerate(
+    ["january", "february", "march", "april", "may", "june", "july", "august",
+     "september", "october", "november", "december"], start=1)}
+
+
+def parse_calendar(lines):
+    """-> {'closed': [YYYY-MM-DD, ...], 'classesOut': [...]} from the page head.
+
+    Dates are published without a year. The term start supplies it, and a month
+    earlier than the term's own month means the following year, so a spring page
+    reads correctly too.
+    """
+    term_start = date.fromisoformat(TERM[0])
+    found = {k: [] for k in CALENDAR_HEADINGS}
+    key = None
+    for line in lines:
+        if line.strip() == "Toggle All":
+            break                                  # the building list starts here
+        heading = next((k for k, r in CALENDAR_HEADINGS.items() if r.match(line)), None)
+        if heading:
+            key = heading
+            continue
+        m = CAL_DATE_RE.match(line)
+        if not m:
+            # Any other heading ("Final Exams:", "Football Home Game Schedule:")
+            # ends the list we were reading, so its dates are not collected.
+            if line.rstrip(":").strip() != line:
+                key = None
+            continue
+        if not key:
+            continue
+        month = MONTHS[m["month"].lower()]
+        year = term_start.year + (1 if month < term_start.month else 0)
+        first = int(m["first"])
+        last = int(m["last"] or first)
+        for day in range(first, last + 1):
+            try:
+                found[key].append(date(year, month, day).isoformat())
+            except ValueError:
+                pass                               # a day the month doesn't have
+    return {k: sorted(set(v)) for k, v in found.items()}
 
 
 def page_lines(url):
@@ -376,6 +438,7 @@ def main():
 
     lines = page_lines(SOURCE_URL)
     parsed, skipped = parse(lines)
+    calendar = parse_calendar(lines)
 
     out = {}
     dropped = []
@@ -392,14 +455,22 @@ def main():
             "address": b["address"],
             "valid": list(TERM),
             "weekly": {d: b["weekly"][d] for d in DAYS},
-            # This schedule says when a classroom can be BOOKED, not when the
-            # doors are unlocked. On a day the university has said classes do
-            # not meet, it therefore describes nothing at all, and the map must
-            # not read it as an official claim that the building is open.
-            # Verified 2026-10-15: during Autumn Break the Architecture and
-            # Geology libraries cut to 10am-2pm, while this schedule still
-            # claimed their buildings were open into the evening.
-            "classDerived": True,
+            # This IS the door schedule, not a proxy for one: the page is written
+            # for whoever locks up, and says so in its own notes -- "lock all
+            # doors but the main entrance at 7pm", "Building always opens at
+            # 6:30 am", "ART students have swipe card access for courses outside
+            # of building hours". So it is treated as published hours.
+            #
+            # What it does not carry is the days it doesn't apply, and those are
+            # printed at the top of the same page. Hence this flag: app.js closes
+            # these buildings on campusClosedDates below and leaves the weekly
+            # pattern standing on every other day.
+            #
+            # Checked 2026-10-18 against the page's own two lists: Autumn Break
+            # (Oct 15-16) and Nov 25 are "no classes, offices OPEN", so a
+            # building open at 8pm on an ordinary Thursday is open at 8pm then
+            # too. Only the "offices closed" list shuts the doors.
+            "followsCampusClosures": True,
         }
 
     # Key on whatever name the class data already uses for this code, so the two
@@ -497,10 +568,18 @@ def main():
         "built_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "campus": "Ohio State",
         "term": "Autumn 2026",
-        "campusClosedDates": [],
+        # Days the registrar publishes as "offices closed" -- every building
+        # carrying followsCampusClosures is shut on these. The companion list is
+        # the days with no classes but open offices, which must NOT close
+        # anything; it is here so a building whose hours are guessed from the
+        # class timetable can say "unknown" instead of "closed".
+        "campusClosedDates": calendar["closed"],
+        "classesOutDates": calendar["classesOut"],
         "buildings": out,
     }, indent=1) + "\n")
 
+    print(f"campus closed on:  {', '.join(calendar['closed']) or 'none found'}")
+    print(f"classes out, open: {', '.join(calendar['classesOut']) or 'none found'}")
     print(f"buildings found:   {len(parsed)}")
     print(f"buildings written: {len(out)}  -> {OUT_FILE.relative_to(ROOT)}")
     if dropped:

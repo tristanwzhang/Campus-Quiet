@@ -645,6 +645,15 @@ function assumedStatus(id, date, time) {
   // still returns the hours of an ordinary Thursday. The whole basis of this
   // estimate is that classes are meeting; on a day the university says they
   // are not, it cannot be read as open.
+  //
+  // But "not open" and "closed" are different claims. Where the campus itself
+  // publishes a day as no classes with offices open, the doors are very likely
+  // unlocked and it is only this estimate that has run out of ground to stand
+  // on -- so it says nothing instead of guessing shut. Campuses that publish no
+  // such list are unaffected and still read closed, as they did before.
+  if ((data.hours?.classesOutDates || []).includes(date)) {
+    return { state: 'unknown' };
+  }
   if (!calendarPeriod(date).classesMeet) {
     return { state: 'closed', source: 'assumed from the class timetable', assumed: true };
   }
@@ -660,19 +669,13 @@ function hoursStatus(id, date, time) {
   const entry = data.hours?.buildings?.[id];
   if (!entry) return assumedStatus(id, date, time);
 
-  // A schedule built from when classrooms can be booked says nothing on a day
-  // the university has said classes do not meet. Ohio State's registrar pool
-  // is the only such source; Illinois' hours are published building hours and
-  // already carry their own closure dates, so they are untouched by this.
-  const period = calendarPeriod(date);
-  if (entry.classDerived && !period.classesMeet) {
-    return {
-      state: 'closed',
-      source: entry.source,
-      assumed: true,
-      closedNote: `Probably closed · ${period.label || 'no classes today'}`,
-    };
-  }
+  // A day with no classes is not a day with locked doors, and the two campuses
+  // publish the difference themselves. Ohio State's registrar prints both lists
+  // at the top of the hours page -- "University Holidays (no classes, offices
+  // closed)" and "Academic Holidays (no classes, offices open)" -- and only the
+  // first belongs in campusClosedDates, which publishedRanges applies below.
+  // So nothing is decided here from whether classes meet: a building open until
+  // 8pm on an ordinary Thursday is open until 8pm on Autumn Break too.
 
   // Still open from yesterday's late hours (e.g. until 2am)?
   const yesterday = publishedRanges(entry, shiftDate(date, -1));
