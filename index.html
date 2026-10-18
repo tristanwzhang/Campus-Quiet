@@ -453,6 +453,47 @@
   .pick-meta { font-size: 11.5px; color: #8a94a8; }
   .pick-note { font-size: 11.5px; color: #8a94a8; padding: 2px 7px 1px; }
 
+  /* ── Study rooms, a second section inside the same sheet ──
+     Its own tap target, because someone who wants the picks does not
+     necessarily want a room list under them, and on a phone the sheet is
+     already competing for a fifth of the screen. Collapsed state is kept
+     separately from the picks', so closing one does not close the other. */
+  #rooms-section {
+    margin-top: 9px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  #rooms-section[hidden] { display: none; }
+  #rooms-toggle {
+    width: 100%;
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    background: none; border: 0; padding: 0 1px 6px;
+    font: inherit; cursor: pointer;
+  }
+  #rooms-toggle:hover .pick-head,
+  #rooms-toggle:focus-visible .pick-head { color: #8a94a8; }
+  #rooms-chevron {
+    width: 9px; height: 9px; flex: none; margin-bottom: 2px;
+    border-right: 1.6px solid #6b7488;
+    border-bottom: 1.6px solid #6b7488;
+    transform: rotate(45deg);
+    transition: transform 0.18s ease;
+  }
+  #rooms-toggle[aria-expanded="false"] #rooms-chevron {
+    transform: rotate(-135deg);
+    margin-bottom: -2px;
+  }
+  #rooms-section.is-collapsed #rooms-body { display: none; }
+  #rooms-list { list-style: none; margin: 0; padding: 0; }
+  .rooms-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 10px; padding: 4px 7px; font-size: 12px; color: #c9d1de;
+  }
+  .rooms-row .rooms-where { color: #6b7589; font-size: 10.5px; }
+  .rooms-free { font-weight: 600; color: #8fd4a8; flex: none; }
+  .rooms-full { font-weight: 600; color: #c08a8a; flex: none; }
+  .rooms-foot { font-size: 10.5px; color: #5a6478; padding: 3px 7px 0; }
+
   /* ── Browse: the whole campus as a list ──
      The map answers "what shape is campus"; a list answers "where do I go",
      which is the question people actually arrive with. Slides over the map
@@ -473,9 +514,8 @@
      among the three real ones.
 
      Called availability rather than bookings because that is what it is —
-     rooms with no class timetabled in them, which the panel itself spells
-     out. The bookable LibCal rooms are a different source, shown per
-     building in its panel. */
+     rooms with no class timetabled in them. The bookable LibCal rooms are a
+     different source and live in the picks sheet. */
   #browse-all {
     pointer-events: auto;              /* #stats itself is click-through */
     display: flex; align-items: center; gap: 8px;
@@ -1492,7 +1532,7 @@
     <span class="chip-lbl">busy</span>
   </div>
   <button id="browse-all" type="button" hidden>
-    <span>Study room availability</span><span class="arrow">&rarr;</span>
+    <span>Room availability</span><span class="arrow">&rarr;</span>
   </button>
 </div>
 
@@ -1504,6 +1544,16 @@
   <div id="pick-body">
     <ol id="pick-list"></ol>
     <div class="pick-note" id="pick-note" hidden></div>
+    <div id="rooms-section" hidden>
+      <button id="rooms-toggle" type="button" aria-expanded="true" aria-controls="rooms-body">
+        <span class="pick-head">Study rooms free now</span>
+        <span id="rooms-chevron" aria-hidden="true"></span>
+      </button>
+      <div id="rooms-body">
+        <ul id="rooms-list"></ul>
+        <div class="rooms-foot">Rooms nobody has booked — not necessarily empty.</div>
+      </div>
+    </div>
     <div id="pick-key" aria-hidden="true">
       <span class="key-bar"></span>
       <span class="key-ends"><span>Empty</span><span>Full</span></span>
