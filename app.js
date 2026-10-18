@@ -412,7 +412,6 @@ async function loadRoomAvailability() {
     if (!res.ok) return;                       // 404 = campus not configured
     const body = await res.json();
     roomAvailability = body?.buildings ?? null;
-    renderRoomsList();
     if (panelBuilding) openPanel(panelBuilding, true);   // a panel is already open
   } catch (e) { /* never let a live feed break the map */ }
 }
@@ -1424,64 +1423,6 @@ function closeBrowse() {
 }
 function browseIsOpen() {
   return !!document.getElementById('browse')?.classList.contains('is-open');
-}
-
-const ROOMS_COLLAPSED_KEY = 'campusQuietRoomsCollapsed';
-
-function roomsCollapsed() {
-  try { return localStorage.getItem(ROOMS_COLLAPSED_KEY) === '1'; } catch (e) { return false; }
-}
-function setRoomsCollapsed(collapsed) {
-  try {
-    if (collapsed) localStorage.setItem(ROOMS_COLLAPSED_KEY, '1');
-    else localStorage.removeItem(ROOMS_COLLAPSED_KEY);
-  } catch (e) { /* preference just won't survive the session */ }
-  applyRoomsCollapsed();
-}
-function applyRoomsCollapsed() {
-  const section = document.getElementById('rooms-section');
-  const toggle = document.getElementById('rooms-toggle');
-  if (!section || !toggle) return;
-  const collapsed = roomsCollapsed();
-  section.classList.toggle('is-collapsed', collapsed);
-  toggle.setAttribute('aria-expanded', String(!collapsed));
-  toggle.title = collapsed ? 'Show study rooms' : 'Hide study rooms';
-  toggle.setAttribute('aria-label', toggle.title);
-  publishSheetHeight();   // the sheet just changed shape
-}
-
-/**
- * The study-room list inside the sheet.
- *
- * Shows only buildings whose library is open enough to have bookable rooms
- * today; a library with nothing bookable is left out rather than listed as
- * "0 of 0", which reads as breakage. The whole section hides when no building
- * on this campus has any, which is every campus but Ohio State today.
- */
-function renderRoomsList() {
-  const section = document.getElementById('rooms-section');
-  const list = document.getElementById('rooms-list');
-  if (!section || !list) return;
-  const rows = Object.entries(roomAvailability ?? {})
-    .filter(([, v]) => v && v.total)
-    .sort((a, b) => b[1].free - a[1].free);
-  if (!rows.length) { section.hidden = true; return; }
-  list.innerHTML = rows.map(([building, v]) => {
-    const label = pickLabel(building);
-    // A library usually shares its building's name, so listing both reads as a
-    // stutter ("Thompson Library · Thompson Library"). Name only the libraries
-    // the building's own label does not already say.
-    const norm = x => x.toLowerCase().replace(/[^a-z0-9]/g, '');
-    const where = (v.sources ?? [])
-      .filter(src => norm(src) !== norm(label) && !norm(label).includes(norm(src)))
-      .join(' · ');
-    const cls = v.free ? 'rooms-free' : 'rooms-full';
-    return `<li class="rooms-row"><span>${label}`
-      + (where ? `<span class="rooms-where"> · ${where}</span>` : '')
-      + `</span><span class="${cls}">${v.free}/${v.total}</span></li>`;
-  }).join('');
-  section.hidden = false;
-  applyRoomsCollapsed();
 }
 
 function renderRooms(name) {
@@ -3267,12 +3208,6 @@ document.getElementById('browse-body')?.addEventListener('click', ev => {
   browseBuilding = decodeURIComponent(row.dataset.building);
   renderBrowse();
   track('browse_building', { building: browseBuilding, device: deviceKind() });
-});
-
-document.getElementById('rooms-toggle')?.addEventListener('click', () => {
-  const collapsed = !roomsCollapsed();
-  setRoomsCollapsed(collapsed);
-  track('rooms_toggled', { collapsed, device: deviceKind() });
 });
 
 /**
