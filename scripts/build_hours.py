@@ -699,13 +699,33 @@ def main():
                    for name, entry in json.loads(google_file.read_text()).get("buildings", {}).items()}
         print(f"Google (fetched): {', '.join(fetched) or 'none'}")
 
+    # Google supplies a WEEKLY PATTERN and nothing else, so it is merged in
+    # rather than written over the top. Replacing the whole entry threw away
+    # every richer thing a unit's own feed carries -- on the first real fetch
+    # (2026-10-18) Main, Grainger and Funk each lost 7 days of exact DATED
+    # hours and got a generalised week in their place. Dated hours win over a
+    # weekly pattern in app.js precisely because they are better: they carry
+    # the days a library closes early for a break.
+    #
+    # Where an entry has dated hours it also keeps its own source name. The
+    # dated days are what the map actually reads, and they did not come from
+    # Google, so they must not be labelled as if they had.
     for name, weekly in {**fetched, **GOOGLE_HOURS}.items():
-        buildings[name] = {
-            "source": "Google Maps listing",
-            "valid": list(SEMESTER),
-            "weekly": weekly,
-            "unknownDuring": [list(FALL_BREAK)] + [[d, d] for d in SHEET_CLOSED_DATES],
-        }
+        existing = buildings.get(name)
+        if existing is None:
+            buildings[name] = {
+                "source": "Google Maps listing",
+                "valid": list(SEMESTER),
+                "weekly": weekly,
+                "unknownDuring": [list(FALL_BREAK)] + [[d, d] for d in SHEET_CLOSED_DATES],
+            }
+            continue
+        merged = dict(existing)
+        merged["weekly"] = weekly
+        if not existing.get("dates"):
+            merged["source"] = "Google Maps listing"
+            merged.pop("sourceUrl", None)
+        buildings[name] = merged
     print(f"Google (by hand): {', '.join(GOOGLE_HOURS) or 'none'}")
 
     carried = extend_through_finals(buildings)

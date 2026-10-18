@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-18T22:14:53+00:00",
+ "built_at": "2026-10-18T22:16:55+00:00",
  "campusClosedDates": [
   "2026-09-07",
   "2026-11-26",
@@ -10,7 +10,7 @@
    "source": "Google Maps listing",
    "valid": [
     "2026-08-24",
-    "2026-12-09"
+    "2026-12-17"
    ],
    "weekly": {
     "monday": [
@@ -73,8 +73,7 @@
      "2026-11-27",
      "2026-11-27"
     ]
-   ],
-   "extendedThrough": "2026-12-17"
+   ]
   },
   "Agricultural Engineering Sciences": {
    "source": "Campus building hours spreadsheet",
@@ -1217,7 +1216,7 @@
    "source": "Google Maps listing",
    "valid": [
     "2026-08-24",
-    "2026-12-09"
+    "2026-12-17"
    ],
    "weekly": {
     "monday": [
@@ -1280,8 +1279,7 @@
      "2026-11-27",
      "2026-11-27"
     ]
-   ],
-   "extendedThrough": "2026-12-17"
+   ]
   },
   "Ceramics Building": {
    "source": "Campus building hours spreadsheet",
@@ -2544,11 +2542,52 @@
    "extendedThrough": "2026-12-17"
   },
   "Funk Library": {
-   "source": "Google Maps listing",
-   "valid": [
-    "2026-08-24",
-    "2026-12-09"
-   ],
+   "source": "University Library hours",
+   "sourceUrl": "https://www.library.illinois.edu/library-hours/",
+   "dates": {
+    "2026-10-18": [
+     [
+      12.0,
+      26.0
+     ]
+    ],
+    "2026-10-19": [
+     [
+      8.5,
+      26.0
+     ]
+    ],
+    "2026-10-20": [
+     [
+      8.5,
+      26.0
+     ]
+    ],
+    "2026-10-21": [
+     [
+      8.5,
+      26.0
+     ]
+    ],
+    "2026-10-22": [
+     [
+      8.5,
+      26.0
+     ]
+    ],
+    "2026-10-23": [
+     [
+      8.5,
+      18.0
+     ]
+    ],
+    "2026-10-24": [
+     [
+      10.0,
+      20.0
+     ]
+    ]
+   },
    "weekly": {
     "monday": [
      [
@@ -2593,6 +2632,11 @@
      ]
     ]
    },
+   "valid": [
+    "2026-08-24",
+    "2026-12-09"
+   ],
+   "weeklyNote": "usual week, taken from the published seven-day hours",
    "unknownDuring": [
     [
      "2026-11-21",
@@ -2698,11 +2742,52 @@
    "extendedThrough": "2026-12-17"
   },
   "Grainger Engineering Library": {
-   "source": "Google Maps listing",
-   "valid": [
-    "2026-08-24",
-    "2026-12-09"
-   ],
+   "source": "University Library hours",
+   "sourceUrl": "https://www.library.illinois.edu/library-hours/",
+   "dates": {
+    "2026-10-18": [
+     [
+      10.0,
+      24.0
+     ]
+    ],
+    "2026-10-19": [
+     [
+      0,
+      24
+     ]
+    ],
+    "2026-10-20": [
+     [
+      0,
+      24
+     ]
+    ],
+    "2026-10-21": [
+     [
+      0,
+      24
+     ]
+    ],
+    "2026-10-22": [
+     [
+      0,
+      24
+     ]
+    ],
+    "2026-10-23": [
+     [
+      0,
+      24
+     ]
+    ],
+    "2026-10-24": [
+     [
+      10.0,
+      24.0
+     ]
+    ]
+   },
    "weekly": {
     "monday": [
      [
@@ -2747,6 +2832,11 @@
      ]
     ]
    },
+   "valid": [
+    "2026-08-24",
+    "2026-12-09"
+   ],
+   "weeklyNote": "usual week, taken from the published seven-day hours",
    "unknownDuring": [
     [
      "2026-11-21",
@@ -3595,10 +3685,27 @@
    "extendedThrough": "2026-12-17"
   },
   "Illini Union": {
-   "source": "Google Maps listing",
+   "source": "Campus building hours spreadsheet",
+   "sourceUrl": "https://financeadmin.illinois.edu/wp-content/uploads/2026/09/Fall-2026-Schedule-Updated-9-10-26.xlsx",
    "valid": [
-    "2026-08-24",
-    "2026-12-09"
+    "2026-08-17",
+    "2026-12-10"
+   ],
+   "followsCampusClosures": true,
+   "periods": [
+    {
+     "start": "2026-11-26",
+     "end": "2026-11-29",
+     "weekly": {
+      "monday": [],
+      "tuesday": [],
+      "wednesday": [],
+      "thursday": [],
+      "friday": [],
+      "saturday": [],
+      "sunday": []
+     }
+    }
    ],
    "weekly": {
     "monday": [
@@ -3644,31 +3751,62 @@
      ]
     ]
    },
-   "unknownDuring": [
-    [
-     "2026-11-21",
-     "2026-11-29"
-    ],
-    [
-     "2026-09-07",
-     "2026-09-07"
-    ],
-    [
-     "2026-11-26",
-     "2026-11-26"
-    ],
-    [
-     "2026-11-27",
-     "2026-11-27"
+   "dates": {
+    "2026-11-25": [
+     [
+      7.0,
+      17.0
+     ]
     ]
-   ],
+   },
    "extendedThrough": "2026-12-17"
   },
   "Illini Union Bookstore": {
    "source": "Google Maps listing",
    "valid": [
-    "2026-08-24",
-    "2026-12-09"
+    "2026-08-17",
+    "2026-12-10"
+   ],
+   "followsCampusClosures": true,
+   "periods": [
+    {
+     "start": "2026-11-21",
+     "end": "2026-11-29",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    }
    ],
    "weekly": {
     "monday": [
@@ -3714,24 +3852,6 @@
      ]
     ]
    },
-   "unknownDuring": [
-    [
-     "2026-11-21",
-     "2026-11-29"
-    ],
-    [
-     "2026-09-07",
-     "2026-09-07"
-    ],
-    [
-     "2026-11-26",
-     "2026-11-26"
-    ],
-    [
-     "2026-11-27",
-     "2026-11-27"
-    ]
-   ],
    "extendedThrough": "2026-12-17"
   },
   "Krannert Center for the Performing Arts": {
@@ -4198,11 +4318,52 @@
    "extendedThrough": "2026-12-17"
   },
   "Main Library": {
-   "source": "Google Maps listing",
-   "valid": [
-    "2026-08-24",
-    "2026-12-09"
-   ],
+   "source": "University Library hours",
+   "sourceUrl": "https://www.library.illinois.edu/library-hours/",
+   "dates": {
+    "2026-10-18": [
+     [
+      13.0,
+      24.0
+     ]
+    ],
+    "2026-10-19": [
+     [
+      8.5,
+      24.0
+     ]
+    ],
+    "2026-10-20": [
+     [
+      8.5,
+      24.0
+     ]
+    ],
+    "2026-10-21": [
+     [
+      8.5,
+      24.0
+     ]
+    ],
+    "2026-10-22": [
+     [
+      8.5,
+      24.0
+     ]
+    ],
+    "2026-10-23": [
+     [
+      8.5,
+      18.0
+     ]
+    ],
+    "2026-10-24": [
+     [
+      10.0,
+      17.0
+     ]
+    ]
+   },
    "weekly": {
     "monday": [
      [
@@ -4247,6 +4408,11 @@
      ]
     ]
    },
+   "valid": [
+    "2026-08-24",
+    "2026-12-09"
+   ],
+   "weeklyNote": "usual week, taken from the published seven-day hours",
    "unknownDuring": [
     [
      "2026-11-21",
