@@ -49,7 +49,16 @@ jobs:
 
       # Refresh Google listing hours too, if a SERPAPI_KEY secret has been added.
       # (Checked in the shell: GitHub doesn't allow secrets in an `if:`.)
+      #
+      # Mondays only, unlike the feeds above. The Sunday run exists to close the
+      # Ohio State calendar-week hole, which is a problem about DATED feeds;
+      # Google publishes a weekly pattern that does not move Sunday to Sunday.
+      # Running it twice would just double the SerpApi spend -- 13 buildings on
+      # the free plan's 250 searches a month is ~57 monthly at one run a week,
+      # ~113 at two -- and leave no headroom for a second campus or a retry.
+      # Manual runs from the Actions tab still include it.
       - name: Refresh Google hours
+        if: github.event.schedule != '20 9 * * 0'
         env:
           SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
         run: |
