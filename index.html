@@ -591,32 +591,65 @@
   .browse-btn:hover { color: #e8edf5; }
   .browse-btn[hidden] { display: none; }
 
-  /* Looking at another time.
-     Limited to the dates that actually have data — the class schedule runs to
-     the last day of term, and there is nothing beyond it to show. Past dates
-     are left out too: they have data but no use. */
+  /* Looking at another time — a set of scroll wheels, the way a phone alarm
+     works, because that is the gesture people already have for picking a time.
+     Scroll-snap does the physics; the only JS is reading which item settled
+     under the band.
+
+     Limited to the dates that actually have data: today through the last day
+     of term. Past dates have data too, but nobody looking for somewhere to sit
+     wants yesterday. */
   #browse-when {
-    display: flex; align-items: center; gap: 7px;
-    padding: 10px 14px;
+    padding: 8px 14px 10px;
     border-bottom: 1px solid rgba(255,255,255,0.07);
   }
   #browse-when[hidden] { display: none; }
-  #browse-when input {
-    color-scheme: dark;                /* so the native pickers are not white */
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 7px;
-    padding: 6px 8px;
-    font: inherit; font-size: 12px; color: #e8edf5;
+
+  #wheels {
+    position: relative;
+    display: flex; gap: 2px;
+    height: 136px;                      /* 4 rows of 34 */
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(transparent, #000 26%, #000 74%, transparent);
+    mask-image: linear-gradient(transparent, #000 26%, #000 74%, transparent);
   }
-  #browse-when input:focus-visible { border-color: rgba(147,190,245,0.55); outline: none; }
-  #browse-date { flex: 1; min-width: 0; }
-  #browse-time { width: 94px; flex: none; }
+  .wheel {
+    flex: 1; min-width: 0;
+    height: 100%;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    outline: none;
+  }
+  .wheel::-webkit-scrollbar { display: none; }
+  .wheel-narrow { flex: 0 0 46px; }
+  /* Half a wheel of padding top and bottom so the first and last item can sit
+     under the band like any other. */
+  .wheel-pad { height: 51px; }
+  .wheel-item {
+    height: 34px;
+    scroll-snap-align: center;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12.5px; color: #6b7589;
+    white-space: nowrap;
+    transition: color 0.12s ease;
+  }
+  .wheel-item.is-sel { color: #f0f4f8; font-weight: 600; }
+  #wheel-band {
+    position: absolute; left: 0; right: 0; top: 51px; height: 34px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.04);
+    pointer-events: none;
+    border-radius: 6px;
+  }
   #browse-now {
-    flex: none;
+    width: 100%;
+    margin-top: 8px;
     background: rgba(96,165,250,0.16);
     border: 1px solid rgba(124,166,230,0.42);
-    border-radius: 7px; padding: 6px 10px;
+    border-radius: 7px; padding: 7px 10px;
     font: inherit; font-size: 11.5px; font-weight: 600; color: #cfe3ff; cursor: pointer;
   }
   #browse-now[hidden] { display: none; }
@@ -1444,8 +1477,13 @@
     <button class="browse-btn" id="browse-close" type="button" aria-label="Close">&times;</button>
   </div>
   <div id="browse-when" hidden>
-    <input type="date" id="browse-date" aria-label="Date">
-    <input type="time" id="browse-time" step="900" aria-label="Time">
+    <div id="wheels">
+      <div class="wheel" id="wheel-date" role="listbox" aria-label="Date" tabindex="0"></div>
+      <div class="wheel wheel-narrow" id="wheel-hour" role="listbox" aria-label="Hour" tabindex="0"></div>
+      <div class="wheel wheel-narrow" id="wheel-min" role="listbox" aria-label="Minute" tabindex="0"></div>
+      <div class="wheel wheel-narrow" id="wheel-ampm" role="listbox" aria-label="AM or PM" tabindex="0"></div>
+      <div id="wheel-band" aria-hidden="true"></div>
+    </div>
     <button id="browse-now" type="button" hidden>Now</button>
   </div>
   <div id="browse-note" hidden></div>
@@ -1595,6 +1633,6 @@
 </div>
 
 <script defer src="basemap-render.js?v=35"></script>
-<script defer src="app.js?v=110"></script>
+<script defer src="app.js?v=113"></script>
 </body>
 </html>
