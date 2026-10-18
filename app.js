@@ -915,7 +915,29 @@ function estimateFor(name) {
     };
   }
   const estimate = estimateWhileOpen(name, day, hour, peak, period, effect, withPeriod, time);
-  if (!estimate || hours.state === 'open') return estimate;
+
+  // A building the university says is OPEN must never read as "no data". It
+  // used to: estimateWhileOpen returns null when nothing is timetabled and the
+  // building has no type profile, and that null went straight to the map as
+  // plain grey. On a Sunday that hid most of the campus -- 10 of the 14
+  // buildings open at 7pm on 2026-10-18 were drawn as if nothing were known
+  // about them, including Enarson and Hitchcock, which the registrar publishes
+  // as open 7am-11pm every day of the week.
+  //
+  // Nothing timetabled is not nothing known. It is the single most useful
+  // thing this map can say: the doors are open and no class is in there. The
+  // value is 0 because that is what an empty room is, and the note says
+  // exactly where that comes from so it cannot read as a measurement.
+  if (hours.state === 'open') {
+    if (estimate) return estimate;
+    const from = hours.official ? ` · hours from ${hours.source}` : '';
+    return {
+      value: 0,
+      source: 'open',
+      note: `Open · nothing timetabled here right now${from}`,
+    };
+  }
+  if (!estimate) return estimate;
 
   // Hours not published for today: only show a number when classes are
   // actually scheduled there right now (so the building must be open). Typical
@@ -1093,6 +1115,13 @@ const BUILDINGS_OSU = {
   'Knowlton Architecture Building': { label: 'Knowlton Hall' },
   'Drinko Hall, John Deaver':       { label: 'Drinko Hall' },
   'Ag. Admin.':                     { label: 'Ag Admin' },
+
+  // The two rec centres have no classes in them ever, so without a type they
+  // would now read "open, nothing timetabled" -- i.e. empty -- at 7pm on a
+  // Sunday, which is the exact hour they are full. A type gives them the rec
+  // profile instead, the same one Illinois' ARC and CRCE use.
+  'Recreation & Phys Activ Ctr':    { type: 'rec', label: 'RPAC' },
+  'Adventure Recreation Center':    { type: 'rec', label: 'ARC' },
 };
 
 // Every entry here traces to Ohio State's own list of library locations
@@ -1105,13 +1134,50 @@ const BUILDINGS_OSU = {
 // knowing the campus — a sourced list can say where the libraries are, but not
 // which atrium people actually work in. That part needs an Ohio State student.
 const STUDY_SPOTS_OSU = {
+  // Libraries first, as at Illinois.
   'Library, Wm Oxley Thompson': 1,     // Thompson, the main library
   '18th Avenue Library': 1,            // also holds the Music & Dance Library
   'Ohio Union, New': 0.75,             // same tier Illinois gives the Illini Union
   'Knowlton Architecture Building': 0.75,  // Architecture Library
   'Orton Hall': 0.75,                  // Geology Library
   'Ag. Admin.': 0.75,                  // FAES Library & Student Success Center
-  'Drinko Hall, John Deaver': 0.5,     // Law Library — no published building hours yet
+  'Drinko Hall, John Deaver': 0.5,     // Law Library -- no published building hours yet
+
+  // Everything below was chosen from the registrar's published hours, not from
+  // a guess about where people like to sit. The rule: at least 60 open hours a
+  // week, and then either open all seven days (0.75) or carrying at least 30
+  // timetabled seats at peak (0.5).
+  //
+  // The old list was libraries only, which is why this campus went nearly dark
+  // at weekends -- Enarson is open 7am to 11pm every day of the week with more
+  // classrooms than any other building on campus, and could never appear.
+  // Illinois' list has always included instructional buildings on the same
+  // reasoning (CIF, BIF, the Armory, the ECE building), and its own comment
+  // says to be generous here, because the list scrolls and more slots is what
+  // lets the quieter, less obvious places show up.
+  'Enarson Classroom': 0.75,                    // 112 hrs/week, peak 178, open 7 days
+  'Timashev Family Music Building': 0.75,       // 91 hrs/week, peak 54, open 7 days
+  'Sullivant Hall': 0.75,                       // 71 hrs/week, peak 34, open 7 days
+  'Hitchcock Hall': 0.75,                       // 112 hrs/week, peak 33, open 7 days
+  'Weigel Hall': 0.75,                          // 91 hrs/week, peak 18, open 7 days
+  'Independence Hall': 0.75,                    // 112 hrs/week, peak 6, open 7 days
+  'Smith Lab': 0.5,                             // 68 hrs/week, peak 112
+  'Journalism Building': 0.5,                   // 80 hrs/week, peak 111
+  'Hagerty Hall': 0.5,                          // 66 hrs/week, peak 98
+  'Denney Hall': 0.5,                           // 60 hrs/week, peak 91
+  'Baker Systems Engineering': 0.5,             // 62 hrs/week, peak 85
+  'Schoenbaum Hall': 0.5,                       // 69 hrs/week, peak 78
+  'Jennings Hall': 0.5,                         // 72 hrs/week, peak 72
+  'McPherson Lab': 0.5,                         // 62 hrs/week, peak 71
+  'Derby Hall': 0.5,                            // 61 hrs/week, peak 54
+  'Bolz Hall': 0.5,                             // 62 hrs/week, peak 48
+  'Caldwell Lab': 0.5,                          // 84 hrs/week, peak 47
+  'Dreese Lab': 0.5,                            // 66 hrs/week, peak 46
+  'Campbell Hall': 0.5,                         // 62 hrs/week, peak 45
+  'Kottman Hall': 0.5,                          // 63 hrs/week, peak 42
+  'Hayes Hall': 0.5,                            // 64 hrs/week, peak 36
+  'Pomerene Hall': 0.5,                         // 78 hrs/week, peak 33
+  'Stillman Hall': 0.5,                         // 70 hrs/week, peak 30
 };
 
 const PICK_LABELS_OSU = {};
@@ -1644,7 +1710,11 @@ function studyPicks(limit = PICK_COUNT) {
     .map(name => ({ name, occ: buildingOccupancy(name) }))
     .filter(({ name, occ }) =>
       occ
-      && !['closed', 'unknown'].includes(occ.source)
+      // 'open' carries no busyness to rank on -- it means only that the doors
+      // are open and nothing is scheduled. It belongs on the map and in the
+      // counts, but a list headed "good for studying" should not be sorted by
+      // a zero nobody measured.
+      && !['closed', 'unknown', 'open'].includes(occ.source)
       && (occ.source !== 'estimated' || classDriven(name)))
     .map(pick => ({ ...pick, appeal: STUDY_SPOTS[pick.name] * (1 - pick.occ.value) }))
     .sort((a, b) => b.appeal - a.appeal)
@@ -2564,6 +2634,9 @@ function occText(occ) {
   if (!occ) return { text: 'No data', color: '#5a6478' };
   if (occ.source === 'closed') return { text: occ.cardAccess ? 'Closed*' : 'Closed', color: '#5a6478' };
   if (occ.source === 'unknown') return { text: 'Hours unknown', color: '#5a6478' };
+  // Open with nothing scheduled is a real answer, but it is not a measurement,
+  // so it does not get a percentage.
+  if (occ.source === 'open') return { text: 'Open · no classes', color: cssColor(0) };
   return { text: `${statusLabel(occ.value)} · ${Math.round(occ.value * 100)}%`, color: cssColor(occ.value) };
 }
 
