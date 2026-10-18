@@ -36,7 +36,7 @@ CAMPUSES = {
         "og_description": "A live 3D map of how busy Ohio State campus buildings are right now.",
         # Set this once a screenshot of the Ohio State map exists. Until then the
         # card shares without an image, which is better than sharing Illinois'.
-        "preview": None,
+        "preview": "osu-preview.png",
         "data_dir": "data/osu",
         "blurb": ("A live 3D map of how busy study spaces are around The Ohio State University "
                   "campus in Columbus — libraries, the Ohio Union and academic buildings — so you "
