@@ -57,9 +57,14 @@ REC_SOURCE = "Ohio State Recreational Sports facility hours"
 # map joins on. Building codes do NOT agree across these sources — the register
 # calls the RPAC "RP" and the class data calls it "RPB" — so matching on code
 # would silently create a second, separate building.
+# campusBuildingID -> (name the class data uses, the code it uses).
+# The code matters: build_osu_class_estimates.py keys every building on it, so
+# an entry without one is invisible to the class join — and the codes do NOT
+# agree across sources, the register calling the RPAC "RP" where the class data
+# calls it "RPB".
 REC_BUILDINGS = {
-    "211": "Adventure Recreation Center",
-    "246": "Recreation & Phys Activ Ctr",
+    "211": ("Adventure Recreation Center", "AR"),
+    "246": ("Recreation & Phys Activ Ctr", "RPB"),
 }
 
 # Which published libraries are a BUILDING in their own right, and the scheduling
@@ -267,9 +272,10 @@ def rec_hours():
 
     out, notes = {}, []
     for f in facilities:
-        name = REC_BUILDINGS.get(str(f.get("campusBuildingID") or "").lstrip("0"))
-        if not name:
+        match = REC_BUILDINGS.get(str(f.get("campusBuildingID") or "").lstrip("0"))
+        if not match:
             continue
+        name, code = match
         for row in f.get("hours") or []:
             raw = row.get("hourDate") or ""
             m = re.match(r"(\d{1,2})/(\d{1,2})/(\d{4})$", raw.strip())
@@ -277,7 +283,7 @@ def rec_hours():
                 notes.append(f"{f.get('label')}: unreadable date {raw!r}")
                 continue
             date = f"{m.group(3)}-{int(m.group(1)):02d}-{int(m.group(2)):02d}"
-            byday = out.setdefault(name, {"dates": {}})["dates"]
+            byday = out.setdefault(name, {"code": code, "dates": {}})["dates"]
             if row.get("closedAllDay"):
                 byday.setdefault(date, [])
                 continue
@@ -451,6 +457,7 @@ def main():
         entry.update({
             "source": REC_SOURCE,
             "sourceUrl": REC_URL,
+            "code": info["code"],
             "dates": info["dates"],
             # Only the published week is known; the rest of term is left
             # unknown rather than extrapolated from a week that may hold a

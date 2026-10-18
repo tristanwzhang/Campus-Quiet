@@ -434,6 +434,199 @@
   .pick-meta { font-size: 11.5px; color: #8a94a8; }
   .pick-note { font-size: 11.5px; color: #8a94a8; padding: 2px 7px 1px; }
 
+  /* ── Study rooms, a second section inside the same sheet ──
+     Its own tap target, because someone who wants the picks does not
+     necessarily want a room list under them, and on a phone the sheet is
+     already competing for a fifth of the screen. Collapsed state is kept
+     separately from the picks', so closing one does not close the other. */
+  #rooms-section {
+    margin-top: 9px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  #rooms-section[hidden] { display: none; }
+  #rooms-toggle {
+    width: 100%;
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    background: none; border: 0; padding: 0 1px 6px;
+    font: inherit; cursor: pointer;
+  }
+  #rooms-toggle:hover .pick-head,
+  #rooms-toggle:focus-visible .pick-head { color: #8a94a8; }
+  #rooms-chevron {
+    width: 9px; height: 9px; flex: none; margin-bottom: 2px;
+    border-right: 1.6px solid #6b7488;
+    border-bottom: 1.6px solid #6b7488;
+    transform: rotate(45deg);
+    transition: transform 0.18s ease;
+  }
+  #rooms-toggle[aria-expanded="false"] #rooms-chevron {
+    transform: rotate(-135deg);
+    margin-bottom: -2px;
+  }
+  #rooms-section.is-collapsed #rooms-body { display: none; }
+  #rooms-list { list-style: none; margin: 0; padding: 0; }
+  .rooms-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 10px; padding: 4px 7px; font-size: 12px; color: #c9d1de;
+  }
+  .rooms-row .rooms-where { color: #6b7589; font-size: 10.5px; }
+  .rooms-free { font-weight: 600; color: #8fd4a8; flex: none; }
+  .rooms-full { font-weight: 600; color: #c08a8a; flex: none; }
+  .rooms-foot { font-size: 10.5px; color: #5a6478; padding: 3px 7px 0; }
+
+  /* ── Browse: the whole campus as a list ──
+     The map answers "what shape is campus"; a list answers "where do I go",
+     which is the question people actually arrive with. Slides over the map
+     rather than resizing it, so the map never reflows and Cesium never has to
+     redraw at a new size. */
+  /* Entry point lives at the foot of the picks card rather than floating:
+     a button pinned at 128px/28px sat exactly on top of that card. It also
+     reads better there — you are looking at three suggestions, and "all
+     buildings" is the obvious next step. */
+  /* Lives on the summary row, not in the picks card.
+     Two earlier attempts put it inside that card; collapsed, it read as the
+     one study pick under "OPEN NOW, GOOD FOR STUDYING". The chips already
+     summarise the whole campus, so this belongs beside them — same subject,
+     more detail.
+
+     Deliberately louder than the chips next to it: they are a readout, this
+     is the only way into the room list, and a fourth grey chip disappeared
+     among the three real ones.
+
+     Called availability rather than bookings because that is what it is —
+     rooms with no class timetabled in them. The bookable LibCal rooms are a
+     different source and live in the picks sheet. */
+  #browse-all {
+    pointer-events: auto;              /* #stats itself is click-through */
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(124,166,230,0.42);
+    background: rgba(96,165,250,0.16);
+    font: inherit; font-size: 12.5px; font-weight: 600; letter-spacing: 0.01em;
+    color: #cfe3ff;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  #browse-all:hover, #browse-all:focus-visible {
+    background: rgba(96,165,250,0.26);
+    border-color: rgba(147,190,245,0.6);
+  }
+  #browse-all[hidden] { display: none; }
+  #browse-all .arrow { opacity: 0.85; font-size: 13px; }
+
+  /* Tapping the map dismisses the panel — a 20px glyph in a corner is a poor
+     target on a phone, and this is the gesture people already try. */
+  #browse-backdrop {
+    position: absolute; inset: 0; z-index: 189;
+    background: rgba(0,0,0,0.35);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.22s ease;
+  }
+  #browse-backdrop.is-open { opacity: 1; pointer-events: auto; }
+
+  #browse {
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 340px; max-width: 86vw;
+    z-index: 190;
+    display: flex; flex-direction: column;
+    background: rgba(8,11,16,0.97);
+    border-right: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(14px);
+    transform: translateX(-100%);
+    transition: transform 0.22s ease;
+  }
+  #browse.is-open { transform: translateX(0); }
+
+  #browse-head {
+    display: flex; align-items: center; gap: 10px;
+    padding: calc(14px + var(--safe-top)) 14px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  /* The flex has to be on the wrapper, not the title inside it — on the title
+     the wrapper still shrank to its content and the close button sat tight
+     against the text instead of at the edge. */
+  #browse-heading { flex: 1; min-width: 0; }
+  #browse-title { font-size: 14px; font-weight: 600; color: #f0f4f8; }
+  #browse-sub { font-size: 11px; color: #5a6478; margin-top: 2px; }
+  .browse-btn {
+    display: flex; align-items: center; justify-content: center;
+    flex: none;
+    min-width: 44px; min-height: 44px;        /* a real target, not a glyph */
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 0;
+    border-radius: 10px;
+    font: inherit; font-size: 22px; line-height: 1; color: #c9d1de; cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .browse-btn:hover, .browse-btn:focus-visible {
+    background: rgba(255,255,255,0.11);
+    border-color: rgba(255,255,255,0.22);
+    color: #f0f4f8;
+  }
+  /* Sits hard against the panel edge so it is where a thumb reaches for it. */
+  #browse-close { margin-right: -2px; }
+  .browse-btn:hover { color: #e8edf5; }
+  .browse-btn[hidden] { display: none; }
+
+  #browse-body { flex: 1; overflow-y: auto; padding: 4px 0 20px; }
+  #browse-body::-webkit-scrollbar { width: 6px; }
+  #browse-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
+
+  .browse-group {
+    font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em;
+    color: #4e5768; padding: 14px 16px 6px;
+  }
+  .browse-row {
+    width: 100%; display: flex; align-items: center; justify-content: space-between;
+    gap: 10px; padding: 11px 16px;
+    background: none; border: 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+    font: inherit; text-align: left; color: #e8edf5; cursor: pointer;
+  }
+  .browse-row:hover { background: rgba(255,255,255,0.04); }
+  .browse-name { font-size: 13px; }
+  .browse-sub  { display: block; font-size: 10.5px; color: #5a6478; margin-top: 2px; }
+  .badge {
+    flex: none; font-size: 11px; font-weight: 600;
+    border-radius: 20px; padding: 3px 9px;
+    border: 1px solid transparent;
+  }
+  .badge-open   { color: #8fd4a8; border-color: rgba(143,212,168,0.3); }
+  .badge-none   { color: #c08a8a; border-color: rgba(192,138,138,0.3); }
+  .badge-closed { color: #5a6478; border-color: rgba(255,255,255,0.08); }
+
+  .room-row {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px; padding: 10px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .room-id { font-size: 13px; color: #e8edf5; }
+  .room-for { display: block; font-size: 10.5px; color: #5a6478; margin-top: 2px; }
+  .browse-foot { font-size: 10.5px; color: #4e5768; padding: 14px 16px; line-height: 1.5; }
+
+  @media (max-width: 640px) {
+    #browse { width: 100%; max-width: 100%; }
+    .browse-row { padding: 13px 16px; }
+  }
+
+  /* Live bookable study rooms, where a library publishes them. Deliberately
+     plainer than the busyness figure above it: this is a different claim —
+     rooms nobody has RESERVED, not rooms that are empty. */
+  #panel-rooms {
+    margin-top: 9px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    font-size: 12px;
+    color: #c9d1de;
+  }
+  #panel-rooms[hidden] { display: none; }
+  #panel-rooms .rooms-count { color: #8fd4a8; font-weight: 600; }
+  #panel-rooms .rooms-none  { color: #c08a8a; font-weight: 600; }
+  #panel-rooms .rooms-where { display: block; color: #6b7589; font-size: 10.5px; margin-top: 2px; }
+
   /* ── Compass ── */
   /* Shown only in the phone layout, where the floating legend is in the way
      of the sheet. Same scale, one line, inside the thing you're already reading. */
@@ -1208,6 +1401,19 @@
 </div>
 <div id="labels"></div>
 
+<div id="browse-backdrop"></div>
+<nav id="browse" aria-label="All buildings">
+  <div id="browse-head">
+    <button class="browse-btn" id="browse-back" type="button" hidden>&larr;</button>
+    <div id="browse-heading">
+      <div id="browse-title">Buildings</div>
+      <div id="browse-sub"></div>
+    </div>
+    <button class="browse-btn" id="browse-close" type="button" aria-label="Close">&times;</button>
+  </div>
+  <div id="browse-body"></div>
+</nav>
+
 <div id="header">
   <div>
     <h1>Ohio State Spaces</h1>
@@ -1233,6 +1439,9 @@
     <span class="chip-val" id="s-busy">—</span>
     <span class="chip-lbl">busy</span>
   </div>
+  <button id="browse-all" type="button" hidden>
+    <span>Room availability</span><span class="arrow">&rarr;</span>
+  </button>
 </div>
 
 <div id="pick" hidden>
@@ -1243,6 +1452,16 @@
   <div id="pick-body">
     <ol id="pick-list"></ol>
     <div class="pick-note" id="pick-note" hidden></div>
+    <div id="rooms-section" hidden>
+      <button id="rooms-toggle" type="button" aria-expanded="true" aria-controls="rooms-body">
+        <span class="pick-head">Study rooms free now</span>
+        <span id="rooms-chevron" aria-hidden="true"></span>
+      </button>
+      <div id="rooms-body">
+        <ul id="rooms-list"></ul>
+        <div class="rooms-foot">Rooms nobody has booked — not necessarily empty.</div>
+      </div>
+    </div>
     <div id="pick-key" aria-hidden="true">
       <span class="key-bar"></span>
       <span class="key-ends"><span>Empty</span><span>Full</span></span>
@@ -1288,6 +1507,7 @@
   </div>
   <div id="panel-thanks"></div>
   <div id="panel-note"></div>
+  <div id="panel-rooms" hidden></div>
   <div id="wishlist">
     <div class="wish-q">Not built yet — which would you use?</div>
     <div class="wish-row" id="wish-row">
@@ -1337,6 +1557,6 @@
 </div>
 
 <script defer src="basemap-render.js?v=35"></script>
-<script defer src="app.js?v=96"></script>
+<script defer src="app.js?v=108"></script>
 </body>
 </html>

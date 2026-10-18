@@ -60,6 +60,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT_FILE = ROOT / "data" / "osu" / "class_activity.json"
 HOURS_FILE = ROOT / "data" / "osu" / "building_hours.json"
 CACHE_DIR = ROOT / "data" / "osu" / ".cache"
+ROOMS_FILE = ROOT / "data" / "osu" / "rooms.json"
 
 API = "https://content.osu.edu/v2/classes/search"
 TERM = "1268"          # Autumn 2026
@@ -151,7 +152,13 @@ def main():
     args = ap.parse_args()
 
     hours = json.loads(HOURS_FILE.read_text())["buildings"]
-    name_by_code = {v["code"]: k for k, v in hours.items()}
+    # Skip rather than crash on an hours entry with no building code: a new
+    # source that forgets one should cost that one building's name, not the
+    # whole sweep. (It did exactly that once, on 2026-10-16.)
+    name_by_code = {v["code"]: k for k, v in hours.items() if v.get("code")}
+    codeless = [k for k, v in hours.items() if not v.get("code")]
+    if codeless:
+        print(f"warning: {len(codeless)} hours entries have no code: {codeless}")
 
     seen_sections = set()
     slots = {}             # (room, day, start, end) -> (weight, capacity, code)
@@ -304,6 +311,51 @@ def main():
                 "`seats` is the same weighting times each room's capacity.",
         "buildings": buildings,
     }, indent=1) + "\n")
+
+    # ── room-level output ──
+    # The aggregate above answers "how busy is this building". It cannot answer
+    # "which room is free", because summing to a per-hour count throws the room
+    # away. `slots` already holds exactly that detail, so write it out too
+    # rather than sweeping the API twice for the same thing.
+    #
+    # A room appearing here means no class is SCHEDULED in it. It does not mean
+    # the door is unlocked — plenty of classrooms are locked outside class — so
+    # whatever reads this file has to say "no class scheduled", not "free".
+    rooms = {}
+    for (fid, day, start, end), (weight, cap, code) in slots.items():
+        room = rooms.setdefault(fid, {"code": code, "capacity": cap, "busy": {}})
+        room["busy"].setdefault(day, []).append([start, end])
+        if cap > room["capacity"]:
+            room["capacity"] = cap
+    for room in rooms.values():
+        # Merge touching or overlapping bookings so a run of back-to-back
+        # classes reads as one closed stretch rather than several.
+        for day, spans in room["busy"].items():
+            merged = []
+            for a, b in sorted(spans):
+                if merged and a <= merged[-1][1]:
+                    merged[-1][1] = max(merged[-1][1], b)
+                else:
+                    merged.append([a, b])
+            room["busy"][day] = merged
+
+    by_building = {}
+    for fid, room in rooms.items():
+        name = name_by_code.get(room["code"]) or code_names.get(room["code"], room["code"])
+        by_building.setdefault(name, {"code": room["code"], "rooms": {}})
+        by_building[name]["rooms"][fid] = {"capacity": room["capacity"], "busy": room["busy"]}
+
+    ROOMS_FILE.write_text(json.dumps({
+        "term": TERM_LABEL,
+        "campus": "Ohio State — Columbus",
+        "built_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "note": "Hours each room is taken by a scheduled class, per weekday. "
+                "A room not listed as busy has NO CLASS SCHEDULED — which is not "
+                "the same as unlocked or available.",
+        "buildings": by_building,
+    }, indent=1) + "\n")
+    print(f"rooms written:     {len(rooms)} in {len(by_building)} buildings "
+          f"-> {ROOMS_FILE.relative_to(ROOT)}")
 
     joined = sum(1 for e in buildings.values() if e["hasHours"])
     print(f"\nsections kept:     {len(seen_sections)}")

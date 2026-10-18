@@ -400,6 +400,23 @@ const DAY_NAMES = ['sunday','monday','tuesday','wednesday','thursday','friday','
 // ─── Data loading ─────────────────────────────────────────────────────────────
 const data = { classActivity: null, popularTimes: null, hours: null, gis: null, checkins: loadLocalCheckins() };
 
+// Bookable study rooms, from the libraries' own systems via /api/rooms.
+// Not part of `data` above: everything there is a file shipped with the site,
+// while this is live and allowed to be missing. A campus with no configured
+// library simply never fills it, which is why Illinois shows nothing.
+let roomAvailability = null;
+
+async function loadRoomAvailability() {
+  try {
+    const res = await fetch(`/api/rooms?campus=${encodeURIComponent(CAMPUS.id)}`);
+    if (!res.ok) return;                       // 404 = campus not configured
+    const body = await res.json();
+    roomAvailability = body?.buildings ?? null;
+    renderRoomsList();
+    if (panelBuilding) openPanel(panelBuilding, true);   // a panel is already open
+  } catch (e) { /* never let a live feed break the map */ }
+}
+
 async function loadJson(path) {
   try {
     const res = await fetch(path, { cache: 'no-cache' });
@@ -1105,6 +1122,229 @@ const GIS_ALIASES = CAMPUS_CONTENT.gisAliases;
  * The reason half of an assumed-closure note, for showing under a heading that
  * already says "Probably closed" — otherwise the panel says it twice.
  */
+/**
+ * Bookable study rooms in this building, when its library publishes them.
+ *
+ * Says "free to book" rather than "free", on purpose. The feed reports rooms
+ * nobody has RESERVED, which is not the same as rooms nobody is sitting in —
+ * blurring the two would be exactly the kind of confident-but-wrong claim the
+ * rest of this map works to avoid. Hidden entirely when the library has no
+ * bookable rooms today, because "0 of 0" reads as breakage rather than as a
+ * closed Saturday.
+ */
+// ─── Browse: the campus as a list ─────────────────────────────────────────────
+// Rooms a class is scheduled in, per weekday, from data/<campus>/rooms.json.
+// Present only where the class sweep was rerun to keep room detail.
+let roomSchedule = null;
+
+async function loadRoomSchedule() {
+  try {
+    const r = await fetch(`${CAMPUS.dataDir}/rooms.json`);
+    if (!r.ok) return;
+    roomSchedule = (await r.json()).buildings ?? null;
+    const entry = document.getElementById('browse-all');
+    if (entry && roomSchedule) entry.hidden = false;
+  } catch (e) { /* no room data for this campus */ }
+}
+
+/**
+ * How long until a class takes this room, in hours, or null if one is in it now.
+ * Infinity means nothing else is scheduled in it today.
+ */
+function roomFreeFor(room, day, time) {
+  const spans = room?.busy?.[day] ?? [];
+  for (const [a, b] of spans) if (time >= a && time < b) return null;
+  const next = spans.map(([a]) => a).filter(a => a > time).sort((x, y) => x - y)[0];
+  return next === undefined ? Infinity : next - time;
+}
+
+/** { free, total } rooms with no class scheduled in them right now. */
+function roomsFreeIn(building) {
+  const entry = roomSchedule?.[building];
+  if (!entry) return null;
+  const { day, time } = campusNow();
+  const rooms = Object.values(entry.rooms ?? {});
+  const free = rooms.filter(r => roomFreeFor(r, day, time) !== null).length;
+  return { free, total: rooms.length };
+}
+
+function shortFor(hours) {
+  if (hours === Infinity) return 'rest of the day';
+  const m = Math.round(hours * 60);
+  return m >= 60 ? `${Math.floor(m / 60)}h ${String(m % 60).padStart(2, '0')}m` : `${m} min`;
+}
+
+let browseBuilding = null;   // null = the list, otherwise the building drilled into
+
+function renderBrowse() {
+  const body = document.getElementById('browse-body');
+  const title = document.getElementById('browse-title');
+  const sub = document.getElementById('browse-sub');
+  const back = document.getElementById('browse-back');
+  if (!body) return;
+
+  if (browseBuilding) return renderBrowseRooms(body, title, sub, back);
+  back.hidden = true;
+  title.textContent = 'Buildings';
+
+  const { date, time } = campusNow();
+  const names = knownBuildings().sort((a, b) => pickLabel(a).localeCompare(pickLabel(b)));
+  const groups = { Library: [], Academic: [] };
+  for (const n of names) {
+    (BUILDINGS[n]?.type === 'library' || /librar/i.test(pickLabel(n)) ? groups.Library : groups.Academic).push(n);
+  }
+  // Campus time, not the reader's — someone checking Ohio State from a
+  // different timezone is asking about Columbus.
+  const hh = Math.floor(time), mm = Math.round((time - hh) * 60);
+  const am = hh < 12 || hh >= 24;
+  const h12 = hh % 12 === 0 ? 12 : hh % 12;
+  sub.textContent = `${names.length} buildings · ${h12}:${String(mm).padStart(2, '0')} ${am ? 'am' : 'pm'}`;
+
+  let html = '';
+  for (const [label, list] of Object.entries(groups)) {
+    if (!list.length) continue;
+    html += `<div class="browse-group">${label}</div>`;
+    for (const n of list) {
+      // "Closed" is a claim; "no hours" is the absence of one. A library whose
+      // published week has rolled past is not shut, we just don't know — and
+      // saying Closed there would send someone away from an open library.
+      const st = hoursStatus(n, date, time);
+      const rooms = st.state === 'open' ? roomsFreeIn(n) : null;
+      let badge;
+      if (st.state === 'unknown') badge = '<span class="badge badge-closed">No hours</span>';
+      else if (st.state !== 'open') badge = `<span class="badge badge-closed">${st.assumed ? 'Probably closed' : 'Closed'}</span>`;
+      else if (rooms && rooms.total) badge = `<span class="badge ${rooms.free ? 'badge-open' : 'badge-none'}">${rooms.free}/${rooms.total}</span>`;
+      else badge = '<span class="badge badge-open">Open</span>';
+      html += `<button class="browse-row" data-building="${encodeURIComponent(n)}">`
+            + `<span class="browse-name">${pickLabel(n)}</span>${badge}</button>`;
+    }
+  }
+  html += '<div class="browse-foot">A count shows rooms with no class scheduled right now. '
+        + 'That is not the same as unlocked — many classrooms are locked outside class.</div>';
+  body.innerHTML = html;
+  body.scrollTop = 0;
+}
+
+function renderBrowseRooms(body, title, sub, back) {
+  const n = browseBuilding;
+  const { day, time } = campusNow();
+  const entry = roomSchedule?.[n];
+  back.hidden = false;
+  title.textContent = pickLabel(n);
+
+  const rooms = Object.entries(entry?.rooms ?? {})
+    .map(([fid, r]) => ({ fid, cap: r.capacity, free: roomFreeFor(r, day, time) }))
+    .sort((a, b) => (b.free ?? -1) - (a.free ?? -1));
+  const freeCount = rooms.filter(r => r.free !== null).length;
+  sub.textContent = rooms.length
+    ? `${freeCount} of ${rooms.length} with no class scheduled`
+    : 'No classroom schedule for this building';
+
+  let html = rooms.map(r => {
+    const id = r.fid.replace(entry.code, '').replace(/^0+/, '') || r.fid;
+    return `<div class="room-row"><span><span class="room-id">${id}</span>`
+      + `<span class="room-for">${r.free === null ? 'Class in progress'
+          : `No class for ${shortFor(r.free)}`}${r.cap ? ` · seats ${r.cap}` : ''}</span></span>`
+      + `<span class="badge ${r.free === null ? 'badge-closed' : 'badge-open'}">`
+      + `${r.free === null ? 'In use' : 'Free'}</span></div>`;
+  }).join('');
+  if (!rooms.length) html = '<div class="browse-foot">Nothing scheduled here, so there is no room list to show.</div>';
+  else html += '<div class="browse-foot">From the registrar\'s class schedule. A room with no class '
+             + 'may still be locked — this says nobody is timetabled in it.</div>';
+  body.innerHTML = html;
+  body.scrollTop = 0;
+}
+
+function openBrowse() {
+  browseBuilding = null;
+  renderBrowse();
+  document.getElementById('browse')?.classList.add('is-open');
+  document.getElementById('browse-backdrop')?.classList.add('is-open');
+  // Move focus into the panel so a keyboard or screen reader follows it, and
+  // so Escape has somewhere sensible to come from.
+  document.getElementById('browse-close')?.focus({ preventScroll: true });
+  track('browse_opened', { device: deviceKind() });
+}
+function closeBrowse() {
+  document.getElementById('browse')?.classList.remove('is-open');
+  document.getElementById('browse-backdrop')?.classList.remove('is-open');
+}
+function browseIsOpen() {
+  return !!document.getElementById('browse')?.classList.contains('is-open');
+}
+
+const ROOMS_COLLAPSED_KEY = 'campusQuietRoomsCollapsed';
+
+function roomsCollapsed() {
+  try { return localStorage.getItem(ROOMS_COLLAPSED_KEY) === '1'; } catch (e) { return false; }
+}
+function setRoomsCollapsed(collapsed) {
+  try {
+    if (collapsed) localStorage.setItem(ROOMS_COLLAPSED_KEY, '1');
+    else localStorage.removeItem(ROOMS_COLLAPSED_KEY);
+  } catch (e) { /* preference just won't survive the session */ }
+  applyRoomsCollapsed();
+}
+function applyRoomsCollapsed() {
+  const section = document.getElementById('rooms-section');
+  const toggle = document.getElementById('rooms-toggle');
+  if (!section || !toggle) return;
+  const collapsed = roomsCollapsed();
+  section.classList.toggle('is-collapsed', collapsed);
+  toggle.setAttribute('aria-expanded', String(!collapsed));
+  toggle.title = collapsed ? 'Show study rooms' : 'Hide study rooms';
+  toggle.setAttribute('aria-label', toggle.title);
+  publishSheetHeight();   // the sheet just changed shape
+}
+
+/**
+ * The study-room list inside the sheet.
+ *
+ * Shows only buildings whose library is open enough to have bookable rooms
+ * today; a library with nothing bookable is left out rather than listed as
+ * "0 of 0", which reads as breakage. The whole section hides when no building
+ * on this campus has any, which is every campus but Ohio State today.
+ */
+function renderRoomsList() {
+  const section = document.getElementById('rooms-section');
+  const list = document.getElementById('rooms-list');
+  if (!section || !list) return;
+  const rows = Object.entries(roomAvailability ?? {})
+    .filter(([, v]) => v && v.total)
+    .sort((a, b) => b[1].free - a[1].free);
+  if (!rows.length) { section.hidden = true; return; }
+  list.innerHTML = rows.map(([building, v]) => {
+    const label = pickLabel(building);
+    // A library usually shares its building's name, so listing both reads as a
+    // stutter ("Thompson Library · Thompson Library"). Name only the libraries
+    // the building's own label does not already say.
+    const norm = x => x.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const where = (v.sources ?? [])
+      .filter(src => norm(src) !== norm(label) && !norm(label).includes(norm(src)))
+      .join(' · ');
+    const cls = v.free ? 'rooms-free' : 'rooms-full';
+    return `<li class="rooms-row"><span>${label}`
+      + (where ? `<span class="rooms-where"> · ${where}</span>` : '')
+      + `</span><span class="${cls}">${v.free}/${v.total}</span></li>`;
+  }).join('');
+  section.hidden = false;
+  applyRoomsCollapsed();
+}
+
+function renderRooms(name) {
+  const box = document.getElementById('panel-rooms');
+  if (!box) return;
+  const entry = roomAvailability?.[name];
+  if (!entry || !entry.total) { box.hidden = true; return; }
+  const { free, total, sources = [] } = entry;
+  const cls = free ? 'rooms-count' : 'rooms-none';
+  const word = total === 1 ? 'room' : 'rooms';
+  box.innerHTML =
+    `<span class="${cls}">${free} of ${total}</span> study ${word} free to book right now`
+    + (sources.length ? `<span class="rooms-where">${sources.join(' · ')}</span>` : '');
+  box.hidden = false;
+}
+
 function closureReason(note) {
   const reason = note.replace(/^Probably closed\s*·\s*/, '');
   return reason.charAt(0).toUpperCase() + reason.slice(1) + '.';
@@ -2406,6 +2646,7 @@ function openPanel(name, keepThanks = false) {
     : `${SOURCE_LABELS[occ.source]} · ${Math.round(occ.value * 100)}% full`;
   panelQ.hidden = closed || unmapped;
   checkinRow.hidden = closed || unmapped;
+  renderRooms(name);
   panelNote.textContent = unmapped
     ? "On the map, but nobody publishes hours for it — so there's nothing to show."
     : closed
@@ -2818,6 +3059,35 @@ pickToggle.addEventListener('click', () => {
   track('picks_toggled', { collapsed, device: deviceKind() });
 });
 
+// Same tap-to-slide as the picks above it, with its own remembered state —
+// wanting the picks and wanting a room list are different wants.
+document.getElementById('browse-all')?.addEventListener('click', openBrowse);
+document.getElementById('browse-backdrop')?.addEventListener('click', closeBrowse);
+// Escape backs out one level: out of a building to the list, then out entirely.
+document.addEventListener('keydown', ev => {
+  if (ev.key !== 'Escape' || !browseIsOpen()) return;
+  if (browseBuilding) { browseBuilding = null; renderBrowse(); }
+  else closeBrowse();
+});
+document.getElementById('browse-close')?.addEventListener('click', closeBrowse);
+document.getElementById('browse-back')?.addEventListener('click', () => {
+  browseBuilding = null;
+  renderBrowse();
+});
+document.getElementById('browse-body')?.addEventListener('click', ev => {
+  const row = ev.target.closest('.browse-row');
+  if (!row) return;
+  browseBuilding = decodeURIComponent(row.dataset.building);
+  renderBrowse();
+  track('browse_building', { building: browseBuilding, device: deviceKind() });
+});
+
+document.getElementById('rooms-toggle')?.addEventListener('click', () => {
+  const collapsed = !roomsCollapsed();
+  setRoomsCollapsed(collapsed);
+  track('rooms_toggled', { collapsed, device: deviceKind() });
+});
+
 /**
  * Ships to everyone, but a PostHog flag can switch it off without a deploy.
  * Unknown means on: the flag is undefined whenever analytics hasn't loaded or
@@ -2975,6 +3245,11 @@ function refresh({ keepThanks = false } = {}) {
   refresh();
   await buildingsLoading;
   refresh();
+
+  // Live room availability, and then on the same cadence as everything else.
+  loadRoomSchedule();
+  loadRoomAvailability();
+  setInterval(loadRoomAvailability, 5 * 60 * 1000);
 
   // Busyness changes with the hour; recheck every five minutes.
   setInterval(refresh, 5 * 60 * 1000);

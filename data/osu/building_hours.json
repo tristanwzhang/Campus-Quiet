@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-16T06:38:54+00:00",
+ "built_at": "2026-10-17T06:03:41+00:00",
  "campus": "Ohio State",
  "term": "Autumn 2026",
  "campusClosedDates": [],
@@ -2351,6 +2351,7 @@
   "Adventure Recreation Center": {
    "source": "Ohio State Recreational Sports facility hours",
    "sourceUrl": "https://recsports.osu.edu/fms/api/facilities",
+   "code": "AR",
    "dates": {
     "2026-10-11": [
      [
@@ -2407,6 +2408,7 @@
   "Recreation & Phys Activ Ctr": {
    "source": "Ohio State Recreational Sports facility hours",
    "sourceUrl": "https://recsports.osu.edu/fms/api/facilities",
+   "code": "RPB",
    "dates": {
     "2026-10-11": [
      [
