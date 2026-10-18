@@ -1198,27 +1198,7 @@ function browseDateRange() {
 
 const WHEEL_ROW = 34;          // must match .wheel-item in the stylesheet
 
-/** Every date there is a schedule for: today through the last day of class. */
-function browseDates() {
-  const { min, max } = browseDateRange();
-  const out = [];
-  const [y, mo, d] = min.split('-').map(Number);
-  const cur = new Date(y, mo - 1, d);
-  for (let i = 0; i < 200; i++) {
-    const iso = `${cur.getFullYear()}-${String(cur.getMonth() + 1).padStart(2, '0')}-${String(cur.getDate()).padStart(2, '0')}`;
-    if (iso > max) break;
-    out.push({
-      value: iso,
-      label: i === 0 ? 'Today'
-        : cur.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' }),
-    });
-    cur.setDate(cur.getDate() + 1);
-  }
-  return out;
-}
-
 const WHEELS = {
-  date: () => browseDates(),
   hour: () => Array.from({ length: 12 }, (_, i) => ({ value: i + 1, label: String(i + 1) })),
   min:  () => [0, 15, 30, 45].map(m => ({ value: m, label: String(m).padStart(2, '0') })),
   ampm: () => [{ value: 0, label: 'AM' }, { value: 1, label: 'PM' }],
@@ -1228,10 +1208,16 @@ let wheelSettle = null;        // debounce, so a flick is read once it stops
 // Setting scrollTop fires 'scroll' just like a finger does, so seating the
 // wheels would otherwise read itself back as a change — which left the "Now"
 // button on screen immediately after it had been used.
-let seatingWheels = false;
+//
+// A boolean cleared on a zero timeout is not enough: the browser dispatches
+// those scroll events asynchronously, and some land after the flag has gone.
+// A timestamp covers the whole dispatch, and nobody flicks a wheel within a
+// quarter second of the panel drawing itself.
+let seatedAt = 0;
+const SEAT_QUIET_MS = 250;
 
 function markAllWheels() {
-  for (const id of ['wheel-date', 'wheel-hour', 'wheel-min', 'wheel-ampm']) {
+  for (const id of ['wheel-hour', 'wheel-min', 'wheel-ampm']) {
     const el = document.getElementById(id);
     if (el) markWheel(el, wheelIndex(el));
   }
@@ -1258,13 +1244,14 @@ function wheelIndex(el) {
 }
 
 function readWheels() {
-  const dates = browseDates();
-  const di = Math.min(wheelIndex(document.getElementById('wheel-date')), dates.length - 1);
+  const { min, max } = browseDateRange();
+  const picked = document.getElementById('browse-date')?.value || min;
+  const date = picked < min ? min : picked > max ? max : picked;
   const h12 = WHEELS.hour()[Math.min(wheelIndex(document.getElementById('wheel-hour')), 11)].value;
   const mins = WHEELS.min()[Math.min(wheelIndex(document.getElementById('wheel-min')), 3)].value;
   const pm = wheelIndex(document.getElementById('wheel-ampm')) === 1;
   const hour24 = (h12 % 12) + (pm ? 12 : 0);
-  return { date: dates[di].value, time: hour24 + mins / 60 };
+  return { date, time: hour24 + mins / 60 };
 }
 
 function applyBrowseWhen(seatWheels = true) {
@@ -1272,21 +1259,21 @@ function applyBrowseWhen(seatWheels = true) {
   const nowBtn = document.getElementById('browse-now');
   if (!wrap) return;
   const w = browseWhen();
-  const dates = browseDates();
   const hh = Math.floor(w.time) % 24;
   const h12 = hh % 12 === 0 ? 12 : hh % 12;
   // Snap to the nearest quarter the wheel can actually show.
   const quarter = Math.min(3, Math.round(((w.time - Math.floor(w.time)) * 60) / 15) % 4);
 
+  const dateEl = document.getElementById('browse-date');
+  if (dateEl) {
+    const { min, max } = browseDateRange();
+    dateEl.min = min; dateEl.max = max; dateEl.value = w.date;
+  }
   if (seatWheels) {
-    seatingWheels = true;
-    fillWheel(document.getElementById('wheel-date'), dates,
-              Math.max(0, dates.findIndex(d => d.value === w.date)));
+    seatedAt = Date.now();
     fillWheel(document.getElementById('wheel-hour'), WHEELS.hour(), h12 - 1);
     fillWheel(document.getElementById('wheel-min'), WHEELS.min(), quarter);
     fillWheel(document.getElementById('wheel-ampm'), WHEELS.ampm(), hh >= 12 ? 1 : 0);
-    // Let the scroll events this just caused land before listening again.
-    setTimeout(() => { seatingWheels = false; }, 0);
   } else {
     // Only the wheel being touched updates itself; keep the others honest.
     markAllWheels();
@@ -3228,14 +3215,20 @@ pickToggle.addEventListener('click', () => {
 // Same tap-to-slide as the picks above it, with its own remembered state —
 // wanting the picks and wanting a room list are different wants.
 document.getElementById('browse-all')?.addEventListener('click', openBrowse);
+document.getElementById('browse-date')?.addEventListener('change', () => {
+  const { date, time } = readWheels();
+  setBrowseAt(date, time, true);      // leave the time wheels where they are
+  track('browse_date_changed', { device: deviceKind() });
+});
+
 // One listener per wheel. Scroll-snap handles the feel; this only has to
 // notice when a flick has come to rest, which a short debounce does — the
 // scrollend event is still missing on Safari.
-for (const id of ['wheel-date', 'wheel-hour', 'wheel-min', 'wheel-ampm']) {
+for (const id of ['wheel-hour', 'wheel-min', 'wheel-ampm']) {
   const el = document.getElementById(id);
   if (!el) continue;
   el.addEventListener('scroll', () => {
-    if (seatingWheels) return;                // we moved it, not a finger
+    if (Date.now() - seatedAt < SEAT_QUIET_MS) return;   // we moved it, not a finger
     markWheel(el, wheelIndex(el));            // highlight follows immediately
     clearTimeout(wheelSettle);
     wheelSettle = setTimeout(() => {

@@ -605,6 +605,22 @@
   }
   #browse-when[hidden] { display: none; }
 
+  /* The date is a calendar, because picking "the 19th" off a grid beats
+     scrolling past every day in between. The time stays on wheels, where
+     scrolling is the natural gesture and the values are few. */
+  #browse-date {
+    width: 100%;
+    color-scheme: dark;                 /* so the native calendar is not white */
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 7px;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    font: inherit; font-size: 12.5px; color: #e8edf5;
+    cursor: pointer;
+  }
+  #browse-date:focus-visible { border-color: rgba(147,190,245,0.55); outline: none; }
+
   #wheels {
     position: relative;
     display: flex; gap: 2px;
@@ -623,7 +639,7 @@
     outline: none;
   }
   .wheel::-webkit-scrollbar { display: none; }
-  .wheel-narrow { flex: 0 0 46px; }
+  .wheel-narrow { flex: 1; }   /* three columns now, so share the width */
   /* Half a wheel of padding top and bottom so the first and last item can sit
      under the band like any other. */
   .wheel-pad { height: 51px; }
@@ -1477,8 +1493,8 @@
     <button class="browse-btn" id="browse-close" type="button" aria-label="Close">&times;</button>
   </div>
   <div id="browse-when" hidden>
+    <input type="date" id="browse-date" aria-label="Date">
     <div id="wheels">
-      <div class="wheel" id="wheel-date" role="listbox" aria-label="Date" tabindex="0"></div>
       <div class="wheel wheel-narrow" id="wheel-hour" role="listbox" aria-label="Hour" tabindex="0"></div>
       <div class="wheel wheel-narrow" id="wheel-min" role="listbox" aria-label="Minute" tabindex="0"></div>
       <div class="wheel wheel-narrow" id="wheel-ampm" role="listbox" aria-label="AM or PM" tabindex="0"></div>
@@ -1633,6 +1649,6 @@
 </div>
 
 <script defer src="basemap-render.js?v=35"></script>
-<script defer src="app.js?v=113"></script>
+<script defer src="app.js?v=115"></script>
 </body>
 </html>
