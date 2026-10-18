@@ -572,6 +572,42 @@
   .browse-btn:hover { color: #e8edf5; }
   .browse-btn[hidden] { display: none; }
 
+  /* Looking at another time.
+     Limited to the dates that actually have data — the class schedule runs to
+     the last day of term, and there is nothing beyond it to show. Past dates
+     are left out too: they have data but no use. */
+  #browse-when {
+    display: flex; align-items: center; gap: 7px;
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  #browse-when[hidden] { display: none; }
+  #browse-when input {
+    color-scheme: dark;                /* so the native pickers are not white */
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 7px;
+    padding: 6px 8px;
+    font: inherit; font-size: 12px; color: #e8edf5;
+  }
+  #browse-when input:focus-visible { border-color: rgba(147,190,245,0.55); outline: none; }
+  #browse-date { flex: 1; min-width: 0; }
+  #browse-time { width: 94px; flex: none; }
+  #browse-now {
+    flex: none;
+    background: rgba(96,165,250,0.16);
+    border: 1px solid rgba(124,166,230,0.42);
+    border-radius: 7px; padding: 6px 10px;
+    font: inherit; font-size: 11.5px; font-weight: 600; color: #cfe3ff; cursor: pointer;
+  }
+  #browse-now[hidden] { display: none; }
+  #browse-note {
+    padding: 9px 14px; font-size: 11px; line-height: 1.5; color: #c0a36b;
+    background: rgba(197,160,89,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  #browse-note[hidden] { display: none; }
+
   #browse-body { flex: 1; overflow-y: auto; padding: 4px 0 20px; }
   #browse-body::-webkit-scrollbar { width: 6px; }
   #browse-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
@@ -1411,6 +1447,12 @@
     </div>
     <button class="browse-btn" id="browse-close" type="button" aria-label="Close">&times;</button>
   </div>
+  <div id="browse-when" hidden>
+    <input type="date" id="browse-date" aria-label="Date">
+    <input type="time" id="browse-time" step="900" aria-label="Time">
+    <button id="browse-now" type="button" hidden>Now</button>
+  </div>
+  <div id="browse-note" hidden></div>
   <div id="browse-body"></div>
 </nav>
 
@@ -1557,6 +1599,6 @@
 </div>
 
 <script defer src="basemap-render.js?v=35"></script>
-<script defer src="app.js?v=108"></script>
+<script defer src="app.js?v=110"></script>
 </body>
 </html>

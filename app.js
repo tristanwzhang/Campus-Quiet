@@ -1159,10 +1159,10 @@ function roomFreeFor(room, day, time) {
 }
 
 /** { free, total } rooms with no class scheduled in them right now. */
-function roomsFreeIn(building) {
+function roomsFreeIn(building, when) {
   const entry = roomSchedule?.[building];
   if (!entry) return null;
-  const { day, time } = campusNow();
+  const { day, time } = when ?? campusNow();
   const rooms = Object.values(entry.rooms ?? {});
   const free = rooms.filter(r => roomFreeFor(r, day, time) !== null).length;
   return { free, total: rooms.length };
@@ -1172,6 +1172,85 @@ function shortFor(hours) {
   if (hours === Infinity) return 'rest of the day';
   const m = Math.round(hours * 60);
   return m >= 60 ? `${Math.floor(m / 60)}h ${String(m % 60).padStart(2, '0')}m` : `${m} min`;
+}
+
+// Looking at a time other than now. null = now.
+let browseAt = null;
+
+/** The moment the browse panel is describing — the chosen one, or now. */
+function browseWhen() {
+  if (!browseAt) return campusNow();
+  const [y, mo, d] = browseAt.date.split('-').map(Number);
+  const weekday = DAY_NAMES[new Date(y, mo - 1, d).getDay()];
+  return { date: browseAt.date, day: weekday, hour: Math.floor(browseAt.time), time: browseAt.time };
+}
+
+/**
+ * The span of dates there is anything to say about: today through the last day
+ * of class. Beyond that the schedule is empty, and before today the answer is
+ * only of historical interest.
+ */
+function browseDateRange() {
+  const today = campusNow().date;
+  const last = ACADEMIC_CALENDAR.classesEnd;
+  return { min: today, max: last > today ? last : today };
+}
+
+function applyBrowseWhen() {
+  const dateEl = document.getElementById('browse-date');
+  const timeEl = document.getElementById('browse-time');
+  const nowBtn = document.getElementById('browse-now');
+  const wrap = document.getElementById('browse-when');
+  if (!dateEl || !timeEl || !wrap) return;
+  const { min, max } = browseDateRange();
+  dateEl.min = min; dateEl.max = max;
+  const w = browseWhen();
+  dateEl.value = w.date;
+  const hh = Math.floor(w.time), mm = Math.round((w.time - hh) * 60);
+  timeEl.value = `${String(hh % 24).padStart(2, '0')}:${String(mm).padStart(2, '0')}`;
+  if (nowBtn) nowBtn.hidden = !browseAt;
+  wrap.hidden = false;
+}
+
+/**
+ * Why a chosen date might show less than today does.
+ *
+ * Two different gaps, and they are worth naming rather than letting someone
+ * conclude the campus is shut. A no-class day has no timetable to read, and
+ * the libraries and rec centres publish only a rolling week, so past that the
+ * map genuinely does not know their hours.
+ */
+function browseNote(date) {
+  const period = calendarPeriod(date);
+  if (!period.classesMeet) {
+    // The calendar's own label usually already ends "— no classes", so this
+    // adds the consequence rather than a second dash and a repeat.
+    const label = (period.label || 'No classes this day').replace(/\s*—\s*no classes$/i, '');
+    return `${label}: nothing is timetabled, so there are no room counts.`;
+  }
+  const dated = Object.values(data.hours?.buildings ?? {}).filter(v => v.dates);
+  if (dated.length) {
+    const covered = dated.some(v => date in v.dates);
+    if (!covered) {
+      return 'Libraries and rec centres publish about a week ahead, so their hours are unknown this far out. Classrooms are unaffected.';
+    }
+  }
+  return null;
+}
+
+function applyBrowseNote(date) {
+  const el = document.getElementById('browse-note');
+  if (!el) return;
+  const msg = browseNote(date);
+  el.textContent = msg ?? '';
+  el.hidden = !msg;
+}
+
+function setBrowseAt(date, time) {
+  const { min, max } = browseDateRange();
+  const clamped = date < min ? min : date > max ? max : date;
+  browseAt = { date: clamped, time };
+  renderBrowse();
 }
 
 let browseBuilding = null;   // null = the list, otherwise the building drilled into
@@ -1187,7 +1266,9 @@ function renderBrowse() {
   back.hidden = true;
   title.textContent = 'Buildings';
 
-  const { date, time } = campusNow();
+  applyBrowseWhen();
+  const { date, time } = browseWhen();
+  applyBrowseNote(date);
   const names = knownBuildings().sort((a, b) => pickLabel(a).localeCompare(pickLabel(b)));
   const groups = { Library: [], Academic: [] };
   for (const n of names) {
@@ -1209,7 +1290,7 @@ function renderBrowse() {
       // published week has rolled past is not shut, we just don't know — and
       // saying Closed there would send someone away from an open library.
       const st = hoursStatus(n, date, time);
-      const rooms = st.state === 'open' ? roomsFreeIn(n) : null;
+      const rooms = st.state === 'open' ? roomsFreeIn(n, browseWhen()) : null;
       let badge;
       if (st.state === 'unknown') badge = '<span class="badge badge-closed">No hours</span>';
       else if (st.state !== 'open') badge = `<span class="badge badge-closed">${st.assumed ? 'Probably closed' : 'Closed'}</span>`;
@@ -1227,7 +1308,8 @@ function renderBrowse() {
 
 function renderBrowseRooms(body, title, sub, back) {
   const n = browseBuilding;
-  const { day, time } = campusNow();
+  applyBrowseWhen();
+  const { day, time } = browseWhen();
   const entry = roomSchedule?.[n];
   back.hidden = false;
   title.textContent = pickLabel(n);
@@ -1257,6 +1339,7 @@ function renderBrowseRooms(body, title, sub, back) {
 
 function openBrowse() {
   browseBuilding = null;
+  browseAt = null;          // always open on now, not on whatever was last picked
   renderBrowse();
   document.getElementById('browse')?.classList.add('is-open');
   document.getElementById('browse-backdrop')?.classList.add('is-open');
@@ -3062,6 +3145,19 @@ pickToggle.addEventListener('click', () => {
 // Same tap-to-slide as the picks above it, with its own remembered state —
 // wanting the picks and wanting a room list are different wants.
 document.getElementById('browse-all')?.addEventListener('click', openBrowse);
+document.getElementById('browse-date')?.addEventListener('change', ev => {
+  const t = browseWhen().time;
+  setBrowseAt(ev.target.value, t);
+  track('browse_date_changed', { device: deviceKind() });
+});
+document.getElementById('browse-time')?.addEventListener('change', ev => {
+  const [h, m] = ev.target.value.split(':').map(Number);
+  setBrowseAt(browseWhen().date, h + (m || 0) / 60);
+});
+document.getElementById('browse-now')?.addEventListener('click', () => {
+  browseAt = null;
+  renderBrowse();
+});
 document.getElementById('browse-backdrop')?.addEventListener('click', closeBrowse);
 // Escape backs out one level: out of a building to the list, then out entirely.
 document.addEventListener('keydown', ev => {
@@ -3243,12 +3339,15 @@ function refresh({ keepThanks = false } = {}) {
   labelOverlays();
   claimPendingTiles();
   refresh();
+  // Before awaiting the buildings: neither of these needs the 3D map, and
+  // queueing them behind it meant the room list arrived seconds late — or not
+  // at all on a page where the tileset fails.
+  loadRoomSchedule();
+  loadRoomAvailability();
   await buildingsLoading;
   refresh();
 
-  // Live room availability, and then on the same cadence as everything else.
-  loadRoomSchedule();
-  loadRoomAvailability();
+  // Keep the live bookings current on the same cadence as everything else.
   setInterval(loadRoomAvailability, 5 * 60 * 1000);
 
   // Busyness changes with the hour; recheck every five minutes.
