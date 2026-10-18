@@ -601,6 +601,30 @@ function publishedRanges(entry, date) {
 // map miss somewhere that is quietly open, but it will not send anyone to a
 // locked door. It is labelled `assumed` everywhere it shows, and published
 // hours always win.
+//
+// A building's own window is only as wide as the classes the sample happens to
+// catch in it: Lincoln Tower shows a single class at 2pm, which made it read
+// "probably closed" all morning on a weekday. So the window is never narrower
+// than the hours the campus itself is in session (campusClassWindow), which is
+// measured from the data rather than set by hand.
+const campusWindowCache = {};
+function campusClassWindow(day) {
+  if (day in campusWindowCache) return campusWindowCache[day];
+  // Only buildings with a substantial timetable, and only on days with enough
+  // of them to mean "the campus": weekends have a handful, so they get nothing.
+  const big = Object.values(data.classActivity?.buildings ?? {})
+    .filter(e => e.peak >= 20 && e.hours?.[day]);
+  let win = null;
+  if (big.length >= 10) {
+    // An hour counts when at least half of those buildings have a class in it.
+    const active = h => big.filter(e => e.hours[day][h] > 0).length / big.length >= 0.5;
+    let first = -1, last = -1;
+    for (let h = 0; h < 24; h++) if (active(h)) { if (first < 0) first = h; last = h; }
+    if (first >= 0) win = [first, last + 1];
+  }
+  return (campusWindowCache[day] = win);
+}
+
 function assumedHours(id, day) {
   const grid = data.classActivity?.buildings?.[id]?.hours?.[day];
   if (!grid) return null;
@@ -609,6 +633,8 @@ function assumedHours(id, day) {
     if (grid[h] > 0) { if (first < 0) first = h; last = h; }
   }
   if (first < 0) return null;         // nothing timetabled: say nothing
+  const campus = campusClassWindow(day);
+  if (campus) { first = Math.min(first, campus[0]); last = Math.max(last, campus[1] - 1); }
   return [first, last + 1];           // the last class runs to the end of its hour
 }
 
