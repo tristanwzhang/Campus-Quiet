@@ -1323,6 +1323,8 @@ function setBrowseAt(date, time, fromWheel = false) {
 }
 
 let browseBuilding = null;   // null = the list, otherwise the building drilled into
+let browseQuery = '';        // what the search box is filtering the list by
+const escapeHtml = s => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 function renderBrowse({ seatWheels = true } = {}) {
   const body = document.getElementById('browse-body');
@@ -1331,6 +1333,8 @@ function renderBrowse({ seatWheels = true } = {}) {
   const back = document.getElementById('browse-back');
   if (!body) return;
 
+  const search = document.getElementById('browse-search-wrap');
+  if (search) search.hidden = !!browseBuilding;
   if (browseBuilding) return renderBrowseRooms(body, title, sub, back, seatWheels);
   back.hidden = true;
   title.textContent = 'Buildings';
@@ -1338,7 +1342,9 @@ function renderBrowse({ seatWheels = true } = {}) {
   applyBrowseWhen(seatWheels);
   const { date, time } = browseWhen();
   applyBrowseNote(date);
-  const names = knownBuildings().sort((a, b) => pickLabel(a).localeCompare(pickLabel(b)));
+  const all = knownBuildings().sort((a, b) => pickLabel(a).localeCompare(pickLabel(b)));
+  const q = browseQuery.trim().toLowerCase();
+  const names = q ? all.filter(n => pickLabel(n).toLowerCase().includes(q) || n.toLowerCase().includes(q)) : all;
   const groups = { Library: [], Academic: [] };
   for (const n of names) {
     (BUILDINGS[n]?.type === 'library' || /librar/i.test(pickLabel(n)) ? groups.Library : groups.Academic).push(n);
@@ -1348,9 +1354,10 @@ function renderBrowse({ seatWheels = true } = {}) {
   const hh = Math.floor(time), mm = Math.round((time - hh) * 60);
   const am = hh < 12 || hh >= 24;
   const h12 = hh % 12 === 0 ? 12 : hh % 12;
-  sub.textContent = `${names.length} buildings · ${h12}:${String(mm).padStart(2, '0')} ${am ? 'am' : 'pm'}`;
+  sub.textContent = `${q ? `${names.length} of ${all.length}` : names.length} buildings · ${h12}:${String(mm).padStart(2, '0')} ${am ? 'am' : 'pm'}`;
 
   let html = '';
+  if (q && !names.length) html = `<div class="browse-foot">No building matches \u201c${escapeHtml(browseQuery.trim())}\u201d.</div>`;
   for (const [label, list] of Object.entries(groups)) {
     if (!list.length) continue;
     html += `<div class="browse-group">${label}</div>`;
@@ -1408,6 +1415,9 @@ function renderBrowseRooms(body, title, sub, back, seatWheels = true) {
 
 function openBrowse() {
   browseBuilding = null;
+  browseQuery = '';
+  const box = document.getElementById('browse-search');
+  if (box) box.value = '';
   browseAt = null;          // always open on now, not on whatever was last picked
   renderBrowse();
   document.getElementById('browse')?.classList.add('is-open');
@@ -3156,6 +3166,10 @@ pickToggle.addEventListener('click', () => {
 // Same tap-to-slide as the picks above it, with its own remembered state —
 // wanting the picks and wanting a room list are different wants.
 document.getElementById('browse-all')?.addEventListener('click', openBrowse);
+document.getElementById('browse-search')?.addEventListener('input', ev => {
+  browseQuery = ev.target.value;
+  renderBrowse({ seatWheels: false });
+});
 document.getElementById('browse-date')?.addEventListener('change', () => {
   const { date, time } = readWheels();
   setBrowseAt(date, time, true);      // leave the time wheels where they are

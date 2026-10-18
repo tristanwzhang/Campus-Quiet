@@ -486,19 +486,38 @@
   }
   #browse-backdrop.is-open { opacity: 1; pointer-events: auto; }
 
+  /* A centred card rather than a strip down the left edge: the strip was
+     340px of a much larger screen, which left the list cramped and the map
+     beside it doing nothing. */
   #browse {
     position: absolute;
-    top: 0; left: 0; bottom: 0;
-    width: 340px; max-width: 86vw;
+    top: 50%; left: 50%;
+    width: min(560px, 92vw); height: min(760px, 88vh);
     z-index: 190;
     display: flex; flex-direction: column;
+    overflow: hidden;
     background: rgba(8,11,16,0.97);
-    border-right: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.55);
     backdrop-filter: blur(14px);
-    transform: translateX(-100%);
-    transition: transform 0.22s ease;
+    opacity: 0; pointer-events: none;
+    transform: translate(-50%, -48%) scale(0.97);
+    transition: opacity 0.2s ease, transform 0.2s ease;
   }
-  #browse.is-open { transform: translateX(0); }
+  #browse.is-open { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+
+  #browse-search-wrap { padding: 10px 14px 0; }
+  #browse-search-wrap[hidden] { display: none; }
+  #browse-search {
+    width: 100%; box-sizing: border-box;
+    padding: 9px 12px; border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.05);
+    font: inherit; font-size: 13px; color: #e8edf5;
+  }
+  #browse-search::placeholder { color: #5a6478; }
+  #browse-search:focus-visible { border-color: rgba(147,190,245,0.55); outline: none; }
 
   #browse-head {
     display: flex; align-items: center; gap: 10px;
@@ -653,7 +672,8 @@
   .browse-foot { font-size: 10.5px; color: #4e5768; padding: 14px 16px; line-height: 1.5; }
 
   @media (max-width: 640px) {
-    #browse { width: 100%; max-width: 100%; }
+    #browse { width: 100%; height: 100%; border-radius: 0; border: 0; top: 0; left: 0; transform: translateY(2%); }
+    #browse.is-open { transform: none; }
     .browse-row { padding: 13px 16px; }
   }
 
@@ -1455,6 +1475,9 @@
       <div id="browse-sub"></div>
     </div>
     <button class="browse-btn" id="browse-close" type="button" aria-label="Close">&times;</button>
+  </div>
+  <div id="browse-search-wrap">
+    <input type="search" id="browse-search" placeholder="Search buildings" aria-label="Search buildings" autocomplete="off" spellcheck="false">
   </div>
   <div id="browse-when" hidden>
     <input type="date" id="browse-date" aria-label="Date">
