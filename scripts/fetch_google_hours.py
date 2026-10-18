@@ -176,7 +176,7 @@ def hours_from_place(place):
     return week
 
 
-def fetch(name, query, expect, api_key):
+def fetch(name, query, expect, api_key, ll):
     response = serpapi({"engine": "google_maps", "type": "search", "q": query, "ll": ll}, api_key)
     if "error" in response:
         raise RuntimeError(response["error"])
