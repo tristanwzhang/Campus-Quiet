@@ -1280,6 +1280,15 @@ function applyBrowseWhen(seatWheels = true) {
 
   if (nowBtn) nowBtn.hidden = !browseAt;
   wrap.hidden = false;
+
+  const chip = document.getElementById('browse-when-label');
+  if (chip) {
+    const [, mo, d] = w.date.split('-').map(Number);
+    chip.textContent = browseAt
+      ? `${MONTH_SHORT[mo - 1]} ${d}, ${h12}:${String(quarter * 15).padStart(2, '0')} ${hh >= 12 ? 'PM' : 'AM'}`
+      : 'Now';
+    document.getElementById('browse-when-toggle')?.classList.toggle('is-custom', !!browseAt);
+  }
 }
 
 /**
@@ -1323,6 +1332,7 @@ function setBrowseAt(date, time, fromWheel = false) {
 }
 
 let browseBuilding = null;   // null = the list, otherwise the building drilled into
+const MONTH_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 let browseQuery = '';        // what the search box is filtering the list by
 const escapeHtml = s => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
@@ -1333,7 +1343,7 @@ function renderBrowse({ seatWheels = true } = {}) {
   const back = document.getElementById('browse-back');
   if (!body) return;
 
-  const search = document.getElementById('browse-search-wrap');
+  const search = document.getElementById('browse-search');
   if (search) search.hidden = !!browseBuilding;
   if (browseBuilding) return renderBrowseRooms(body, title, sub, back, seatWheels);
   back.hidden = true;
@@ -1416,6 +1426,8 @@ function renderBrowseRooms(body, title, sub, back, seatWheels = true) {
 function openBrowse() {
   browseBuilding = null;
   browseQuery = '';
+  document.getElementById('browse-when')?.classList.add('is-collapsed');
+  document.getElementById('browse-when-toggle')?.setAttribute('aria-expanded', 'false');
   const box = document.getElementById('browse-search');
   if (box) box.value = '';
   browseAt = null;          // always open on now, not on whatever was last picked
@@ -3166,6 +3178,14 @@ pickToggle.addEventListener('click', () => {
 // Same tap-to-slide as the picks above it, with its own remembered state —
 // wanting the picks and wanting a room list are different wants.
 document.getElementById('browse-all')?.addEventListener('click', openBrowse);
+document.getElementById('browse-when-toggle')?.addEventListener('click', ev => {
+  const wrap = document.getElementById('browse-when');
+  const open = wrap.classList.contains('is-collapsed');
+  wrap.classList.toggle('is-collapsed', !open);
+  ev.currentTarget.setAttribute('aria-expanded', String(open));
+  if (open) applyBrowseWhen(true);
+});
+document.getElementById('browse-note')?.addEventListener('click', ev => ev.currentTarget.classList.toggle('is-open'));
 document.getElementById('browse-search')?.addEventListener('input', ev => {
   browseQuery = ev.target.value;
   renderBrowse({ seatWheels: false });
