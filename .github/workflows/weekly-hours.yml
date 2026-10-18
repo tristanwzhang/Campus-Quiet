@@ -21,6 +21,11 @@ on:
     - cron: "20 9 * * 0"     # Sundays, 4:20am campus time
     - cron: "20 9 * * 1"     # Mondays, 4:20am campus time
   workflow_dispatch:          # or run it by hand from the Actions tab
+    inputs:
+      osu_probe:
+        description: "Also probe Google for Ohio State (8 searches, prints only)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write             # to commit the refreshed data file
@@ -67,6 +72,23 @@ jobs:
             python3 scripts/build_hours.py
           else
             echo "No SERPAPI_KEY secret set; skipping Google hours."
+          fi
+
+      # Ohio State is a probe, not a source: this prints what Google holds and
+      # writes nothing that anything reads. Run it from the Actions tab with the
+      # box ticked, then score the two control buildings -- Ag. Admin. and
+      # Pomerene -- against the hours the registrar already publishes.
+      - name: Probe Google hours - Ohio State
+        if: inputs.osu_probe
+        env:
+          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+        run: |
+          if [ -n "$SERPAPI_KEY" ]; then
+            python3 scripts/fetch_google_hours.py --campus osu
+            echo "--- what Google returned ---"
+            cat data/osu/google_hours.json
+          else
+            echo "No SERPAPI_KEY secret set; skipping the Ohio State probe."
           fi
 
       - name: Commit if anything changed
