@@ -84,6 +84,31 @@ LIBRARY_BUILDINGS = {
 # there is no feed to scrape. Keep the sourceUrl: it's how the next person
 # re-checks these when the term turns over.
 HAND_ENTERED = {
+    # The School of Music publishes one schedule for both its buildings, and is
+    # explicit about the exceptions: "The building is CLOSED and remains locked
+    # on university holidays and home football Saturdays." Those are the two
+    # flags below. Timashev is the second-busiest building on campus with no
+    # published hours, so this is worth hand-keeping until a feed exists.
+    "TMVN": {
+        "name": "Timashev Family Music Building",
+        "source": "Ohio State School of Music published building hours",
+        "sourceUrl": "https://music.osu.edu/about/facilities",
+        "weekly": {d: [[7, 20]] for d in (
+            "monday", "tuesday", "wednesday", "thursday",
+            "friday", "saturday", "sunday")},
+        "followsCampusClosures": True,
+        "closedOnFootballSaturdays": True,
+    },
+    "WG": {
+        "name": "Weigel Hall",
+        "source": "Ohio State School of Music published building hours",
+        "sourceUrl": "https://music.osu.edu/about/facilities",
+        "weekly": {d: [[7, 20]] for d in (
+            "monday", "tuesday", "wednesday", "thursday",
+            "friday", "saturday", "sunday")},
+        "followsCampusClosures": True,
+        "closedOnFootballSaturdays": True,
+    },
     "OU": {
         "name": "Ohio Union",
         "source": "Ohio Union published building hours",
@@ -147,6 +172,9 @@ RANGE_RE = re.compile(
 CALENDAR_HEADINGS = {
     "closed": re.compile(r"^University Holidays\b.*offices closed", re.I),
     "classesOut": re.compile(r"^Academic Holidays\b.*offices open", re.I),
+    # Not a holiday, but some buildings lock for them -- the music school says
+    # so in as many words -- and campus is a different place on those days.
+    "football": re.compile(r"^Football Home Game Schedule", re.I),
 }
 # "September 7" | "November 26-27" | "December 11 - 17"
 CAL_DATE_RE = re.compile(
@@ -572,7 +600,7 @@ def main():
     for code, info in HAND_ENTERED.items():
         name = (next((k for k, v in out.items() if v.get("code") == code), None)
                 or class_names.get(code) or info["name"])
-        out[name] = {
+        entry = {
             "source": info["source"],
             "sourceUrl": info["sourceUrl"],
             "code": code,
@@ -583,11 +611,25 @@ def main():
                 for a, b in info.get("breaks", [])
             ],
         }
+        if info.get("followsCampusClosures"):
+            entry["followsCampusClosures"] = True
+        if info.get("closedOnFootballSaturdays"):
+            # Resolved to real dates here rather than left as a rule, so the
+            # file says which days are shut and app.js needs no calendar of
+            # its own. Only Saturdays: the registrar lists every home game,
+            # and a weeknight game does not lock the building.
+            entry["closedDates"] = [
+                d for d in calendar["football"]
+                if date.fromisoformat(d).weekday() == 5
+            ]
+        out[name] = entry
     print(f"rec buildings added: {len(recs)}  ({', '.join(sorted(recs)) or 'none'})")
     if rec_notes:
         print(f"rec days not readable: {len(rec_notes)}")
         for n in rec_notes[:6]:
             print(f"   {n}")
+    print(f"home football Saturdays: "
+          f"{', '.join(d for d in calendar['football'] if date.fromisoformat(d).weekday() == 5) or 'none'}")
     print(f"hand-entered buildings: {len(HAND_ENTERED)} "
           f"({', '.join(v['name'] for v in HAND_ENTERED.values())})")
 

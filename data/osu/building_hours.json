@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-18T21:51:23+00:00",
+ "built_at": "2026-10-18T21:58:04+00:00",
  "campus": "Ohio State",
  "term": "Autumn 2026",
  "campusClosedDates": [
@@ -2554,6 +2554,134 @@
     "saturday": [],
     "sunday": []
    }
+  },
+  "Timashev Family Music Building": {
+   "source": "Ohio State School of Music published building hours",
+   "sourceUrl": "https://music.osu.edu/about/facilities",
+   "code": "TMVN",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "saturday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "sunday": [
+     [
+      7,
+      20
+     ]
+    ]
+   },
+   "periods": [],
+   "followsCampusClosures": true,
+   "closedDates": [
+    "2026-09-05",
+    "2026-09-19",
+    "2026-09-26",
+    "2026-10-10",
+    "2026-11-14",
+    "2026-11-28"
+   ],
+   "extendedThrough": "2026-12-17"
+  },
+  "Weigel Hall": {
+   "source": "Ohio State School of Music published building hours",
+   "sourceUrl": "https://music.osu.edu/about/facilities",
+   "code": "WG",
+   "valid": [
+    "2026-08-25",
+    "2026-12-09"
+   ],
+   "weekly": {
+    "monday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "saturday": [
+     [
+      7,
+      20
+     ]
+    ],
+    "sunday": [
+     [
+      7,
+      20
+     ]
+    ]
+   },
+   "periods": [],
+   "followsCampusClosures": true,
+   "closedDates": [
+    "2026-09-05",
+    "2026-09-19",
+    "2026-09-26",
+    "2026-10-10",
+    "2026-11-14",
+    "2026-11-28"
+   ],
+   "extendedThrough": "2026-12-17"
   },
   "Ohio Union, New": {
    "source": "Ohio Union published building hours",

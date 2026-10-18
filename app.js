@@ -583,6 +583,10 @@ function publishedRanges(entry, date) {
     && !(entry.openDates || []).includes(date);
   if (campusClosed) return [];
 
+  // Days this building alone is shut -- Ohio State's music buildings lock for
+  // home football Saturdays, which closes nothing else on campus.
+  if ((entry.closedDates || []).includes(date)) return [];
+
   if ((entry.unknownDuring || []).some(([a, b]) => date >= a && date <= b)) return null;
 
   const period = (entry.periods || []).find(p => date >= p.start && date <= p.end);
