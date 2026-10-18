@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-18T13:22:46+00:00",
+ "built_at": "2026-10-18T21:51:23+00:00",
  "campusClosedDates": [
   "2026-09-07",
   "2026-11-26",
@@ -167,7 +167,8 @@
       17.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Altgeld Hall": {
    "source": "Campus building hours spreadsheet",
@@ -250,7 +251,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Animal Sciences Laboratory": {
    "source": "Campus building hours spreadsheet",
@@ -338,7 +340,8 @@
      ]
     ],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Architecture Building": {
    "source": "Campus building hours spreadsheet",
@@ -432,7 +435,8 @@
       22.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Armory": {
    "source": "Campus building hours spreadsheet",
@@ -535,7 +539,8 @@
       21.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Art and Design Building": {
    "source": "Campus building hours spreadsheet",
@@ -629,7 +634,8 @@
       22.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Astronomy Building": {
    "source": "Campus building hours spreadsheet",
@@ -712,7 +718,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Beckman Institute": {
    "source": "Google Maps listing",
@@ -771,7 +778,8 @@
      "2026-11-27",
      "2026-11-27"
     ]
-   ]
+   ],
+   "extendedThrough": "2026-12-17"
   },
   "Bevier Hall": {
    "source": "Campus building hours spreadsheet",
@@ -854,7 +862,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Burrill Hall": {
    "source": "Campus building hours spreadsheet",
@@ -937,7 +946,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Business Instructional Facility": {
    "source": "Campus building hours spreadsheet",
@@ -1082,7 +1092,8 @@
    },
    "openDates": [
     "2026-09-07"
-   ]
+   ],
+   "extendedThrough": "2026-12-17"
   },
   "Campus Instructional Facility": {
    "source": "Campus building hours spreadsheet",
@@ -1199,7 +1210,8 @@
       23.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Campus Recreation Center East": {
    "source": "Campus Recreation hours",
@@ -1352,7 +1364,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Chemistry Annex": {
    "source": "Campus building hours spreadsheet",
@@ -1446,7 +1459,8 @@
       21.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Civil and Environmental Engineering Building": {
    "source": "Campus building hours spreadsheet",
@@ -1530,7 +1544,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Coordinated Science Laboratory": {
    "source": "Campus building hours spreadsheet",
@@ -1614,7 +1629,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Davenport Hall": {
    "source": "Campus building hours spreadsheet",
@@ -1698,7 +1714,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "David Kinley Hall": {
    "source": "Campus building hours spreadsheet",
@@ -1791,7 +1808,8 @@
       24
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Digital Computer Laboratory": {
    "source": "Campus building hours spreadsheet",
@@ -1894,7 +1912,8 @@
       22.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Doris Kelley Christopher Hall": {
    "source": "Campus building hours spreadsheet",
@@ -1982,7 +2001,8 @@
      ]
     ],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Education Building": {
    "source": "Campus building hours spreadsheet",
@@ -2071,7 +2091,8 @@
      ]
     ],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Electrical and Computer Engineering Building": {
    "source": "Campus building hours spreadsheet",
@@ -2160,7 +2181,8 @@
      ]
     ],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Engineering Hall": {
    "source": "Campus building hours spreadsheet",
@@ -2244,7 +2266,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "English Building": {
    "source": "Campus building hours spreadsheet",
@@ -2337,7 +2360,8 @@
       24
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Everitt Laboratory": {
    "source": "Campus building hours spreadsheet",
@@ -2421,7 +2445,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Flagg Hall": {
    "source": "Campus building hours spreadsheet",
@@ -2515,7 +2540,8 @@
       18.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Funk Library": {
    "source": "University Library hours",
@@ -2630,7 +2656,8 @@
      "2026-11-27",
      "2026-11-27"
     ]
-   ]
+   ],
+   "extendedThrough": "2026-12-17"
   },
   "Graduate School of Library and Information Science": {
    "source": "Campus building hours spreadsheet",
@@ -2713,7 +2740,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Grainger Engineering Library": {
    "source": "University Library hours",
@@ -2828,7 +2856,8 @@
      "2026-11-27",
      "2026-11-27"
     ]
-   ]
+   ],
+   "extendedThrough": "2026-12-17"
   },
   "Gregory Hall": {
    "source": "Campus building hours spreadsheet",
@@ -2921,7 +2950,8 @@
       24
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Harding Band Building": {
    "source": "Campus building hours spreadsheet",
@@ -2979,7 +3009,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Henry Administration Building": {
    "source": "Campus building hours spreadsheet",
@@ -3063,7 +3094,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Huff Hall": {
    "source": "Campus building hours spreadsheet",
@@ -3157,7 +3189,8 @@
       22.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "ISR Dining Center": {
    "source": "University Housing dining schedule",
@@ -3368,7 +3401,8 @@
      "2026-11-27",
      "2026-11-27"
     ]
-   ]
+   ],
+   "extendedThrough": "2026-12-17"
   },
   "Ice Arena": {
    "source": "Google Maps listing",
@@ -3437,7 +3471,8 @@
      "2026-11-27",
      "2026-11-27"
     ]
-   ]
+   ],
+   "extendedThrough": "2026-12-17"
   },
   "Ikenberry Dining Hall": {
    "source": "University Housing dining schedule",
@@ -3648,7 +3683,8 @@
      "2026-11-27",
      "2026-11-27"
     ]
-   ]
+   ],
+   "extendedThrough": "2026-12-17"
   },
   "Illini Union": {
    "source": "Campus building hours spreadsheet",
@@ -3724,7 +3760,8 @@
       17.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Illini Union Bookstore": {
    "source": "Google Maps listing",
@@ -3793,7 +3830,8 @@
      "2026-11-27",
      "2026-11-27"
     ]
-   ]
+   ],
+   "extendedThrough": "2026-12-17"
   },
   "Krannert Center for the Performing Arts": {
    "source": "Campus building hours spreadsheet",
@@ -3886,7 +3924,8 @@
       23.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Lincoln Hall": {
    "source": "Campus building hours spreadsheet",
@@ -3980,7 +4019,8 @@
       23.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Literatures, Cultures & Linguistics Building": {
    "source": "Campus building hours spreadsheet",
@@ -4073,7 +4113,8 @@
       22.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Loomis Laboratory of Physics": {
    "source": "Campus building hours spreadsheet",
@@ -4157,7 +4198,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Louise Freer Hall": {
    "source": "Campus building hours spreadsheet",
@@ -4251,7 +4293,8 @@
       16.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Main Library": {
    "source": "University Library hours",
@@ -4366,7 +4409,8 @@
      "2026-11-27",
      "2026-11-27"
     ]
-   ]
+   ],
+   "extendedThrough": "2026-12-17"
   },
   "Materials Science & Engineering Building": {
    "source": "Campus building hours spreadsheet",
@@ -4454,7 +4498,8 @@
      ]
     ],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Mechanical Engineering Lab": {
    "source": "Campus building hours spreadsheet",
@@ -4538,7 +4583,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Medical Sciences Building": {
    "source": "Campus building hours spreadsheet",
@@ -4622,7 +4668,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Morrill Hall": {
    "source": "Campus building hours spreadsheet",
@@ -4705,7 +4752,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Mumford Hall": {
    "source": "Campus building hours spreadsheet",
@@ -4798,7 +4846,8 @@
       18.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Music Building": {
    "source": "Campus building hours spreadsheet",
@@ -4901,7 +4950,8 @@
       24
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "National Soybean Research Center": {
    "source": "Campus building hours spreadsheet",
@@ -4984,7 +5034,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Natural History Building": {
    "source": "Campus building hours spreadsheet",
@@ -5078,7 +5129,8 @@
       22.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Newmark Civil Engineering Laboratory": {
    "source": "Campus building hours spreadsheet",
@@ -5162,7 +5214,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Noyes Laboratory": {
    "source": "Campus building hours spreadsheet",
@@ -5256,7 +5309,8 @@
       20.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Psychology Building": {
    "source": "Campus building hours spreadsheet",
@@ -5345,7 +5399,8 @@
      ]
     ],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Roger Adams Laboratory": {
    "source": "Campus building hours spreadsheet",
@@ -5428,7 +5483,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "School of Labor & Employment Relations": {
    "source": "Campus building hours spreadsheet",
@@ -5487,7 +5543,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Sidney Lu Mechanical Engineering Building": {
    "source": "Campus building hours spreadsheet",
@@ -5570,7 +5627,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Siebel Center for Computer Science": {
    "source": "Campus building hours spreadsheet",
@@ -5663,7 +5721,8 @@
       21.5
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Siebel Center for Design": {
    "source": "Campus building hours spreadsheet",
@@ -5732,7 +5791,8 @@
       24
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Smith Memorial Hall": {
    "source": "Campus building hours spreadsheet",
@@ -5836,7 +5896,8 @@
       24
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Speech and Hearing Science Building": {
    "source": "Campus building hours spreadsheet",
@@ -5920,7 +5981,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Spurlock Museum": {
    "source": "Spurlock Museum hours",
@@ -5974,7 +6036,8 @@
      "2026-11-21",
      "2026-11-29"
     ]
-   ]
+   ],
+   "extendedThrough": "2026-12-17"
   },
   "Steven S. Wymer Hall": {
    "source": "Campus building hours spreadsheet",
@@ -6068,7 +6131,8 @@
       20.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Stock Pavilion": {
    "source": "Campus building hours spreadsheet",
@@ -6161,7 +6225,8 @@
       18.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Student Dining and Residential Programs (SDRP)": {
    "source": "hours confirmed by the site owner",
@@ -6230,7 +6295,8 @@
      "2026-11-27",
      "2026-11-27"
     ]
-   ]
+   ],
+   "extendedThrough": "2026-12-17"
   },
   "Talbot Laboratory": {
    "source": "Campus building hours spreadsheet",
@@ -6314,7 +6380,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Temple Hoyne Buell Hall": {
    "source": "Campus building hours spreadsheet",
@@ -6398,7 +6465,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Transportation Building": {
    "source": "Campus building hours spreadsheet",
@@ -6492,7 +6560,8 @@
       21.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Turner Hall": {
    "source": "Campus building hours spreadsheet",
@@ -6575,7 +6644,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "University of Illinois College of Law": {
    "source": "Campus building hours spreadsheet",
@@ -6659,7 +6729,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Veterinary Medicine Basic Sciences Building": {
    "source": "Campus building hours spreadsheet",
@@ -6743,7 +6814,8 @@
     ],
     "saturday": [],
     "sunday": []
-   }
+   },
+   "extendedThrough": "2026-12-17"
   },
   "Wohlers Hall": {
    "source": "Campus building hours spreadsheet",
@@ -6836,7 +6908,8 @@
       23.0
      ]
     ]
-   }
+   },
+   "extendedThrough": "2026-12-17"
   }
  }
 }

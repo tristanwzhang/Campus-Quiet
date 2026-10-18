@@ -588,8 +588,24 @@ function publishedRanges(entry, date) {
   const period = (entry.periods || []).find(p => date >= p.start && date <= p.end);
   if (period) return period.weekly[weekdayOf(date)] ?? null;
 
-  if (!entry.valid || date < entry.valid[0] || date > entry.valid[1]) return null;
+  if (!entry.valid || date < entry.valid[0]) return null;
+  // Published hours stop at the last day of classes, but the term does not: the
+  // buildings are open through finals, which is when people most want to know.
+  // extendedThrough carries the weekly pattern across that gap rather than
+  // going quiet -- see extendedHours() for how it is labelled.
+  if (date > entry.valid[1] && !(entry.extendedThrough && date <= entry.extendedThrough)) {
+    return null;
+  }
   return entry.weekly?.[weekdayOf(date)] ?? null;
+}
+
+/** True when this date is past what the source publishes and is being assumed. */
+function extendedHours(entry, date) {
+  return !!entry.extendedThrough
+    && !!entry.valid
+    && date > entry.valid[1]
+    && date <= entry.extendedThrough
+    && !(entry.dates && date in entry.dates);   // real dated hours are not assumed
 }
 
 /** { state: 'open' | 'closed' | 'unknown', source } */
@@ -654,7 +670,14 @@ function assumedStatus(id, date, time) {
   if ((data.hours?.classesOutDates || []).includes(date)) {
     return { state: 'unknown' };
   }
-  if (!calendarPeriod(date).classesMeet) {
+  // Finals and the reading day before them are the exception that proves the
+  // point: no classes meet, and the buildings are at their fullest all term.
+  // Until somebody publishes finals-week hours, the ordinary weekday window is
+  // the working assumption -- a library reading "probably closed" during finals
+  // is the worst answer the map can give.
+  const period = calendarPeriod(date);
+  const finalsWeek = period.kind === 'finals' || period.kind === 'reading';
+  if (!period.classesMeet && !finalsWeek) {
     return { state: 'closed', source: 'assumed from the class timetable', assumed: true };
   }
   const [open, close] = window;
@@ -686,11 +709,18 @@ function hoursStatus(id, date, time) {
   const today = publishedRanges(entry, date);
   if (today == null) return assumedStatus(id, date, time);
   const open = today.some(([o, c]) => time >= o && time < c);
+  // Past the end of the published schedule the same hours are assumed to hold,
+  // but they are no longer a published fact, so they stop being labelled as one.
+  const extended = extendedHours(entry, date);
   return {
     state: open ? 'open' : 'closed',
     source: entry.source,
-    official: !!entry.sourceUrl,
-    cardAccess: !!entry.cardAccess,   // doors have a card reader
+    official: !!entry.sourceUrl && !extended,
+    assumed: extended,
+    closedNote: extended
+      ? 'Probably closed \u00b7 its published hours stop before finals week'
+      : undefined,
+    cardAccess: !extended && !!entry.cardAccess,
   };
 }
 

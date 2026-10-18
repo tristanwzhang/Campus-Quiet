@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-18T21:36:56+00:00",
+ "built_at": "2026-10-18T21:51:23+00:00",
  "campus": "Ohio State",
  "term": "Autumn 2026",
  "campusClosedDates": [
@@ -63,7 +63,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Ag. Engineering": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -108,7 +109,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Animal Science": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -153,7 +155,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Arps Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -203,7 +206,8 @@
     ],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Baker Systems Engineering": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -248,7 +252,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Biological Sciences Building": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -293,7 +298,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Bolz Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -338,7 +344,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Bricker Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -383,7 +390,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Caldwell Lab": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -433,7 +441,8 @@
      ]
     ]
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Campbell Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -478,7 +487,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "CBEC": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -523,7 +533,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Cockins Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -573,7 +584,8 @@
      ]
     ]
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Cunz Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -618,7 +630,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Denney Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -663,7 +676,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Derby Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -708,7 +722,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Dreese Lab": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -753,7 +768,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Dulles Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -798,7 +814,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Eighteenth Avenue, 209 W": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -843,7 +860,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Enarson Classroom": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -898,7 +916,8 @@
      ]
     ]
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Evans Lab": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -943,7 +962,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Fontana Lab": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -988,7 +1008,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Hagerty Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1038,7 +1059,8 @@
      ]
     ]
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Hayes Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1083,7 +1105,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Hitchcock Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1138,7 +1161,8 @@
      ]
     ]
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Hopkins Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1183,7 +1207,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Independence Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1238,7 +1263,8 @@
      ]
     ]
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Jennings Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1283,7 +1309,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Journalism Building": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1328,7 +1355,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Knowlton Architecture Building": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1373,7 +1401,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Kottman Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1418,7 +1447,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Lazenby Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1463,7 +1493,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "McPherson Lab": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1508,7 +1539,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Mendenhall Lab": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1553,7 +1585,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Orton Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1603,7 +1636,8 @@
      ]
     ]
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Page Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1648,7 +1682,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Physical Activity and Educational Services": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1698,7 +1733,8 @@
      ]
     ]
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Pomerene Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1748,7 +1784,8 @@
      ]
     ]
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Psychology Building": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1793,7 +1830,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Ramseyer Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1843,7 +1881,8 @@
      ]
     ]
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Schoenbaum Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1888,7 +1927,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Scott Lab": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1933,7 +1973,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Smith Lab": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -1978,7 +2019,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Stillman Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -2028,7 +2070,8 @@
      ]
     ]
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Sullivant Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -2083,7 +2126,8 @@
      ]
     ]
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Theatre, Film & Media Arts Building": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -2128,7 +2172,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "Townshend Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -2173,7 +2218,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "University Hall": {
    "source": "Ohio State registrar classroom pool building schedule",
@@ -2218,7 +2264,8 @@
     "saturday": [],
     "sunday": []
    },
-   "followsCampusClosures": true
+   "followsCampusClosures": true,
+   "extendedThrough": "2026-12-17"
   },
   "18th Avenue Library": {
    "source": "Ohio State University Libraries hours",
@@ -2657,7 +2704,8 @@
       ]
      }
     }
-   ]
+   ],
+   "extendedThrough": "2026-12-17"
   }
  }
 }

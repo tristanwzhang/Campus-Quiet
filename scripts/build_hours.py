@@ -620,6 +620,34 @@ def build_osm_hours(wanted):
 
 # ─── Main ─────────────────────────────────────────────────────────────────────
 
+
+# The published schedules stop at the last day of classes; the term runs on
+# through finals, which is exactly when people most want to know where is open.
+# Nobody publishes finals-week building hours at either campus, so the weekly
+# pattern is carried across that gap and app.js drops the "official" label on
+# it -- an assumption, shown as one, instead of a week of "closed".
+#
+# Only entries with a real weekly pattern are extended. The library and rec
+# feeds publish a rolling week of dated hours and carry an EMPTY weekly, so
+# extending those would assert "closed" rather than assume the usual week;
+# their own dated hours answer for finals once the weekly refresh picks them up.
+FINALS_THROUGH = "2026-12-17"
+
+
+def extend_through_finals(out, through=FINALS_THROUGH):
+    """Mark entries whose weekly pattern should hold past its published end."""
+    extended = []
+    for name, entry in out.items():
+        weekly = entry.get("weekly") or {}
+        if not any(weekly.values()):
+            continue
+        valid = entry.get("valid")
+        if valid and valid[1] < through:
+            entry["extendedThrough"] = through
+            extended.append(name)
+    return extended
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--sheet-url", default=SHEET_URL)
@@ -679,6 +707,9 @@ def main():
             "unknownDuring": [list(FALL_BREAK)] + [[d, d] for d in SHEET_CLOSED_DATES],
         }
     print(f"Google (by hand): {', '.join(GOOGLE_HOURS) or 'none'}")
+
+    carried = extend_through_finals(buildings)
+    print(f"weekly hours carried through finals ({FINALS_THROUGH}): {len(carried)}")
 
     out = {
         "built_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
