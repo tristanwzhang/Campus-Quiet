@@ -23,12 +23,35 @@ const CAMPUSES = {
     ],
   },
 
+  // Maryland, enabled 2026-10-19. The lid-to-building question this comment
+  // used to flag answered itself: LibCal's own location names state the host
+  // building ("Art Library in Art Sociology Building", "STEM Library in
+  // William E. Kirwan Hall"), so nothing here is a guess. Building names are
+  // the ones Testudo's class data uses, because that is what the map joins on.
+  //
+  // Measured 2026-10-19: 96 bookable rooms, against Ohio State's 7 — this is
+  // the one feature where Maryland has by far the most to show.
+  //
+  // McKeldin's sub-locations (lid 23065 Terrapin Learning Commons group study,
+  // 23067 study carrels, 23082, 23071, 30085, 40070) are NOT listed. They are
+  // category filters inside lid 2552 rather than separate locations: each
+  // returns zero slots of its own, and adding them would have double-counted
+  // McKeldin's 81 rooms.
+  umd: {
+    host: 'https://umd.libcal.com',
+    locations: [
+      { lid: '2552',  building: 'McKeldin Library',                      label: 'McKeldin Library' },
+      { lid: '6745',  building: 'William E. Kirwan Hall',                label: 'STEM Library' },
+      { lid: '14006', building: 'Clarice Smith Performing Arts Center',  label: 'Michelle Smith Performing Arts Library' },
+      { lid: '14005', building: 'Parren J. Mitchell Art-Sociology Bldg.', label: 'Art Library' },
+    ],
+  },
+
   // Verified available and ready to switch on, but deliberately not enabled:
   //
-  //   umd   https://umd.libcal.com            lid 2552 (McKeldin), 3816 slots
   //   uoft  https://libcal.library.utoronto.ca lid 3320 (Zeidler), more libraries exist
   //
-  // Both need their lid-to-BUILDING mapping confirmed first — a lid names a
+  // It needs its lid-to-BUILDING mapping confirmed first — a lid names a
   // library, and this map joins on the building that library sits in, which is
   // the same distinction that made Ohio State's register work fiddly.
 };

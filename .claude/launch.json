@@ -4,8 +4,12 @@
     {
       "name": "uiuc-spaces",
       "runtimeExecutable": "sh",
-      "runtimeArgs": ["-c", "exec python3 -m http.server \"${PORT:-8080}\""],
-      "autoPort": true
+      "runtimeArgs": [
+        "-c",
+        "exec python3 -m http.server \"${PORT:-8080}\""
+      ],
+      "autoPort": true,
+      "port": 8080
     }
   ]
 }

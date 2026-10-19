@@ -69,6 +69,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 OUT_FILE = ROOT / "data" / "umd" / "class_activity.json"
 CODES_FILE = ROOT / "data" / "umd" / "building_codes.json"
+ROOMS_FILE = ROOT / "data" / "umd" / "rooms.json"
 HOURS_FILE = ROOT / "data" / "umd" / "building_hours.json"
 CACHE_DIR = ROOT / "data" / "umd" / ".cache"
 
@@ -426,6 +427,57 @@ def main():
         "buildings": buildings,
     }, indent=1) + "\n")
 
+    # ── room-level output ──
+    # The aggregate above answers "how busy is this building". It cannot answer
+    # "which room is free", because summing to a per-hour count throws the room
+    # away. `slots` already holds exactly that detail, so write it out too
+    # rather than sweeping Testudo twice for the same thing.
+    #
+    # A room appearing here means no class is SCHEDULED in it. It does not mean
+    # the door is unlocked, so whatever reads this file has to say "no class
+    # scheduled", not "free".
+    #
+    # No `capacity` is written, unlike Columbus. Ohio State publishes the ROOM's
+    # capacity; Testudo publishes the SECTION's seat cap, and the largest
+    # section timetabled in a room is only a floor on how many seats it has.
+    # Printing "seats 35" for a room that holds 60 would be a confident wrong
+    # answer, and app.js already drops the clause when the number is absent.
+    room_rows = {}
+    for (code, room, day, start, end), (_weight, _seats) in slots.items():
+        if code not in names:
+            continue
+        fid = f"{code}{room}"
+        entry = room_rows.setdefault(fid, {"code": code, "busy": {}})
+        entry["busy"].setdefault(day, []).append([start, end])
+    for entry in room_rows.values():
+        # Merge touching or overlapping classes so a run of back-to-back
+        # lectures reads as one closed stretch rather than several.
+        for day, spans in entry["busy"].items():
+            merged = []
+            for a, b in sorted(spans):
+                if merged and a <= merged[-1][1]:
+                    merged[-1][1] = max(merged[-1][1], b)
+                else:
+                    merged.append([a, b])
+            entry["busy"][day] = merged
+
+    by_building = {}
+    for fid, entry in room_rows.items():
+        name = names[entry["code"]]
+        by_building.setdefault(name, {"code": entry["code"], "rooms": {}})
+        by_building[name]["rooms"][fid] = {"busy": entry["busy"]}
+
+    ROOMS_FILE.write_text(json.dumps({
+        "term": TERM_LABEL,
+        "campus": "Maryland — College Park",
+        "built_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "note": "Hours each room is taken by a scheduled class, per weekday. "
+                "A room not listed as busy has NO CLASS SCHEDULED — which is not "
+                "the same as unlocked or available. Room seat counts are not "
+                "published by Testudo, so none are given.",
+        "buildings": by_building,
+    }, indent=1) + "\n")
+
     # The code table, so build_umd_buildings.py joins to the state GIS on the
     # university's own building numbers without asking Testudo all over again.
     CODES_FILE.write_text(json.dumps({
@@ -478,8 +530,10 @@ def main():
         print(f"!! {len(missing_courses)} courses never fetched (rerun to resume): "
               f"{missing_courses[:10]}{'…' if len(missing_courses) > 10 else ''}",
               file=sys.stderr)
+    print(f"rooms written:      {len(room_rows)} in {len(by_building)} buildings")
     print(f"-> {OUT_FILE.relative_to(ROOT)}")
     print(f"-> {CODES_FILE.relative_to(ROOT)}")
+    print(f"-> {ROOMS_FILE.relative_to(ROOT)}")
     return 0
 
 

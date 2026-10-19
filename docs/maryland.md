@@ -228,16 +228,92 @@ What is real:
 - **Google listing hours** via the existing `fetch_google_hours.py` + the
   hand-entered table pattern, for the handful of buildings worth it.
 
-Three sources I could **not** reach from this machine and that need checking
-before they go in a script: `recwell.umd.edu`, `dining.umd.edu` and
-`stamp.umd.edu` all refused the connection here, from both the shell and the
-fetcher, while `registrar.umd.edu`, `app.testudo.umd.edu`, `umd.libcal.com` and
-`lib.umd.edu` all answered. That is more likely a block on this host than an
-outage, but it means RecWell, Dining and the Stamp union are **unverified** —
-and on Columbus, RecWell's equivalent was the source that turned out to be
-JavaScript-rendered with a usable JSON API hiding behind it. Check for an API
-before scraping any of the three. One lead: `nutrition.umd.edu` *is* reachable
-and is Dining's own menu app, so whatever it calls for hours is worth following.
+### RecWell, Dining and Stamp — checked 2026-10-16
+
+All three refused connections on the first attempt and answered fine later, so
+that was their edge being flaky, not a block. Checked properly, they are three
+different answers.
+
+**Stamp: the best hours source on this campus, and not just for Stamp.**
+`stamp.umd.edu/visit/hours_operation` publishes 14 HTML tables. The first is the
+building itself, under a heading that states its own validity —
+"Fall Semester 2026 Hours, August 27 through December 20":
+
+    Monday through Thursday   7 a.m. to midnight
+    Friday                    7 a.m. to 1:30 a.m.
+    Saturday                  8 a.m. to 1:30 a.m.
+    Sunday                    11 a.m. to midnight
+
+Then **dated exception tables** for Labor Day, Fall Break, Thanksgiving and
+Winter Break — Oct 12 closed, Nov 26–27 closed, Dec 25–Jan 3 closed. That is
+the `periods` and `campusClosedDates` data Ohio State never got, from a
+published source. It independently corroborates the Fall Break dates the LibCal
+feed named.
+
+Two caveats. Some cells are free text — "TBD (Based on home football start
+time.)" — and must be skipped, not interpreted. And the page's own weekday
+labels can be wrong: it says "Sunday, November 30", but Nov 30 2026 is a Monday.
+Parse the date, ignore the weekday word.
+
+**Stamp is not in the class data** (no classes meet there), so it has to be added
+as a building in its own right, exactly as Illinois carries the Illini Union.
+The state GIS has it: **Stamp Student Union, building 163**.
+
+**RecWell: real hours, but not where the site says.**
+`/facilities/todays-facility-hours` renders **empty** — no hours, and no API
+call behind it either (checked in a browser with the network log open). Do not
+use it. `/facility-hours` 403s. The hours live on the per-facility pages:
+
+| Page | Shape |
+|---|---|
+| `/eppley-recreation-center-0` | facility × weekday-group, 4 term tabs |
+| `/reckord-armory` | same, different day-header wording |
+| `/outdoor-aquatic-center` | rows are **date ranges**, not facilities |
+| `/natatorium` | tenant inside Eppley — excluded |
+| `/ritchie-coliseum` | no tables; hours not published here |
+
+The four tables per page are the four terms, and the labels are **not visible
+text** — they are `data-title` attributes (`<div data-title="Fall Semester ">`),
+which is why a naive text extraction sees four identical unlabelled tables and
+cannot tell which applies today. A regex over the raw HTML reads them fine, so
+no browser is needed in CI. Note the trailing spaces in those attributes.
+
+Day headers are inconsistent across pages — "Monday to Friday", "Monday through
+Friday", "MON though THURS" (their typo), "SAT and SUN" — so parse defensively
+and report anything unrecognised rather than guessing. Cells carry parenthetical
+caveats too ("limited availability beginning at 6pm when Intramural Sports
+begin").
+
+These are **term patterns, not dated**, so they need `followsCampusClosures` and
+break `periods` the way Illinois' entries do. `/facility-alerts` does carry a
+dated table (Eppley, Natatorium, Ritchie, Reckord, Outdoor Aquatic by exact
+date) but it is **stale** — on 16 Oct it still showed 9–13 Oct, the Fall Break
+window. It is an occasional-exceptions page, not a rolling feed, so it cannot
+carry a weekly job.
+
+Confirmed in the state GIS: Eppley **068**, Reckord Armory **078**, Ritchie
+Coliseum **004**, Aquatic Center **399**.
+
+**Dining: does not publish hours on the web.** `/hours/dining-halls` gives only
+generic meal windows (breakfast to 10:30, lunch 10:30–4, dinner 4 to close) and
+then says, in as many words, to download the UMD mobile app for specific times.
+`/hours/open-now` renders a full venue list with every hours cell showing "—",
+in a real browser, with no API call. Two independent reads agree, so this is the
+page's actual state rather than a loading artifact. The venue list is still
+useful as a **venue → host building** map (Footnotes in McKeldin, Creative
+Commons in Tawes, Sneaker's in Eppley), but those are tenants and their hours
+are not their building's hours. The three dining halls that ARE buildings
+(South Campus 026, Denton Area 251, Ellicott Area 257, Yahentamitsi 436) stay on
+the class fallback.
+
+### What this does to the hours count
+
+Buildings that these sources can actually cover, intersected with the 63 the
+class sweep found: **ERC (068, Eppley)** and **ARM (078, Reckord Armory)** from
+RecWell. Plus **Stamp (163)** added by hand, and Ritchie and the Aquatic Center
+if they are worth carrying. With the two LibCal libraries that is **5 to 7
+buildings with genuinely published hours** — the same order as Ohio State's 5,
+and still a long way from Illinois' 74.
 
 ### Academic calendar
 
@@ -315,31 +391,115 @@ locked door. `PICK_LABELS_UMD` and the short-label entries in `BUILDINGS_UMD`
 (Testudo's names are reasonable, so this may be nearly empty) are the same kind
 of local knowledge.
 
-## Order of work
+## State as of 2026-10-19 — built, not public
 
-1. ~~`build_umd_class_estimates.py`~~ — **written and run.** 63 buildings,
-   9,434 meetings, `data/umd/class_activity.json` and
-   `data/umd/building_codes.json` written. Outstanding: confirm the four
-   HTTP-500 codes above.
-2. `build_umd_buildings.py` — join `data/umd/building_codes.json` (which step 1
-   writes: code → official name → building number) to MD iMAP on the building
-   number, for outlines and coordinates. No more Testudo calls needed.
-3. Recompute `area`/`center`, sample `groundM`, add the `CAMPUS_SITES` entry,
-   run `build_basemap.py --campus umd`.
-4. `build_umd_hours.py` — LibCal first (it is most of the real data), then
-   whichever of RecWell / Dining / Stamp turns out to publish something.
-5. Calendar, read off the registrar page directly.
-6. `build_campus_pages.py` entry → `umd.html`; leave it out of the sitemap and
-   unlinked until launch.
+Everything below is on the local `maryland` branch and **nothing is pushed**.
+`/umd` does not exist on campusquiet.com, the sitemap is untouched, and the
+campus picker has no Maryland card.
+
+| Piece | State |
+|---|---|
+| `scripts/build_umd_class_estimates.py` | done — 207 departments, 4,708 courses, 9,434 meetings, 63 buildings |
+| `data/umd/class_activity.json` | done |
+| `data/umd/rooms.json` | done — 721 classrooms in 63 buildings, from the same sweep |
+| `scripts/build_umd_buildings.py` | done — 308 footprints, 60 of 63 codes joined |
+| `data/umd/buildings.json` | done |
+| `scripts/build_umd_hours.py` | done — 5 buildings, 3 dated and 2 weekly |
+| `data/umd/building_hours.json` | done |
+| `data/umd/basemap.json` | done — 7,630 features |
+| `app.js` config + content | done — `CAMPUS_SITES.umd`, `BUILDINGS_UMD`, `STUDY_SPOTS_UMD`, `PICK_LABELS_UMD`, `GIS_ALIASES_UMD`, `ACADEMIC_CALENDAR_UMD`, `CAMPUS_CONTENT` |
+| `api/rooms.mjs` | done — 96 bookable rooms in 4 buildings, tested live |
+| `umd.html` | generated, not served |
+| CI hours step | done |
+| `scripts/hours_accuracy.mjs` | knows `--campus umd` |
+| Campus picker card + `logos/umd.png` | **not done, on purpose** |
+| sitemap entry | **not done, on purpose** |
+| preview image | not done — needs a screenshot of a map nobody can see yet |
+
+### The launch checklist, when it is wanted
+
+Three edits, all in files that are live, which is why they are not made:
+
+1. `index.html` line 106 — a card beside the other two:
+   `<a class="campus" href="/umd"><div class="logo"><img src="logos/umd.png" alt=""></div><div><b>Maryland</b><span>University of Maryland — College Park</span></div></a>`
+2. `index.html` line 14 — add `umd` to the remembered-campus redirect, or a
+   returning Maryland visitor keeps landing on the picker.
+3. `sitemap.xml` — add `https://campusquiet.com/umd`.
+
+`logos/umd.png` needs a decision rather than a download: the other two cards
+carry each university's own mark, and whether to use Maryland's is a
+trademark call for the owner of the site, not something to settle by fetching a
+file.
+
+### Measured accuracy, and the problem it exposes
+
+`node scripts/hours_accuracy.mjs --campus umd`, week of 2026-10-19:
+
+| | Illinois | Ohio State | **Maryland** |
+|---|---|---|---|
+| buildings | 74 | 93 | 61 |
+| silent (no answer at all) | 0.4% | 18.3% | **34.0%** |
+| claims from the class fallback | 1.0% | 32.3% | **87.6%** |
+| fallback accuracy, measured | 85.7% | 90.9% | **43.8%** |
+| scored slots behind that number | 2,608 | 2,040 | **112** |
+| composite, of claims made | 93.1% | 92.5% | **50.1%** |
+| composite, counting silence as wrong | 92.8% | 75.6% | **33.1%** |
+
+**Do not quote the 43.8% as Maryland's accuracy.** The hold-out works by hiding
+the hours of buildings that publish them and asking the fallback what it would
+have guessed — and Maryland has only five such buildings, all of them the worst
+possible case for a class-schedule proxy: a library open 24 hours with almost no
+classes in it, a union, two gyms. 112 scored slots against Illinois' 2,608. The
+number is real but it measures "the fallback is bad at libraries and gyms",
+which was already known, on a sample too small and too biased to carry a
+campus-wide claim.
+
+What is *not* a measurement artifact is the row above it: **87.6% of Maryland's
+claims come from the class timetable**, against 32% at Ohio State and 1% at
+Illinois, and **a third of the time the map declines to answer at all**. Grant
+the fallback Ohio State's measured 90.9% and the composite lands near 91%;
+grant it the 43.8% and it lands at 50%. The honest position is that Maryland's
+accuracy is unmeasurable from the inside until more buildings publish hours,
+and that it is the thinnest of the three either way.
+
+### Hours: the search is now exhaustive, and the answer is five buildings
+
+Checked and ruled out, so nobody repeats it:
+
+- **Facilities Management** — publishes no building hours.
+- **The registrar** — no classroom-pool schedule, the thing that covers 47
+  Columbus buildings.
+- **25Live**, which the Provost's classroom search runs on — every
+  `25live.collegenet.com/25live/data/umd/run/*` endpoint answers **HTTP 401**.
+  Closed, like Ohio State's room-booking app. Do not retry.
+- **Dining** — nothing on the web; it points at the mobile app.
+- **Individual high-load buildings** — Van Munching, the busiest building on
+  campus, publishes *break* hours as news announcements ("2026 Summer Hours")
+  and no academic-year hours; the Smith Service Center hours on that site are an
+  office inside it, not the building.
+
+### A thing this campus has that the other two do not
+
+The terrain is **not flat**. Sampled from Cesium at all 60 placed buildings:
+median 3.4 m, running from **−12.8 m** (A. James Clark Hall) to **+20.7 m** (the
+Education Building) — a 33 m spread, where Illinois varies by about 3 m. The
+single `groundM` that both existing campuses rely on is therefore a compromise
+here, and labels at the extremes sit up to ~17 m off their building. It is set
+to the median and flagged in the config; per-building sampling is the real fix
+if it ever reads badly on screen. Worth looking at before launch.
 
 ## What is different from Columbus, in one list
 
 - **Better:** the code→building join is fully official and complete; library
   hours come 8 weeks ahead instead of 7 days.
-- **Worse:** no published building hours at all, so the class fallback carries
-  more buildings than it does on either existing campus.
+- **Worse:** no campus-wide building-hours publication, so after RecWell, Stamp
+  and the libraries there are still ~56 buildings on the class fallback. Ohio
+  State at least has a registrar document covering 47.
 - **New:** Testudo is HTML rather than JSON, hangs about a third of the time,
   and has a server-side gap that loses four real buildings.
-- **Unverified:** RecWell, Dining and Stamp hours — unreachable from here.
+- **Checked since:** RecWell publishes hours on its per-facility pages (not on
+  its own "today's hours" page, which renders empty); Stamp publishes a weekly
+  table plus dated break exceptions and is the best hours source on the campus;
+  Dining publishes none on the web and points at its mobile app.
 - **Same trap:** off-campus teaching centres, like Wooster. Filter on the
   university's own field.

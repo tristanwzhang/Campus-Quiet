@@ -29,6 +29,8 @@ CAMPUSES = {
              "bbox": (-88.33, 40.06, -88.16, 40.16)},
     "osu":  {"out": ROOT / "data" / "osu" / "basemap.json",
              "bbox": (-83.063, 39.974, -82.984, 40.025)},
+    "umd":  {"out": ROOT / "data" / "umd" / "basemap.json",
+             "bbox": (-76.971, 38.970, -76.918, 39.019)},
 }
 
 _campus = "uiuc"
@@ -187,7 +189,7 @@ def join_rings(pieces):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--input", help="use a saved Overpass JSON instead of downloading")
-    parser.add_argument("--campus", default="uiuc", help="uiuc (default) or osu")
+    parser.add_argument("--campus", default="uiuc", help="uiuc (default), osu or umd")
     args = parser.parse_args()
 
     raw = json.load(open(args.input)) if args.input else download()

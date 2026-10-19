@@ -39,7 +39,7 @@
  * the real loader cannot overwrite it.
  *
  * Usage:
- *   node scripts/hours_accuracy.mjs                      # both campuses
+ *   node scripts/hours_accuracy.mjs                      # every campus
  *   node scripts/hours_accuracy.mjs --campus osu
  *   node scripts/hours_accuracy.mjs --week 2026-11-09    # any Monday in term
  */
@@ -65,7 +65,7 @@ const HOURS   = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
 const SAMPLED = [8, 10, 12, 14, 16, 18, 20, 22];
 const EVENING = [18, 19, 20, 21, 22, 23];
 
-const CAMPUSES = { uiuc: 'data', osu: 'data/osu' };
+const CAMPUSES = { uiuc: 'data', osu: 'data/osu', umd: 'data/umd' };
 
 const readJson = (p) => {
   try { return JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8')); } catch { return null; }

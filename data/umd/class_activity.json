@@ -3,7 +3,7 @@
  "campus": "Maryland \u2014 College Park",
  "source": "University of Maryland Schedule of Classes (Testudo)",
  "sourceUrl": "https://app.testudo.umd.edu/soc/202608",
- "built_at": "2026-10-16T13:07:39+00:00",
+ "built_at": "2026-10-19T16:05:32+00:00",
  "note": "Weighted count of class meetings in progress. Not people. Weights and hour counting match data/class_activity.json. `seats` is the same weighting times each section's seat total \u2014 Testudo publishes the SECTION cap, not the room's capacity, which is what Ohio State's `seats` uses.",
  "buildings": {
   "Susquehanna Hall": {

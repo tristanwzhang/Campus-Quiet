@@ -52,6 +52,15 @@ jobs:
         continue-on-error: true
         run: python3 scripts/build_osu_hours.py
 
+      # Maryland's libraries publish dated hours eight weeks ahead, so this has
+      # a far looser deadline than the other two — but Stamp and RecWell are
+      # scraped HTML, and markup changes without warning, so running it weekly
+      # is how a break gets noticed while it is still small. Allowed to fail on
+      # its own so it cannot take Illinois or Ohio State down with it.
+      - name: Rebuild hours — Maryland
+        continue-on-error: true
+        run: python3 scripts/build_umd_hours.py
+
       # Refresh Google listing hours too, if a SERPAPI_KEY secret has been added.
       # (Checked in the shell: GitHub doesn't allow secrets in an `if:`.)
       #
@@ -95,7 +104,7 @@ jobs:
         run: |
           git config user.name "hours bot"
           git config user.email "actions@github.com"
-          git add data/building_hours.json data/google_hours.json data/osu/building_hours.json 2>/dev/null || true
+          git add data/building_hours.json data/google_hours.json data/osu/building_hours.json data/umd/building_hours.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Hours unchanged."
           else

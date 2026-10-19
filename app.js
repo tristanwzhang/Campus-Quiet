@@ -165,6 +165,40 @@ const CAMPUS_SITES = {
     viewNarrow: { pitchDeg: -50, range: 1300 },
     groundM: 196,
   },
+  umd: {
+    id: 'umd',
+    title: 'Maryland Spaces',
+    subtitle: 'University of Maryland — College Park',
+    disclaimerRest: ' · not affiliated with the University of Maryland',
+    tz: 'America/New_York',
+    dataDir: 'data/umd',
+    // Measured, not estimated. The 60 class buildings the register can place
+    // span -76.9549..-76.9335 and 38.9821..39.0069, and AREA clamps the CAMERA
+    // rather than its target: at -38 degrees and 1500 m the camera sits 1182 m
+    // behind the point it looks at, which here is 0.0106 of latitude and
+    // 0.0137 of longitude. Every side is padded by that much past the
+    // outermost building, which is what stops panning to an edge building
+    // shoving the view back.
+    area: { west: -76.971, south: 38.970, east: -76.918, north: 39.019 },
+    // Median of the buildings we hold data for, which lands on McKeldin Mall.
+    center: { lon: -76.9427, lat: 38.9883, height: 220 },
+    // College Park's academic core is 1.9 km by 1.3 km -- tighter than either
+    // other campus -- so this sits closer than Columbus' 1700.
+    view: { pitchDeg: -38, range: 1500 },
+    viewNarrow: { pitchDeg: -50, range: 1200 },
+    // Sampled from Cesium's terrain at all 60 placed buildings on 2026-10-19:
+    // median 3.4 m, and the method checks out against the other two campuses
+    // (it returns 195.9 for Columbus and 189.7 for Illinois, both configured
+    // from the same sampling).
+    //
+    // UNLIKE the other two, this campus is NOT flat. Illinois varies by about
+    // 3 m; here the 60 buildings run from -12.8 m (A. James Clark Hall) to
+    // +20.7 m (the Education Building), a 33 m spread. One ground height is
+    // therefore a compromise rather than a fact, and labels at the extremes
+    // sit up to ~17 m off. Per-building sampling is the real fix if that ever
+    // reads badly on screen.
+    groundM: 3,
+  },
 };
 
 // Each campus has its own page (osu.html, built by scripts/build_campus_pages.py)
@@ -1251,6 +1285,107 @@ const ACADEMIC_CALENDAR_OSU = {
   ],
 };
 
+// ─── Maryland content ─────────────────────────────────────────────────────────
+// Same discipline as Columbus: shortened labels only where the short form is
+// plainly the same name, and study spots only where a published source says a
+// library is there. Which classroom buildings students actually treat as study
+// spots is local knowledge this file does not have, and guessing it would put
+// someone in front of a locked door.
+//
+// Keyed on the name Testudo's class data uses, because that is what the hours
+// and room files join to. Several of those names are the registrar's rather
+// than anyone's: HBK is officially the "Undergraduate Library" and everybody
+// calls it Hornbake, and Testudo misspells Eppley as "Epply". The label fixes
+// what is shown; renaming in the data would break the join.
+const BUILDINGS_UMD = {
+  'McKeldin Library':      { type: 'library' },
+  'Undergraduate Library': { type: 'library', label: 'Hornbake Library' },
+  'Stamp Student Union':   { type: 'union',   label: 'Stamp Student Union' },
+  // "Epply" is Testudo's typo; MD iMAP and the university's own printed
+  // directory both write Eppley.
+  'Eppely Recreation Center': { type: 'rec', label: 'Eppley Recreation Center' },
+  'Armory (Reckord)':         { type: 'rec', label: 'Reckord Armory' },
+  'Yahentamitsi Dining Hall': { type: 'dining', label: 'Yahentamitsi' },
+
+  // Long official names crowd out their neighbours on the map, so these show a
+  // shorter form of the SAME name. Tooltips still show the full one.
+  'Edward St. John Learning and Teaching Center': { label: 'Edward St. John', labelPriority: 1 },
+  'Institute for Physical Sciences & Technology': { label: 'Physical Sciences & Tech' },
+  'Parren J. Mitchell Art-Sociology Bldg.':       { label: 'Art-Sociology' },
+  'Computer Science Instructional Center':        { label: 'CSIC' },
+  // Buildings 088 and 089. The printed campus directory calls 088 "MARTIN
+  // HALL", which is what everyone calls the pair.
+  'Engineering Classroom Bldg. (Martin)':         { label: 'Martin Hall' },
+  'Engineering Laboratory Bldg. (Martin)':        { label: 'Engineering Lab' },
+  'Clarice Smith Performing Arts Center':         { label: 'The Clarice' },
+  'Jeong H. Kim Engineering Building':            { label: 'Kim Engineering' },
+  'Jimenez Bldg. (World Languages)':              { label: 'Jimenez Hall' },
+  'John S. Toll Physics Building':                { label: 'Toll Physics' },
+  'LeFrak Hall (Social Sciences)':                { label: 'LeFrak Hall' },
+  'Avrum Gudelsky Veterinary Center':             { label: 'Gudelsky Vet Center' },
+  'Biosciences Research Building':                { label: 'Biosciences Research' },
+  'Chemistry-Biochemistry Bldg.':                 { label: 'Chemistry' },
+  'Tawes Fine Arts Bldg.':                        { label: 'Tawes Hall' },
+  'William E. Kirwan Hall':                       { label: 'Kirwan Hall' },
+  'Architecture Bldg.':                           { label: 'Architecture' },
+  'School of Public Health':                      { label: 'Public Health' },
+};
+
+// Every entry traces to the Libraries' own location pages, which state the
+// building each library sits in, or to the union being the union. The tiers
+// mirror the other two campuses: a library is a 1, the union and a building
+// that CONTAINS a library are 0.75.
+//
+// Still short, and deliberately so. Illinois has twelve, and the rest of that
+// list came from knowing the campus. A sourced list can say where the
+// libraries are; it cannot say which atrium people actually work in.
+const STUDY_SPOTS_UMD = {
+  'McKeldin Library': 1,                            // the main library
+  'Undergraduate Library': 1,                       // Hornbake
+  'Stamp Student Union': 0.75,                      // same tier as the Illini and Ohio Unions
+  'William E. Kirwan Hall': 0.75,                   // STEM Library, room 1403
+  'Parren J. Mitchell Art-Sociology Bldg.': 0.75,   // Art Library
+  'Architecture Bldg.': 0.75,                       // Architecture Library
+  'Clarice Smith Performing Arts Center': 0.75,     // Michelle Smith Performing Arts Library
+};
+
+// Shorter still for the picks card, where three names wrap to three lines each.
+// These are the forms already in use on campus, not invented abbreviations.
+const PICK_LABELS_UMD = {
+  'Undergraduate Library': 'Hornbake',
+  'Clarice Smith Performing Arts Center': 'The Clarice',
+  'Parren J. Mitchell Art-Sociology Bldg.': 'Art-Sociology',
+  'Edward St. John Learning and Teaching Center': 'ESJ',
+  'Eppely Recreation Center': 'Eppley Rec',
+};
+
+// Stamp has no classes, so Testudo gives it no scheduling code and the register
+// join by code cannot reach it. MD iMAP puts the Stamp Student Union at
+// building 163, so the name is pointed straight at that record — the same
+// hand-checked, sourced route GIS_ALIASES_OSU uses, and for the same reason: a
+// near-miss on a code is how a building gets drawn where it isn't.
+const GIS_ALIASES_UMD = {
+  'Stamp Student Union': '163',
+};
+
+// From the university's own semester calendar:
+// https://academiccatalog.umd.edu/about-university/academic-calendar/semester-calendar/
+// Read on 2026-10-19. Worth noting against an earlier draft of this work: the
+// LibCal feed labels 11 October "Fall Break", a day before the registrar's
+// break starts, because that is when the LIBRARY closed. The registrar's dates
+// are the ones that say whether classes meet.
+const ACADEMIC_CALENDAR_UMD = {
+  term: 'Fall 2026',
+  classesStart: '2026-08-31',
+  classesEnd:   '2026-12-11',
+  termEnd:      '2026-12-21',   // last day of final examinations
+  periods: [
+    { start: '2026-09-07', end: '2026-09-07', kind: 'holiday', label: 'Labor Day — no classes' },
+    { start: '2026-10-12', end: '2026-10-13', kind: 'break',   label: 'Fall Break — no classes' },
+    { start: '2026-11-25', end: '2026-11-29', kind: 'break',   label: 'Thanksgiving Recess — no classes' },
+  ],
+};
+
 // Resolve the campus-specific content. Everything below this point uses the
 // plain names, exactly as it did when there was only one campus.
 const CAMPUS_CONTENT = {
@@ -1265,6 +1400,13 @@ const CAMPUS_CONTENT = {
   osu:  { buildings: BUILDINGS_OSU,  studySpots: STUDY_SPOTS_OSU,
           pickLabels: PICK_LABELS_OSU,  calendar: ACADEMIC_CALENDAR_OSU,
           gisAliases: GIS_ALIASES_OSU, sayWhenShut: true },
+  umd:  { buildings: BUILDINGS_UMD,  studySpots: STUDY_SPOTS_UMD,
+          pickLabels: PICK_LABELS_UMD,  calendar: ACADEMIC_CALENDAR_UMD,
+          // Maryland publishes no campus-wide building hours at all -- five
+          // buildings have a published source and the rest ride the class
+          // timetable -- so an empty-looking evening map needs the same
+          // explanation Columbus gets.
+          gisAliases: GIS_ALIASES_UMD, sayWhenShut: true },
 }[CAMPUS.id];
 
 const BUILDINGS = CAMPUS_CONTENT.buildings;
