@@ -1,0 +1,16 @@
+/* TEAM */
+  Built by: Tristan Zhang
+  Contact: tristanwzhang@gmail.com
+  Source: https://github.com/tristanwzhang/uiuc-spaces
+
+/* SITE */
+  CampusQuiet — how busy is your campus right now
+  Illinois: https://campusquiet.com/
+  Ohio State: https://campusquiet.com/osu
+
+  A student project. Not affiliated with any university.
+
+  Busyness is estimated from published class schedules and building hours,
+  not measured by sensors. If the map says a building is closed and you are
+  sitting in it, that is a real error and worth an email — corrections are
+  the only thing that makes it better than the schedules it reads.
