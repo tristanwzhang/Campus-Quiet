@@ -70,7 +70,11 @@ function startAnalytics() {
       // a computer do, and event counts can't show whether that's fumbled
       // taps or genuine browsing. Watching a few sessions can. Turn this back
       // off (or set it to true) once that question is answered.
-      disable_session_recording: deviceKind() !== 'phone',
+      // Was on for phones only, to find out whether taps were missing their
+      // target on the redesign. They were not -- the replays showed taps
+      // landing and no rage-clicking -- so it is off again. Turning it back on
+      // needs a question it can answer.
+      disable_session_recording: true,
       disable_surveys: true,
       respect_dnt: true,
       capture_pageview: true,
@@ -1230,12 +1234,17 @@ const ACADEMIC_CALENDAR_OSU = {
 // Resolve the campus-specific content. Everything below this point uses the
 // plain names, exactly as it did when there was only one campus.
 const CAMPUS_CONTENT = {
+  // sayWhenShut: tell people when most of campus is closed. Ohio State shuts
+  // earlier and harder than Illinois -- 11pm leaves 5 of its 86 buildings open
+  // against 11 of Illinois' 74 -- so a late visitor there meets a mostly dark
+  // map and needs telling that is the answer, not a failure. Illinois is left
+  // as it is; switch this on there only if the same question comes up.
   uiuc: { buildings: BUILDINGS_UIUC, studySpots: STUDY_SPOTS_UIUC,
           pickLabels: PICK_LABELS_UIUC, calendar: ACADEMIC_CALENDAR_UIUC,
-          gisAliases: GIS_ALIASES_UIUC },
+          gisAliases: GIS_ALIASES_UIUC, sayWhenShut: false },
   osu:  { buildings: BUILDINGS_OSU,  studySpots: STUDY_SPOTS_OSU,
           pickLabels: PICK_LABELS_OSU,  calendar: ACADEMIC_CALENDAR_OSU,
-          gisAliases: GIS_ALIASES_OSU },
+          gisAliases: GIS_ALIASES_OSU, sayWhenShut: true },
 }[CAMPUS.id];
 
 const BUILDINGS = CAMPUS_CONTENT.buildings;
@@ -3423,6 +3432,26 @@ function markZoomedPick() {
   }
 }
 
+/**
+ * A line for when most of campus is shut, or null during ordinary hours.
+ * Counts only buildings we have an answer for: saying "most of campus is
+ * closed" while 45 buildings are actually unknown would be claiming more than
+ * we know, so those are left out of both sides of the comparison.
+ */
+function scarcityNote() {
+  if (!CAMPUS_CONTENT.sayWhenShut) return null;
+  const { date, time } = campusNow();
+  let open = 0, closed = 0;
+  for (const name of knownBuildings()) {
+    const state = hoursStatus(name, date, time).state;
+    if (state === 'open') open++;
+    else if (state === 'closed') closed++;
+  }
+  if (!open || closed <= open) return null;
+  return `Most of campus is shut now — ${open} of the ${open + closed} `
+       + `we have hours for ${open === 1 ? 'is' : 'are'} still open.`;
+}
+
 function renderPicks() {
   if (!pickCard) return;
   if (!picksEnabled()) { pickCard.hidden = true; publishSheetHeight(); return; }
@@ -3480,7 +3509,15 @@ function renderPicks() {
   // nothing left to tap to get back out.
   if (zoomedPick && !picks.some(p => p.name === zoomedPick)) zoomedPick = null;
   markZoomedPick();
-  pickNote.hidden = true;
+
+  // Late on, the map behind this list is mostly dark -- at Ohio State 11pm
+  // leaves 5 buildings open out of 93, because that campus shuts earlier than
+  // Illinois does. A dark map reads as a broken one unless something says
+  // otherwise, and 11pm is exactly when people open this. So when more is shut
+  // than open, the sheet says so, which turns the emptiness into the answer.
+  const scarce = scarcityNote();
+  pickNote.textContent = scarce ?? '';
+  pickNote.hidden = !scarce;
   publishSheetHeight();   // the list just changed shape; the credits sit on it
 
   // Someone who reads the sheet and leaves looks exactly like someone who
