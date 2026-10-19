@@ -56,24 +56,41 @@
     justify-content: center;
     padding: calc(24px + var(--safe-top)) 16px calc(24px + var(--safe-bottom));
   }
-  main { width: 100%; max-width: 440px; }
+  main { width: 100%; max-width: 520px; }
   h1 { font-size: 26px; font-weight: 600; letter-spacing: -0.01em; }
   .lede { margin-top: 8px; font-size: 15px; line-height: 1.5; color: #9aa5b8; }
   .pick-label { margin-top: 28px; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #5a6478; }
-  .campuses { margin-top: 10px; display: grid; gap: 10px; }
+  .campuses { margin-top: 12px; display: grid; gap: 14px; }
   .campus {
-    display: block;
-    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    min-height: 128px;
+    padding: 18px 22px 18px 18px;
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,255,255,0.09);
-    border-radius: 12px;
+    border-radius: 16px;
     color: inherit;
     text-decoration: none;
-    transition: background 0.15s, border-color 0.15s;
+    transition: background 0.15s, border-color 0.15s, transform 0.15s;
   }
   .campus:hover, .campus:focus-visible { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.22); outline: none; }
-  .campus b { display: block; font-size: 17px; font-weight: 600; }
-  .campus span { display: block; margin-top: 2px; font-size: 13px; color: #6b7589; }
+  .campus:active { transform: scale(0.99); }
+  /* White tile: Ohio State's wordmark is black, which disappears on the dark page. */
+  .logo {
+    flex: none;
+    width: 92px;
+    height: 92px;
+    padding: 10px;
+    background: #fff;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .logo img { max-width: 100%; max-height: 100%; display: block; }
+  .campus b { display: block; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+  .campus span { display: block; margin-top: 4px; font-size: 14px; line-height: 1.35; color: #8a94a8; }
   .note { margin-top: 24px; font-size: 12px; line-height: 1.5; color: #5a6478; }
 </style>
 </head>
@@ -83,8 +100,8 @@
   <p class="lede">See how busy campus libraries, dining halls and study spaces are right now, before you walk over.</p>
   <div class="pick-label">Pick your campus</div>
   <nav class="campuses" aria-label="Campuses">
-    <a class="campus" href="/uiuc"><b>UIUC</b><span>University of Illinois Urbana-Champaign</span></a>
-    <a class="campus" href="/osu"><b>Ohio State</b><span>The Ohio State University — Columbus</span></a>
+    <a class="campus" href="/uiuc"><div class="logo"><img src="logos/uiuc.png" alt="" width="246" height="349"></div><div><b>UIUC</b><span>University of Illinois Urbana-Champaign</span></div></a>
+    <a class="campus" href="/osu"><div class="logo"><img src="logos/osu.png" alt="" width="226" height="223"></div><div><b>Ohio State</b><span>The Ohio State University — Columbus</span></div></a>
   </nav>
   <p class="note">A student project · not affiliated with any university. Busyness is estimated from class schedules and official building hours.</p>
 </main>
