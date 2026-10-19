@@ -122,7 +122,7 @@ const CAMPUS_SITES = {
     id: 'uiuc',
     title: 'UIUC Spaces',
     subtitle: 'University of Illinois Urbana-Champaign',
-    disclaimer: 'A student project · not affiliated with the University of Illinois',
+    disclaimerRest: ' · not affiliated with the University of Illinois',
     tz: 'America/Chicago',
     dataDir: 'data',
     area: { west: -88.33, south: 40.06, east: -88.16, north: 40.16 },
@@ -137,7 +137,7 @@ const CAMPUS_SITES = {
     id: 'osu',
     title: 'Ohio State Spaces',
     subtitle: 'The Ohio State University — Columbus',
-    disclaimer: 'A student project · not affiliated with The Ohio State University',
+    disclaimerRest: ' · not affiliated with The Ohio State University',
     // Columbus is Eastern, Champaign is Central. Getting this wrong shifts every
     // estimate by an hour and reads as bad data rather than a config mistake.
     tz: 'America/New_York',
@@ -185,8 +185,16 @@ if (CAMPUS.id !== 'uiuc') {
   if (h1) h1.textContent = CAMPUS.title;
   // Naming the wrong university in a non-affiliation notice is worse than
   // having none, so this follows the campus too.
-  const note = document.querySelector('#header .disclaimer');
-  if (note) note.textContent = CAMPUS.disclaimer;
+  //
+  // Only the tail is written, and only into the .d-rest span. Setting
+  // textContent on the whole .disclaimer used to be how this worked, which
+  // silently deleted that span -- and the span is what the phone stylesheet
+  // hides to stop the notice wrapping to a second line. The CSS fix was there
+  // all along; this line was removing the thing it acts on, so on a phone the
+  // words "not affiliated with The Ohio State University" sat underneath the
+  // stats chips, which have z-index 100.
+  const rest = document.querySelector('#header .disclaimer .d-rest');
+  if (rest) rest.textContent = CAMPUS.disclaimerRest;
 }
 
 const BUILDINGS_UIUC = {
