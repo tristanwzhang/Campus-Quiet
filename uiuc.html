@@ -1208,6 +1208,72 @@
 
   #survey-text::placeholder { color: #5a6478; }
 
+  /* ── Report a problem ──
+     Same floating-card shape as #survey, for the same reason: it has to clear
+     the sheet on a phone and the hint box on a computer, and that geometry is
+     already solved. Opened from either trigger; nothing shows until asked. */
+  #report {
+    position: absolute;
+    bottom: calc(60px + var(--safe-bottom));
+    left: 50%;
+    z-index: 140;
+    width: min(340px, calc(100vw - 32px));
+    background: rgba(10,14,20,0.96);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 12px;
+    padding: 14px 34px 14px 16px;
+    backdrop-filter: blur(12px);
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  #report.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+  #report[hidden] { display: none; }
+
+  #report-close {
+    position: absolute; top: 4px; right: 4px;
+    width: 32px; height: 32px;
+    background: none; border: 0; cursor: pointer;
+    color: #6b7488; font-size: 17px; line-height: 1;
+  }
+  #report-close:hover { color: #c9d1de; }
+
+  #report .report-q { font-size: 12.5px; color: #e8edf5; padding-right: 8px; }
+  #report .report-hint { font-size: 11px; color: #6b7589; margin-top: 3px; line-height: 1.45; }
+
+  #report-text {
+    width: 100%; box-sizing: border-box; margin-top: 10px;
+    font-family: inherit; font-size: 12px; line-height: 1.4;
+    color: #f0f4f8;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 7px;
+    padding: 8px 10px;
+    resize: none;
+  }
+  #report-text::placeholder { color: #5a6478; }
+  #report-text:focus { outline: none; border-color: rgba(255,255,255,0.22); }
+
+  #report-send {
+    margin-top: 9px; padding: 7px 14px;
+    font-family: inherit; font-size: 12px; font-weight: 600;
+    color: #0b1016; background: #9fb4d8;
+    border: 0; border-radius: 7px; cursor: pointer;
+  }
+  #report-send:hover { background: #cfe0ff; }
+  #report-send:disabled { opacity: 0.45; cursor: default; }
+  #report .report-done { font-size: 12.5px; color: #8fd4a8; }
+
+  /* Both triggers are buttons, not links — they open a box, they do not navigate. */
+  #hint .report, #pick-key .report-inline {
+    font-family: inherit;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+
+
   #survey-text:focus { outline: none; border-color: rgba(255,255,255,0.22); }
 
   .survey-send-row { display: flex; justify-content: flex-end; margin-top: 6px; }
@@ -1376,6 +1442,11 @@
     /* The survey is centred and nearly full-width down here, so it also
        needs the legend's own corner clear rather than just avoiding it. */
     #survey { bottom: calc(96px + var(--safe-bottom)); }
+    /* Sits on top of the sheet, whose height is already published to CSS
+       because it changes when the list does and when it collapses. A fixed
+       offset put the box straight through the middle of it. */
+    #report { bottom: calc(var(--sheet-h, 96px) + 12px + var(--safe-bottom)); }
+    #report-close { width: 44px; height: 44px; top: 2px; right: 2px; }
     /* The sheet would otherwise cover the map attribution, which has to stay
        visible. The element to move is Cesium's own bottom bar: it sits at
        left:50%/right:50% with no width, so anything positioned on the credits
@@ -1602,7 +1673,7 @@
     <div id="pick-key" aria-hidden="true">
       <span class="key-bar"></span>
       <span class="key-ends"><span>Empty</span><span>Full</span></span>
-      <span class="key-note">Not affiliated with the University of Illinois · <a class="report-inline" id="report-link-sheet" href="mailto:tristanwzhang@gmail.com">something wrong?</a></span>
+      <span class="key-note">Not affiliated with the University of Illinois · <button type="button" class="report-inline" id="report-link-sheet">something wrong?</button></span>
     </div>
   </div>
 </div>
@@ -1660,6 +1731,17 @@
 
 <div id="privacy-note">Anonymous usage stats help improve this map.</div>
 
+<div id="report" hidden>
+  <button id="report-close" type="button" aria-label="Close">&times;</button>
+  <div class="report-step" id="report-step-ask">
+    <div class="report-q">Something look wrong?</div>
+    <div class="report-hint">Which building, and what did it get wrong? This goes straight to the student who made it.</div>
+    <textarea id="report-text" rows="3" maxlength="400" placeholder="e.g. Thompson shows closed but I'm sitting in it"></textarea>
+    <button id="report-send" type="button">Send</button>
+  </div>
+  <div class="report-step report-done" id="report-step-done" hidden>Thanks — that is genuinely the most useful thing you could have sent.</div>
+</div>
+
 <div id="survey">
   <button id="survey-close" aria-label="Dismiss">×</button>
 
@@ -1690,11 +1772,11 @@
 </div>
 
 <div id="hint">
-  <a class="report" id="report-link" href="mailto:tristanwzhang@gmail.com">Something look wrong? Tell me →</a>
+  <button type="button" class="report" id="report-link">Something look wrong? Tell me →</button>
   <p>Drag · move<br>Pinch or scroll · zoom<br>Ctrl + drag · tilt &amp; rotate<br>H · back to campus</p>
 </div>
 
 <script defer src="basemap-render.js?v=35"></script>
-<script defer src="app.js?v=124"></script>
+<script defer src="app.js?v=125"></script>
 </body>
 </html>

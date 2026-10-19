@@ -196,21 +196,7 @@ if (CAMPUS.id !== 'uiuc') {
   const rest = document.querySelector('#header .disclaimer .d-rest');
   if (rest) rest.textContent = CAMPUS.disclaimerRest;
 
-  // A report is only useful if it says what the map claimed and what was
-  // actually there, so the link asks for both rather than opening a blank
-  // message. The subject carries the campus, because the two will be mixed in
-  // one inbox and "Thompson said closed" means nothing without it.
-  const mailto = 'mailto:tristanwzhang@gmail.com'
-    + '?subject=' + encodeURIComponent(`${CAMPUS.title} \u2014 something looks wrong`)
-    + '&body=' + encodeURIComponent(
-        'Building:\n\n'
-      + 'What the map said:\n\n'
-      + 'What it was actually like:\n\n'
-      + 'Roughly when:\n');
-  for (const id of ['report-link', 'report-link-sheet']) {
-    const a = document.getElementById(id);
-    if (a) a.href = mailto;
-  }
+
 }
 
 // Remember which campus this person uses, so campusquiet.com can send them
@@ -3268,6 +3254,66 @@ document.getElementById('survey-close').addEventListener('click', () => {
   askTrack('dismissed', { at_stage: askStage });
   markAskDone();
   dismissSurvey();
+});
+
+// ─── Report a problem ─────────────────────────────────────────────────────────
+// A box rather than a mailto. An email client is a wall: it exposes the
+// reporter's address, takes them off the page, and most people on a phone
+// never finish. This sends the text straight to the analytics the rest of the
+// site already uses, so a correction costs one sentence and a tap.
+//
+// It is the only way to find out whether the published hours are right.
+// scripts/hours_accuracy.mjs assumes 93% for them because nobody has checked a
+// schedule against a real door -- "Thompson shows closed and I am sitting in
+// it" IS that check, and it arrives here.
+const reportCard = document.getElementById('report');
+const reportText = document.getElementById('report-text');
+
+function openReport(from) {
+  if (!reportCard) return;
+  reportCard.hidden = false;
+  // Force a reflow so the transition starts from the hidden state. A
+  // requestAnimationFrame would be the usual way, but it does not fire in a
+  // backgrounded tab -- which left the box present, focusable and completely
+  // invisible, because `hidden` had already been cleared.
+  void reportCard.offsetHeight;
+  reportCard.classList.add('show');
+  document.getElementById('report-step-ask').hidden = false;
+  document.getElementById('report-step-done').hidden = true;
+  reportText.value = '';
+  reportText.focus();
+  track('report_opened', { from, device: deviceKind() });
+}
+
+function closeReport() {
+  if (!reportCard) return;
+  reportCard.classList.remove('show');
+  setTimeout(() => { reportCard.hidden = true; }, 220);
+}
+
+document.getElementById('report-link')?.addEventListener('click', () => openReport('hint'));
+document.getElementById('report-link-sheet')?.addEventListener('click', () => openReport('sheet'));
+document.getElementById('report-close')?.addEventListener('click', closeReport);
+
+document.getElementById('report-send')?.addEventListener('click', () => {
+  const text = reportText.value.trim().slice(0, 400);
+  if (!text) { reportText.focus(); return; }
+  // Whatever building is open travels with it: most reports will be about the
+  // one they are looking at, and it saves them naming it.
+  track('report_sent', {
+    text,
+    building: panelTarget(),
+    device: deviceKind(),
+    at: `${campusNow().date} ${Math.floor(campusNow().time)}:00`,
+  });
+  document.getElementById('report-step-ask').hidden = true;
+  document.getElementById('report-step-done').hidden = false;
+  setTimeout(closeReport, 1800);
+});
+
+// Escape closes it, like every other panel here.
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && reportCard && !reportCard.hidden) closeReport();
 });
 
 
