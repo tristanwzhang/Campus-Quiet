@@ -197,6 +197,16 @@ if (CAMPUS.id !== 'uiuc') {
   if (rest) rest.textContent = CAMPUS.disclaimerRest;
 }
 
+// Remember which campus this person uses, so campusquiet.com can send them
+// straight back to it instead of showing the picker every visit. Only a page
+// that is really a campus records it: ?campus= on an unfinished one should not
+// become what they are sent to next time.
+try {
+  if (document.documentElement.dataset.campus || CAMPUS.id === 'uiuc') {
+    localStorage.setItem('cq-campus', CAMPUS.id);
+  }
+} catch (e) { /* storage blocked: they just see the picker next time */ }
+
 const BUILDINGS_UIUC = {
   "Main Library":                     { type: "library", peakFullness: 0.95 },
   "Grainger Engineering Library":     { type: "library", peakFullness: 0.95 },

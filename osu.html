@@ -24,30 +24,30 @@
 <meta property="og:title" content="Ohio State Spaces">
 <meta property="og:description" content="A live 3D map of how busy Ohio State campus buildings are right now.">
 <meta property="og:url" content="https://campusquiet.com/osu">
+<!-- Shared links show the map itself, which is the whole pitch. -->
 <meta property="og:image" content="https://campusquiet.com/osu-preview.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="A 3D map of the Ohio State campus with buildings shaded green to red by how busy they are.">
-<!-- Shared links show the map itself, which is the whole pitch. -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://campusquiet.com/osu-preview.png">
 <meta name="twitter:title" content="Ohio State Spaces">
 <meta name="twitter:description" content="A live 3D map of how busy Ohio State campus buildings are right now.">
+<meta name="twitter:image" content="https://campusquiet.com/osu-preview.png">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "Ohio State Spaces",
   "url": "https://campusquiet.com/osu",
-  "image": "https://campusquiet.com/osu-preview.png",
   "applicationCategory": "BrowserApplication",
   "operatingSystem": "Any modern web browser",
   "isAccessibleForFree": true,
   "description": "A live 3D map of how busy Ohio State campus buildings are right now.",
-    "about": { "@type": "CollegeOrUniversity", "name": "The Ohio State University" },
+  "image": "https://campusquiet.com/osu-preview.png",
+  "about": { "@type": "CollegeOrUniversity", "name": "The Ohio State University" },
   "isPartOf": {
     "@type": "WebSite",
-    "name": "Ohio State Spaces",
+    "name": "CampusQuiet",
     "url": "https://campusquiet.com/"
   }
 }
@@ -332,6 +332,16 @@
      first version of it feel pointless. */
   #old-look { display: none; }
 
+  /* Sends someone who landed on the wrong school to the picker. It shares the
+     disclaimer line, which stays one short line on a phone. */
+  #change-campus {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    pointer-events: auto;
+  }
+  #change-campus:hover { color: #9aa5b8; }
+
   #pick {
     position: absolute;
     top: calc(128px + var(--safe-top));
@@ -440,6 +450,47 @@
   .pick-meta { font-size: 11.5px; color: #8a94a8; }
   .pick-note { font-size: 11.5px; color: #8a94a8; padding: 2px 7px 1px; }
 
+  /* ── Study rooms, a second section inside the same sheet ──
+     Its own tap target, because someone who wants the picks does not
+     necessarily want a room list under them, and on a phone the sheet is
+     already competing for a fifth of the screen. Collapsed state is kept
+     separately from the picks', so closing one does not close the other. */
+  #rooms-section {
+    margin-top: 9px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  #rooms-section[hidden] { display: none; }
+  #rooms-toggle {
+    width: 100%;
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    background: none; border: 0; padding: 0 1px 6px;
+    font: inherit; cursor: pointer;
+  }
+  #rooms-toggle:hover .pick-head,
+  #rooms-toggle:focus-visible .pick-head { color: #8a94a8; }
+  #rooms-chevron {
+    width: 9px; height: 9px; flex: none; margin-bottom: 2px;
+    border-right: 1.6px solid #6b7488;
+    border-bottom: 1.6px solid #6b7488;
+    transform: rotate(45deg);
+    transition: transform 0.18s ease;
+  }
+  #rooms-toggle[aria-expanded="false"] #rooms-chevron {
+    transform: rotate(-135deg);
+    margin-bottom: -2px;
+  }
+  #rooms-section.is-collapsed #rooms-body { display: none; }
+  #rooms-list { list-style: none; margin: 0; padding: 0; }
+  .rooms-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 10px; padding: 4px 7px; font-size: 12px; color: #c9d1de;
+  }
+  .rooms-row .rooms-where { color: #6b7589; font-size: 10.5px; }
+  .rooms-free { font-weight: 600; color: #8fd4a8; flex: none; }
+  .rooms-full { font-weight: 600; color: #c08a8a; flex: none; }
+  .rooms-foot { font-size: 10.5px; color: #5a6478; padding: 3px 7px 0; }
+
   /* ── Browse: the whole campus as a list ──
      The map answers "what shape is campus"; a list answers "where do I go",
      which is the question people actually arrive with. Slides over the map
@@ -460,9 +511,8 @@
      among the three real ones.
 
      Called availability rather than bookings because that is what it is —
-     rooms with no class timetabled in them, which the panel itself spells
-     out. The bookable LibCal rooms are a different source, shown per
-     building in its panel. */
+     rooms with no class timetabled in them. The bookable LibCal rooms are a
+     different source and live in the picks sheet. */
   #browse-all {
     pointer-events: auto;              /* #stats itself is click-through */
     display: flex; align-items: center; gap: 8px;
@@ -491,63 +541,36 @@
     transition: opacity 0.22s ease;
   }
   #browse-backdrop.is-open { opacity: 1; pointer-events: auto; }
-  @media (min-width: 641px) { #browse-backdrop, #browse-backdrop.is-open { background: transparent; pointer-events: none; } }
 
-  /* Docked down the left edge and wide enough to read, with the map still
-     live beside it — the list is the main thing here, not a popup over it. */
   #browse {
     position: absolute;
     top: 0; left: 0; bottom: 0;
-    width: clamp(380px, 37vw, 580px); max-width: 100vw;
+    width: 340px; max-width: 86vw;
     z-index: 190;
     display: flex; flex-direction: column;
     background: rgba(8,11,16,0.97);
-    border-right: 1px solid rgba(255,255,255,0.1);
+    border-right: 1px solid rgba(255,255,255,0.08);
     backdrop-filter: blur(14px);
     transform: translateX(-100%);
     transition: transform 0.22s ease;
   }
   #browse.is-open { transform: translateX(0); }
 
-  #browse-search-wrap { display: flex; gap: 8px; padding: 10px 18px 10px; border-bottom: 1px solid rgba(255,255,255,0.07); }
-  #browse-search[hidden] { display: none; }
-  #browse-when-toggle {
-    flex: none; margin-left: auto; display: flex; align-items: center; gap: 7px;
-    padding: 0 14px; min-height: 40px; border-radius: 24px;
-    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
-    font: inherit; font-size: 13px; color: #e8edf5; cursor: pointer; white-space: nowrap;
-  }
-  #browse-when-toggle::after {
-    content: ''; width: 6px; height: 6px; margin-bottom: 3px;
-    border-right: 1.6px solid #8a94a8; border-bottom: 1.6px solid #8a94a8; transform: rotate(45deg);
-    transition: transform 0.18s ease;
-  }
-  #browse-when-toggle[aria-expanded="true"]::after { transform: rotate(-135deg); margin-bottom: -2px; }
-  #browse-when-toggle.is-custom { border-color: rgba(124,166,230,0.5); background: rgba(96,165,250,0.16); color: #cfe3ff; }
-  #browse-search {
-    flex: 1; min-width: 0; box-sizing: border-box;
-    padding: 9px 16px; border-radius: 24px;
-    border: 1px solid rgba(255,255,255,0.12);
-    background: rgba(255,255,255,0.05);
-    font: inherit; font-size: 15px; color: #e8edf5;
-  }
-  #browse-search::placeholder { color: #5a6478; }
-  #browse-search:focus-visible { border-color: rgba(147,190,245,0.55); outline: none; }
-
   #browse-head {
     display: flex; align-items: center; gap: 10px;
-    padding: calc(10px + var(--safe-top)) 14px 8px 22px;
+    padding: calc(14px + var(--safe-top)) 14px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
   }
   /* The flex has to be on the wrapper, not the title inside it — on the title
      the wrapper still shrank to its content and the close button sat tight
      against the text instead of at the edge. */
   #browse-heading { flex: 1; min-width: 0; }
-  #browse-title { font-size: 17px; font-weight: 600; color: #f0f4f8; }
+  #browse-title { font-size: 14px; font-weight: 600; color: #f0f4f8; }
   #browse-sub { font-size: 11px; color: #5a6478; margin-top: 2px; }
   .browse-btn {
     display: flex; align-items: center; justify-content: center;
     flex: none;
-    min-width: 40px; min-height: 40px;        /* a real target, not a glyph */
+    min-width: 44px; min-height: 44px;        /* a real target, not a glyph */
     background: rgba(255,255,255,0.05);
     border: 1px solid rgba(255,255,255,0.1);
     padding: 0;
@@ -574,12 +597,8 @@
      of term. Past dates have data too, but nobody looking for somewhere to sit
      wants yesterday. */
   #browse-when {
-    padding: 8px 18px 10px;
+    padding: 8px 14px 10px;
     border-bottom: 1px solid rgba(255,255,255,0.07);
-  }
-  #browse-when.is-collapsed {
-    max-height: 0; padding-top: 0; padding-bottom: 0; overflow: hidden; border-bottom: 0;
-    visibility: hidden;
   }
   #browse-when[hidden] { display: none; }
 
@@ -648,13 +667,11 @@
   }
   #browse-now[hidden] { display: none; }
   #browse-note {
-    padding: 5px 22px; font-size: 11px; line-height: 1.5; color: #c0a36b; cursor: pointer;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    padding: 9px 14px; font-size: 11px; line-height: 1.5; color: #c0a36b;
     background: rgba(197,160,89,0.08);
     border-bottom: 1px solid rgba(255,255,255,0.07);
   }
   #browse-note[hidden] { display: none; }
-  #browse-note.is-open { white-space: normal; }
 
   #browse-body { flex: 1; overflow-y: auto; padding: 4px 0 20px; }
   #browse-body::-webkit-scrollbar { width: 6px; }
@@ -662,20 +679,19 @@
 
   .browse-group {
     font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em;
-    color: #6b7589; padding: 18px 22px 8px; font-size: 12px;
+    color: #4e5768; padding: 14px 16px 6px;
   }
   .browse-row {
     width: 100%; display: flex; align-items: center; justify-content: space-between;
-    gap: 12px; padding: 16px 22px;
+    gap: 10px; padding: 11px 16px;
     background: none; border: 0; border-bottom: 1px solid rgba(255,255,255,0.04);
     font: inherit; text-align: left; color: #e8edf5; cursor: pointer;
   }
   .browse-row:hover { background: rgba(255,255,255,0.04); }
-  .browse-name { font-size: 16px; }
-  .browse-row::after { content: ''; flex: none; width: 7px; height: 7px; margin-left: 2px; border-top: 1.6px solid #6b7488; border-right: 1.6px solid #6b7488; transform: rotate(45deg); }
+  .browse-name { font-size: 13px; }
   .browse-sub  { display: block; font-size: 10.5px; color: #5a6478; margin-top: 2px; }
   .badge {
-    flex: none; font-size: 12px; letter-spacing: 0.03em; font-weight: 600;
+    flex: none; font-size: 11px; font-weight: 600;
     border-radius: 20px; padding: 3px 9px;
     border: 1px solid transparent;
   }
@@ -685,10 +701,10 @@
 
   .room-row {
     display: flex; align-items: center; justify-content: space-between;
-    gap: 10px; padding: 14px 22px;
+    gap: 10px; padding: 10px 16px;
     border-bottom: 1px solid rgba(255,255,255,0.04);
   }
-  .room-id { font-size: 15px; color: #e8edf5; }
+  .room-id { font-size: 13px; color: #e8edf5; }
   .room-for { display: block; font-size: 10.5px; color: #5a6478; margin-top: 2px; }
   .browse-foot { font-size: 10.5px; color: #4e5768; padding: 14px 16px; line-height: 1.5; }
 
@@ -1496,11 +1512,7 @@
     </div>
     <button class="browse-btn" id="browse-close" type="button" aria-label="Close">&times;</button>
   </div>
-  <div id="browse-search-wrap">
-    <input type="search" id="browse-search" placeholder="Search buildings" aria-label="Search buildings" autocomplete="off" spellcheck="false">
-    <button id="browse-when-toggle" type="button" aria-expanded="false" aria-controls="browse-when"><span id="browse-when-label">Now</span></button>
-  </div>
-  <div id="browse-when" class="is-collapsed" hidden>
+  <div id="browse-when" hidden>
     <input type="date" id="browse-date" aria-label="Date">
     <div id="wheels">
       <div class="wheel wheel-narrow" id="wheel-hour" role="listbox" aria-label="Hour" tabindex="0"></div>
@@ -1518,7 +1530,7 @@
   <div>
     <h1>Ohio State Spaces</h1>
     <div class="sub" id="header-sub">The Ohio State University</div>
-    <div class="disclaimer">A student project<span class="d-rest"> · not affiliated with The Ohio State University</span></div>
+    <div class="disclaimer">A student project<span class="d-rest"> · not affiliated with The Ohio State University</span> · <a id="change-campus" href="/?choose">Change campus</a></div>
   </div>
   <a id="old-look" href="classic.html">Old look</a>
 </div>
@@ -1540,7 +1552,7 @@
     <span class="chip-lbl">busy</span>
   </div>
   <button id="browse-all" type="button" hidden>
-    <span>Study room availability</span><span class="arrow">&rarr;</span>
+    <span>Room availability</span><span class="arrow">&rarr;</span>
   </button>
 </div>
 
@@ -1552,6 +1564,16 @@
   <div id="pick-body">
     <ol id="pick-list"></ol>
     <div class="pick-note" id="pick-note" hidden></div>
+    <div id="rooms-section" hidden>
+      <button id="rooms-toggle" type="button" aria-expanded="true" aria-controls="rooms-body">
+        <span class="pick-head">Study rooms free now</span>
+        <span id="rooms-chevron" aria-hidden="true"></span>
+      </button>
+      <div id="rooms-body">
+        <ul id="rooms-list"></ul>
+        <div class="rooms-foot">Rooms nobody has booked — not necessarily empty.</div>
+      </div>
+    </div>
     <div id="pick-key" aria-hidden="true">
       <span class="key-bar"></span>
       <span class="key-ends"><span>Empty</span><span>Full</span></span>
@@ -1647,6 +1669,6 @@
 </div>
 
 <script defer src="basemap-render.js?v=35"></script>
-<script defer src="app.js?v=122"></script>
+<script defer src="app.js?v=123"></script>
 </body>
 </html>

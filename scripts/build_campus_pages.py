@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Write a static page per campus from index.html.
+Write a static page per campus from uiuc.html.
 
 Reddit, iMessage and Snapchat build their link preview from the raw HTML and
 never run the JavaScript, so a page that swaps its own title at runtime shares
@@ -8,7 +8,7 @@ as whatever the file says — a link to the Ohio State map would have previewed
 as "UIUC Spaces" over a picture of Illinois. Each campus therefore needs a real
 file with its own title, description, canonical and preview image.
 
-index.html stays the Illinois page and the source of truth. Everything else is
+uiuc.html is the Illinois page and the source of truth (index.html is the campus picker). Everything else is
 generated from it, so the layout, styles and script only ever exist once.
 
 Usage:  python3 scripts/build_campus_pages.py
@@ -136,13 +136,13 @@ def render(html, c):
 </noscript>"""
         out = out[:block.start()] + new_block + out[block.end():]
 
-    # The redirect in index.html is for the old Illinois address only.
+    # The redirect in uiuc.html is for the old Illinois address only.
     out = re.sub(r"<script>\n// The site moved to campusquiet\.com\..*?\n</script>\n", "", out, count=1, flags=re.S)
     return out
 
 
 def main():
-    html = (ROOT / "index.html").read_text()
+    html = (ROOT / "uiuc.html").read_text()
     for cid, c in CAMPUSES.items():
         c = {**c, "id": cid}
         page = render(html, c)
