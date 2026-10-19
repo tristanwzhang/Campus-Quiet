@@ -107,5 +107,61 @@
   </nav>
   <p class="note">A student project · not affiliated with any university. Busyness is estimated from class schedules and official building hours.</p>
 </main>
+
+<script>
+// The picker records nothing, and since it replaced the Illinois map at the
+// root every visitor now lands here first -- so arrivals, and which campus
+// they pick, have been invisible since 2026-10-18. Anyone who shares
+// campusquiet.com rather than a campus URL disappears entirely.
+//
+// Deliberately the same shape as app.js: the ?nostats opt-out, no cookies,
+// no autocapture, and `school` registered so the automatic pageview carries
+// it. The campus pages register their own id; this one says 'picker', which
+// is what makes the click-through countable.
+(function () {
+  var KEY = 'phc_pTDiskU8X4GkZisJH9byyKWbRnWv6tyLCZuJfZ6KTpQx';
+  var HOST = 'https://us.i.posthog.com';
+  var NOSTATS = 'uiucSpacesNoStats';
+  try {
+    var params = new URLSearchParams(location.search);
+    if (params.has('nostats')) {
+      if (params.get('nostats') === '0') localStorage.removeItem(NOSTATS);
+      else localStorage.setItem(NOSTATS, '1');
+    }
+    if (localStorage.getItem(NOSTATS) === '1') return;
+  } catch (e) { /* private browsing: carry on, nothing is stored */ }
+
+  var script = document.createElement('script');
+  script.async = true;
+  script.src = HOST + '/static/array.js';
+  script.onload = function () {
+    window.posthog.init(KEY, {
+      api_host: HOST,
+      persistence: 'localStorage',
+      autocapture: false,
+      disable_session_recording: true,
+      disable_surveys: true,
+      respect_dnt: true,
+      capture_pageview: true,
+      capture_pageleave: true,
+      person_profiles: 'never',
+      loaded: function (ph) { ph.register({ school: 'picker' }); },
+    });
+    // Sent before the link follows. keepalive lets it survive the navigation;
+    // without it the browser cancels the request on unload and the click is
+    // lost, which is the whole measurement.
+    document.querySelectorAll('a.campus').forEach(function (a) {
+      a.addEventListener('click', function () {
+        try {
+          window.posthog && window.posthog.capture('campus_chosen', {
+            chose: a.getAttribute('href').replace('/', ''),
+          });
+        } catch (e) { /* never block the link */ }
+      });
+    });
+  };
+  document.head.append(script);
+})();
+</script>
 </body>
 </html>
