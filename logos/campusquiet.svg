@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CampusQuiet">
+  <defs>
+    <linearGradient id="cq" gradientUnits="userSpaceOnUse" x1="0" y1="58" x2="0" y2="6">
+      <stop offset="0" stop-color="#22c55e"/><stop offset=".55" stop-color="#eab308"/><stop offset="1" stop-color="#ef4444"/>
+    </linearGradient>
+  </defs>
+  <circle cx="28" cy="28" r="17" fill="none" stroke="url(#cq)" stroke-width="8"/>
+  <path d="M41 41 L55 55" stroke="url(#cq)" stroke-width="8" stroke-linecap="round"/>
+  <path d="M19 27 L28 19 L37 27 Z" fill="url(#cq)"/>
+  <rect x="20.5" y="28.5" width="15" height="9" rx="1" fill="url(#cq)"/>
+  <rect x="26" y="31.5" width="4" height="6" rx="1" fill="#10151d"/>
+</svg>

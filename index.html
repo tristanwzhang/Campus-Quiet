@@ -20,8 +20,8 @@
 <meta name="google-site-verification" content="2yHqqMcUZ2wneCB7bMSbk0u5ygMaqu72CmEDhTtyPKQ" />
 <meta name="description" content="Live 3D maps of how busy campus libraries, dining halls and study spaces are right now. Pick your campus: UIUC or Ohio State.">
 <link rel="canonical" href="https://campusquiet.com/">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="favicon.svg?v=2" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CampusQuiet">
 <meta property="og:title" content="CampusQuiet">
@@ -57,7 +57,10 @@
     padding: calc(24px + var(--safe-top)) 16px calc(24px + var(--safe-bottom));
   }
   main { width: 100%; max-width: 520px; }
-  h1 { font-size: 26px; font-weight: 600; letter-spacing: -0.01em; }
+  h1 { display: flex; align-items: center; gap: 12px; font-size: 30px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+  h1 img { width: 52px; height: 52px; display: block; }
+  /* The map's own scale, green to red, across the word that names the product. */
+  h1 i { font-style: normal; background: linear-gradient(90deg,#22c55e,#eab308,#ef4444); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .lede { margin-top: 8px; font-size: 15px; line-height: 1.5; color: #9aa5b8; }
   .pick-label { margin-top: 28px; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #5a6478; }
   .campuses { margin-top: 12px; display: grid; gap: 14px; }
@@ -95,7 +98,7 @@
 </head>
 <body>
 <main>
-  <h1>CampusQuiet</h1>
+  <h1><img src="logos/campusquiet.svg" alt="" width="52" height="52"><span>Campus<i>Quiet</i></span></h1>
   <p class="lede">See how busy campus libraries, dining halls and study spaces are right now, before you walk over.</p>
   <div class="pick-label">Pick your campus</div>
   <nav class="campuses" aria-label="Campuses">
