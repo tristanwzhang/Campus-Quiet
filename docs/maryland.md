@@ -488,6 +488,100 @@ here, and labels at the extremes sit up to ~17 m off their building. It is set
 to the median and flagged in the config; per-building sampling is the real fix
 if it ever reads badly on screen. Worth looking at before launch.
 
+
+## 2026-10-19, second pass: accuracy
+
+### A bug that blanked the whole map, found on this campus
+
+`applyStyle()` built a Cesium 3D-Tiles style by quoting each building name into
+a style expression and escaping apostrophes as `\'`. **Cesium's expression
+parser does not understand backslash escapes**, so `'Queen Anne\'s Hall'` ends
+at the apostrophe and throws *"Unclosed quote"* — which stopped Cesium
+rendering altogether. One building name took the entire map down.
+
+Illinois and Ohio State have no apostrophe in any building name, which is why
+this survived two campuses. Maryland has four: Queen Ann's Hall (in the class
+data), Queen Anne's Hall, Prince George's Hall and St. Mary's Hall.
+
+Fixed in both `app.js` and `classic.js` by quoting with whichever character the
+name does not contain, since Cesium accepts both. A name containing both is
+unrepresentable and is now skipped — it loses its colour instead of taking the
+map with it. Verified against all 332 Maryland names: every one parses, none
+skipped.
+
+### The fallback, measured and changed
+
+Two changes, both measured with `scripts/hours_accuracy.mjs`, scoring every
+slot with silence counted as wrong.
+
+**1. Order of guards in `assumedStatus()` — a bug fix, on for every campus.**
+The "nothing timetabled today" check ran before the "no classes meet today"
+check, so during a recess two buildings could disagree about the same day: one
+with a Saturday timetable read *closed*, one without read *silent*. The
+campus-wide questions are now settled first. This improves the live campuses:
+
+| Thanksgiving week | before | after |
+|---|---|---|
+| Illinois | 82.9% | **90.0%** |
+| Ohio State | 69.6% | **72.6%** |
+| Maryland | 40.9% | **65.1%** |
+
+Unchanged on ordinary weeks for both live campuses.
+
+**2. `assumeShutWithoutClasses` — a judgement call, on for Maryland only.**
+Maryland timetables **no Saturday classes at all**, so the fallback said
+nothing every weekend: 34% of all building-hours, against Ohio State's 18% and
+Illinois' 0.4%. Reading "nothing timetabled here today" as *probably closed*
+removes that silence. It can only ever be wrong in the safer direction — it
+adds "said closed when open" and **never a single "said open when closed"**, so
+it cannot send anyone to a locked door.
+
+| week of 2026-10-19 | silent | assumed shut | new claims right |
+|---|---|---|---|
+| Illinois | 92.8% | 93.0% | 685/1144 (60%) |
+| Ohio State | 75.6% | **90.2%** | 637/840 (76%) |
+| Maryland | 33.1% | **51.6%** | 58/112 (52%) |
+
+**Ohio State would gain 14.6 points from switching this on.** It is off there
+because that map is live and this changes what it tells people — an owner's
+decision, not a side effect of building a third campus.
+
+**A negative result worth not re-deriving:** `assumedHours()` widens every
+building to the campus-wide class window, which looks too aggressive — it is
+why Reckord Armory, open from 3pm, reads open at 6am. Removing it was tested
+and is **worse** everywhere (Illinois 92.8→92.7, Ohio State 75.6→74.0, Maryland
+51.6→41.0). It does cut the dangerous error sharply (98→36 "open when closed"
+on Illinois) at the cost of far more false closures. Keep the union.
+
+### Break days, now from two published sources
+
+`campusClosedDates` was three dates guessed from the academic calendar. It is
+now the university's own staff holiday calendar
+(`uhr.umd.edu/employee-resources/holiday-calendar`), read from the **observed**
+column: 7 Sep, **12 Oct**, 26–27 Nov, 25 Dec, 28–31 Dec. Election Day is earned
+on 3 November but observed in March 2027, and Veteran's Day and President's Day
+are observed inside the December break — none of them closes anything this term.
+
+12 October is the one that would have been got wrong: HR calls it "Indigenous
+Peoples Day - Fall Break", and Stamp's own hours page independently prints that
+Monday as *Closed* while showing the Tuesday open until 6pm. Two published
+sources, agreeing.
+
+`classesOutDates` is new: **13 Oct and 25 Nov**, the no-class days that are
+*not* university holidays, so the offices are open and the fallback says
+nothing rather than guessing shut. Derived by subtracting one published list
+from the other.
+
+### Sources checked and ruled out, second pass
+
+- **OpenStreetMap `opening_hours`** — 111 tagged venues inside the campus box,
+  every one a restaurant, café, pharmacy or charging station. The only match to
+  a building we hold is Mowatt Lane Parking Garage (24/7). Not a source.
+- **Occuspace** (`api.occuspace.io`) — 401. **Waitz** — 404 for Maryland,
+  consistent with it being Purdue-only.
+- The official app's busy meter for dining halls and rec centres has **no web
+  surface at all**: no widget, no XHR, nothing on the RecWell or Dining pages.
+
 ## What is different from Columbus, in one list
 
 - **Better:** the code→building join is fully official and complete; library

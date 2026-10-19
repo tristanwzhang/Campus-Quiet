@@ -109,12 +109,42 @@ RECWELL_TERM = "Fall Semester"          # which data-title tab to read
 # register's building number (163, per MD iMAP).
 STAMP_BUILDING = "Stamp Student Union"
 
-# Days the university itself is shut. Both are published, not inferred: the
-# registrar's calendar names Labor Day and the Thanksgiving recess, and Stamp's
-# own hours page prints "Thursday, November 26 Closed" and "Friday, November 27
-# Closed". The rest of the recess (Wed 25, Sat 28, Sun 29) is a class break
-# with the campus open, so it is not listed here.
-CAMPUS_CLOSED = ["2026-09-07", "2026-11-26", "2026-11-27"]
+# Days the UNIVERSITY is shut, from its own staff holiday calendar — the
+# observed column, not the earned one, because that is the day the doors are
+# locked. https://uhr.umd.edu/employee-resources/holiday-calendar
+#
+# This is the distinction the Ohio State work turned on: a day with no classes
+# is not the same as a day with locked doors, and only the second belongs here.
+# Two published sources agree on the one that is easy to get wrong — HR lists
+# 12 October as "Indigenous Peoples Day - Fall Break", and Stamp's own hours
+# page independently prints that Monday as Closed while showing the Tuesday
+# open until 6pm.
+#
+# Election Day is earned on 3 November 2026 but OBSERVED on 17 March 2027, so
+# it is not a closure this term; Veteran's Day and President's Day are likewise
+# observed in the December break rather than on the date they are named for.
+CAMPUS_CLOSED = [
+    "2026-09-07",   # Labor Day
+    "2026-10-12",   # Indigenous Peoples Day / Fall Break
+    "2026-11-26",   # Thanksgiving Day
+    "2026-11-27",   # Thanksgiving Holiday
+    "2026-12-25",   # Christmas Day
+    "2026-12-28",   # President's Day, observed
+    "2026-12-29",   # Winter Break
+    "2026-12-30",   # Veteran's Day, observed
+    "2026-12-31",   # Winter Break
+]
+
+# No classes, but the university is open and the doors are very likely
+# unlocked. On these days the class-timetable fallback has run out of ground to
+# stand on and app.js makes it say nothing rather than guess shut — the same
+# treatment Ohio State's "Academic Holidays (no classes, offices open)" get.
+#
+# Derived by subtracting the holiday calendar above from the registrar's
+# no-class days, which is two published sources rather than a judgement:
+# Fall Break is 12-13 October and only the 12th is a holiday; the Thanksgiving
+# recess starts Wednesday the 25th and only the 26th and 27th are holidays.
+CLASSES_OUT = ["2026-10-13", "2026-11-25"]
 
 TERM = "2026/fall"
 TERM_RANGE = ["2026-08-31", "2026-12-11"]    # first and last day of classes
@@ -556,6 +586,7 @@ def main():
         "campus": "Maryland — College Park",
         "term": TERM,
         "campusClosedDates": CAMPUS_CLOSED,
+        "classesOutDates": CLASSES_OUT,
         "buildings": buildings,
     }, indent=1) + "\n")
 

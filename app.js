@@ -717,31 +717,81 @@ function assumedHours(id, day) {
 }
 
 function assumedStatus(id, date, time) {
-  const window = assumedHours(id, weekdayOf(date));
-  if (!window) return { state: 'unknown' };
-  // assumedHours is keyed by weekday, so on a Thursday in a break week it
-  // still returns the hours of an ordinary Thursday. The whole basis of this
-  // estimate is that classes are meeting; on a day the university says they
-  // are not, it cannot be read as open.
-  //
-  // But "not open" and "closed" are different claims. Where the campus itself
-  // publishes a day as no classes with offices open, the doors are very likely
-  // unlocked and it is only this estimate that has run out of ground to stand
-  // on -- so it says nothing instead of guessing shut. Campuses that publish no
-  // such list are unaffected and still read closed, as they did before.
+  // Order matters here, and getting it wrong is how two buildings end up
+  // disagreeing about the same day. The campus-wide questions are settled
+  // FIRST, so that every building on a given date is treated alike, and only
+  // then does this look at what is timetabled in this particular one.
+
+  // 1. No classes, but the university is open and the doors very likely are
+  // too. The estimate has run out of ground to stand on rather than learnt
+  // that anything is shut, so it says nothing. Campuses that publish no such
+  // list are unaffected.
   if ((data.hours?.classesOutDates || []).includes(date)) {
     return { state: 'unknown' };
   }
-  // Finals and the reading day before them are the exception that proves the
-  // point: no classes meet, and the buildings are at their fullest all term.
-  // Until somebody publishes finals-week hours, the ordinary weekday window is
-  // the working assumption -- a library reading "probably closed" during finals
-  // is the worst answer the map can give.
+
+  // 2. Finals and the reading day before them are the exception that proves
+  // the point: no classes meet, and the buildings are at their fullest all
+  // term. Until somebody publishes finals-week hours, the ordinary weekday
+  // window is the working assumption -- a library reading "probably closed"
+  // during finals is the worst answer the map can give.
   const period = calendarPeriod(date);
   const finalsWeek = period.kind === 'finals' || period.kind === 'reading';
+
+  const window = assumedHours(id, weekdayOf(date));
+
+  // 3. A day the university says classes do not meet. The whole basis of this
+  // estimate is that they do, so it cannot be read as open.
   if (!period.classesMeet && !finalsWeek) {
     return { state: 'closed', source: 'assumed from the class timetable', assumed: true };
   }
+
+  // 4. Nothing timetabled in THIS building today, on a day classes do meet
+  // elsewhere. Two readings, and which is right is a property of the campus
+  // rather than of the code -- so it is a flag.
+  //
+  // Saying nothing is the cautious reading and what every campus did until
+  // now. It costs more than it looks: Maryland timetables NO Saturday classes
+  // at all, so the whole map went silent every weekend -- 34% of all
+  // building-hours, against Ohio State's 18% and Illinois' 0.4%.
+  //
+  // Reading it as "probably closed" is measurably better where the fallback
+  // carries real weight, and it can only ever be wrong in the SAFER
+  // direction: it adds "said closed when open" and never a single "said open
+  // when closed", so it cannot send anyone to a locked door. Measured with
+  // scripts/hours_accuracy.mjs for the week of 2026-10-19, scoring every slot
+  // with silence counted as wrong:
+  //
+  //            silent  ->  assumed shut      new claims right
+  //   Illinois  92.8%  ->  93.0%             685/1144  (60%)
+  //   Ohio St   75.6%  ->  90.2%             637/840   (76%)
+  //   Maryland  33.1%  ->  51.6%              58/112   (52%)
+  //
+  // Only Maryland has it on. Illinois has almost no silence to fill, and Ohio
+  // State is live -- switching it on there is a real improvement AND a real
+  // change to what a launched map tells people, so it is the owner's call and
+  // not a side effect of building a third campus.
+  if (!window) {
+    if (!CAMPUS_CONTENT.assumeShutWithoutClasses || finalsWeek) {
+      // During finals there is no ordinary window for a day nothing ever
+      // meets on, and the buildings are at their busiest. Guessing shut then
+      // would be the same mistake as point 2, by another route.
+      return { state: 'unknown' };
+    }
+    const week = data.classActivity?.buildings?.[id]?.hours;
+    const known = week && Object.values(week).some(g => g.some(v => v > 0));
+    if (!known) return { state: 'unknown' };   // no timetable at all: nothing to reason from
+    return {
+      state: 'closed',
+      source: 'assumed from the class timetable',
+      assumed: true,
+      // The panel reads closedNote, not note. Without this it would fall back
+      // to "no classes are scheduled now", which is true but vaguer than what
+      // is actually known: nothing meets here on this day at all.
+      closedNote: 'Probably closed · nothing is timetabled here on this day',
+    };
+  }
+
   const [open, close] = window;
   return {
     state: time >= open && time < close ? 'open' : 'closed',
@@ -1396,17 +1446,17 @@ const CAMPUS_CONTENT = {
   // as it is; switch this on there only if the same question comes up.
   uiuc: { buildings: BUILDINGS_UIUC, studySpots: STUDY_SPOTS_UIUC,
           pickLabels: PICK_LABELS_UIUC, calendar: ACADEMIC_CALENDAR_UIUC,
-          gisAliases: GIS_ALIASES_UIUC, sayWhenShut: false },
+          gisAliases: GIS_ALIASES_UIUC, sayWhenShut: false, assumeShutWithoutClasses: false },
   osu:  { buildings: BUILDINGS_OSU,  studySpots: STUDY_SPOTS_OSU,
           pickLabels: PICK_LABELS_OSU,  calendar: ACADEMIC_CALENDAR_OSU,
-          gisAliases: GIS_ALIASES_OSU, sayWhenShut: true },
+          gisAliases: GIS_ALIASES_OSU, sayWhenShut: true, assumeShutWithoutClasses: false },
   umd:  { buildings: BUILDINGS_UMD,  studySpots: STUDY_SPOTS_UMD,
           pickLabels: PICK_LABELS_UMD,  calendar: ACADEMIC_CALENDAR_UMD,
           // Maryland publishes no campus-wide building hours at all -- five
           // buildings have a published source and the rest ride the class
           // timetable -- so an empty-looking evening map needs the same
           // explanation Columbus gets.
-          gisAliases: GIS_ALIASES_UMD, sayWhenShut: true },
+          gisAliases: GIS_ALIASES_UMD, sayWhenShut: true, assumeShutWithoutClasses: true },
 }[CAMPUS.id];
 
 const BUILDINGS = CAMPUS_CONTENT.buildings;
@@ -2419,6 +2469,30 @@ function applyOverlayColors() {
 
 let lastStyleSignature = null;
 
+/**
+ * A building name as a Cesium style-expression string literal, or null when it
+ * cannot safely be written as one.
+ *
+ * Cesium's expression parser does NOT understand backslash escapes inside a
+ * string literal: `'Queen Anne\'s Hall'` does not mean what it looks like, it
+ * ends the string at the apostrophe and throws "Unclosed quote". That threw
+ * from applyStyle, which stopped Cesium rendering ALTOGETHER -- one building
+ * with an apostrophe in its name blanked the entire map. Illinois and Ohio
+ * State have no such name, which is why this survived two campuses; Maryland
+ * has Queen Ann's Hall, St. Mary's Hall, Prince George's Hall and Queen Anne's
+ * Hall.
+ *
+ * So quote with whichever character the name does not contain. A name holding
+ * both is unrepresentable, and is skipped rather than allowed to emit a broken
+ * expression -- that building loses its colour, where before it took the map
+ * down with it.
+ */
+function styleLiteral(name) {
+  if (!name.includes("'")) return `'${name}'`;
+  if (!name.includes('"')) return `"${name}"`;
+  return null;
+}
+
 function applyStyle() {
   applyOverlayColors();
   if (!buildingsTileset) return;
@@ -2428,9 +2502,10 @@ function applyStyle() {
     if (overlays.has(name)) continue;
     const occ = buildingOccupancy(name);
     if (!occ) continue;
-    const safe = name.replace(/'/g, "\\'");
+    const safe = styleLiteral(name);
+    if (safe === null) continue;      // unquotable name: leave it uncoloured
     const { hex, alpha } = colorFor(occ);
-    conditions.push([`\${name} === '${safe}'`, `color('${hex}', ${alpha})`]);
+    conditions.push([`\${name} === ${safe}`, `color('${hex}', ${alpha})`]);
   }
   conditions.push(['true', `color('${NO_DATA_HEX}', 1)`]);
 

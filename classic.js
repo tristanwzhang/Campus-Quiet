@@ -1333,6 +1333,30 @@ function applyOverlayColors() {
 
 let lastStyleSignature = null;
 
+/**
+ * A building name as a Cesium style-expression string literal, or null when it
+ * cannot safely be written as one.
+ *
+ * Cesium's expression parser does NOT understand backslash escapes inside a
+ * string literal: `'Queen Anne\'s Hall'` does not mean what it looks like, it
+ * ends the string at the apostrophe and throws "Unclosed quote". That threw
+ * from applyStyle, which stopped Cesium rendering ALTOGETHER -- one building
+ * with an apostrophe in its name blanked the entire map. Illinois and Ohio
+ * State have no such name, which is why this survived two campuses; Maryland
+ * has Queen Ann's Hall, St. Mary's Hall, Prince George's Hall and Queen Anne's
+ * Hall.
+ *
+ * So quote with whichever character the name does not contain. A name holding
+ * both is unrepresentable, and is skipped rather than allowed to emit a broken
+ * expression -- that building loses its colour, where before it took the map
+ * down with it.
+ */
+function styleLiteral(name) {
+  if (!name.includes("'")) return `'${name}'`;
+  if (!name.includes('"')) return `"${name}"`;
+  return null;
+}
+
 function applyStyle() {
   applyOverlayColors();
   if (!buildingsTileset) return;
@@ -1342,9 +1366,10 @@ function applyStyle() {
     if (overlays.has(name)) continue;
     const occ = buildingOccupancy(name);
     if (!occ) continue;
-    const safe = name.replace(/'/g, "\\'");
+    const safe = styleLiteral(name);
+    if (safe === null) continue;      // unquotable name: leave it uncoloured
     const { hex, alpha } = colorFor(occ);
-    conditions.push([`\${name} === '${safe}'`, `color('${hex}', ${alpha})`]);
+    conditions.push([`\${name} === ${safe}`, `color('${hex}', ${alpha})`]);
   }
   conditions.push(['true', `color('${NO_DATA_HEX}', 1)`]);
 
