@@ -11,7 +11,7 @@
   if (/[?&]choose\b/.test(location.search)) return;
   try {
     var c = localStorage.getItem('cq-campus');
-    if (c === 'uiuc' || c === 'osu') location.replace('/' + c + location.hash);
+    if (c === 'uiuc' || c === 'osu' || c === 'umd') location.replace('/' + c + location.hash);
   } catch (e) {}
 })();
 </script>
@@ -104,6 +104,7 @@
   <nav class="campuses" aria-label="Campuses">
     <a class="campus" href="/uiuc"><div class="logo"><img src="logos/uiuc.png" alt=""></div><div><b>UIUC</b><span>University of Illinois Urbana-Champaign</span></div></a>
     <a class="campus" href="/osu"><div class="logo"><img src="logos/osu.png" alt=""></div><div><b>Ohio State</b><span>The Ohio State University — Columbus</span></div></a>
+    <a class="campus" href="/umd"><div class="logo"><img src="logos/umd.png" alt=""></div><div><b>Maryland</b><span>University of Maryland — College Park</span></div></a>
   </nav>
   <p class="note">A student project · not affiliated with any university. Busyness is estimated from class schedules and official building hours.</p>
 </main>
