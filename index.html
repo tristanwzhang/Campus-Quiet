@@ -76,19 +76,18 @@
   }
   .campus:hover, .campus:focus-visible { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.22); outline: none; }
   .campus:active { transform: scale(0.99); }
-  /* White tile: Ohio State's wordmark is black, which disappears on the dark page. */
+  /* Logos sit straight on the card. The Ohio State wordmark is the reversed
+     (white) version for this reason, and the Block I keeps its own aspect ratio
+     inside a fixed box, so neither is stretched. */
   .logo {
     flex: none;
-    width: 92px;
-    height: 92px;
-    padding: 10px;
-    background: #fff;
-    border-radius: 14px;
+    width: 96px;
+    height: 96px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .logo img { max-width: 100%; max-height: 100%; display: block; }
+  .logo img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; }
   .campus b { display: block; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
   .campus span { display: block; margin-top: 4px; font-size: 14px; line-height: 1.35; color: #8a94a8; }
   .note { margin-top: 24px; font-size: 12px; line-height: 1.5; color: #5a6478; }
@@ -100,8 +99,8 @@
   <p class="lede">See how busy campus libraries, dining halls and study spaces are right now, before you walk over.</p>
   <div class="pick-label">Pick your campus</div>
   <nav class="campuses" aria-label="Campuses">
-    <a class="campus" href="/uiuc"><div class="logo"><img src="logos/uiuc.png" alt="" width="246" height="349"></div><div><b>UIUC</b><span>University of Illinois Urbana-Champaign</span></div></a>
-    <a class="campus" href="/osu"><div class="logo"><img src="logos/osu.png" alt="" width="226" height="223"></div><div><b>Ohio State</b><span>The Ohio State University — Columbus</span></div></a>
+    <a class="campus" href="/uiuc"><div class="logo"><img src="logos/uiuc.png" alt=""></div><div><b>UIUC</b><span>University of Illinois Urbana-Champaign</span></div></a>
+    <a class="campus" href="/osu"><div class="logo"><img src="logos/osu.png" alt=""></div><div><b>Ohio State</b><span>The Ohio State University — Columbus</span></div></a>
   </nav>
   <p class="note">A student project · not affiliated with any university. Busyness is estimated from class schedules and official building hours.</p>
 </main>
