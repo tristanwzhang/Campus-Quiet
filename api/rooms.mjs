@@ -75,15 +75,22 @@ export function countFree(grid, nowIso) {
       .map(b => String(b.itemId)),
   );
   const rooms = new Set(slots.map(s => String(s.itemId)));
-  const freeNow = new Set(
+  // Rooms with a slot covering this instant -- i.e. rooms the library is taking
+  // bookings for right now. Outside opening hours there are none at all.
+  const bookableNow = new Set(
     slots
       .filter(s => s.start <= nowIso && nowIso < s.end)
-      .map(s => String(s.itemId))
-      .filter(id => !booked.has(id)),
+      .map(s => String(s.itemId)),
   );
+  const freeNow = new Set([...bookableNow].filter(id => !booked.has(id)));
   // `total` counts rooms the feed knows about today, so "0 of 7" still reads
   // as a real answer rather than as missing data.
-  return { free: freeNow.size, total: rooms.size };
+  //
+  // `bookable` is what separates "every room is taken" from "the library is
+  // shut". Both used to come out as "0 of 7 free to book right now", which is
+  // badly wrong at 1am: it sends someone away believing the place is heaving
+  // when it is closed and empty.
+  return { free: freeNow.size, total: rooms.size, bookable: bookableNow.size };
 }
 
 /** "2026-10-16 14:05:00" in the campus's own zone, which is what LibCal compares against. */
@@ -120,13 +127,14 @@ export default async function handler(req, res) {
   await Promise.all(campus.locations.map(async loc => {
     try {
       const grid = await fetchGrid(campus.host, loc.lid, loc.gid, today, tomorrow);
-      const { free, total } = countFree(grid, now);
+      const { free, total, bookable } = countFree(grid, now);
       // Several libraries can share a building; add them up rather than
       // letting the last one win.
-      const prev = buildings[loc.building] ?? { free: 0, total: 0, sources: [] };
+      const prev = buildings[loc.building] ?? { free: 0, total: 0, bookable: 0, sources: [] };
       buildings[loc.building] = {
         free: prev.free + free,
         total: prev.total + total,
+        bookable: prev.bookable + bookable,
         sources: [...prev.sources, loc.label],
       };
     } catch (err) {

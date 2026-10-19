@@ -1607,11 +1607,15 @@ function renderRooms(name) {
   if (!box) return;
   const entry = roomAvailability?.[name];
   if (!entry || !entry.total) { box.hidden = true; return; }
-  const { free, total, sources = [] } = entry;
-  const cls = free ? 'rooms-count' : 'rooms-none';
+  const { free, total, bookable, sources = [] } = entry;
   const word = total === 1 ? 'room' : 'rooms';
-  box.innerHTML =
-    `<span class="${cls}">${free} of ${total}</span> study ${word} free to book right now`
+  // No slot covers this instant, so the library is not taking bookings now.
+  // Saying "0 of 7 free" here would read as "all seven are taken".
+  const body = bookable === 0
+    ? `<span class="rooms-none">Not bookable now</span> · ${total} study ${word} here`
+    : `<span class="${free ? 'rooms-count' : 'rooms-none'}">${free} of ${total}</span>`
+      + ` study ${word} free to book right now`;
+  box.innerHTML = body
     + (sources.length ? `<span class="rooms-where">${sources.join(' · ')}</span>` : '');
   box.hidden = false;
 }
