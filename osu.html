@@ -1237,6 +1237,35 @@
     color: #8a93a8;
     line-height: 1.9;
   }
+
+  /* Sits inside the hint box rather than floating above it, so it cannot drift
+     out of alignment or collide as the hint changes size. The box ignores the
+     mouse; the link has to take it back. */
+  #hint .report {
+    display: block;
+    font-size: 11px;
+    color: #9fb4d8;
+    text-decoration: none;
+    padding-bottom: 7px;
+    margin-bottom: 7px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    pointer-events: auto;
+  }
+  #hint .report:hover, #hint .report:focus-visible { color: #cfe0ff; }
+
+  /* The hint box is hidden on phones, so the sheet carries the same link. */
+  #pick-key .report-inline {
+    color: #9fb4d8;
+    text-decoration: none;
+    /* The hint box is gone on phones, so this is the only way in on the device
+       most people arrive on -- and as plain inline text it was a 13px tap
+       target. The padding grows it to roughly 25px; the negative margin keeps
+       the footer exactly where it was. */
+    display: inline-block;
+    padding: 6px 3px;
+    margin: -6px 0;
+  }
+  #pick-key .report-inline:hover, #pick-key .report-inline:focus-visible { color: #cfe0ff; }
   /* ── Small screens ── */
   @media (max-width: 640px) {
     #header { padding: calc(14px + var(--safe-top)) 16px 50px; }
@@ -1582,7 +1611,7 @@
     <div id="pick-key" aria-hidden="true">
       <span class="key-bar"></span>
       <span class="key-ends"><span>Empty</span><span>Full</span></span>
-      <span class="key-note">Not affiliated with The Ohio State University</span>
+      <span class="key-note">Not affiliated with The Ohio State University · <a class="report-inline" id="report-link-sheet" href="mailto:tristanwzhang@gmail.com">something wrong?</a></span>
     </div>
   </div>
 </div>
@@ -1670,10 +1699,11 @@
 </div>
 
 <div id="hint">
+  <a class="report" id="report-link" href="mailto:tristanwzhang@gmail.com">Something look wrong? Tell me →</a>
   <p>Drag · move<br>Pinch or scroll · zoom<br>Ctrl + drag · tilt &amp; rotate<br>H · back to campus</p>
 </div>
 
 <script defer src="basemap-render.js?v=35"></script>
-<script defer src="app.js?v=123"></script>
+<script defer src="app.js?v=124"></script>
 </body>
 </html>

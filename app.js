@@ -195,6 +195,22 @@ if (CAMPUS.id !== 'uiuc') {
   // stats chips, which have z-index 100.
   const rest = document.querySelector('#header .disclaimer .d-rest');
   if (rest) rest.textContent = CAMPUS.disclaimerRest;
+
+  // A report is only useful if it says what the map claimed and what was
+  // actually there, so the link asks for both rather than opening a blank
+  // message. The subject carries the campus, because the two will be mixed in
+  // one inbox and "Thompson said closed" means nothing without it.
+  const mailto = 'mailto:tristanwzhang@gmail.com'
+    + '?subject=' + encodeURIComponent(`${CAMPUS.title} \u2014 something looks wrong`)
+    + '&body=' + encodeURIComponent(
+        'Building:\n\n'
+      + 'What the map said:\n\n'
+      + 'What it was actually like:\n\n'
+      + 'Roughly when:\n');
+  for (const id of ['report-link', 'report-link-sheet']) {
+    const a = document.getElementById(id);
+    if (a) a.href = mailto;
+  }
 }
 
 // Remember which campus this person uses, so campusquiet.com can send them
