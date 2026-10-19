@@ -55,6 +55,13 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ASSUMED = {
   'published schedule': 0.93,   // a weekly pattern: registrar, spreadsheet, unit page
   'dated feed':         0.97,   // exact hours for that date, refreshed weekly
+  // A campus-wide RULE applied building by building ("academic buildings are
+  // generally open 7am-9pm on weekdays"), not a schedule anyone published for
+  // that building. It has no number here on purpose. 93% belongs to a source
+  // that names each building's own hours, and handing the same figure to a
+  // general rule turned Maryland from 51.6% to 92.2% on paper without a single
+  // door being checked. It is left out of the composite and reported beside it.
+  'campus-wide rule':   null,
 };
 
 // What assumedStatus() stamps on a claim it derived from the class timetable.
@@ -155,6 +162,7 @@ const weekFrom = (iso) => Array.from({ length: 7 }, (_, i) => {
 function pathOf(status, entry, date) {
   if (status.state === 'unknown') return null;
   if (status.source === FALLBACK_SOURCE) return FALLBACK;
+  if (entry?.generalRule) return 'campus-wide rule';
   if (entry?.dates && date in entry.dates) return 'dated feed';
   return 'published schedule';
 }
@@ -162,6 +170,10 @@ function pathOf(status, entry, date) {
 function holdOut(api, days, hours) {
   let correct = 0, saidOpenWasClosed = 0, saidClosedWasOpen = 0, declined = 0;
   for (const [name, entry] of Object.entries(api.entries())) {
+    // A general rule is not independent ground truth: Maryland's is built from
+    // the same class windows the fallback reads, plus 7am-9pm, so scoring the
+    // fallback against it measures how well it agrees with itself.
+    if (entry.generalRule) continue;
     for (const day of days) {
       const truth = api.publishedRanges(entry, day);
       if (truth == null) continue;                 // nothing published to score against
@@ -204,6 +216,7 @@ function report(campus, weekStart) {
   const fbAll = holdOut(api, days, SAMPLED);
   const fbEve = holdOut(api, days, EVENING);
   const rateOf = (p, fb) => p === FALLBACK ? fb : ASSUMED[p];
+  const ruled = all.counts['campus-wide rule'] ?? 0;
 
   console.log(`\n=== ${campus.toUpperCase()} — week of ${weekStart} ===`);
   console.log(`${api.knownBuildings().length} buildings · ${all.total} building-hours · ` +
@@ -211,11 +224,18 @@ function report(campus, weekStart) {
   console.log('  source                     share   accuracy  basis');
   for (const [p, n] of Object.entries(all.counts).sort((a, b) => b[1] - a[1])) {
     console.log(`  ${p.padEnd(24)} ${pct(n / all.claims)}  ${pct(rateOf(p, fbAll.accuracy))}  ` +
-                (p === FALLBACK ? 'MEASURED (hold-out)' : 'assumed'));
+                (p === FALLBACK ? 'MEASURED (hold-out)'
+                  : p === 'campus-wide rule' ? 'UNMEASURED — no ground truth'
+                  : 'assumed'));
   }
 
-  const composite = (fb) => Object.entries(all.counts)
-    .reduce((sum, [p, n]) => sum + (n / all.claims) * rateOf(p, fb), 0);
+  // Over the claims that HAVE a number. A row with no rate is not counted as
+  // right or as wrong; it is reported separately so that nobody reads the
+  // composite as covering it.
+  const rated = all.claims - ruled;
+  const composite = (fb) => rated === 0 ? null : Object.entries(all.counts)
+    .filter(([p]) => rateOf(p, fb) != null)
+    .reduce((sum, [p, n]) => sum + (n / rated) * rateOf(p, fb), 0);
   const allDay = composite(fbAll.accuracy), evening = composite(fbEve.accuracy);
 
   console.log(`\n  hold-out all day  ${pct(fbAll.accuracy)}  ${fbAll.correct}/${fbAll.scored} ` +
@@ -223,8 +243,13 @@ function report(campus, weekStart) {
               `· ${fbAll.saidClosedWasOpen} said closed when open`);
   console.log(`  hold-out evening  ${pct(fbEve.accuracy)}  ${fbEve.correct}/${fbEve.scored}`);
   console.log(`\n  ESTIMATE  of claims made   all day ${pct(allDay)}   evening ${pct(evening)}`);
-  console.log(`            of every slot     all day ${pct(allDay * (1 - all.silentShare))}` +
-              `   evening ${pct(evening * (1 - all.silentShare))}   (silence counted as wrong)`);
+  console.log(`            of every slot     all day ${pct(allDay == null ? null : allDay * (1 - all.silentShare))}` +
+              `   evening ${pct(evening == null ? null : evening * (1 - all.silentShare))}   (silence counted as wrong)`);
+  if (ruled) {
+    console.log(`\n  NOT IN THE ESTIMATE  ${pct(ruled / all.claims)} of claims come from a campus-wide rule ` +
+                `with no ground truth to score it against.`);
+    console.log('  The figures above cover only the other ' + pct(rated / all.claims).trim() + '.');
+  }
 }
 
 process.on('unhandledRejection', () => {});   // app.js's own loaders, which cannot reach the network

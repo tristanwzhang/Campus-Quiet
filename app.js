@@ -455,7 +455,7 @@ const CAMPUS_TZ = CAMPUS.tz;
 const DAY_NAMES = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
 
 // ─── Data loading ─────────────────────────────────────────────────────────────
-const data = { classActivity: null, popularTimes: null, hours: null, gis: null, checkins: loadLocalCheckins() };
+const data = { classActivity: null, popularTimes: null, hours: null, gis: null, directory: null, checkins: loadLocalCheckins() };
 
 // Bookable study rooms, from the libraries' own systems via /api/rooms.
 // Not part of `data` above: everything there is a file shipped with the site,
@@ -1140,7 +1140,17 @@ function offMap(names) {
     // without a register entry there is no sourced location to put them at.
     // Showing them anyway risks a tile with a similar name claiming the label,
     // which is a wrong location rather than a missing one.
-    if (!b) { offMapNames.add(name); continue; }
+    if (!b) {
+      // Not in the register, but a REAL building the register simply predates.
+      // Each name on a campus's list has been checked three ways: Testudo
+      // resolves its scheduling code, the university's printed directory
+      // numbers it, and the 3D tiles carry it inside the map area. The
+      // register's absence is then the register's gap, not evidence the
+      // building is somewhere else.
+      if (CAMPUS_CONTENT.registerGaps?.includes(name)) continue;
+      offMapNames.add(name);
+      continue;
+    }
     if (b.lon < AREA.west || b.lon > AREA.east || b.lat < AREA.south || b.lat > AREA.north) {
       offMapNames.add(name);
     }
@@ -1356,6 +1366,19 @@ const BUILDINGS_UMD = {
   'Eppely Recreation Center': { type: 'rec', label: 'Eppley Recreation Center' },
   'Armory (Reckord)':         { type: 'rec', label: 'Reckord Armory' },
   'Yahentamitsi Dining Hall': { type: 'dining', label: 'Yahentamitsi' },
+  // The three below publish hours but have no classes, so they are known only
+  // through BUILDINGS_UMD and placed through GIS_ALIASES_UMD, as Stamp is.
+  // "251 North" is what the dining site and the printed campus directory call
+  // the Denton Area Dining Hall.
+  'South Campus Dining Hall': { type: 'dining', label: 'South Campus Dining' },
+  'Denton Area Dining Hall':  { type: 'dining', label: '251 North' },
+  'Ritchie Coliseum':         { type: 'rec' },
+  // RecWell calls it the Outdoor Aquatic Center; the register calls it Aquatic
+  // Center. It is shut for the rest of the term, which the hours say.
+  'Aquatic Center':           { type: 'rec', label: 'Outdoor Aquatic Center' },
+  // No type on purpose: a health centre has no "typical busyness" shape that
+  // would be anything but invented, so it shows open or closed and nothing more.
+  'University Health Center': { label: 'Health Center' },
 
   // Long official names crowd out their neighbours on the map, so these show a
   // shorter form of the SAME name. Tooltips still show the full one.
@@ -1416,6 +1439,12 @@ const PICK_LABELS_UMD = {
 // near-miss on a code is how a building gets drawn where it isn't.
 const GIS_ALIASES_UMD = {
   'Stamp Student Union': '163',
+  // Building numbers from MD iMAP, each also printed in the campus directory.
+  'South Campus Dining Hall': '026',
+  'Denton Area Dining Hall': '251',
+  'Ritchie Coliseum': '004',
+  'University Health Center': '140',
+  'Aquatic Center': '399',
 };
 
 // From the university's own semester calendar:
@@ -1456,7 +1485,17 @@ const CAMPUS_CONTENT = {
           // buildings have a published source and the rest ride the class
           // timetable -- so an empty-looking evening map needs the same
           // explanation Columbus gets.
-          gisAliases: GIS_ALIASES_UMD, sayWhenShut: true, assumeShutWithoutClasses: true },
+          gisAliases: GIS_ALIASES_UMD, sayWhenShut: true, assumeShutWithoutClasses: true,
+          // Name every building the register holds, not only the ones with data.
+          // Off for the two live campuses: Ohio State's register has 534 records and
+          // turning this on there would change a launched map.
+          labelRegisterBuildings: true,
+          // Class buildings MD iMAP has no footprint for -- all three opened after
+          // that layer was last drawn. Without this, offMap() dropped them from the
+          // map entirely, which took Thurgood Marshall Hall (one of the larger
+          // class buildings) and Yahentamitsi's dining hours with it. Directory
+          // numbers 433, 228 and 436.
+          registerGaps: ['Thurgood Marshall Hall', 'E.A. Fernandez IDEA Factory', 'Yahentamitsi Dining Hall'] },
 }[CAMPUS.id];
 
 const BUILDINGS = CAMPUS_CONTENT.buildings;
@@ -2535,6 +2574,10 @@ function applyStyle() {
 const labelled = new Set();
 const labels = [];
 const LABEL_RANGE_M = 2600;
+// Buildings we only know the name of are a different kind of label from the ones
+// that carry a colour: context, not information. They show only when you are
+// close, and always yield to a label that means something.
+const QUIET_LABEL_RANGE_M = 2000;
 // Ellipsoid height of the ground on campus. Campus is flat (±3 m), so labels use
 // this instead of looking up terrain under every label (that cost dozens of
 // extra terrain downloads on page load).
@@ -2558,7 +2601,7 @@ function wrapName(name, max = 22) {
   return lines;
 }
 
-function addLabel(name, lon, lat, aboveGroundM, absoluteM) {
+function addLabel(name, lon, lat, aboveGroundM, absoluteM, quiet = false) {
   if (labelled.has(name)) return;
   labelled.add(name);
 
@@ -2572,10 +2615,15 @@ function addLabel(name, lon, lat, aboveGroundM, absoluteM) {
   dot.className = 'map-label-dot';
   el.append(text, dot);
   el.classList.add('is-hidden');
+  if (quiet) {
+    el.classList.add('is-quiet');
+    text.style.opacity = '0.72';
+    text.style.fontWeight = '500';
+  }
   labelLayer.append(el);
 
   const label = {
-    name, el, lines, visible: false,
+    name, el, lines, visible: false, quiet,
     position: Cesium.Cartesian3.fromDegrees(lon, lat, absoluteM ?? APPROX_GROUND_M + aboveGroundM),
   };
   labels.push(label);
@@ -2595,14 +2643,15 @@ function placeLabels() {
     .map(label => {
       const distance = Cesium.Cartesian3.distance(camera, label.position);
       const priority = labelPriority(label.name);
-      return { label, distance, rank: distance * (priority ? 0.65 : 1) * (label.visible ? 0.85 : 1) };
+      // x3 for a name-only label, so a building with data always wins the space.
+      return { label, distance, rank: distance * (priority ? 0.65 : 1) * (label.quiet ? 3 : 1) * (label.visible ? 0.85 : 1) };
     })
     .sort((a, b) => a.rank - b.rank);
 
   const taken = [];
   for (const { label, distance } of items) {
     let win = null;
-    if (distance < LABEL_RANGE_M) {
+    if (distance < (label.quiet ? QUIET_LABEL_RANGE_M : LABEL_RANGE_M)) {
       win = Cesium.SceneTransforms.wgs84ToWindowCoordinates(scene, label.position, scratchWindow);
     }
     let show = !!win && win.x > -100 && win.x < width + 100 && win.y > -50 && win.y < height + 100;
@@ -2846,6 +2895,57 @@ function labelOverlays() {
     const [lon, lat] = cfg.labelAt ?? areaCentre(outline);
     addLabel(name, lon, lat, 0, cfg.shape.topM + 2);
   }
+}
+
+// Buildings nobody goes to find somewhere to sit: sheds, barns, storage,
+// concessions, garages, trailers and plant. The register holds all of them, and
+// naming every one would bury the ones that matter under forty labels.
+const UNLABELLED_KINDS = new RegExp('\\b(' + [
+  'storage', 'shed', 'barn', 'toilet', 'maintenance', 'repair shop', 'concessions?',
+  'ticket booth', 'trailer', 'greenhouse', 'equipment', 'training facility',
+  'extinguisher', 'drill tower', 'shop facility', 'firefighting', 'grounds',
+  'plant operations', 'utility', 'leased facility', 'buoyancy', 'wind tunnel',
+  'animal care', 'animal science service', 'energy plant', 'fleet', 'shuttle bus',
+  'environmental service', 'service building', 'garage', 'parking',
+].join('|') + ')\\b|^building \\d+', 'i');
+
+/**
+ * Name the buildings the register holds that we have no data on. Without this
+ * only a building we hold data for is ever named, so most of a campus is a
+ * field of unlabelled blocks and a student has no way to tell a residence hall
+ * from the library next to it.
+ *
+ * These are quiet labels: visible only up close, and beaten by any labelled
+ * building that wants the same space.
+ */
+function labelRegisterBuildings() {
+  if (!CAMPUS_CONTENT.labelRegisterBuildings || !data.gis) return 0;
+  const withData = new Set(knownBuildings().map(gisFor).filter(Boolean));
+  let n = 0;
+  for (const b of Object.values(data.gis.buildings || {})) {
+    if (withData.has(b) || b.lat == null || !b.name) continue;
+    if (UNLABELLED_KINDS.test(b.name)) continue;
+    if (b.lon < AREA.west || b.lon > AREA.east || b.lat < AREA.south || b.lat > AREA.north) continue;
+    addLabel(b.name, b.lon, b.lat, 10, undefined, true);
+    n++;
+  }
+  return n;
+}
+
+// What the university's own directory files a building under, for the ones we
+// know nothing else about: 'housing', 'places' or 'university'.
+let registerKindIndex = null;
+function registerKind(name) {
+  if (!data.directory || !data.gis) return null;
+  if (!registerKindIndex) {
+    registerKindIndex = new Map();
+    for (const [number, b] of Object.entries(data.gis.buildings || {})) {
+      const section = data.directory.buildings?.[number]?.section;
+      if (!section) continue;
+      for (const alias of [b.name, ...(b.aliases || [])]) registerKindIndex.set(normaliseName(alias), section);
+    }
+  }
+  return registerKindIndex.get(normaliseName(name)) ?? null;
 }
 
 // The picks sheet covers the bottom of a phone screen, including where the map
@@ -3138,8 +3238,10 @@ function openPanel(name, keepThanks = false) {
   // Nothing published for this one at all. Say that plainly and don't ask how
   // busy it is — a report on a building with no hours has nothing to attach to.
   const unmapped = !occ && !knownBuildings().includes(name);
+  const housing = unmapped && registerKind(name) === 'housing';
   panelName.textContent = name;
-  panelNow.textContent = unmapped ? 'No hours published for this building'
+  panelNow.textContent = housing ? 'Residence hall'
+    : unmapped ? 'No hours published for this building'
     : !occ ? 'No data yet'
     : closed ? (occ.cardAccess ? 'Public doors locked · i-card may work'
                 : occ.assumed ? 'Probably closed' : 'Closed right now')
@@ -3148,7 +3250,9 @@ function openPanel(name, keepThanks = false) {
   panelQ.hidden = closed || unmapped;
   checkinRow.hidden = closed || unmapped;
   renderRooms(name);
-  panelNote.textContent = unmapped
+  panelNote.textContent = housing
+    ? "The university lists this as campus housing and publishes no public hours for it."
+    : unmapped
     ? "On the map, but nobody publishes hours for it — so there's nothing to show."
     : closed
     // An assumed closure has to show its working — otherwise "probably closed"
@@ -3849,7 +3953,7 @@ function refresh({ keepThanks = false } = {}) {
   // Buildings take longest, so start them first; they're coloured once our
   // data arrives.
   const buildingsLoading = loadBuildings();
-  const [classActivity, popularTimes, hours, gis, drawTile] = await Promise.all([
+  const [classActivity, popularTimes, hours, gis, drawTile, directory] = await Promise.all([
     loadJson(`${CAMPUS.dataDir}/class_activity.json`),
     loadJson(`${CAMPUS.dataDir}/popular_times.json`),
     loadJson(`${CAMPUS.dataDir}/building_hours.json`),
@@ -3857,6 +3961,10 @@ function refresh({ keepThanks = false } = {}) {
     // 404 for Illinois is handled the same way popular_times.json is.
     loadJson(`${CAMPUS.dataDir}/buildings.json`),
     startBasemap(),
+    // The university's printed directory sorts every building into academic and
+    // administrative, key places, or housing. Only a campus that labels the
+    // whole register needs it, and asking the others would be a 404 each visit.
+    CAMPUS_CONTENT.labelRegisterBuildings ? loadJson(`${CAMPUS.dataDir}/directory.json`) : null,
   ]);
   performance.mark('data-and-basemap-ready');
   if (drawTile) {
@@ -3866,10 +3974,12 @@ function refresh({ keepThanks = false } = {}) {
   data.popularTimes = popularTimes;
   data.hours = hours;
   data.gis = gis;
+  data.directory = directory;
 
   updateHeader();
   createOverlays();
   labelOverlays();
+  labelRegisterBuildings();
   claimPendingTiles();
   refresh();
   // Before awaiting the buildings: neither of these needs the 3D map, and

@@ -4,14 +4,29 @@ Build Maryland building hours into data/umd/building_hours.json, in the same
 shape build_hours.py produces for Illinois and build_osu_hours.py for Columbus,
 so app.js can read any of the three.
 
-**Maryland publishes no campus-wide building hours.** There is no equivalent of
-Illinois' Facilities spreadsheet or Ohio State's registrar classroom-pool
-schedule — Facilities Management publishes none, and the registrar publishes
-none. So this file is small on purpose: three sources covering the buildings
-that genuinely publish, and everything else rides the class-timetable fallback
-in app.js, which is already the agreed design for that gap.
+**Maryland publishes no per-building hours spreadsheet** — nothing like
+Illinois' Facilities file or Ohio State's registrar classroom-pool schedule. It
+DOES publish one campus-wide rule, which an earlier version of this file missed
+because it was looking for a table. UMPD Building Security Services, the office
+that controls the door locks ("Locking/unlocking is controlled by remote
+electronic programming"), states:
 
-The three, each checked live on 2026-10-16 and again on 2026-10-19:
+    Campus academic and administrative facilities are generally open to the
+    public from 7:00am to 9:00pm Monday through Friday during the academic
+    year. Unless specifically requested, these facilities are closed on
+    weekends and University holidays. [...] Regularly scheduled classes and
+    exams [...] exterior doors to the appropriate facilities will be unlocked
+    during the scheduled period.
+    https://umpd.umd.edu/about-us/our-units/building-security-systems
+
+That is applied below to the buildings that are plainly academic, with each
+building's own scheduled classes added on top, because the same page says the
+doors unlock for them. It is a GENERAL rule, not a per-building schedule, and
+the entries say so (`generalRule`) rather than posing as one.
+
+Everything else rides the class-timetable fallback in app.js.
+
+The sources, each checked live on 2026-10-16 and again on 2026-10-19:
 
   1. **University Libraries, via LibCal** — the best hours feed on any of the
      three campuses. Key-less, and it answers with DATED hours eight weeks
@@ -37,12 +52,12 @@ The three, each checked live on 2026-10-16 and again on 2026-10-19:
 
 What is deliberately NOT here:
 
-  * **Dining.** It publishes no per-hall hours on the web — the dining-halls
-    page gives meal windows and then says to use the mobile app, and
-    /hours/open-now serves a full venue list with every hours cell empty.
-  * **The Outdoor Aquatic Center**, whose table is shaped by date range rather
-    than weekday and which is shut for the rest of the term anyway.
-  * **Ritchie Coliseum**, which has no hours table on its page.
+  * **Dining venues that are tenants.** The cafes in McKeldin, Tawes, Iribe and
+    the rest publish hours, but a cafe's hours are not its building's hours.
+    Only the three dining HALLS, which are buildings in their own right, are
+    used. (An earlier version of this file said Dining publishes no hours at
+    all. It does — they load a few seconds after the page does, from a public
+    Google Sheet the page itself reads, which a first look at the page missed.)
   * Any hours derived from the class timetable. Ohio State's registrar proxy
     earns its `classDerived` flag by being a published schedule; inventing one
     here from our own class data would be circular.
@@ -73,6 +88,29 @@ LIBCAL = "https://umd.libcal.com/api_hours_grid.php?iid=0&format=json&weeks=%d"
 LIBCAL_SOURCE = "University of Maryland Libraries hours"
 LIBCAL_URL = "https://www.lib.umd.edu/visit/hours"
 
+DINING_PAGE = "https://dining.umd.edu/hours/open-now"
+DINING_SOURCE = "UMD Dining Services published hours"
+# The page's own script names the sheet and the tab, so they are read from it
+# rather than trusted as constants. These are only the fallback if that fails.
+DINING_SHEET_FALLBACK = ("1vdWskGO2-aJfKLSW8-3zMaj_nx4SBJHF3OvMEy4-ZNo", "479022338")
+# Hall label in the sheet's first column -> the building the map uses. 251 North
+# is the Denton Area Dining Hall (the printed campus directory pairs them:
+# "251 NORTH/DENTON AREA DINING HALL"); Yahentamitsi is its class-data name.
+DINING_HALLS = {
+    "South Campus": "South Campus Dining Hall",
+    "251 North": "Denton Area Dining Hall",
+    "Yahentamitsi": "Yahentamitsi Dining Hall",
+}
+
+HEALTH_URL = "https://health.umd.edu/your-visit/hours-and-location"
+HEALTH_SOURCE = "University Health Center published hours"
+HEALTH_BUILDING = "University Health Center"
+
+UMPD_URL = "https://umpd.umd.edu/about-us/our-units/building-security-systems"
+UMPD_SOURCE = "UMD Police Building Security Services \u2014 general academic building hours"
+DIRECTORY_FILE = ROOT / "data" / "umd" / "directory.json"
+ROOMS_FILE = ROOT / "data" / "umd" / "rooms.json"
+
 STAMP_URL = "https://stamp.umd.edu/visit/hours_operation"
 STAMP_SOURCE = "Adele H. Stamp Student Union published hours"
 
@@ -100,7 +138,21 @@ RECWELL = {
         ("Eppely Recreation Center", "ERC", "Eppley Recreation Center"),
     "https://recwell.umd.edu/reckord-armory":
         ("Armory (Reckord)", "ARM", "Reckord Armory Gym"),
+    # No classes meet in Ritchie, so it has no scheduling code; it is joined to
+    # the register by number (004) through GIS_ALIASES_UMD, as Stamp is. The page
+    # was once described as old, but its Fall Semester tab matches Eppley's
+    # exactly and RecWell's dated /facility-alerts table lists both on the same
+    # hours, so the two agree.
+    "https://recwell.umd.edu/ritchie-coliseum-0":
+        ("Ritchie Coliseum", None, "Ritchie Coliseum"),
 }
+POOL_URL = "https://recwell.umd.edu/outdoor-aquatic-center"
+# The register calls it "Aquatic Center" (building 399); RecWell calls it the
+# Outdoor Aquatic Center and places it "on the west end of Eppley Recreation
+# Center". The directory puts both in map grid D7. The identification is an
+# inference from that — there is no other standalone aquatic building — and is
+# flagged as one in docs/maryland.md.
+POOL_BUILDING = "Aquatic Center"
 RECWELL_TERM = "Fall Semester"          # which data-title tab to read
 
 # Stamp is not in the class data at all — no classes meet there — so it has no
@@ -548,6 +600,288 @@ def recwell(skipped):
     return out
 
 
+# ── 4. Dining halls ───────────────────────────────────────────────────────────
+
+def merge_ranges(ranges):
+    """[[7,10.5],[10.5,16],[16,21]] -> [[7,21]]. Meals that touch are one stretch
+    of open doors, which is what the map is asking about."""
+    out = []
+    for a, b in sorted(ranges):
+        if out and a <= out[-1][1]:
+            out[-1][1] = max(out[-1][1], b)
+        else:
+            out.append([a, b])
+    return out
+
+
+def dining(skipped):
+    """The three dining halls, DATED, from the sheet dining.umd.edu itself reads.
+
+    The hours do not appear in the page's HTML: a script fetches them from a
+    public Google Sheet a few seconds after load, which is why a first read of
+    the page (and a plain scrape of it) shows every cell empty. The page names
+    the sheet and the tab in its own code, so both are taken from there; the tab
+    is then checked by its CONTENT (rows called "South Campus | Breakfast")
+    rather than trusted by number.
+
+    One column per calendar day, a year ahead, so this is dated hours like the
+    libraries' — no weekly pattern to reason from and nothing to guess at breaks.
+    """
+    sheet, gid = DINING_SHEET_FALLBACK
+    page = fetch(DINING_PAGE)
+    if page:
+        m = re.search(r"diningUrl\s*=\s*'https://docs\.google\.com/spreadsheets/d/([\w-]+)/gviz/tq\?gid=(\d+)'", page)
+        if m:
+            sheet, gid = m.group(1), m.group(2)
+        else:
+            skipped.append("dining page no longer names its sheet; using the last known one")
+    raw = fetch(f"https://docs.google.com/spreadsheets/d/{sheet}/gviz/tq?gid={gid}&tqx=out:json")
+    if not raw:
+        return {}
+    m = re.search(r"setResponse\((.*)\);?\s*$", raw, re.S)
+    if not m:
+        skipped.append("dining sheet: unrecognised response")
+        return {}
+    table = json.loads(m.group(1)).get("table", {})
+    rows = table.get("rows", [])
+
+    def text(c):
+        return ((c or {}).get("f") or (c or {}).get("v") or "")
+
+    if not rows:
+        return {}
+    header = [str(text(c)).strip() for c in rows[0]["c"]]
+    isodates = {}
+    for i, h in enumerate(header[1:], 1):
+        mo = re.fullmatch(r"(\d{1,2})/(\d{1,2})/(\d{4})", h)
+        if mo:
+            isodates[i] = f"{int(mo.group(3)):04d}-{int(mo.group(1)):02d}-{int(mo.group(2)):02d}"
+
+    # meal rows per hall: {hall: [row, row, row]}
+    halls = {}
+    for r in rows[1:]:
+        cells = r["c"]
+        label = str(text(cells[0])).strip() if cells else ""
+        hall = label.split("|")[0].strip()
+        if hall in DINING_HALLS and "|" in label:
+            halls.setdefault(hall, []).append(cells)
+    if set(halls) != set(DINING_HALLS):
+        skipped.append(f"dining sheet: expected halls {sorted(DINING_HALLS)}, found {sorted(halls)}")
+
+    out = {}
+    for hall, meal_rows in halls.items():
+        dates = {}
+        for i, iso in isodates.items():
+            if iso < "2026-08-17":
+                continue                     # the rest of the year behind us
+            ranges, bad = [], False
+            for cells in meal_rows:
+                cell = str(text(cells[i]) if i < len(cells) else "").strip()
+                if not cell:
+                    bad = True               # a blank is not the same as Closed
+                    break
+                sp = span(cell)
+                if sp is None:
+                    bad = True               # "TBD" and friends: say nothing
+                    break
+                if sp:
+                    ranges.append(sp)
+            if bad:
+                skipped.append(f"{DINING_HALLS[hall]} {iso}: blank or TBD")
+                continue
+            dates[iso] = merge_ranges(ranges)
+        if not dates:
+            continue
+        keys = sorted(dates)
+        out[DINING_HALLS[hall]] = {
+            "source": DINING_SOURCE,
+            "sourceUrl": DINING_PAGE,
+            "dates": dates,
+            "valid": [keys[0], keys[-1]],
+        }
+    return out
+
+
+# ── 5. University Health Center ───────────────────────────────────────────────
+
+# Closures the Health Center prints in its own holiday table, as dates. Labor
+# Day and the Thanksgiving recess are named; the registrar's calendar gives the
+# recess as Wednesday 25 to Sunday 29 November. Christmas to New Year's is
+# outside this term. Fall Break is NOT in its table: HR lists 12 October as a
+# university holiday, but the Health Center never says it closes, so that day
+# is left unknown rather than assumed either way.
+HEALTH_CLOSED = ["2026-09-07", "2026-11-25", "2026-11-26", "2026-11-27", "2026-11-28", "2026-11-29"]
+
+
+def health(skipped):
+    raw = fetch(HEALTH_URL)
+    if not raw:
+        return {}
+    tables = re.findall(r"<table.*?</table>", raw, re.S)
+    # The first table is FALL/SPRING for the building; the later ones are the
+    # pharmacy, the lab, summer and the holiday list, none of which are the
+    # building's public hours.
+    first = rows_of(tables[0]) if tables else []
+    if not first or "FALL" not in first[0][0].upper():
+        skipped.append("Health Center: first table is not FALL/SPRING any more")
+        return {}
+    weekly = empty_week()
+    for row in first[1:]:
+        if len(row) < 2:
+            continue
+        group = day_group(row[0].rstrip(": "))
+        # "8:00am - 5:00pm, plus limited evening services from 5:00 - 7:00pm by
+        # appointment only." The evening sessions are by appointment, not
+        # public hours, so only the range before the comma is read.
+        cell = re.split(r",\s*plus\b", row[1], maxsplit=1)[0]
+        ranges = span(cell)
+        if group is None or ranges is None:
+            skipped.append(f"Health Center {row[0]!r} -> {row[1][:48]!r}")
+            continue
+        for d in group:
+            # A later row for the same weekday would overwrite an earlier one,
+            # and the Monday/Tuesday/Thursday row repeats Monday-Friday.
+            weekly[d] = as_ranges(ranges)
+    if not any(weekly.values()):
+        return {}
+    return {HEALTH_BUILDING: {
+        "source": HEALTH_SOURCE,
+        "sourceUrl": HEALTH_URL,
+        "weekly": weekly,
+        "valid": ["2026-08-31", "2026-12-21"],
+        "closedDates": HEALTH_CLOSED,
+        "unknownDuring": [["2026-10-12", "2026-10-12"]],
+    }}
+
+
+# ── 6. The outdoor pool ───────────────────────────────────────────────────────
+
+def pool(skipped):
+    """Rows are DATE RANGES, not weekday groups, so it becomes `periods`."""
+    raw = fetch(POOL_URL)
+    if not raw:
+        return {}
+    panels = re.findall(r'<div data-title="([^"]*)">(.*?)(?=<div data-title="|\Z)', raw, re.S)
+    panel = next((body for title, body in panels if title.strip() == RECWELL_TERM), None)
+    table = re.search(r"<table.*?</table>", panel or "", re.S)
+    if not table:
+        skipped.append("Aquatic Center: no Fall Semester table")
+        return {}
+    rows = rows_of(table.group(0))
+    header, periods = rows[0], []
+    groups = [day_group(h) for h in header[1:]]
+    for row in rows[1:]:
+        m = re.fullmatch(r"([A-Za-z]+ \d{1,2})\s+to\s+([A-Za-z]+ \d{1,2})", row[0])
+        start, end = (as_iso(m.group(1), 2026), as_iso(m.group(2), 2026)) if m else (None, None)
+        if not (start and end):
+            skipped.append(f"Aquatic Center date range {row[0]!r}")
+            continue
+        weekly = empty_week()
+        for i, cell in enumerate(row[1:]):
+            ranges = span(cell)
+            if i >= len(groups) or groups[i] is None or ranges is None:
+                skipped.append(f"Aquatic Center {row[0]!r} -> {cell[:30]!r}")
+                continue
+            for d in groups[i]:
+                weekly[d] = as_ranges(ranges)
+        periods.append({"start": start, "end": end, "weekly": weekly})
+    if not periods:
+        return {}
+    return {POOL_BUILDING: {
+        "source": RECWELL_SOURCE,
+        "sourceUrl": POOL_URL,
+        "periods": periods,
+        "weekly": empty_week(),
+        "valid": [periods[0]["start"], periods[-1]["end"]],
+        "noExtension": True,
+    }}
+
+
+# ── 7. The campus-wide rule, for the academic buildings ───────────────────────
+
+# Class buildings the directory does not list but that are plainly academic:
+# the Computer Science Instructional Center opened after the directory was
+# printed. Anything added here needs a reason, because the rule is "academic and
+# administrative" and a wrong inclusion shows a building open to the public that
+# is not.
+ACADEMIC_NOT_IN_DIRECTORY = {"Computer Science Instructional Center"}
+
+# In the directory's "University Buildings" but not academic or administrative in
+# the sense the rule means, so they keep the class-timetable fallback instead.
+NOT_GENERAL_ACADEMIC = {
+    "Cambridge Community Center": "a housing community centre, open to residents",
+    "Leonardtown Community Center": "a housing community centre, open to residents",
+    "Preinkert Field House": "an athletics building",
+    "Avrum Gudelsky Veterinary Center": "a clinical veterinary facility with its own hours",
+}
+
+
+def umpd_rule(existing, skipped):
+    """Mon-Fri 7am-9pm, plus the hours classes are scheduled, for each academic
+    building that has no hours of its own.
+
+    Which buildings is decided by the university's own directory, not by name:
+    its printed section for a building is "University Buildings" (academic,
+    administrative, research, service), "Key Places of Interest" (libraries, the
+    stadium, the health center — all of which keep their own hours) or "Campus
+    Housing". Eight residence halls host classes and would otherwise have been
+    shown open to the public at 7am; they are the reason this reads the
+    directory at all.
+
+    The class windows are exact, from rooms.json (a 9:30 class is 9.5, not the
+    whole of hour 9), because the rule says the doors unlock for "the scheduled
+    period", not for the clock hour it touches.
+    """
+    if not (DIRECTORY_FILE.exists() and ROOMS_FILE.exists() and CLASS_FILE.exists()):
+        skipped.append("campus rule: needs data/umd/{directory,rooms,class_activity}.json")
+        return {}
+    directory = json.loads(DIRECTORY_FILE.read_text())["buildings"]
+    rooms = json.loads(ROOMS_FILE.read_text())["buildings"]
+    classes = json.loads(CLASS_FILE.read_text())["buildings"]
+
+    out, why = {}, {"housing": [], "places": [], "unlisted": [], "excluded": [], "has own hours": []}
+    for name, v in sorted(classes.items()):
+        section = (directory.get(v.get("number")) or {}).get("section")
+        if name in existing:
+            why["has own hours"].append(name)
+            continue
+        if name in NOT_GENERAL_ACADEMIC:
+            why["excluded"].append(f"{name} ({NOT_GENERAL_ACADEMIC[name]})")
+            continue
+        if section == "housing":
+            why["housing"].append(name)
+            continue
+        if section == "places":
+            why["places"].append(name)
+            continue
+        if section is None and name not in ACADEMIC_NOT_IN_DIRECTORY:
+            why["unlisted"].append(name)
+            continue
+
+        weekly = empty_week()
+        for d in DAYS:
+            spans = [[a, b] for r in (rooms.get(name, {}).get("rooms") or {}).values()
+                     for a, b in (r.get("busy") or {}).get(d, [])]
+            base = [[7.0, 21.0]] if d in DAYS[:5] else []
+            weekly[d] = merge_ranges(base + spans)
+        out[name] = {
+            "source": UMPD_SOURCE,
+            "sourceUrl": UMPD_URL,
+            "code": v.get("code"),
+            "weekly": weekly,
+            "valid": ["2026-08-31", "2026-12-21"],
+            "followsCampusClosures": True,
+            "generalRule": True,
+            "weeklyNote": "7am-9pm on weekdays plus the hours classes are scheduled; "
+                          "closed weekends and university holidays unless something is scheduled",
+        }
+    for reason, names in why.items():
+        if names:
+            skipped.append(f"campus rule not applied [{reason}]: {', '.join(names)}")
+    return out
+
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--print-skipped", action="store_true")
@@ -557,9 +891,17 @@ def main():
     buildings = {}
     for label, got in (("libraries", libcal(skipped)),
                        ("Stamp", stamp(skipped)),
-                       ("RecWell", recwell(skipped))):
+                       ("RecWell", recwell(skipped)),
+                       ("dining", dining(skipped)),
+                       ("health", health(skipped)),
+                       ("pool", pool(skipped))):
         print(f"{label:<10} {len(got)} building(s): {', '.join(got) or '—'}")
         buildings.update(got)
+    # Last, and never over a building that publishes its own: the campus rule is
+    # the fallback for academic buildings, not a rival to a real schedule.
+    got = umpd_rule(buildings, skipped)
+    print(f"{'campus rule':<10} {len(got)} building(s)")
+    buildings.update(got)
 
     if not buildings:
         print("no hours from any source; leaving the existing file alone", file=sys.stderr)
@@ -569,7 +911,8 @@ def main():
     # and the end of finals, which is exactly when people most want to know.
     # The dated feeds need no help: they publish past it already.
     for entry in buildings.values():
-        if "weekly" in entry and entry.get("valid", [None, None])[1] <= TERM_RANGE[1]:
+        if ("weekly" in entry and not entry.get("noExtension") and not entry.get("generalRule")
+                and not entry.get("dates") and entry.get("valid", [None, None])[1] <= TERM_RANGE[1]):
             entry["extendedThrough"] = FINALS_END
 
     # Sanity-check the join before writing: an entry keyed on a name the class
@@ -599,10 +942,10 @@ def main():
         for s in skipped:
             print(f"   {s}")
     if off_join:
-        # Expected for Stamp, which has no classes. Anything else here is a bug.
-        print(f"not in the class data: {', '.join(off_join)} "
-              f"(fine for Stamp — it needs a GIS_ALIASES_UMD entry; "
-              f"anything else is a join failure)")
+        # Buildings with no classes: each needs a GIS_ALIASES_UMD entry in
+        # app.js to be placed, and a BUILDINGS_UMD entry to be known at all.
+        print(f"no class data (need GIS_ALIASES_UMD + BUILDINGS_UMD entries): "
+              f"{', '.join(off_join)}")
     print(f"-> {OUT_FILE.relative_to(ROOT)}")
     return 0
 

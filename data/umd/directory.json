@@ -1,0 +1,824 @@
+{
+ "built_at": "2026-10-19T23:23:19+00:00",
+ "source": "University of Maryland campus map \u2014 building directory",
+ "sourceUrl": "https://umdconf.umd.edu/drupal/current_map.pdf",
+ "note": "number -> {name, section}. section is the printed heading: places (key places of interest), university (academic, administrative, research, service) or housing (residence halls).",
+ "buildings": {
+  "001": {
+   "name": "ENERGY PLANT",
+   "section": "university"
+  },
+  "003": {
+   "name": "SERVICE BUILDING",
+   "section": "university"
+  },
+  "004": {
+   "name": "RITCHIE COLISEUM",
+   "section": "places"
+  },
+  "006": {
+   "name": "BUILDING 006",
+   "section": "university"
+  },
+  "007": {
+   "name": "POCOMOKE BUILDING",
+   "section": "places"
+  },
+  "008": {
+   "name": "ANNAPOLIS HALL",
+   "section": "housing"
+  },
+  "009": {
+   "name": "MEMORIAL CHAPEL",
+   "section": "places"
+  },
+  "010": {
+   "name": "PATUXENT BUILDING",
+   "section": "university"
+  },
+  "011": {
+   "name": "BUILDING 011/THE HALL CP",
+   "section": "university"
+  },
+  "014": {
+   "name": "HARFORD HALL",
+   "section": "housing"
+  },
+  "015": {
+   "name": "CALVERT HALL",
+   "section": "housing"
+  },
+  "016": {
+   "name": "BALTIMORE HALL",
+   "section": "housing"
+  },
+  "017": {
+   "name": "CECIL HALL",
+   "section": "housing"
+  },
+  "021": {
+   "name": "PRINCE GEORGES HALL",
+   "section": "housing"
+  },
+  "022": {
+   "name": "KENT HALL",
+   "section": "housing"
+  },
+  "023": {
+   "name": "WASHINGTON HALL",
+   "section": "housing"
+  },
+  "024": {
+   "name": "ALLEGANY HALL",
+   "section": "housing"
+  },
+  "025": {
+   "name": "CHARLES HALL",
+   "section": "housing"
+  },
+  "026": {
+   "name": "SOUTH CAMPUS DINING HALL",
+   "section": "places"
+  },
+  "028": {
+   "name": "HOWARD HALL",
+   "section": "housing"
+  },
+  "029": {
+   "name": "FREDERICK HALL",
+   "section": "housing"
+  },
+  "030": {
+   "name": "TALBOT HALL",
+   "section": "housing"
+  },
+  "031": {
+   "name": "GARRETT HALL",
+   "section": "housing"
+  },
+  "032": {
+   "name": "MONTGOMERY HALL",
+   "section": "housing"
+  },
+  "034": {
+   "name": "JIMENEZ HALL",
+   "section": "university"
+  },
+  "035": {
+   "name": "MCKELDIN LIBRARY",
+   "section": "places"
+  },
+  "036": {
+   "name": "PLANT SCIENCES BUILDING",
+   "section": "university"
+  },
+  "037": {
+   "name": "SHOEMAKER BUILDING",
+   "section": "university"
+  },
+  "038": {
+   "name": "LEFRAK HALL",
+   "section": "university"
+  },
+  "039": {
+   "name": "VAN MUNCHING HALL",
+   "section": "university"
+  },
+  "040": {
+   "name": "MORRILL HALL",
+   "section": "university"
+  },
+  "042": {
+   "name": "TYDINGS HALL",
+   "section": "university"
+  },
+  "043": {
+   "name": "TALIAFERRO HALL",
+   "section": "university"
+  },
+  "044": {
+   "name": "SKINNER BUILDING",
+   "section": "university"
+  },
+  "046": {
+   "name": "MARIE MOUNT HALL",
+   "section": "university"
+  },
+  "047": {
+   "name": "WOODS HALL",
+   "section": "university"
+  },
+  "048": {
+   "name": "FRANCIS SCOTT KEY HALL",
+   "section": "university"
+  },
+  "051": {
+   "name": "WORCESTER HALL",
+   "section": "housing"
+  },
+  "052": {
+   "name": "ADMISSIONS/CLARENCE M. MITCHELL, JR. BLDG.",
+   "section": "places"
+  },
+  "054": {
+   "name": "PREINKERT HALL",
+   "section": "university"
+  },
+  "059": {
+   "name": "CHINCOTEAGUE HALL",
+   "section": "university"
+  },
+  "060": {
+   "name": "ANNE ARUNDEL HALL",
+   "section": "housing"
+  },
+  "061": {
+   "name": "QUEEN ANNE\u2019S HALL",
+   "section": "housing"
+  },
+  "062": {
+   "name": "ST. MARY\u2019S HALL",
+   "section": "housing"
+  },
+  "063": {
+   "name": "SOMERSET HALL",
+   "section": "housing"
+  },
+  "064": {
+   "name": "DORCHESTER HALL",
+   "section": "housing"
+  },
+  "065": {
+   "name": "CARROLL HALL",
+   "section": "housing"
+  },
+  "068": {
+   "name": "EPPLEY RECREATION CENTER",
+   "section": "places"
+  },
+  "069": {
+   "name": "WICOMICO HALL",
+   "section": "housing"
+  },
+  "070": {
+   "name": "CAROLINE HALL",
+   "section": "housing"
+  },
+  "071": {
+   "name": "LEE BUILDING",
+   "section": "places"
+  },
+  "073": {
+   "name": "H.J. PATTERSON HALL",
+   "section": "university"
+  },
+  "076": {
+   "name": "SYMONS HALL",
+   "section": "university"
+  },
+  "077": {
+   "name": "THOMAS V. MILLER, JR. ADMINISTRATION BLDG.",
+   "section": "places"
+  },
+  "078": {
+   "name": "RECKORD ARMORY",
+   "section": "places"
+  },
+  "079": {
+   "name": "TURNER HALL",
+   "section": "places"
+  },
+  "080": {
+   "name": "ROSSBOROUGH INN",
+   "section": "places"
+  },
+  "081": {
+   "name": "WIND TUNNEL BUILDING",
+   "section": "university"
+  },
+  "082": {
+   "name": "JOHN S. TOLL PHYSICS BUILDING",
+   "section": "university"
+  },
+  "083": {
+   "name": "J.M. PATTERSON BUILDING",
+   "section": "university"
+  },
+  "084": {
+   "name": "WILLIAM E. KIRWAN HALL",
+   "section": "university"
+  },
+  "085": {
+   "name": "INSTITUTE FOR PHYSICAL SCIENCE & TECH",
+   "section": "university"
+  },
+  "087": {
+   "name": "CENTRAL ANIMAL RESOURCES FACILITY",
+   "section": "university"
+  },
+  "088": {
+   "name": "MARTIN HALL",
+   "section": "university"
+  },
+  "089": {
+   "name": "ENGINEERING LABORATORY BUILDING",
+   "section": "university"
+  },
+  "090": {
+   "name": "CHEMICAL & NUCLEAR ENGINEERING BUILDING",
+   "section": "university"
+  },
+  "091": {
+   "name": "CHEMISTRY BUILDING",
+   "section": "university"
+  },
+  "093": {
+   "name": "ENGINEERING ANNEX",
+   "section": "university"
+  },
+  "096": {
+   "name": "CAMBRIDGE HALL",
+   "section": "housing"
+  },
+  "097": {
+   "name": "CAMBRIDGE COMMUNITY CENTER",
+   "section": "university"
+  },
+  "098": {
+   "name": "CENTREVILLE HALL",
+   "section": "housing"
+  },
+  "099": {
+   "name": "BEL AIR HALL",
+   "section": "housing"
+  },
+  "103": {
+   "name": "ANIMAL SCIENCE SERVICE BLDG.",
+   "section": "university"
+  },
+  "108": {
+   "name": "HORSE BARN",
+   "section": "university"
+  },
+  "109": {
+   "name": "SHEEP BARN",
+   "section": "university"
+  },
+  "110": {
+   "name": "CATTLE BARN",
+   "section": "university"
+  },
+  "111": {
+   "name": "PHYSICS WELDING SHOP",
+   "section": "university"
+  },
+  "115": {
+   "name": "A.V. WILLIAMS BUILDING",
+   "section": "university"
+  },
+  "119": {
+   "name": "POULTRY BARN",
+   "section": "university"
+  },
+  "121": {
+   "name": "CHESTERTOWN HALL",
+   "section": "housing"
+  },
+  "122": {
+   "name": "CUMBERLAND HALL",
+   "section": "housing"
+  },
+  "130-133": {
+   "name": "FRATERNITY ROW HOUSES 5-8",
+   "section": "housing"
+  },
+  "134": {
+   "name": "FRATERNITY ROW HOUSE 9 G12135-",
+   "section": "housing"
+  },
+  "139": {
+   "name": "FRATERNITY ROW HOUSES 10-14 F12170-",
+   "section": "housing"
+  },
+  "140": {
+   "name": "UNIVERSITY HEALTH CENTER",
+   "section": "places"
+  },
+  "141": {
+   "name": "TAWES HALL",
+   "section": "university"
+  },
+  "142": {
+   "name": "ANIMAL SCIENCES/AGRIC. ENGRG BLDG",
+   "section": "university"
+  },
+  "143": {
+   "name": "BENJAMIN BUILDING",
+   "section": "university"
+  },
+  "144": {
+   "name": "BIOLOGY-PSYCHOLOGY BUILDING",
+   "section": "university"
+  },
+  "145": {
+   "name": "ARCHITECTURE BUILDING",
+   "section": "university"
+  },
+  "146": {
+   "name": "PARREN J. MITCHELL ART-SOCIOLOGY BUILDING",
+   "section": "university"
+  },
+  "147": {
+   "name": "HORNBAKE LIBRARY",
+   "section": "places"
+  },
+  "148": {
+   "name": "MANUFACTURING BUILDING",
+   "section": "university"
+  },
+  "156": {
+   "name": "ARBORETUM OUTREACH CENTER",
+   "section": "university"
+  },
+  "158": {
+   "name": "VARSITY SPORTS TEAMHOUSE",
+   "section": "university"
+  },
+  "159": {
+   "name": "BOB \u201cTURTLE\u201d SMITH STADIUM AT SHIPLEY FIELD",
+   "section": "university"
+  },
+  "162": {
+   "name": "COLE STUDENT ACTIVITIES BUILDING",
+   "section": "places"
+  },
+  "164": {
+   "name": "UNIVERSITY HOUSE",
+   "section": "university"
+  },
+  "165": {
+   "name": "GOLF COURSE DRIV. RANGE CONT. BLDG.",
+   "section": "places"
+  },
+  "166": {
+   "name": "GOLF COURSE CLUB HOUSE",
+   "section": "places"
+  },
+  "169": {
+   "name": "BOAT HOUSE",
+   "section": "university"
+  },
+  "172": {
+   "name": "GRAHAM CRACKER HOUSES 170-172 F12173-",
+   "section": "housing"
+  },
+  "176": {
+   "name": "GRAHAM CRACKER HOUSES 173-176",
+   "section": "housing"
+  },
+  "179": {
+   "name": "UNION LANE PARKING GARAGE",
+   "section": "university"
+  },
+  "195": {
+   "name": "MFRI DRILL TOWER",
+   "section": "university"
+  },
+  "196": {
+   "name": "MFRI STRUCTURAL FIREFIGHTING BLDG",
+   "section": "university"
+  },
+  "197": {
+   "name": "MFRI FIRE EXTINGUISHER TRAINING FAC.",
+   "section": "university"
+  },
+  "198": {
+   "name": "MFRI SHOP FACILITY",
+   "section": "university"
+  },
+  "199": {
+   "name": "MFRI OFFICE/CLASSROOM BUILDING",
+   "section": "university"
+  },
+  "202": {
+   "name": "REGENTS DRIVE PARKING GARAGE",
+   "section": "university"
+  },
+  "218": {
+   "name": "STADIUM DRIVE PARKING GARAGE",
+   "section": "university"
+  },
+  "219": {
+   "name": "ASTRONOMY LECTURE BLDG",
+   "section": "university"
+  },
+  "220": {
+   "name": "ASTRONOMY TRAILER",
+   "section": "university"
+  },
+  "221": {
+   "name": "ASTRONOMICAL OBSERVATORY",
+   "section": "university"
+  },
+  "223": {
+   "name": "ENERGY RESEARCH FACILITY",
+   "section": "university"
+  },
+  "224": {
+   "name": "ATLANTIC BUILDING",
+   "section": "university"
+  },
+  "225": {
+   "name": "KIM ENGINEERING BUILDING",
+   "section": "university"
+  },
+  "226": {
+   "name": "EDWARD ST. JOHN LEARNING AND TEACHING CENTER",
+   "section": "university"
+  },
+  "227": {
+   "name": "JULL HALL",
+   "section": "university"
+  },
+  "228": {
+   "name": "E.A. FERNANDEZ IDEA FACTORY",
+   "section": "university"
+  },
+  "231": {
+   "name": "MICROBIOLOGY BUILDING",
+   "section": "university"
+  },
+  "232": {
+   "name": "NYUMBURU CULTURAL CENTER",
+   "section": "university"
+  },
+  "233": {
+   "name": "SUSQUEHANNA HALL",
+   "section": "university"
+  },
+  "237": {
+   "name": "GEOLOGY BUILDING",
+   "section": "university"
+  },
+  "244-249": {
+   "name": "LEONARDTOWN APARTMENTS",
+   "section": "housing"
+  },
+  "250": {
+   "name": "LEONARDTOWN COMMUNITY CENTER",
+   "section": "university"
+  },
+  "251": {
+   "name": "251 NORTH/DENTON AREA DINING HALL",
+   "section": "places"
+  },
+  "252": {
+   "name": "DENTON HALL",
+   "section": "housing"
+  },
+  "253": {
+   "name": "EASTON HALL",
+   "section": "housing"
+  },
+  "254": {
+   "name": "ELKTON HALL",
+   "section": "housing"
+  },
+  "255": {
+   "name": "SCHOOL OF PUBLIC HEALTH BUILDING",
+   "section": "university"
+  },
+  "256": {
+   "name": "ELLICOTT HALL",
+   "section": "housing"
+  },
+  "257": {
+   "name": "ELLICOTT AREA DINING HALL",
+   "section": "places"
+  },
+  "258": {
+   "name": "HAGERSTOWN HALL",
+   "section": "housing"
+  },
+  "259": {
+   "name": "LA PLATA HALL",
+   "section": "housing"
+  },
+  "260-285": {
+   "name": "GRADUATE GARDEN APARTMENTS GRADUATE GARDEN APARTMENTS",
+   "section": "housing"
+  },
+  "286-292": {
+   "name": "GRADUATE HILLS APARTMENTS",
+   "section": "housing"
+  },
+  "296": {
+   "name": "BIOMOLECULAR SCIENCES BUILDING",
+   "section": "university"
+  },
+  "309": {
+   "name": "INDOOR PRACTICE FACILITY",
+   "section": "university"
+  },
+  "311": {
+   "name": "ELKINS BUILDING",
+   "section": "university"
+  },
+  "338": {
+   "name": "CHESAPEAKE BUILDING",
+   "section": "places"
+  },
+  "344": {
+   "name": "ENVIRONMENTAL SERVICE FACILITY",
+   "section": "university"
+  },
+  "345": {
+   "name": "COLLEGE PARK MARRIOTT HOTEL AND CONFERENCE CENTER",
+   "section": "places"
+  },
+  "346": {
+   "name": "UMGC ADMINISTRATION BUILDING",
+   "section": "university"
+  },
+  "347": {
+   "name": "UMGC / MARRIOTT GARAGE",
+   "section": "university"
+  },
+  "360": {
+   "name": "XFINITY CENTER",
+   "section": "places"
+  },
+  "361": {
+   "name": "TYSER TOWER",
+   "section": "places"
+  },
+  "366": {
+   "name": "MARYLAND STADIUM TICKET BOOTH",
+   "section": "places"
+  },
+  "368": {
+   "name": "SECU STADIUM BUILDING (UPPER DECK)",
+   "section": "places"
+  },
+  "379": {
+   "name": "GOSSETT FOOTBALL TEAM HOUSE",
+   "section": "university"
+  },
+  "381": {
+   "name": "CENTER FOR YOUNG CHILDREN",
+   "section": "university"
+  },
+  "382": {
+   "name": "NEUTRAL BUOYANCY RESEARCH FACILITY",
+   "section": "university"
+  },
+  "383": {
+   "name": "PAINT BRANCH BUILDING",
+   "section": "university"
+  },
+  "386": {
+   "name": "CLARICE SMITH PERFORMING ARTS CENTER",
+   "section": "places"
+  },
+  "387": {
+   "name": "TECHNOLOGY ADVANCEMENT PROGRAM BUILDING",
+   "section": "university"
+  },
+  "388": {
+   "name": "KEHOE TRACK AT LUDWIG FIELD",
+   "section": "university"
+  },
+  "389": {
+   "name": "TRACK & SOCCER FIELD TICKET BOOTH",
+   "section": "university"
+  },
+  "398": {
+   "name": "RESEARCH GREENHOUSE",
+   "section": "university"
+  },
+  "399": {
+   "name": "AQUATIC CENTER",
+   "section": "university"
+  },
+  "403": {
+   "name": "TERRAPIN TRAIL PARKING GARAGE",
+   "section": "university"
+  },
+  "404": {
+   "name": "MOWATT LANE PARKING GARAGE",
+   "section": "university"
+  },
+  "407": {
+   "name": "RIGGS ALUMNI CENTER",
+   "section": "places"
+  },
+  "409": {
+   "name": "MARYLAND SOFTBALL STADIUM",
+   "section": "university"
+  },
+  "413": {
+   "name": "BIOSCIENCE RESEARCH BUILDING",
+   "section": "university"
+  },
+  "414": {
+   "name": "FIELD HOCKEY AND LACROSSE COMPLEX",
+   "section": "university"
+  },
+  "415": {
+   "name": "PHYSICAL SCIENCES COMPLEX",
+   "section": "university"
+  },
+  "417": {
+   "name": "KNIGHT HALL",
+   "section": "university"
+  },
+  "419": {
+   "name": "OAKLAND HALL",
+   "section": "housing"
+  },
+  "424": {
+   "name": "SHUTTLE BUS FACILITY",
+   "section": "university"
+  },
+  "425": {
+   "name": "PRINCE FREDERICK HALL",
+   "section": "housing"
+  },
+  "427": {
+   "name": "FLEET SERVICES BUILDING",
+   "section": "university"
+  },
+  "428": {
+   "name": "WYE OAK BUILDING",
+   "section": "university"
+  },
+  "429": {
+   "name": "A. JAMES CLARK HALL",
+   "section": "university"
+  },
+  "430": {
+   "name": "METZEROTT HOUSE (4103)",
+   "section": "university"
+  },
+  "431": {
+   "name": "METZEROTT HOUSE (4109)",
+   "section": "university"
+  },
+  "432": {
+   "name": "BRENDAN IRIBE CENTER",
+   "section": "university"
+  },
+  "433": {
+   "name": "THURGOOD MARSHALL HALL",
+   "section": "university"
+  },
+  "435": {
+   "name": "JOHNSON-WHITTLE HALL",
+   "section": "housing"
+  },
+  "436": {
+   "name": "YAHENTAMITSI (DINING HALL)",
+   "section": "places"
+  },
+  "795": {
+   "name": "AVRUM GUDELSKY VETERINARY CENTER",
+   "section": "university"
+  },
+  "796": {
+   "name": "LABORATORY FOR PHYSICAL SCIENCES",
+   "section": "university"
+  },
+  "797": {
+   "name": "LABORATORY FOR TELECOM. SCIENCES",
+   "section": "university"
+  },
+  "799": {
+   "name": "LEAFHOUSE",
+   "section": "university"
+  },
+  "800": {
+   "name": "4-H HEADQUARTERS",
+   "section": "university"
+  },
+  "802": {
+   "name": "COLLEGE PARK FIRE STATION",
+   "section": "places"
+  },
+  "803": {
+   "name": "ADELPHI ROAD OFFICE ANNEX",
+   "section": "university"
+  },
+  "805": {
+   "name": "PATAPSCO BUILDING",
+   "section": "university"
+  },
+  "806": {
+   "name": "TECHNOLOGY VENTURES BUILDING",
+   "section": "university"
+  },
+  "807": {
+   "name": "RESEARCH PARK BUILDING 1",
+   "section": "university"
+  },
+  "809": {
+   "name": "POLICE SERVICES AND TRAINING FAC.",
+   "section": "university"
+  },
+  "810": {
+   "name": "SEVERN BUILDING SEVERN BUILDING",
+   "section": "university"
+  },
+  "812": {
+   "name": "SENECA BUILDING",
+   "section": "university"
+  },
+  "813": {
+   "name": "ARTEMESIA BUILDING",
+   "section": "university"
+  },
+  "814": {
+   "name": "CYPRESS BUILDING",
+   "section": "university"
+  },
+  "815": {
+   "name": "7401 BALTIMORE AVE",
+   "section": "university"
+  },
+  "816": {
+   "name": "ANACOSTIA BUILDING",
+   "section": "university"
+  },
+  "886": {
+   "name": "CRANE AQUACULTURE BUILDING",
+   "section": "university"
+  },
+  "888": {
+   "name": "CRANE AQUACULTURE SUPPORT BUILDING",
+   "section": "university"
+  },
+  "900": {
+   "name": "THE HOTEL AT THE UNIVERSITY OF MARYLAND",
+   "section": "places"
+  },
+  "981": {
+   "name": "SOUTH CAMPUS COMMONS 5",
+   "section": "housing"
+  },
+  "987-993": {
+   "name": "THE COURTYARDS",
+   "section": "housing"
+  },
+  "987-994": {
+   "name": "COURTYARDS",
+   "section": "housing"
+  },
+  "996-999": {
+   "name": "SOUTH CAMPUS COMMONS 1 E12974,975,",
+   "section": "housing"
+  },
+  "N/A": {
+   "name": "CAMBRIA HOTEL",
+   "section": "places"
+  }
+ }
+}

@@ -198,13 +198,19 @@ empty unless a code genuinely fails.
 is a useful cross-check (it agreed on every code I spot-checked), but one of its
 421 rows is in Web Mercator rather than degrees — don't trust it unchecked.
 
-### Hours — the weak spot, and it is weaker than Columbus
+### Hours — corrected 2026-10-19: weaker than Illinois, not weaker than Columbus
 
-**Maryland does not appear to publish per-building hours.** Ohio State's
-registrar classroom-pool schedule has no Maryland equivalent that I can find,
-and Facilities Management publishes none. Expect the class-timetable fallback to
-carry most buildings, with `classDerived: true` doing the break-day work it
-already does.
+> **Correction.** This section originally said Maryland publishes no building
+> hours and that Dining publishes none on the web. **Both were wrong**, and both
+> were stated more firmly than the evidence supported. Dining's hours load a few
+> seconds after the page does, from a public Google Sheet, so a first look (and
+> a plain scrape) sees empty cells. And UMPD publishes a campus-wide rule for
+> academic buildings that I never found because I was looking for a table. Both
+> are now in `scripts/build_umd_hours.py`; see "Third pass" below.
+
+Maryland has no per-building hours spreadsheet — nothing like Illinois'
+Facilities file or Ohio State's registrar schedule — but it has one real
+campus-wide rule and five real per-building sources.
 
 What is real:
 
@@ -294,26 +300,23 @@ carry a weekly job.
 Confirmed in the state GIS: Eppley **068**, Reckord Armory **078**, Ritchie
 Coliseum **004**, Aquatic Center **399**.
 
-**Dining: does not publish hours on the web.** `/hours/dining-halls` gives only
-generic meal windows (breakfast to 10:30, lunch 10:30–4, dinner 4 to close) and
-then says, in as many words, to download the UMD mobile app for specific times.
-`/hours/open-now` renders a full venue list with every hours cell showing "—",
-in a real browser, with no API call. Two independent reads agree, so this is the
-page's actual state rather than a loading artifact. The venue list is still
-useful as a **venue → host building** map (Footnotes in McKeldin, Creative
-Commons in Tawes, Sneaker's in Eppley), but those are tenants and their hours
-are not their building's hours. The three dining halls that ARE buildings
-(South Campus 026, Denton Area 251, Ellicott Area 257, Yahentamitsi 436) stay on
-the class fallback.
+**Dining: publishes dated hours** (corrected — this paragraph said it did not).
+`dining.umd.edu/hours/open-now` shows every cell as "—" in the raw HTML and for
+the first seconds after load, then fills them in from a public Google Sheet the
+page's own script names (`const diningUrl = 'https://docs.google.com/
+spreadsheets/d/<id>/gviz/tq?gid=…'`). That is why it was missed twice: a scrape
+sees nothing, and a browser read taken immediately sees nothing. Network
+monitoring did not show it either, because the calls go to `docs.google.com`.
+One column per calendar day, 394 days, three meal rows per hall. Used for the
+three halls that are buildings in their own right; the cafes in other buildings
+are tenants and their hours are not the building's.
 
 ### What this does to the hours count
 
-Buildings that these sources can actually cover, intersected with the 63 the
-class sweep found: **ERC (068, Eppley)** and **ARM (078, Reckord Armory)** from
-RecWell. Plus **Stamp (163)** added by hand, and Ritchie and the Aquatic Center
-if they are worth carrying. With the two LibCal libraries that is **5 to 7
-buildings with genuinely published hours** — the same order as Ohio State's 5,
-and still a long way from Illinois' 74.
+Superseded by the third pass below: 11 buildings now have a source of their own
+(2 libraries, Stamp, Eppley, Reckord Armory, Ritchie, 3 dining halls, the Health
+Center, the outdoor pool) and 43 academic buildings are covered by UMPD's
+campus-wide rule.
 
 ### Academic calendar
 
@@ -433,6 +436,10 @@ file.
 
 ### Measured accuracy, and the problem it exposes
 
+> **Superseded.** These are the 2026-10-19 morning figures, before the campus
+> rule and the new sources. The third pass below has the current ones, and
+> explains why one of them must not be quoted.
+
 `node scripts/hours_accuracy.mjs --campus umd`, week of 2026-10-19:
 
 | | Illinois | Ohio State | **Maryland** |
@@ -462,17 +469,19 @@ grant it the 43.8% and it lands at 50%. The honest position is that Maryland's
 accuracy is unmeasurable from the inside until more buildings publish hours,
 and that it is the thinnest of the three either way.
 
-### Hours: the search is now exhaustive, and the answer is five buildings
+### Hours: what was ruled out (see the third pass for what was missed)
 
 Checked and ruled out, so nobody repeats it:
 
-- **Facilities Management** — publishes no building hours.
+- **Facilities Management** — publishes no building hours. (The rule that
+  matters comes from UMPD Building Security Services instead; see below.)
 - **The registrar** — no classroom-pool schedule, the thing that covers 47
   Columbus buildings.
 - **25Live**, which the Provost's classroom search runs on — every
   `25live.collegenet.com/25live/data/umd/run/*` endpoint answers **HTTP 401**.
   Closed, like Ohio State's room-booking app. Do not retry.
-- **Dining** — nothing on the web; it points at the mobile app.
+- ~~**Dining** — nothing on the web~~ **WRONG, corrected:** Dining publishes
+  dated hours via a public Google Sheet. See above.
 - **Individual high-load buildings** — Van Munching, the busiest building on
   campus, publishes *break* hours as news announcements ("2026 Summer Hours")
   and no academic-year hours; the Smith Service Center hours on that site are an
@@ -586,14 +595,164 @@ from the other.
 
 - **Better:** the code→building join is fully official and complete; library
   hours come 8 weeks ahead instead of 7 days.
-- **Worse:** no campus-wide building-hours publication, so after RecWell, Stamp
-  and the libraries there are still ~56 buildings on the class fallback. Ohio
-  State at least has a registrar document covering 47.
+- **Worse than Illinois, comparable to Columbus:** no per-building hours
+  document. What exists is one campus-wide rule (UMPD) that covers 43 academic
+  buildings, which is a *general* statement rather than a schedule. Columbus has
+  a registrar document covering 47 buildings in the same "generally" spirit.
 - **New:** Testudo is HTML rather than JSON, hangs about a third of the time,
   and has a server-side gap that loses four real buildings.
 - **Checked since:** RecWell publishes hours on its per-facility pages (not on
   its own "today's hours" page, which renders empty); Stamp publishes a weekly
   table plus dated break exceptions and is the best hours source on the campus;
-  Dining publishes none on the web and points at its mobile app.
+  Dining DOES publish, as dated hours from a public sheet (an earlier version of
+  this list said it did not).
 - **Same trap:** off-campus teaching centres, like Wooster. Filter on the
   university's own field.
+
+
+## 2026-10-19, third pass: labels, and what was missed
+
+### Two corrections to things stated earlier
+
+1. **Dining publishes hours.** See the Dining paragraph above. Dated, a year
+   ahead, from a public Google Sheet the page itself reads.
+2. **There *is* a campus-wide rule.** UMPD Building Security Services — the
+   office that controls the locks ("Locking/unlocking is controlled by remote
+   electronic programming") — states at
+   `umpd.umd.edu/about-us/our-units/building-security-systems`:
+
+   > Campus academic and administrative facilities are generally open to the
+   > public from 7:00am to 9:00pm Monday through Friday during the academic
+   > year. Unless specifically requested, these facilities are closed on
+   > weekends and University holidays. Several student support facilities
+   > (Recreation Center, Health Center, Libraries) maintain their own service
+   > hours. [...] Regularly scheduled classes and exams [...] exterior doors to
+   > the appropriate facilities will be unlocked during the scheduled period.
+
+   I read this before relying on a search engine's summary of it. It is a
+   *general* statement ("generally open"), not a per-building schedule, and the
+   entries say so (`generalRule: true`, and the source name says "general
+   academic building hours").
+
+### What `build_umd_hours.py` now covers
+
+| Source | Buildings | Shape |
+|---|---|---|
+| Libraries (LibCal) | McKeldin, Hornbake | dated, 10 weeks |
+| Stamp | Stamp Student Union | weekly + dated break exceptions |
+| RecWell | Eppley, Reckord Armory, **Ritchie Coliseum** | weekly, Fall tab |
+| **Dining (public sheet)** | South Campus, 251 North (Denton), Yahentamitsi | **dated**, to 22 Jan 2027 |
+| **Health Center** | University Health Center | weekly, Mon-Fri 8-5 |
+| **RecWell, date ranges** | Aquatic Center (the outdoor pool) | `periods`; shut 11 Oct to 11 Dec |
+| **UMPD rule** | **43 academic buildings** | Mon-Fri 7-21 plus each building's class windows |
+
+That is **54 buildings with an hours entry, up from 5**. 11 of them have a
+source of their own; 43 have the general rule.
+
+**How the rule is applied, and what it deliberately leaves out.** The
+university's own printed building directory (`scripts/build_umd_directory.py` →
+`data/umd/directory.json`) files every building under "Key places of interest",
+"University buildings" or "Campus housing". The rule is applied only to class
+buildings in the second group. That excludes:
+
+- **8 residence halls that host classes** (Anne Arundel, Centreville,
+  Cumberland, Dorchester, LaPlata, Prince Frederick, Queen Ann's, Somerset) —
+  without the directory they would read as academic buildings open to the public
+  at 7am;
+- the Clarice and the Golf Range Classroom (key places, own policies);
+- 4 judged not to be general academic buildings (two housing community centres,
+  Preinkert Field House, the Gudelsky Veterinary Center) and the Paint Branch
+  Research Facility, which the directory does not list.
+
+The Computer Science Instructional Center is the one inclusion that is not in
+the directory (it opened after the directory was printed); it is plainly an
+academic instruction building and is added by name with that reason.
+
+The class windows come from `rooms.json` (exact start and end, so a 9:30 class
+unlocks at 9:30, not at 9:00), because the rule says the doors unlock for "the
+scheduled period".
+
+**An inference to be aware of:** `Aquatic Center` (building 399) is taken to be
+RecWell's *Outdoor* Aquatic Center. RecWell places that pool "on the west end of
+Eppley Recreation Center" and the directory puts both in grid D7; there is no
+other standalone aquatic building. That is reasoning, not confirmation. If it is
+wrong, one building shows as closed for the rest of the term.
+
+### Not claimed, on purpose
+
+- **The Health Center's "limited evening services"** are by appointment only,
+  so the building's public hours are 8 to 5.
+- **Fall Break (12 October) at the Health Center** is left unknown: HR lists it
+  as a university holiday but the Health Center never says it closes.
+- **Administrative buildings with no classes** (Admissions / Mitchell Building,
+  the Thomas V. Miller Jr. Administration Building) are covered by the rule in
+  principle and are **not** lit up. With no class data and no busyness model,
+  "open" would be drawn as an empty, green building, which for an office building
+  is a claim nobody made.
+- **Mulligan's Grill and the cafes** inside other buildings: tenants.
+
+### The accuracy harness was about to mislead, and now does not
+
+After adding the rule, `hours_accuracy.mjs --campus umd` first reported **92.2%**,
+up from 51.6%. **That number is wrong and must not be quoted.** Two separate
+faults, both mine:
+
+- It filed the 43 rule buildings under "published schedule" and applied
+  Illinois' assumed 93%, which belongs to a source that names each building's
+  own hours. A general rule got a specific schedule's accuracy.
+- The hold-out scored the fallback against each building's published hours; for
+  rule buildings those "hours" are built from the same class windows plus
+  7am-9pm, so it was measuring the fallback's agreement with itself.
+
+Fixed: rule entries get their own row, `campus-wide rule`, marked **UNMEASURED —
+no ground truth**, are excluded from the composite, and are skipped in the
+hold-out. Current output, week of 2026-10-19:
+
+| | share of claims | accuracy |
+|---|---|---|
+| campus-wide rule | 62.1% | **unmeasured** |
+| class-timetable fallback | 22.7% | 52.5% measured (280 slots) |
+| published schedule | 9.1% | 93% assumed |
+| dated feed | 6.1% | 97% assumed |
+
+The estimate over the rated 37.9% is 69.3%. **Nothing can be said about the
+other 62.1%.** The rule is the university's own statement about its own doors,
+which is better than a guess, but "generally open" has not been checked against
+a single real door, and a building with card access after 6pm would be wrong
+on it every evening. Student check-ins are the only available check.
+
+### The labelling gap
+
+Only buildings with data were named; the other ~250 of the register's 308 were
+unlabelled grey blocks. `labelRegisterBuildings` (Maryland only, flag in
+`CAMPUS_CONTENT`) now names them, as **quiet labels**: dimmer, shown out to
+2,000 m, ranked three times worse than a labelled building so they only fill
+space nothing else wants. 180 labels are added. Sheds, barns, storage, garages,
+concessions, trailers and numbered placeholders ("Building 006") are left
+unnamed by a keyword list. Off for Illinois and Ohio State: Columbus has 534
+register records and turning it on there would change a launched map.
+
+For a building we know only by its register entry, the panel now says what the
+university's own directory files it under. A residence hall reads "Residence
+hall — the university lists this as campus housing and publishes no public hours
+for it". The other categories keep "no hours published", because the directory
+says nothing more about them.
+
+### Three real buildings were being dropped from the map
+
+`offMap()` removes any building the register does not carry, on the Wooster
+reasoning (Ohio State teaches some Columbus classes 60 miles away). Three
+College Park class buildings are missing from MD iMAP only because they opened
+after that layer was drawn: **Thurgood Marshall Hall** (one of the larger class
+buildings), the **E.A. Fernandez IDEA Factory** and **Yahentamitsi Dining Hall**.
+They were silently absent from the map, and Yahentamitsi's new dining hours with
+them. Each was checked three ways before being allowed back: Testudo resolves its
+scheduling code, the university's printed directory numbers it (433, 228, 436),
+and the 3D tiles carry it by its exact class-data name inside the map area.
+`CAMPUS_CONTENT.registerGaps` lists them for Maryland.
+
+### Still open
+
+- 4 class buildings lost to Testudo's HTTP 500 (BMS, HIL, PWS, SEN) — unchanged.
+- No ground truth for the campus-wide rule.
+- `/umd.html` and the picker card are still held back: nothing here is public.
