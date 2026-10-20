@@ -20,7 +20,7 @@
       ]
     },
     {
-      "source": "/(app|classic|basemap-render|basemap-worker).js",
+      "source": "/(app|classic|basemap-render|basemap-worker)\\.js",
       "has": [
         {
           "type": "query",
