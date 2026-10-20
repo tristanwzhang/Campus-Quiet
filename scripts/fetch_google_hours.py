@@ -87,6 +87,45 @@ PLACES_OSU = {
     "Pressey Hall":             ("Pressey Hall, 1070 Carmack Rd, Columbus, OH", ["pressey"]),
 }
 
+# Maryland is a PROBE too, built the same way and for the same reason.
+#
+# The controls come first because they are the point. Seven buildings whose real
+# hours Maryland already publishes, so Google's answer can be checked against a
+# known one: Kim, Clark, Iribe, Tawes and CSIC publish their own door hours (all
+# read directly from college and department pages), and McKeldin and Stamp publish
+# exact dated hours. If Google is wrong on those it cannot be trusted on the rest,
+# and the thirteen below it are the buildings that matter -- the busiest class
+# buildings with no published hours at all, currently covered only by UMPD's
+# general "7am-9pm on weekdays" rule. Run with --campus umd; nothing reads the
+# output yet.
+#
+# Keys are the names Testudo's class data uses, because that is what the map joins on.
+PLACES_UMD = {
+    # --- controls: real hours already published ---
+    "Jeong H. Kim Engineering Building": ("Jeong H. Kim Engineering Building, College Park, MD", ["kim"]),
+    "A James Clark Hall":                ("A. James Clark Hall, College Park, MD", ["clark"]),
+    "Brendan Iribe Center":              ("Brendan Iribe Center for Computer Science and Engineering, College Park, MD", ["iribe"]),
+    "Tawes Fine Arts Bldg.":             ("Tawes Hall, University of Maryland, College Park, MD", ["tawes"]),
+    "Computer Science Instructional Center": ("Computer Science Instructional Center, College Park, MD", ["computer science instructional", "csic"]),
+    "McKeldin Library":                  ("McKeldin Library, College Park, MD", ["mckeldin"]),
+    "Stamp Student Union":               ("Adele H. Stamp Student Union, College Park, MD", ["stamp"]),
+
+    # --- the gap: busiest class buildings with no published door hours ---
+    "Van Munching Hall":                 ("Van Munching Hall, College Park, MD", ["van munching"]),
+    "Tydings Hall":                      ("Tydings Hall, University of Maryland, College Park, MD", ["tydings"]),
+    "Edward St. John Learning and Teaching Center": ("Edward St. John Learning and Teaching Center, College Park, MD", ["st. john", "st john"]),
+    "William E. Kirwan Hall":            ("William E. Kirwan Hall, College Park, MD", ["kirwan"]),
+    "Jimenez Bldg. (World Languages)":   ("Jimenez Hall, University of Maryland, College Park, MD", ["jimenez", "jim\u00e9nez"]),
+    "John S. Toll Physics Building":     ("John S. Toll Physics Building, College Park, MD", ["toll"]),
+    "Francis Scott Key Hall":            ("Francis Scott Key Hall, College Park, MD", ["key hall", "francis scott key"]),
+    "School of Public Health":           ("School of Public Health, University of Maryland, College Park, MD", ["public health"]),
+    "Chemistry-Biochemistry Bldg.":      ("Chemistry Building, University of Maryland, College Park, MD", ["chemistry"]),
+    "Plant Sciences":                    ("Plant Sciences Building, University of Maryland, College Park, MD", ["plant sciences"]),
+    "Engineering Classroom Bldg. (Martin)": ("Glenn L. Martin Hall, College Park, MD", ["martin"]),
+    "Susquehanna Hall":                  ("Susquehanna Hall, College Park, MD", ["susquehanna"]),
+    "LeFrak Hall (Social Sciences)":     ("LeFrak Hall, College Park, MD", ["lefrak"]),
+}
+
 # name -> where its results go, where to search, and what to run afterwards.
 CAMPUSES = {
     "uiuc": {
@@ -100,6 +139,12 @@ CAMPUSES = {
         "out": ROOT / "data" / "osu" / "google_hours.json",
         "ll": "@40.0125,-83.0307,15z",   # centroid of the 454 Columbus buildings
         "then": None,                    # nothing reads this yet, on purpose
+    },
+    "umd": {
+        "places": PLACES_UMD,
+        "out": ROOT / "data" / "umd" / "google_hours.json",
+        "ll": "@38.9883,-76.9427,15z",   # median of the buildings we hold data for
+        "then": None,                    # a probe: nothing reads it until the controls are checked
     },
 }
 
