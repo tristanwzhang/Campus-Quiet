@@ -825,7 +825,7 @@ function hoursStatus(id, date, time) {
     // about the day, and it is not "no data".
     if (entry.eventVenue) {
       return { ...assumed, eventVenue: true, event: entry.events?.[date], noStandingHours: !!entry.noStandingHours,
-               venueNote: entry.note };
+               venueNote: entry.note, headline: entry.headline };
     }
     return assumed;
   }
@@ -1019,7 +1019,8 @@ function estimateFor(name) {
   if (hours.eventVenue) {
     if (hours.noStandingHours) {
       return { value: 0, source: 'unknown', venue: true,
-               note: `Event venue \u00b7 ${hours.venueNote ?? 'no standing hours are published'}` };
+               headline: hours.headline ?? 'Event venue',
+               note: hours.venueNote ?? 'No standing hours are published for this building.' };
     }
     if (hours.state === 'open') {
       return { value: 0.9, source: 'event', note: `${hours.event ?? 'Event in progress'} \u00b7 from the Maryland Athletics schedule` };
@@ -1028,14 +1029,14 @@ function estimateFor(name) {
     // game day, not a day with no game, and saying "no home game scheduled"
     // at 11am on game day would be flatly wrong.
     if (hours.event) {
-      return { value: 0, source: 'unknown', venue: true, note: hours.event };
+      return { value: 0, source: 'unknown', venue: true, headline: 'Event day', note: hours.event };
     }
     if (hours.state === 'closed') {
       return { value: 0, source: 'closed', assumed: true,
                note: 'Probably closed \u00b7 no home game is scheduled, and other events are not on that schedule' };
     }
     if (hours.event) {
-      return { value: 0, source: 'unknown', venue: true, note: hours.event };
+      return { value: 0, source: 'unknown', venue: true, headline: 'Event day', note: hours.event };
     }
   }
 
@@ -1893,9 +1894,35 @@ function browseIsOpen() {
   return !!document.getElementById('browse')?.classList.contains('is-open');
 }
 
+/**
+ * What inside a building publishes hours of its own, for a building that has none
+ * as a whole. Cole is the case: a football performance centre, a sports medicine
+ * clinic, an academy, a gallery and a bike shop under one roof, with separate
+ * doors. A tenant's hours are not the building's, so each is shown as what it is
+ * -- open or closed -- under "Inside", and nothing here says the building is open.
+ */
+function renderTenants(box, tenants) {
+  const { date, time } = campusNow();
+  const rows = tenants.map(t => {
+    const ranges = publishedRanges(t, date);
+    const now = ranges?.find(([o, c]) => time >= o && time < c);
+    const state = ranges == null ? ''
+      : now ? `<span class="rooms-count">open now</span> until ${fmtHour(now[1])}`
+      : `<span class="rooms-none">closed now</span>`;
+    const hrs = t.hoursText ? ` \u00b7 ${t.hoursText}` : '';
+    const small = [t.where, t.caveat].filter(Boolean).join(' \u00b7 ');
+    return `<div style="margin-top:6px"><b>${t.name}</b> \u00b7 ${state || 'hours below'}${hrs}`
+         + `${small ? `<span class="rooms-where">${small}</span>` : ''}</div>`;
+  });
+  box.innerHTML = `<span class="rooms-where" style="margin:0 0 2px">Inside this building</span>${rows.join('')}`;
+  box.hidden = false;
+}
+
 function renderRooms(name) {
   const box = document.getElementById('panel-rooms');
   if (!box) return;
+  const tenants = data.hours?.buildings?.[name]?.tenants;
+  if (tenants?.length) { renderTenants(box, tenants); return; }
   const entry = roomAvailability?.[name];
   if (!entry || !entry.total) { box.hidden = true; return; }
   const { free, total, bookable, sources = [] } = entry;
@@ -3411,14 +3438,14 @@ function openPanel(name, keepThanks = false) {
     : closed ? (occ.cardAccess ? 'Public doors locked · i-card may work'
                 : occ.assumed ? 'Probably closed' : 'Closed right now')
     : occ.source === 'event' ? 'Event in progress'
-    : occ.venue ? (occ.note.startsWith('Event venue') ? 'Event venue' : 'Event day')
+    : occ.venue ? (occ.headline ?? 'Event day')
     : occ.source === 'unknown' ? 'Hours not published — no estimate right now'
     : `${SOURCE_LABELS[occ.source]} · ${Math.round(occ.value * 100)}% full`;
   panelQ.hidden = closed || unmapped;
   checkinRow.hidden = closed || unmapped;
   renderRooms(name);
   panelNote.textContent = occ && (occ.source === 'event' || occ.venue)
-    ? occ.note.replace(/^Event venue \u00b7 /, '')
+    ? occ.note
     : housing
     ? "The university lists this as campus housing and publishes no public hours for it."
     : unmapped

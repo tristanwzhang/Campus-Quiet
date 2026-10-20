@@ -157,15 +157,9 @@ STADIUM_SCHEDULE_URL = "https://umterps.com/sports/football/schedule"
 STADIUM_SOURCE = "Maryland Athletics schedule"
 STADIUM_BUILDING = "SECU Stadium"  # register name: "Maryland Stadium Building Upper Deck", #368
 
-# Buildings that are real, public-facing and have NO standing hours or schedule
-# anywhere. They are carried as known buildings so they get a footprint, a name
-# and a panel that says so, instead of an unexplained grey block.
-EVENT_VENUES_NO_HOURS = {
-    # Listed under "Key Places of Interest" in the printed campus directory (#162).
-    # The only schedule found for anything in it belongs to a tenant, the RecWell
-    # Bike Shop, and a tenant's hours are not the building's.
-    "Cole Student Activities Building": "No standing hours are published for this building.",
-}
+COLE_BUILDING = "Cole Student Activities Building"   # directory #162, "Key Places of Interest"
+BIKE_SHOP_URL = "https://recwell.umd.edu/programs-activities/adventure-program/bike-shop"
+DRISKELL_URL = "https://driskellcenter.umd.edu/visit"
 # The register calls it "Aquatic Center" (building 399); RecWell calls it the
 # Outdoor Aquatic Center and places it "on the west end of Eppley Recreation
 # Center". The directory puts both in map grid D7. The identification is an
@@ -986,11 +980,94 @@ def stadium(skipped):
     }}
 
 
-def event_venues():
-    return {name: {"source": "University of Maryland campus directory",
-                   "eventVenue": True, "noStandingHours": True, "note": note}
-            for name, note in EVENT_VENUES_NO_HOURS.items()}
+def hours_text(weekly):
+    """{'monday': [[12, 18]], ...} -> 'noon-6pm Mon-Fri'. Only the shapes these
+    pages actually use; anything stranger returns None rather than a guess."""
+    def f(h):
+        hh = int(h) % 24
+        label = "noon" if hh == 12 and h == 12 else "midnight" if h in (0, 24) else \
+            f"{(hh % 12) or 12}{'pm' if hh >= 12 else 'am'}"
+        return label
+    open_days = [d for d in DAYS if weekly.get(d)]
+    if open_days == DAYS[:5] and len({json.dumps(weekly[d]) for d in open_days}) == 1:
+        a, b = weekly[open_days[0]][0]
+        return f"{f(a)}-{f(b)} Mon-Fri"
+    return None
 
+
+def cole_tenants(skipped):
+    """What inside Cole publishes hours. The building itself does not, and cannot:
+    the university describes a mixed-use building (Maryland Football's performance
+    center with an indoor field, a sports medicine centre with a public
+    orthopedics clinic, an innovation academy, the Driskell Center, the RecWell
+    Bike Shop) with separate entrances. A tenant's hours are not the building's,
+    so these are shown as what is INSIDE, never as the building being open.
+    """
+    tenants = []
+
+    raw = fetch(BIKE_SHOP_URL)
+    if raw:
+        panels = re.findall(r'<div data-title="([^"]*)">(.*?)(?=<div data-title="|\Z)', raw, re.S)
+        panel = next((body for title, body in panels if title.strip() == RECWELL_TERM), None)
+        table = re.search(r"<table.*?</table>", panel or "", re.S)
+        weekly = empty_week()
+        if table:
+            rows = rows_of(table.group(0))
+            groups = [day_group(h) for h in rows[0][1:]] if rows else []
+            for row in rows[1:]:
+                if row[0].strip().lower() != "bike shop":
+                    continue
+                for i, cell in enumerate(row[1:]):
+                    ranges = span(cell)
+                    if i < len(groups) and groups[i] and ranges is not None:
+                        for d in groups[i]:
+                            weekly[d] = as_ranges(ranges)
+        if any(weekly.values()):
+            tenants.append({
+                "name": "RecWell Bike Shop", "where": "Room 0249",
+                "weekly": weekly, "hoursText": hours_text(weekly),
+                "valid": [TERM_RANGE[0], TERM_RANGE[1]], "followsCampusClosures": True,
+                "caveat": "Hours change during finals and breaks.",
+                "sourceUrl": BIKE_SHOP_URL,
+            })
+        else:
+            skipped.append("Cole: no Bike Shop hours found in the Fall Semester tab")
+
+    raw = fetch(DRISKELL_URL)
+    if raw:
+        text = re.sub(r"\s+", " ", htmllib.unescape(re.sub(r"<[^>]+>", " ", re.sub(r"<(script|style)[^>]*>.*?</\1>", "", raw, flags=re.S))))
+        m = re.search(r"open during exhibitions only\s+(\d{1,2}(?::\d{2})? ?[ap]\.m\.)\s*[-–]\s*(\d{1,2}(?::\d{2})? ?[ap]\.m\.)\s+Monday\s*[-–]\s*Friday", text)
+        gallery = span(f"{m.group(1)} to {m.group(2)}") if m else None
+        if gallery:
+            weekly = empty_week()
+            for d in DAYS[:5]:
+                weekly[d] = [gallery]
+            tenants.append({
+                "name": "Driskell Center gallery", "where": "Cole, triple doors under the Driskell sign",
+                "weekly": weekly, "hoursText": hours_text(weekly),
+                "valid": [TERM_RANGE[0], FINALS_END],
+                # "closed during university-observed holidays and breaks"
+                "closedDates": sorted(set(CAMPUS_CLOSED + CLASSES_OUT + ["2026-11-25"])),
+                "caveat": "Open during exhibitions only.",
+                "sourceUrl": DRISKELL_URL,
+            })
+        else:
+            skipped.append("Cole: Driskell gallery hours not found on the visit page")
+    return tenants
+
+
+def event_venues(skipped):
+    out = {COLE_BUILDING: {
+        "source": "University of Maryland campus directory",
+        "eventVenue": True, "noStandingHours": True,
+        "headline": "No hours for the building as a whole",
+        "note": "Several separate programs share this building, and none of them "
+                "publishes hours for the building itself.",
+    }}
+    tenants = cole_tenants(skipped)
+    if tenants:
+        out[COLE_BUILDING]["tenants"] = tenants
+    return out
 
 
 def main():
@@ -1007,7 +1084,7 @@ def main():
                        ("health", health(skipped)),
                        ("pool", pool(skipped)),
                        ("stadium", stadium(skipped)),
-                       ("venues", event_venues())):
+                       ("venues", event_venues(skipped))):
         print(f"{label:<10} {len(got)} building(s): {', '.join(got) or '—'}")
         buildings.update(got)
     # Last, and never over a building that publishes its own: the campus rule is

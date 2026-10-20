@@ -810,20 +810,44 @@ Registered as `SECU Stadium`, register number 368 (the printed directory calls i
 "SECU Stadium Building (Upper Deck)"; the register says "Maryland Stadium
 Building Upper Deck").
 
-### Cole Student Activities Building: nothing, said plainly
+### Cole Student Activities Building: no building hours, and why
 
-No standing hours exist for it. The only Cole schedule found is the RecWell Bike
-Shop's, and a tenant's hours are not the building's. It is carried as a known
-building with `noStandingHours`, so it gets a footprint, a name and a panel that
-reads "Event venue · No standing hours are published for this building" instead
-of an unexplained grey block. It stays grey, deliberately, because anything else
-would be a claim with no source. Directory #162, listed under Key Places of
-Interest.
+**Correction.** This section first called Cole an "event venue". The university's
+own description does not support that. `today.umd.edu` ("New Cole to advance
+science, sport") describes a mixed-use building: the **Terrapin Performance
+Center** (Maryland Football's home, with an indoor regulation field, not public),
+a **Center for Sports Medicine, Health and Human Performance** with a public
+orthopedics clinic, an **Academy for Innovation and Entrepreneurship**, plus the
+**David C. Driskell Center** and the **RecWell Bike Shop**. Separate programs,
+separate entrances (the Driskell Center's is "the triple doors under the Driskell
+Center sign"; the Bike Shop's is on the east side). There is no single set of
+hours for the building because it is not one thing, and none is published.
+
+What the map now does instead of colouring it:
+
+- It stays grey, because any state would be a claim with no source.
+- The panel says **"No hours for the building as a whole · Several separate
+  programs share this building, and none of them publishes hours for the building
+  itself."**
+- Under **"Inside this building"** it lists the two tenants that do publish
+  hours, each with live open/closed:
+  - **RecWell Bike Shop**, Room 0249: noon to 6pm Monday to Friday (Fall tab on
+    its RecWell page; "hours change during finals and breaks").
+  - **Driskell Center gallery**: 11am to 4pm Monday to Friday, "open during
+    exhibitions only", closed on university holidays and breaks. Its office
+    (9 to 5) and its archive (10 to 4, by appointment) are not listed.
+
+A tenant's hours are never presented as the building's. "Open now" appears
+beside the tenant's name and nowhere else.
+
+Not listed because no schedule was found: the football performance center, the
+sports medicine clinic and the innovation academy. The clinic is public, so its
+hours would be worth finding.
 
 A tile block inside Cole's footprint is named "Jones-Hill House" in
-OpenStreetMap, a 41 m block that is probably Cole itself mislabelled. Named
-blocks are never reassigned, so the app currently draws its own flat prism for
-Cole beside it. Not verified, and not fixed.
+OpenStreetMap, a 41 m block that is probably Cole itself mislabelled. Named blocks
+are never reassigned, so the app currently draws its own flat prism for Cole
+beside it. Not verified, and not fixed.
 
 ### The harness
 

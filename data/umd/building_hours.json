@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-20T01:16:13+00:00",
+ "built_at": "2026-10-20T01:45:02+00:00",
  "campus": "Maryland \u2014 College Park",
  "term": "2026/fall",
  "campusClosedDates": [
@@ -3778,7 +3778,114 @@
    "source": "University of Maryland campus directory",
    "eventVenue": true,
    "noStandingHours": true,
-   "note": "No standing hours are published for this building."
+   "headline": "No hours for the building as a whole",
+   "note": "Several separate programs share this building, and none of them publishes hours for the building itself.",
+   "tenants": [
+    {
+     "name": "RecWell Bike Shop",
+     "where": "Room 0249",
+     "weekly": {
+      "monday": [
+       [
+        12.0,
+        18.0
+       ]
+      ],
+      "tuesday": [
+       [
+        12.0,
+        18.0
+       ]
+      ],
+      "wednesday": [
+       [
+        12.0,
+        18.0
+       ]
+      ],
+      "thursday": [
+       [
+        12.0,
+        18.0
+       ]
+      ],
+      "friday": [
+       [
+        12.0,
+        18.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     },
+     "hoursText": "noon-6pm Mon-Fri",
+     "valid": [
+      "2026-08-31",
+      "2026-12-11"
+     ],
+     "followsCampusClosures": true,
+     "caveat": "Hours change during finals and breaks.",
+     "sourceUrl": "https://recwell.umd.edu/programs-activities/adventure-program/bike-shop"
+    },
+    {
+     "name": "Driskell Center gallery",
+     "where": "Cole, triple doors under the Driskell sign",
+     "weekly": {
+      "monday": [
+       [
+        11.0,
+        16.0
+       ]
+      ],
+      "tuesday": [
+       [
+        11.0,
+        16.0
+       ]
+      ],
+      "wednesday": [
+       [
+        11.0,
+        16.0
+       ]
+      ],
+      "thursday": [
+       [
+        11.0,
+        16.0
+       ]
+      ],
+      "friday": [
+       [
+        11.0,
+        16.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     },
+     "hoursText": "11am-4pm Mon-Fri",
+     "valid": [
+      "2026-08-31",
+      "2026-12-21"
+     ],
+     "closedDates": [
+      "2026-09-07",
+      "2026-10-12",
+      "2026-10-13",
+      "2026-11-25",
+      "2026-11-26",
+      "2026-11-27",
+      "2026-12-25",
+      "2026-12-28",
+      "2026-12-29",
+      "2026-12-30",
+      "2026-12-31"
+     ],
+     "caveat": "Open during exhibitions only.",
+     "sourceUrl": "https://driskellcenter.umd.edu/visit"
+    }
+   ]
   },
   "A James Clark Hall": {
    "source": "UMD Police Building Security Services \u2014 general academic building hours",
