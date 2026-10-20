@@ -1072,3 +1072,63 @@ State would gain the same measurement by turning it on.
 - **Finals exam schedules**, skipped at the owner's direction.
 - **Asking UMPD Building Security** for the programmed lock schedules, the one
   source that would settle the rule.
+
+
+## 2026-10-20, sixth pass: a bug in the libraries' hours, and Google
+
+### Hornbake read closed every day, and McKeldin on most days
+
+`dates[iso] = ranges` in the LibCal reader had been changed to
+`as_ranges(ranges)` when a different nesting bug was fixed, by a replace applied
+to every occurrence instead of the one it was meant for. `ranges` there is already
+a LIST of `[open, close]` pairs, so the result was `[[[7, 22]]]`. The browser
+destructures `[open, close]` from each element and got an array and `undefined`,
+so every comparison was false: **Hornbake was closed on all 46 of its open days,
+and McKeldin on the 29 that were not 24-hour days**, the two main libraries and
+the best study spaces on the map. A screenshot showed Hornbake dark at 4pm and it
+was not questioned.
+
+Found when a comparison script crashed on the same shape. Fixed, and the builder
+now refuses to write `building_hours.json` or `tenants.json` if any value is not a
+list of `[open, close]` pairs with open < close (`check_shapes()`, tested against
+the exact bug).
+
+**Every Maryland harness figure reported between the original change and this fix
+was computed with those libraries wrongly closed.** After the fix the fallback's
+measured hold-out accuracy is 73.4%, not 64.5%, because it is now scored against
+correct library hours. Illinois and Ohio State do not use this builder and are
+unchanged. Current output, week of 2026-10-19:
+
+| | share of claims | accuracy |
+|---|---|---|
+| campus-wide rule | 52.7% | unmeasured |
+| class-timetable fallback | 20.3% | 73.4% measured |
+| published schedule | 13.5% | 93% assumed |
+| dated feed | 6.8% | 97% assumed |
+| event schedule | 6.8% | unmeasured |
+
+### Google listings: probed, and not to be trusted for academic buildings
+
+`scripts/fetch_google_hours.py --campus umd` searched 20 buildings (7 controls with
+known hours, 13 with none). Six returned usable hours; fourteen returned nothing
+(most academic buildings have no hours in their listing at all, and three were
+rejected because the result's title did not match).
+
+Against the controls, week of 26 October, hours 8am-11pm:
+
+| | Google Monday | Real Monday | Agrees |
+|---|---|---|---|
+| Stamp Student Union | 7am-midnight | 7am-midnight | 112/112 |
+| Iribe Center | 7am-10pm | closes 10pm (CS) | 112/112 |
+| McKeldin Library | 8am-11pm | open 24 hours | 107/112 |
+| **Kim Engineering** | **8:30am-4:30pm** | **doors 6:30am-8pm** | **91/112** |
+
+Kim is the telling one. Google's listing is the **office** hours, not the door
+hours, and the same pattern shows in the School of Public Health (9am-4:30pm, where
+a student lounge is open 7am-10pm). For the buildings that matter, the academic
+ones, a listing is as likely to be an office as the building. **Not wired in, and
+nothing reads it.** Van Munching (6:00am-10:30pm) is the one new candidate; it is
+plausible against its summer pattern (weekdays from 6am) and is unverified.
+
+20 searches used. The key was passed inline for the single command and was not
+written anywhere; it should be rotated, since it was pasted into the conversation.

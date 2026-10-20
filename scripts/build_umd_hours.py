@@ -406,7 +406,7 @@ def libcal(skipped):
                     skipped.append(f"{name} {iso}: status={status!r} "
                                    f"{str(times.get('rendered', ''))[:40]!r}")
                     continue
-                dates[iso] = as_ranges(ranges)
+                dates[iso] = ranges          # already a LIST of ranges; as_ranges() is for ONE
         if not dates:
             continue
         days = sorted(dates)
@@ -1305,6 +1305,40 @@ def tenants(skipped):
     return out
 
 
+def check_shapes(buildings, tenants_by_building):
+    """Every hours value must be a LIST of [open, close] pairs, with open < close.
+
+    A list wrapped one level too deep ([[[7, 22]]] instead of [[7, 22]]) is not an
+    error to the JSON writer and not to the browser's parser; it is a building the
+    map silently reads as closed, because destructuring [open, close] from [[7, 22]]
+    gives an array and undefined. That happened to Hornbake (closed every day) and to
+    McKeldin (closed whenever it was not open 24 hours) when a fix for a different
+    nesting bug was applied too widely, and it went unseen for a day. This is the
+    check that would have stopped it.
+    """
+    def ok(rs):
+        return isinstance(rs, list) and all(
+            isinstance(r, list) and len(r) == 2 and all(isinstance(x, (int, float)) for x in r) and r[0] < r[1]
+            for r in rs)
+    problems = []
+    def scan(label, entry):
+        for iso, rs in (entry.get("dates") or {}).items():
+            if not ok(rs): problems.append(f"{label} dates[{iso}] = {rs!r}")
+        for day, rs in (entry.get("weekly") or {}).items():
+            if not ok(rs): problems.append(f"{label} weekly[{day}] = {rs!r}")
+        for per in entry.get("periods") or []:
+            for day, rs in per["weekly"].items():
+                if not ok(rs): problems.append(f"{label} period weekly[{day}] = {rs!r}")
+        for t in entry.get("tenants") or []:
+            scan(f"{label} / {t['name']}", t)
+    for name, entry in buildings.items():
+        scan(name, entry)
+    for name, lst in tenants_by_building.items():
+        for t in lst:
+            scan(f"{name} / {t['name']}", t)
+    return problems
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--print-skipped", action="store_true")
@@ -1359,6 +1393,12 @@ def main():
     }, indent=1) + "\n")
 
     inside = tenants(skipped)
+    problems = check_shapes(buildings, inside)
+    if problems:
+        print(f"REFUSING TO WRITE: {len(problems)} hours value(s) are mis-shaped, e.g.:", file=sys.stderr)
+        for line in problems[:5]:
+            print("   " + line, file=sys.stderr)
+        return 1
     TENANTS_FILE.write_text(json.dumps({
         "built_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "note": "What is inside each building and publishes its own hours. A tenant's "

@@ -1,0 +1,257 @@
+{
+ "buildings": {
+  "Jeong H. Kim Engineering Building": {
+   "google_title": "Jeong H. Kim Engineering Building",
+   "weekly": {
+    "monday": [
+     [
+      8.5,
+      16.5
+     ]
+    ],
+    "tuesday": [
+     [
+      8.5,
+      16.5
+     ]
+    ],
+    "wednesday": [
+     [
+      8.5,
+      16.5
+     ]
+    ],
+    "thursday": [
+     [
+      8.5,
+      16.5
+     ]
+    ],
+    "friday": [
+     [
+      8.5,
+      16.5
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "Brendan Iribe Center": {
+   "google_title": "Brendan Iribe Center for Computer Science and Engineering",
+   "weekly": {
+    "monday": [
+     [
+      7.0,
+      22.0
+     ]
+    ],
+    "tuesday": [
+     [
+      7.0,
+      22.0
+     ]
+    ],
+    "wednesday": [
+     [
+      7.0,
+      22.0
+     ]
+    ],
+    "thursday": [
+     [
+      7.0,
+      22.0
+     ]
+    ],
+    "friday": [
+     [
+      7.0,
+      22.0
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  },
+  "McKeldin Library": {
+   "google_title": "McKeldin Library",
+   "weekly": {
+    "monday": [
+     [
+      8.0,
+      23.0
+     ]
+    ],
+    "tuesday": [
+     [
+      8.0,
+      23.0
+     ]
+    ],
+    "wednesday": [
+     [
+      8.0,
+      23.0
+     ]
+    ],
+    "thursday": [
+     [
+      8.0,
+      23.0
+     ]
+    ],
+    "friday": [
+     [
+      8.0,
+      20.0
+     ]
+    ],
+    "saturday": [
+     [
+      11.0,
+      20.0
+     ]
+    ],
+    "sunday": [
+     [
+      11.0,
+      23.0
+     ]
+    ]
+   }
+  },
+  "Stamp Student Union": {
+   "google_title": "Adele H. Stamp Student Union",
+   "weekly": {
+    "monday": [
+     [
+      7.0,
+      24.0
+     ]
+    ],
+    "tuesday": [
+     [
+      7.0,
+      24.0
+     ]
+    ],
+    "wednesday": [
+     [
+      7.0,
+      24.0
+     ]
+    ],
+    "thursday": [
+     [
+      7.0,
+      24.0
+     ]
+    ],
+    "friday": [
+     [
+      7.0,
+      25.5
+     ]
+    ],
+    "saturday": [
+     [
+      8.0,
+      25.5
+     ]
+    ],
+    "sunday": [
+     [
+      11.0,
+      24.0
+     ]
+    ]
+   }
+  },
+  "Van Munching Hall": {
+   "google_title": "Van Munching",
+   "weekly": {
+    "monday": [
+     [
+      6.0,
+      22.5
+     ]
+    ],
+    "tuesday": [
+     [
+      6.0,
+      22.5
+     ]
+    ],
+    "wednesday": [
+     [
+      6.0,
+      22.5
+     ]
+    ],
+    "thursday": [
+     [
+      6.0,
+      22.5
+     ]
+    ],
+    "friday": [
+     [
+      6.0,
+      22.5
+     ]
+    ],
+    "saturday": [
+     [
+      6.0,
+      21.5
+     ]
+    ],
+    "sunday": [
+     [
+      6.0,
+      21.5
+     ]
+    ]
+   }
+  },
+  "School of Public Health": {
+   "google_title": "UMD School of Public Health",
+   "weekly": {
+    "monday": [
+     [
+      9.0,
+      16.5
+     ]
+    ],
+    "tuesday": [
+     [
+      9.0,
+      14.0
+     ]
+    ],
+    "wednesday": [
+     [
+      9.0,
+      14.0
+     ]
+    ],
+    "thursday": [
+     [
+      9.0,
+      14.0
+     ]
+    ],
+    "friday": [
+     [
+      9.0,
+      14.0
+     ]
+    ],
+    "saturday": [],
+    "sunday": []
+   }
+  }
+ },
+ "built_at": "2026-10-20T06:45:18+00:00"
+}
