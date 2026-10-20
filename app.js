@@ -2031,7 +2031,7 @@ function renderHoursReport(name, occ) {
     : occ.source === 'closed' ? (occ.assumed ? 'probably closed' : 'closed')
     : ['unknown'].includes(occ.source) ? null
     : 'open';
-  if (!CAMPUS_CONTENT.hoursReports || !claim) { box?.remove(); return; }
+  if (!CAMPUS_CONTENT.hoursReports) { box?.remove(); return; }
   if (!box) {
     box = document.createElement('div');
     box.id = 'hours-report';
@@ -2039,16 +2039,24 @@ function renderHoursReport(name, occ) {
     document.getElementById('panel-rooms')?.insertAdjacentElement('afterend', box);
   }
   const key = `hr:${CAMPUS.id}:${name}:${claim}`;
+  // The wrong-hours link is offered on every building, claim or not: a building
+  // with no published hours is exactly where the real hours are most wanted.
+  const fix = '<button type="button" id="hours-fix" style="background:none;border:0;padding:0;'
+            + 'color:#9db8e8;font-size:12px;cursor:pointer;text-decoration:underline">'
+            + 'Know the real hours? Tell me</button>';
   let done = false;
   try { done = !!sessionStorage.getItem(key); } catch (e) { /* storage blocked */ }
   const btn = 'background:transparent;border:1px solid rgba(255,255,255,.18);color:#c8d0e0;'
             + 'border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;margin-right:6px';
-  box.innerHTML = done
-    ? '<span style="color:#8fd4a8">Thanks, that helps.</span>'
-    : `<span style="display:block;color:#8b95a8;margin-bottom:6px">Is "${claim}" right?</span>`
-      + `<button type="button" data-actual="open" style="${btn}">It's actually open</button>`
-      + `<button type="button" data-actual="closed" style="${btn}">It's actually closed</button>`;
-  box.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+  const ask = !claim ? ''
+    : done
+      ? '<span style="color:#8fd4a8">Thanks, that helps.</span>'
+      : `<span style="display:block;color:#8b95a8;margin-bottom:6px">Is "${claim}" right?</span>`
+        + `<button type="button" data-actual="open" style="${btn}">It's actually open</button>`
+        + `<button type="button" data-actual="closed" style="${btn}">It's actually closed</button>`;
+  box.innerHTML = ask + `<div style="margin-top:${ask ? 8 : 0}px">${fix}</div>`;
+  box.querySelector('#hours-fix')?.addEventListener('click', () => openReport('hours', name));
+  box.querySelectorAll('button[data-actual]').forEach(b => b.addEventListener('click', () => {
     const { date, time } = campusNow();
     track('hours_report', {
       school: CAMPUS.id, building: name, claimed: claim, actual: b.dataset.actual,
@@ -2056,7 +2064,9 @@ function renderHoursReport(name, occ) {
       basis: hoursBasis(name), at: `${date} ${time.toFixed(2)}`, device: deviceKind(),
     });
     try { sessionStorage.setItem(key, '1'); } catch (e) { /* storage blocked */ }
-    box.innerHTML = '<span style="color:#8fd4a8">Thanks, that helps.</span>';
+    box.querySelectorAll('button[data-actual]').forEach(x => x.remove());
+    box.firstElementChild?.matches('span') && (box.firstElementChild.outerHTML =
+      '<span style="display:block;color:#8fd4a8;margin-bottom:8px">Thanks, that helps.</span>');
   }));
 }
 
@@ -3936,8 +3946,34 @@ document.getElementById('survey-close').addEventListener('click', () => {
 const reportCard = document.getElementById('report');
 const reportText = document.getElementById('report-text');
 
-function openReport(from) {
+// The same card serves two questions. Defaults are read from the page once so
+// switching back to "something look wrong?" restores them exactly.
+const reportCopy = {
+  q: document.querySelector('#report .report-q')?.textContent,
+  hint: document.querySelector('#report .report-hint')?.textContent,
+  placeholder: reportText?.placeholder,
+  done: document.querySelector('#report-step-done')?.textContent,
+};
+let reportKind = 'problem';
+let reportBuilding = null;
+
+function openReport(from, building = null) {
   if (!reportCard) return;
+  reportKind = from === 'hours' ? 'hours' : 'problem';
+  reportBuilding = reportKind === 'hours' ? building : null;
+  const set = (sel, text) => { const el = document.querySelector(sel); if (el && text != null) el.textContent = text; };
+  if (reportKind === 'hours') {
+    set('#report .report-q', `What are the real hours for ${building}?`);
+    set('#report .report-hint', 'Which days, when it opens and closes, and anything odd — card access after 5, '
+      + 'closed on game days. One sentence is plenty. I check every one before changing the map.');
+    reportText.placeholder = 'e.g. Open 7am–11pm Mon–Thu, 7am–6pm Fri, closed weekends';
+    set('#report-step-done', 'Thanks — I will check this against the building and fix the map.');
+  } else {
+    set('#report .report-q', reportCopy.q);
+    set('#report .report-hint', reportCopy.hint);
+    reportText.placeholder = reportCopy.placeholder;
+    set('#report-step-done', reportCopy.done);
+  }
   reportCard.hidden = false;
   // Force a reflow so the transition starts from the hidden state. A
   // requestAnimationFrame would be the usual way, but it does not fire in a
@@ -3969,7 +4005,8 @@ document.getElementById('report-send')?.addEventListener('click', () => {
   // one they are looking at, and it saves them naming it.
   track('report_sent', {
     text,
-    building: panelTarget(),
+    kind: reportKind,
+    building: reportBuilding ?? panelTarget(),
     device: deviceKind(),
     at: `${campusNow().date} ${Math.floor(campusNow().time)}:00`,
   });

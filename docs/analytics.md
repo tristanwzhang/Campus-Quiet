@@ -54,8 +54,13 @@ Every event carries a `school` property (`SCHOOL` constant in app.js, `"uiuc"` f
 one line to change per deployment). One PostHog project holds every school; **not**
 separate projects, which can't share funnels or combined charts.
 
-**Status: not built yet.** The reminder for this is tracked — just ask for it when
-you're ready, which doesn't need to be until a second school is close to launching.
+**Status: built (2026-10-20).** PostHog project 614748 holds, per campus, an overview and a
+launch-health dashboard (UIUC 2107522 / 2125754, OSU 2225117 / 2225118, Maryland 2233503 / 2233504),
+plus "All schools — overview" (2225119) and "All schools — launch health" (2225120).
+Maryland's launch health has one extra tile, "Hours check: was the map right?" (`hours_report`).
+Four master tiles name campuses in their SQL (Visitors by campus, Daily visitors and page loads,
+Check-ins per day, Where visitors come from): add a `school = '<id>'` column to each when a campus launches.
+Maryland's are empty until `/umd` is public. The steps below are the manual route.
 
 **Per-school dashboard** (do this one for UIUC now, if you want it before school #2):
 1. Open the existing "UIUC Spaces KPIs" dashboard → **Filters** → **+ Add filter** →
