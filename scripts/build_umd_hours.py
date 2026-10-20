@@ -843,11 +843,35 @@ PUBLISHED_DOORS = {
         "open": 6.5, "close": 20.0,
         "url": "https://clarknet.eng.umd.edu/reservation-policies",
         "text": "Kim Building exterior doors are open from 6:30am-8:00pm, Monday through Friday",
+        "source": "College of Engineering building policy",
     },
     "A James Clark Hall": {
         "open": 6.5, "close": 20.0,
         "url": "https://clarknet.eng.umd.edu/policies-clark-hall-reservable-spaces",
         "text": "Clark Hall exterior doors are open from 6:30am-8:00pm, Monday through Friday",
+        "source": "College of Engineering building policy",
+    },
+    # The Brin Mathematics Research Center's visitor page gives its address as
+    # "4146 CSIC Bldg. #406" -- the Computer Science Instructional Center -- and
+    # says "The building is unrestricted from 7:30AM to 10:30PM Monday through
+    # Friday during the fall and spring semesters" (5:30pm in summer). A statement
+    # about the whole building, by a tenant that lives in it.
+    "Computer Science Instructional Center": {
+        "open": 7.5, "close": 22.5,
+        "url": "https://brinmrc.umd.edu/information-for-visitors/",
+        "text": "The building is unrestricted from 7:30AM to 10:30PM Monday through Friday during the fall and spring semesters",
+        "source": "Brin Mathematics Research Center visitor information (CSIC)",
+    },
+    # The English Department's page for Ulrich Recital Hall: "The main doors to
+    # Tawes are open between 7:00 a.m. and 9:00 p.m., Monday through Friday." It
+    # agrees with the general rule exactly; it is carried as published because a
+    # building-specific statement is a different kind of evidence from a default,
+    # even when the numbers coincide. A department page, so it may lag the policy.
+    "Tawes Fine Arts Bldg.": {
+        "open": 7.0, "close": 21.0,
+        "url": "https://intranet.english.umd.edu/spaces/ulrich",
+        "text": "The main doors to Tawes are open between 7:00 a.m. and 9:00 p.m., Monday through Friday",
+        "source": "English Department building information (Tawes)",
     },
 }
 # Only a closing time is published; the opening comes from the general rule.
@@ -928,7 +952,7 @@ def umpd_rule(existing, skipped):
             # a general rule, so it is no longer marked as one.
             d_ = PUBLISHED_DOORS[name]
             entry.update({
-                "source": "College of Engineering building policy",
+                "source": d_["source"],
                 "sourceUrl": d_["url"], "generalRule": False,
                 "weeklyNote": f'"{d_["text"]}"; weekends by arrangement, plus the hours classes are scheduled',
             })

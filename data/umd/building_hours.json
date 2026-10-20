@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-20T05:21:43+00:00",
+ "built_at": "2026-10-20T06:27:35+00:00",
  "campus": "Maryland \u2014 College Park",
  "term": "2026/fall",
  "campusClosedDates": [
@@ -5076,38 +5076,38 @@
    "weeklyNote": "7am-9pm on weekdays plus the hours classes are scheduled; closed weekends and university holidays unless something is scheduled"
   },
   "Computer Science Instructional Center": {
-   "source": "UMD Police Building Security Services \u2014 general academic building hours",
-   "sourceUrl": "https://umpd.umd.edu/about-us/our-units/building-security-systems",
+   "source": "Brin Mathematics Research Center visitor information (CSIC)",
+   "sourceUrl": "https://brinmrc.umd.edu/information-for-visitors/",
    "code": "CSI",
    "weekly": {
     "monday": [
      [
-      7.0,
-      21.25
+      7.5,
+      22.5
      ]
     ],
     "tuesday": [
      [
-      7.0,
-      21.0
+      7.5,
+      22.5
      ]
     ],
     "wednesday": [
      [
-      7.0,
-      21.0
+      7.5,
+      22.5
      ]
     ],
     "thursday": [
      [
-      7.0,
-      21.75
+      7.5,
+      22.5
      ]
     ],
     "friday": [
      [
-      7.0,
-      21.0
+      7.5,
+      22.5
      ]
     ],
     "saturday": [],
@@ -5118,8 +5118,8 @@
     "2026-12-21"
    ],
    "followsCampusClosures": true,
-   "generalRule": true,
-   "weeklyNote": "7am-9pm on weekdays plus the hours classes are scheduled; closed weekends and university holidays unless something is scheduled"
+   "generalRule": false,
+   "weeklyNote": "\"The building is unrestricted from 7:30AM to 10:30PM Monday through Friday during the fall and spring semesters\"; weekends by arrangement, plus the hours classes are scheduled"
   },
   "E.A. Fernandez IDEA Factory": {
    "source": "UMD Police Building Security Services \u2014 general academic building hours",
@@ -6323,8 +6323,8 @@
    "weeklyNote": "7am-9pm on weekdays plus the hours classes are scheduled; closed weekends and university holidays unless something is scheduled"
   },
   "Tawes Fine Arts Bldg.": {
-   "source": "UMD Police Building Security Services \u2014 general academic building hours",
-   "sourceUrl": "https://umpd.umd.edu/about-us/our-units/building-security-systems",
+   "source": "English Department building information (Tawes)",
+   "sourceUrl": "https://intranet.english.umd.edu/spaces/ulrich",
    "code": "TWS",
    "weekly": {
     "monday": [
@@ -6365,8 +6365,8 @@
     "2026-12-21"
    ],
    "followsCampusClosures": true,
-   "generalRule": true,
-   "weeklyNote": "7am-9pm on weekdays plus the hours classes are scheduled; closed weekends and university holidays unless something is scheduled"
+   "generalRule": false,
+   "weeklyNote": "\"The main doors to Tawes are open between 7:00 a.m. and 9:00 p.m., Monday through Friday\"; weekends by arrangement, plus the hours classes are scheduled"
   },
   "Thurgood Marshall Hall": {
    "source": "UMD Police Building Security Services \u2014 general academic building hours",

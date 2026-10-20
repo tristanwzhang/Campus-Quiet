@@ -981,3 +981,94 @@ configured height, so they are unchanged.
 - **Cole's own hours.** There are none; what is inside it is now listed.
 - **Per-building door hours for the other ~40 academic buildings.** The college
   sites do not publish them.
+
+
+## 2026-10-20, fifth pass: measuring, and being honest about the rule
+
+### Five buildings publish their own door hours; the rule agrees with them 94%
+
+Two more were found. **CSIC** (the Computer Science Instructional Center): the
+Brin Mathematics Research Center's visitor page gives its address as "4146 CSIC
+Bldg. #406" and says "The building is unrestricted from 7:30AM to 10:30PM Monday
+through Friday during the fall and spring semesters" (5:30pm in summer). A
+statement about the whole building, by a tenant that lives in it. **Tawes**: the
+English Department's page for Ulrich Recital Hall says "The main doors to Tawes
+are open between 7:00 a.m. and 9:00 p.m., Monday through Friday". That is a
+department page and may lag policy, but it matches the rule exactly.
+
+| | Published | Rule (7-21) agrees on |
+|---|---|---|
+| Kim Engineering | 6:30am-8:00pm | 15/16 weekday hours |
+| Clark Hall | 6:30am-8:00pm | 15/16 |
+| Iribe | closes 10:00pm | 15/16 |
+| Tawes | 7:00am-9:00pm | 16/16 |
+| CSIC | 7:30am-10:30pm | 14/16 |
+| **overall** | | **75/80 = 94%** |
+
+Weekdays only, five buildings, three of them engineering or computer science.
+It is evidence for the rule, not a campus-wide measurement, and every miss is
+within 90 minutes of closing. Searches for about fifteen other buildings
+(Martin, Toll, Chemistry, Benjamin, Tydings, Key, Marie Mount, Skinner and
+others) found only office hours, never door hours.
+
+**The harness figure for Maryland is now about 81% and that is, again,
+bookkeeping.** CSIC and Tawes moved from the unmeasured-rule row to
+"published schedule" at an assumed 93%. Do not quote it.
+
+### Busyness now uses students enrolled
+
+`seats` in `class_activity.json` was a section's seat cap times a guessed weight
+(3.0 lecture, 1.5 lab, 1.0 discussion). Testudo also publishes the seats still
+open, so it is now **students actually enrolled** (cap minus open), summed over
+distinct sections in a room-hour. A 400-seat lecture at 40% and one that is full
+no longer count the same, and a lecture and a discussion are both just however
+many people are in them. Cross-listed sections in one room are one event for "is
+the room taken" and two groups of people for "how busy", so the weight is taken
+once and the people are added.
+
+Rebuilt from the cache with no new requests. Meeting counts are identical; what
+changed is the shape of the day. The median building's normalised weekday profile
+moved by 0.07, and the largest moves are real (Skinner Building's peak hour went
+from noon to 9am, where its largest lectures are). The sum of building peaks fell
+from 73,696 to 30,282 concurrent students, which is a believable figure for a
+campus of about 41,000; the old number was inflated by the weights.
+
+Caveat: a snapshot read after drop/add on 2026-10-16. It drifts slowly. It
+affects the colours and not the open/closed claim, and it is unmeasured like all
+busyness on every campus.
+
+### A general rule now says "probably", not "closed"
+
+Buildings covered only by the UMPD default read "Probably closed · outside the
+campus default of weekdays 7am-9pm, and nothing is scheduled" instead of a flat
+"Closed right now", and an open one carries "generally open weekdays 7am-9pm
+(campus default)" in both the panel and the hover. The map claims what it knows.
+
+### A report on every open/closed claim
+
+Maryland's panel now asks "Is 'probably closed' right?" with two buttons. A tap
+sends one `hours_report` event to PostHog:
+
+`school, building, claimed, actual, correct, basis, at, device`
+
+`basis` is `campus rule`, `published`, `class timetable` or `event schedule`, so
+the reports sum to an accuracy figure per source, which is the number nobody can
+compute from inside. One report per building per claim per session.
+
+Closed buildings never opened a panel (the app skipped them on purpose, as there
+was nothing to check in on), which would have made the most valuable report, "it
+says closed and I am inside it", impossible to send. For Maryland a closed
+building now opens its panel. Query: `hours_report` grouped by `basis`, mean of
+`correct`.
+
+Behind `CAMPUS_CONTENT.hoursReports`, on for Maryland only. Illinois and Ohio
+State would gain the same measurement by turning it on.
+
+### Not done
+
+- **Google popular times.** Needs a SerpApi key, which is not available here,
+  and `fetch_popular_times.py` is Illinois-only. It would give measured busyness
+  for the bigger buildings.
+- **Finals exam schedules**, skipped at the owner's direction.
+- **Asking UMPD Building Security** for the programmed lock schedules, the one
+  source that would settle the rule.

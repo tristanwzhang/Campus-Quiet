@@ -844,6 +844,7 @@ function hoursStatus(id, date, time) {
     cardAccess: !extended && !!entry.cardAccess,
     eventVenue: !!entry.eventVenue,
     event: entry.events?.[date],
+    general: !!entry.generalRule,
   };
 }
 
@@ -1045,6 +1046,19 @@ function estimateFor(name) {
     // Never let an assumption read like a published fact. "Closed right now"
     // is a claim; "probably closed" with the reason attached is what we can
     // actually support.
+    // The campus-wide default ("generally open 7am-9pm on weekdays") is a statement
+    // about buildings in general, not a schedule anyone published for this one, so
+    // it can support "probably closed" and no more. Three buildings that DO publish
+    // their own door hours were checked against it and it was within an hour of
+    // closing on all of them, which is good evidence and not a guarantee.
+    if (hours.general && !hours.assumed) {
+      return {
+        value: 0,
+        source: 'closed',
+        assumed: true,
+        note: 'Probably closed \u00b7 outside the campus default of weekdays 7am\u20139pm, and nothing is scheduled',
+      };
+    }
     if (hours.assumed) {
       return {
         value: 0,
@@ -1078,12 +1092,13 @@ function estimateFor(name) {
   // value is 0 because that is what an empty room is, and the note says
   // exactly where that comes from so it cannot read as a measurement.
   if (hours.state === 'open') {
-    if (estimate) return estimate;
+    const general = hours.general ? ' \u00b7 generally open weekdays 7am\u20139pm (campus default)' : '';
+    if (estimate) return general ? { ...estimate, note: `${estimate.note}${general}` } : estimate;
     const from = hours.official ? ` · hours from ${hours.source}` : '';
     return {
       value: 0,
       source: 'open',
-      note: `Open · nothing timetabled here right now${from}`,
+      note: `Open · nothing timetabled here right now${hours.general ? general : from}`,
     };
   }
   if (!estimate) return estimate;
@@ -1581,6 +1596,12 @@ const CAMPUS_CONTENT = {
           // data/<campus>/tenants.json: what is inside each building. Loaded after the
           // map is up, never on the way to first paint.
           tenants: true,
+          // A per-building "this is wrong" report on open/closed, sent to analytics with
+          // exactly what the map claimed and where the claim came from. Maryland's
+          // hours rest mostly on a general rule nobody has checked against a door, and
+          // this is the only check there will be. Off for the launched campuses until
+          // their owner decides to turn it on.
+          hoursReports: true,
           // data/<campus>/ground.json: terrain sampled on an 80 m grid. One ground
           // height was fine for Illinois (about 3 m of relief) and wrong for College
           // Park, where the 60 buildings span -12.8 m to +20.7 m: the buildings the
@@ -1985,6 +2006,58 @@ async function loadTenants() {
   if (!CAMPUS_CONTENT.tenants) return;
   const json = await loadJson(`${CAMPUS.dataDir}/tenants.json`);
   data.tenants = json?.buildings ?? null;
+}
+
+/**
+ * "Is this right?" under a building's open/closed claim.
+ *
+ * The report carries what the map CLAIMED and where the claim came from, because
+ * that is what makes it a measurement: a tap on "actually open" against a claim of
+ * "probably closed" from the campus rule is one data point about the rule, and
+ * summing them per source is the accuracy figure nobody can compute from inside.
+ */
+function hoursBasis(name) {
+  const { date, time } = campusNow();
+  const h = hoursStatus(name, date, time);
+  if (h.eventVenue) return 'event schedule';
+  if (h.general) return 'campus rule';
+  if (h.assumed) return 'class timetable';
+  return h.state === 'unknown' ? 'none' : 'published';
+}
+
+function renderHoursReport(name, occ) {
+  let box = document.getElementById('hours-report');
+  const claim = !occ ? null
+    : occ.source === 'closed' ? (occ.assumed ? 'probably closed' : 'closed')
+    : ['unknown'].includes(occ.source) ? null
+    : 'open';
+  if (!CAMPUS_CONTENT.hoursReports || !claim) { box?.remove(); return; }
+  if (!box) {
+    box = document.createElement('div');
+    box.id = 'hours-report';
+    box.style.cssText = 'margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,.08);font-size:12px';
+    document.getElementById('panel-rooms')?.insertAdjacentElement('afterend', box);
+  }
+  const key = `hr:${CAMPUS.id}:${name}:${claim}`;
+  let done = false;
+  try { done = !!sessionStorage.getItem(key); } catch (e) { /* storage blocked */ }
+  const btn = 'background:transparent;border:1px solid rgba(255,255,255,.18);color:#c8d0e0;'
+            + 'border-radius:8px;padding:6px 10px;font-size:12px;cursor:pointer;margin-right:6px';
+  box.innerHTML = done
+    ? '<span style="color:#8fd4a8">Thanks, that helps.</span>'
+    : `<span style="display:block;color:#8b95a8;margin-bottom:6px">Is "${claim}" right?</span>`
+      + `<button type="button" data-actual="open" style="${btn}">It's actually open</button>`
+      + `<button type="button" data-actual="closed" style="${btn}">It's actually closed</button>`;
+  box.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    const { date, time } = campusNow();
+    track('hours_report', {
+      school: CAMPUS.id, building: name, claimed: claim, actual: b.dataset.actual,
+      correct: (b.dataset.actual === 'open') === (claim === 'open'),
+      basis: hoursBasis(name), at: `${date} ${time.toFixed(2)}`, device: deviceKind(),
+    });
+    try { sessionStorage.setItem(key, '1'); } catch (e) { /* storage blocked */ }
+    box.innerHTML = '<span style="color:#8fd4a8">Thanks, that helps.</span>';
+  }));
 }
 
 function closureReason(note) {
@@ -3517,6 +3590,7 @@ function openPanel(name, keepThanks = false) {
   panelQ.hidden = closed || unmapped;
   checkinRow.hidden = closed || unmapped;
   renderRooms(name);
+  renderHoursReport(name, occ);
   panelNote.textContent = occ && (occ.source === 'event' || occ.venue)
     ? occ.note
     : housing
@@ -3527,6 +3601,9 @@ function openPanel(name, keepThanks = false) {
     // An assumed closure has to show its working — otherwise "probably closed"
     // is just as unexplained as the claim it replaced.
     ? (occ.assumed && occ.note ? closureReason(occ.note) : "Check-ins are off while it's closed.")
+    // Open on the strength of the campus default: say so where it can be read, not
+    // only in the hover text.
+    : occ?.note?.includes('(campus default)') ? occ.note.split(' \u00b7 ').slice(-1)[0].replace(/^./, c => c.toUpperCase()) + '.'
     : sharedCheckins()
     ? 'Shared with everyone using the map.'
     : 'Saved on this device only — no server yet.';
@@ -3912,7 +3989,7 @@ handler.setInputAction((click) => {
   const occ = name ? buildingOccupancy(name) : null;
   // Closed buildings have nothing to check in on — skip the panel entirely
   // so people aren't clicking through a popup that can't do anything.
-  if (name && occ?.source !== 'closed') {
+  if (name && (occ?.source !== 'closed' || CAMPUS_CONTENT.hoursReports)) {
     openPanel(name);
     // Kept as its own event so "most-opened buildings" stays a list of places
     // we actually cover — and so this becomes the list of buildings worth

@@ -248,7 +248,10 @@ def building(code, room, offline):
 
 def meetings(html, stats):
     """Every scheduled meeting in one sections response.
-    -> (course, section, kind, code, room, days, start, end, seats)"""
+    -> (course, section, kind, code, room, days, start, end, seats, enrolled)
+
+    `seats` is the section's cap; `enrolled` is the cap minus the seats still open
+    when the page was fetched, which is how many students are actually in it."""
     out = []
     bounds = [(m.group(1), m.end()) for m in COURSE_SECTIONS_RE.finditer(html)]
     for i, (course, start_at) in enumerate(bounds):
@@ -262,6 +265,9 @@ def meetings(html, stats):
             number = one(r'name="sectionId" value="([^"]*)"', sec) or "?"
             seats = one(r'class="total-seats-count">\s*(\d+)', sec)
             seats = int(seats) if seats else 0
+            open_ = one(r'class="open-seats-count">\s*(\d+)', sec)
+            # Without an open-seat figure the cap is the best available number.
+            enrolled = max(seats - int(open_), 0) if open_ is not None else seats
             stats[f"delivery:{delivery}"] += 1
 
             if "class-days-container" not in sec:
@@ -285,7 +291,7 @@ def meetings(html, stats):
                     stats["rows_with_bad_range"] += 1
                     continue
                 kind = one(r'class="class-type">\s*([^<]*?)\s*<', row)
-                out.append((course, number, kind, code, room, days, start, end, seats))
+                out.append((course, number, kind, code, room, days, start, end, seats, enrolled))
     return out
 
 
@@ -306,6 +312,7 @@ def main():
     by_kind = collections.Counter()
     unknown_kinds = collections.Counter()
     slots = {}                 # (code, room, day, start, end) -> (weight, seats)
+    people = collections.defaultdict(dict)   # same key -> {(course, section): students enrolled}
     rooms = collections.defaultdict(set)
     missing_courses = []
     no_sections = []
@@ -331,7 +338,7 @@ def main():
             got = set(COURSE_SECTIONS_RE.findall(html))
             no_sections += sorted(set(batch) - got)
 
-            for course, sec, kind, code, room, days, start, end, seats in meetings(html, stats):
+            for course, sec, kind, code, room, days, start, end, seats, enrolled in meetings(html, stats):
                 weight = MAIN_MEETING_WEIGHT if kind is None else TYPE_WEIGHTS.get(kind, DEFAULT_WEIGHT)
                 if kind is not None and kind not in TYPE_WEIGHTS:
                     unknown_kinds[kind] += 1
@@ -350,6 +357,13 @@ def main():
                         slots[slot] = (weight, seats)
                     else:
                         stats["duplicate_room_hour"] += 1
+                    # Students are summed over DISTINCT sections in a slot. Two
+                    # sections in one room at one time are one event for the
+                    # purposes of "is the room taken", but they are two groups of
+                    # people -- cross-listed courses (CMSC 4xx and 6xx) are the
+                    # usual case -- so the weight is taken once and the people
+                    # are added.
+                    people[slot][(course, sec)] = enrolled
                 stats["rows_used"] += 1
         if n % 20 == 0 or n == len(depts):
             print(f"  {n}/{len(depts)} departments, {stats['rows_used']} meetings, "
@@ -382,11 +396,16 @@ def main():
     counts = collections.defaultdict(lambda: {d: [0.0] * 24 for d in DAYS})
     seats_h = collections.defaultdict(lambda: {d: [0.0] * 24 for d in DAYS})
     for (code, _room, day, start, end), (weight, seats) in slots.items():
+        enrolled_here = sum(people[(code, _room, day, start, end)].values())
         if code not in names:
             continue
         for h in hours_touched(start, end):
             counts[code][day][h] += weight
-            seats_h[code][day][h] += weight * seats
+            # Students actually enrolled, not the section's cap times a guessed
+            # weight: a 400-seat lecture that is 40% full and one that is full no
+            # longer count the same, and a lecture and a discussion are both just
+            # however many people are in them.
+            seats_h[code][day][h] += enrolled_here
 
     hours_names = {}
     if HOURS_FILE.exists():
@@ -421,9 +440,11 @@ def main():
         "built_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "note": "Weighted count of class meetings in progress. Not people. "
                 "Weights and hour counting match data/class_activity.json. "
-                "`seats` is the same weighting times each section's seat total — "
-                "Testudo publishes the SECTION cap, not the room's capacity, "
-                "which is what Ohio State's `seats` uses.",
+                "`seats` is the number of students ENROLLED in the sections meeting "
+                "then (each section's seat total minus the seats still open when "
+                "Testudo was read), summed over distinct sections. It is a snapshot "
+                "taken after drop/add and drifts only slowly. Ohio State's `seats` "
+                "is a room capacity instead.",
         "buildings": buildings,
     }, indent=1) + "\n")
 
