@@ -53,10 +53,7 @@ CAMPUSES = {
                         "right now — McKeldin Library, Hornbake, Stamp Student Union and more — "
                         "built from class schedules and published building hours."),
         "og_description": "A live 3D map of how busy University of Maryland campus buildings are right now.",
-        # No screenshot of the Maryland map exists yet, and a preview card
-        # showing another campus' photo is worse than one showing none. Set
-        # this once there is a real one.
-        "preview": None,
+        "preview": "umd-preview.png",
         "data_dir": "data/umd",
         "blurb": ("A live 3D map of how busy study spaces are around the University of Maryland "
                   "campus in College Park — McKeldin and Hornbake libraries, the Stamp Student "
