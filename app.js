@@ -2357,6 +2357,10 @@ function startWorkerBasemap() {
 const viewer = new Cesium.Viewer('cesiumContainer', {
   terrain: Cesium.Terrain.fromWorldTerrain(),
   baseLayer: false,   // the drawn basemap is added once its data has loaded
+  // Six star-field textures (~0.9 MB) that sit behind the daytime sky atmosphere
+  // and are never visible from this camera. On a slow connection they compete
+  // with the building tiles for bandwidth, which is the only thing that matters.
+  skyBox: false,
   useBrowserRecommendedResolution: false,   // see RENDER_PIXEL_RATIO below
   // Only redraw when something changes, instead of 60 times a second
   requestRenderMode: true,

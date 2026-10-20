@@ -1061,6 +1061,7 @@ function startWorkerBasemap() {
 const viewer = new Cesium.Viewer('cesiumContainer', {
   terrain: Cesium.Terrain.fromWorldTerrain(),
   baseLayer: false,   // the drawn basemap is added once its data has loaded
+  skyBox: false,   // ~0.9 MB of star textures that are never visible from here
   useBrowserRecommendedResolution: false,   // see RENDER_PIXEL_RATIO below
   // Only redraw when something changes, instead of 60 times a second
   requestRenderMode: true,
