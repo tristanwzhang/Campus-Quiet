@@ -80,6 +80,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 OUT_FILE = ROOT / "data" / "umd" / "building_hours.json"
 CLASS_FILE = ROOT / "data" / "umd" / "class_activity.json"
+TENANTS_FILE = ROOT / "data" / "umd" / "tenants.json"
 
 UA = {"User-Agent": "Mozilla/5.0 (campusquiet.com hours build)"}
 WEEKS = 10                      # LibCal served 8 happily; ask for the whole term
@@ -152,7 +153,7 @@ POOL_URL = "https://recwell.umd.edu/outdoor-aquatic-center"
 # Maryland Athletics publishes an iCalendar feed per sport (Sidearm Sports). The
 # stadium has no hours, only games, so the feed is the whole of what is known.
 ATHLETICS_ICS = "https://umterps.com/calendar.ashx/calendar.ics?sport_id=%d"
-ATHLETICS_SPORTS = (3, 7)          # football, men's lacrosse: the two that play at SECU Stadium
+ATHLETICS_SPORT_IDS = (1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 17, 19, 30)   # the ids that return events
 STADIUM_SCHEDULE_URL = "https://umterps.com/sports/football/schedule"
 STADIUM_SOURCE = "Maryland Athletics schedule"
 STADIUM_BUILDING = "SECU Stadium"  # register name: "Maryland Stadium Building Upper Deck", #368
@@ -829,6 +830,36 @@ NOT_GENERAL_ACADEMIC = {
 }
 
 
+# Buildings that publish their OWN door hours, found by searching each college's
+# site. They replace the general rule where they say more than it does, and the
+# fact that they disagree with it (Kim and Clark close at 8pm, not 9pm; Iribe at
+# 10pm) is the reason the rule can only ever be a default.
+#
+# Both engineering pages were read directly, not taken from a search summary.
+# Clark Hall has a conflict: its policy page says 6:30am, and a newer reservation
+# form is reported (not verified: it returns 403 to a script) to say 8:00am.
+PUBLISHED_DOORS = {
+    "Jeong H. Kim Engineering Building": {
+        "open": 6.5, "close": 20.0,
+        "url": "https://clarknet.eng.umd.edu/reservation-policies",
+        "text": "Kim Building exterior doors are open from 6:30am-8:00pm, Monday through Friday",
+    },
+    "A James Clark Hall": {
+        "open": 6.5, "close": 20.0,
+        "url": "https://clarknet.eng.umd.edu/policies-clark-hall-reservable-spaces",
+        "text": "Clark Hall exterior doors are open from 6:30am-8:00pm, Monday through Friday",
+    },
+}
+# Only a closing time is published; the opening comes from the general rule.
+PUBLISHED_CLOSING = {
+    "Brendan Iribe Center": {
+        "close": 22.0,
+        "url": "https://www.cs.umd.edu/meeting-event-request",
+        "text": "the Iribe Center closes at 10:00 p.m.",
+    },
+}
+
+
 def umpd_rule(existing, skipped):
     """Mon-Fri 7am-9pm, plus the hours classes are scheduled, for each academic
     building that has no hours of its own.
@@ -876,8 +907,12 @@ def umpd_rule(existing, skipped):
             spans = [[a, b] for r in (rooms.get(name, {}).get("rooms") or {}).values()
                      for a, b in (r.get("busy") or {}).get(d, [])]
             base = [[7.0, 21.0]] if d in DAYS[:5] else []
+            if name in PUBLISHED_DOORS and d in DAYS[:5]:
+                base = [[PUBLISHED_DOORS[name]["open"], PUBLISHED_DOORS[name]["close"]]]
+            elif name in PUBLISHED_CLOSING and d in DAYS[:5]:
+                base = [[7.0, PUBLISHED_CLOSING[name]["close"]]]
             weekly[d] = merge_ranges(base + spans)
-        out[name] = {
+        entry = {
             "source": UMPD_SOURCE,
             "sourceUrl": UMPD_URL,
             "code": v.get("code"),
@@ -888,6 +923,21 @@ def umpd_rule(existing, skipped):
             "weeklyNote": "7am-9pm on weekdays plus the hours classes are scheduled; "
                           "closed weekends and university holidays unless something is scheduled",
         }
+        if name in PUBLISHED_DOORS:
+            # A schedule the building's own college publishes, in full: no longer
+            # a general rule, so it is no longer marked as one.
+            d_ = PUBLISHED_DOORS[name]
+            entry.update({
+                "source": "College of Engineering building policy",
+                "sourceUrl": d_["url"], "generalRule": False,
+                "weeklyNote": f'"{d_["text"]}"; weekends by arrangement, plus the hours classes are scheduled',
+            })
+        elif name in PUBLISHED_CLOSING:
+            c_ = PUBLISHED_CLOSING[name]
+            entry["source"] = UMPD_SOURCE + " (closing time from the Computer Science department)"
+            entry["weeklyNote"] = f'7am to {c_["text"].split("closes at ")[-1].rstrip(".")} on weekdays: opening from the general rule, closing published by CS'
+            entry["closingSourceUrl"] = c_["url"]
+        out[name] = entry
     for reason, names in why.items():
         if names:
             skipped.append(f"campus rule not applied [{reason}]: {', '.join(names)}")
@@ -911,73 +961,96 @@ def ics_events(text):
     return out
 
 
-def stadium(skipped):
-    """Home games at SECU Stadium, from the athletics calendar feeds.
+# Venues the athletics feeds name EXPLICITLY, by the pattern each one is spelled
+# with there -> the building the map uses. Only an explicit location counts: many
+# basketball and softball games list just "College Park, MD", and which building
+# that is would be a guess, so those are left out rather than assigned.
+ATHLETICS_VENUES = [
+    (r"SECU Stadium", "SECU Stadium"),
+    (r"XFINITY Center|Schanwald Pavilion", "XFINITY Center"),   # the pavilion is inside it
+    (r"Turtle.{0,3} Smith Stadium", 'Bob "Turtle" Smith Stadium'),
+    (r"Field Hockey & Lacrosse Complex", "Field Hockey & Lacrosse Complex"),
+    (r"Ludwig Field", "Kehoe Track at Ludwig Field"),
+]
+ATHLETICS_ALL = "https://umterps.com/calendar.ashx/calendar.ics"
+
+
+def athletics_venues(skipped):
+    """Games at each athletic venue, from the athletics calendar feeds.
 
     Three honest limits, each of which shapes what the map is allowed to say:
 
-      * The feed's end time is a fixed placeholder (every game is kickoff + 3h),
-        not an end anyone announced. It is used as published and not stretched.
-      * Two late-season games are listed by DATE only, with no kickoff yet. Those
-        days are "a game is scheduled, time not announced" — never an open window.
-      * The schedule lists games and nothing else. The stadium may host other
-        events, so a day with no game is "probably closed", not "closed".
+      * The feed's end time is a placeholder (typically kickoff + 3h), not an end
+        anyone announced. It is used as published and not stretched.
+      * Some games are listed by DATE only, with no start time yet. Those days are
+        "a game is scheduled, time not announced" -- never an open window.
+      * The schedule lists games and nothing else. A venue may host other events,
+        so a day with no game is "probably closed", not "closed".
+
+    The all-sports feed and the per-sport feeds cover DIFFERENT windows (112 events
+    in the per-sport feeds are absent from the all-sports one, and 107 the other
+    way), so both are read and de-duplicated.
     """
     from zoneinfo import ZoneInfo
     local = ZoneInfo("America/New_York")
-    dates, events, tba, seen = {}, {}, [], set()
-    for sport in ATHLETICS_SPORTS:
-        raw = fetch(ATHLETICS_ICS % sport)
+    feeds = [ATHLETICS_ALL] + [ATHLETICS_ICS % n for n in ATHLETICS_SPORT_IDS]
+    per = {}                                   # building -> {dates, events, tba}
+    seen = set()
+    for url in feeds:
+        raw = fetch(url)
         if not raw:
-            skipped.append(f"athletics feed sport_id={sport} unreachable")
+            skipped.append(f"athletics feed unreachable: {url.rsplit('/', 1)[-1]}")
             continue
         for ev in ics_events(raw):
-            if not re.search(r"SECU Stadium", ev["location"], re.I):
-                continue                 # an away game: the location is another city
+            building = next((b for pat, b in ATHLETICS_VENUES if re.search(pat, ev["location"], re.I)), None)
+            if not building:
+                continue
             title = re.sub(r"^\[[A-Z]\]\s*", "", ev["summary"]).strip()
             key = (ev["start"], title)
             if key in seen:
                 continue
             seen.add(key)
+            slot = per.setdefault(building, {"dates": {}, "events": {}, "tba": []})
             if re.fullmatch(r"\d{8}", ev["start"]):
                 iso = f"{ev['start'][:4]}-{ev['start'][4:6]}-{ev['start'][6:]}"
-                tba.append(iso)
-                events[iso] = f"{title} · kickoff time not announced yet"
+                if iso >= "2026-08-31":
+                    slot["tba"].append(iso)
+                    slot["events"].setdefault(iso, []).append(f"{title} · start time not announced yet")
                 continue
             try:
                 a = datetime.strptime(ev["start"], "%Y%m%dT%H%M%SZ").replace(tzinfo=timezone.utc).astimezone(local)
                 b = datetime.strptime(ev["end"], "%Y%m%dT%H%M%SZ").replace(tzinfo=timezone.utc).astimezone(local)
             except ValueError:
-                skipped.append(f"stadium event {ev['start']!r} {title[:40]!r}")
+                skipped.append(f"athletics event {ev['start']!r} {title[:40]!r}")
                 continue
             iso = a.date().isoformat()
+            if iso < "2026-08-31":
+                continue
             start, end = a.hour + a.minute / 60, b.hour + b.minute / 60
             if end <= start:
                 end += 24
-            dates.setdefault(iso, []).append([start, end])
+            slot["dates"].setdefault(iso, []).append([start, end])
             clock12 = a.strftime("%-I:%M%p").lower().replace(":00", "")
-            events[iso] = f"{title} · kickoff {clock12}"
-    # The lacrosse feed still carries last spring. Nothing before the term is
-    # claimed, and the app ignores it anyway, so it is not written.
-    dates = {d: r for d, r in dates.items() if d >= "2026-08-31"}
-    events = {d: t for d, t in events.items() if d >= "2026-08-31"}
-    tba = [d for d in tba if d >= "2026-08-31"]
-    if not (dates or tba):
-        return {}
-    for iso in dates:
-        dates[iso] = merge_ranges(dates[iso])
-    last = max(list(dates) + tba)
-    return {STADIUM_BUILDING: {
-        "source": STADIUM_SOURCE,
-        "sourceUrl": STADIUM_SCHEDULE_URL,
-        "eventVenue": True,
-        "weekly": empty_week(),
-        "dates": dates,
-        "events": events,
-        "unknownDuring": [[d, d] for d in sorted(tba)],
-        "valid": ["2026-08-31", last],
-        "noExtension": True,
-    }}
+            slot["events"].setdefault(iso, []).append(f"{title} · {clock12}")
+
+    out = {}
+    for building, slot in per.items():
+        if not (slot["dates"] or slot["tba"]):
+            continue
+        dates = {d: merge_ranges(r) for d, r in slot["dates"].items()}
+        last = max(list(dates) + slot["tba"])
+        out[building] = {
+            "source": STADIUM_SOURCE,
+            "sourceUrl": STADIUM_SCHEDULE_URL,
+            "eventVenue": True,
+            "weekly": empty_week(),
+            "dates": dates,
+            "events": {d: " ; ".join(t) for d, t in slot["events"].items()},
+            "unknownDuring": [[d, d] for d in sorted(set(slot["tba"]) - set(dates))],
+            "valid": ["2026-08-31", last],
+            "noExtension": True,
+        }
+    return out
 
 
 def hours_text(weekly):
@@ -1070,6 +1143,144 @@ def event_venues(skipped):
     return out
 
 
+# ── 9. What is INSIDE each building ───────────────────────────────────────────
+# A cafe, a branch library or a pool inside a building publishes its own hours,
+# and a tenant's hours are not the building's. They are written to their own file
+# and shown in the panel as "Inside this building", never merged into the
+# building's open/closed state. The file is loaded after the map is up, so it
+# costs nothing on first paint.
+
+# The dining page's own venue lists say which building each venue is in, using
+# its own wording ("community"). This maps that wording to the name the map uses.
+TENANT_BUILDING = {
+    "Clarice Smith Performing Arts Center": "Clarice Smith Performing Arts Center",
+    "Brendan Iribe Center for Computer Science and Engineering": "Brendan Iribe Center",
+    "Stamp Student Union": "Stamp Student Union",
+    "Tawes Hall": "Tawes Fine Arts Bldg.",
+    "E.A. Fernandez IDEA Factory": "E.A. Fernandez IDEA Factory",
+    "Kirwan Hall": "William E. Kirwan Hall",
+    "Edward St. John Learning & Teaching Center": "Edward St. John Learning and Teaching Center",
+    "McKeldin Library": "McKeldin Library",
+    "Physical Science Complex": "Physical Sciences Complex",
+    "Van Munching Hall": "Van Munching Hall",
+    "H. J. Patterson Hall": "H.J. Patterson Hall",
+    "Eppley Recreation Center": "Eppely Recreation Center",
+}
+# Each sheet tab's own venue array on the page, and which building a tab implies
+# when its venues name a spot INSIDE one building ("Food Court", "Baltimore Room").
+TENANT_TABS = {"cafesVenues": ("cafesUrl", None), "shopsVenues": ("shopsUrl", None),
+               "stampVenues": ("stampUrl", "Stamp Student Union"),
+               "kirwanVenues": ("kirwanUrl", "William E. Kirwan Hall")}
+
+# Branch libraries inside other buildings. LibCal publishes each as its own
+# location with DATED hours; the building they sit in is stated by the
+# Libraries' own location pages.
+LIBCAL_TENANTS = {
+    17168: ("William E. Kirwan Hall", "STEM Library"),
+    17166: ("Parren J. Mitchell Art-Sociology Bldg.", "Art Library"),
+    18760: ("Architecture Bldg.", "Architecture Library"),
+    17167: ("Clarice Smith Performing Arts Center", "Michelle Smith Performing Arts Library"),
+}
+
+
+def read_sheet(sheet, gid):
+    raw = fetch(f"https://docs.google.com/spreadsheets/d/{sheet}/gviz/tq?gid={gid}&tqx=out:json")
+    if not raw:
+        return None, []
+    m = re.search(r"setResponse\((.*)\);?\s*$", raw, re.S)
+    if not m:
+        return None, []
+    rows = json.loads(m.group(1)).get("table", {}).get("rows", [])
+    if not rows:
+        return None, []
+    cell = lambda c: str(((c or {}).get("f") or (c or {}).get("v") or "")).strip()
+    header = [cell(c) for c in rows[0]["c"]]
+    iso = {}
+    for i, h in enumerate(header[1:], 1):
+        mo = re.fullmatch(r"(\d{1,2})/(\d{1,2})/(\d{4})", h)
+        if mo:
+            iso[i] = f"{int(mo.group(3)):04d}-{int(mo.group(1)):02d}-{int(mo.group(2)):02d}"
+    body = [(cell(r["c"][0]), [cell(c) for c in r["c"]]) for r in rows[1:] if r.get("c")]
+    return iso, body
+
+
+def tenants(skipped):
+    out = {}
+
+    def add(building, tenant):
+        lst = out.setdefault(building, [])
+        if not any(t["name"] == tenant["name"] for t in lst):
+            lst.append(tenant)
+
+    # -- food, from the dining sheet the page itself reads --
+    page = fetch(DINING_PAGE)
+    if page:
+        sheet = re.search(r"spreadsheets/d/([\w-]+)/gviz", page)
+        urls = dict(re.findall(r"const (\w+Url)\s*=\s*'[^']*gid=(\d+)'", page))
+        arrays = dict(re.findall(r"const (\w+Venues)\s*=\s*(\[.*?\]);", page, re.S))
+        if sheet:
+            for array, (url_var, fixed) in TENANT_TABS.items():
+                gid, venues = urls.get(url_var), arrays.get(array)
+                if not (gid and venues):
+                    skipped.append(f"tenants: dining page no longer defines {array}/{url_var}")
+                    continue
+                iso, rows = read_sheet(sheet.group(1), gid)
+                if not iso:
+                    continue
+                # The sheet writes Rudy’s and Sneaker’s with a curly apostrophe and the
+                # page's script with a straight one; matching on the raw strings lost both.
+                squash = lambda t: t.replace("\u2019", "'").replace("\u2018", "'").strip()
+                by_label = {squash(label): cells for label, cells in rows}
+                for m in re.finditer(r"name:\s*(['\"])(.*?)\1,\s*community:\s*(['\"])(.*?)\3", venues):
+                    name, where = m.group(2), m.group(4)
+                    building = fixed or TENANT_BUILDING.get(where)
+                    if not building:
+                        continue            # a venue in a residential community, or off the map
+                    cells = by_label.get(squash(name))
+                    if not cells:
+                        skipped.append(f"tenants: {name!r} has no row in its sheet tab")
+                        continue
+                    dates = {}
+                    for i, d in iso.items():
+                        if d < "2026-08-31" or i >= len(cells) or not cells[i]:
+                            continue
+                        sp = span(cells[i])
+                        if sp is None:
+                            continue        # TBD
+                        dates[d] = as_ranges(sp)
+                    if dates:
+                        ks = sorted(dates)
+                        add(building, {"name": name, "kind": "food", "where": where if fixed else None,
+                                       "dates": dates, "valid": [ks[0], ks[-1]], "sourceUrl": DINING_PAGE})
+
+    # -- branch libraries, from LibCal --
+    raw = fetch(LIBCAL % WEEKS)
+    if raw:
+        for loc in json.loads(raw).get("locations", []):
+            pair = LIBCAL_TENANTS.get(loc.get("lid"))
+            if not pair:
+                continue
+            dates = {}
+            for week in loc.get("weeks", []):
+                for _wd, day in week.items():
+                    iso, t = day.get("date"), day.get("times") or {}
+                    if not iso:
+                        continue
+                    if t.get("status") == "closed":
+                        dates[iso] = []
+                    elif t.get("status") == "24hours":
+                        dates[iso] = [[0.0, 24.0]]
+                    else:
+                        rs = [span(f"{h.get('from')} to {h.get('to')}") for h in t.get("hours") or []]
+                        if rs and all(r is not None for r in rs):
+                            dates[iso] = [r for r in rs if r]
+            if dates:
+                ks = sorted(dates)
+                add(pair[0], {"name": pair[1], "kind": "library", "dates": dates,
+                              "valid": [ks[0], ks[-1]], "sourceUrl": LIBCAL_URL})
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--print-skipped", action="store_true")
@@ -1083,7 +1294,7 @@ def main():
                        ("dining", dining(skipped)),
                        ("health", health(skipped)),
                        ("pool", pool(skipped)),
-                       ("stadium", stadium(skipped)),
+                       ("athletics", athletics_venues(skipped)),
                        ("venues", event_venues(skipped))):
         print(f"{label:<10} {len(got)} building(s): {', '.join(got) or '—'}")
         buildings.update(got)
@@ -1122,6 +1333,16 @@ def main():
         "classesOutDates": CLASSES_OUT,
         "buildings": buildings,
     }, indent=1) + "\n")
+
+    inside = tenants(skipped)
+    TENANTS_FILE.write_text(json.dumps({
+        "built_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "note": "What is inside each building and publishes its own hours. A tenant's "
+                "hours are not the building's; the map shows these separately.",
+        "buildings": inside,
+    }, separators=(",", ":")) + "\n")
+    print(f"tenants:    {sum(len(v) for v in inside.values())} venues in {len(inside)} buildings -> "
+          f"{TENANTS_FILE.relative_to(ROOT)} ({TENANTS_FILE.stat().st_size // 1024} KB)")
 
     dated = sum(1 for v in buildings.values() if v.get("dates"))
     print(f"\nwritten:    {len(buildings)} buildings ({dated} with dated hours, "

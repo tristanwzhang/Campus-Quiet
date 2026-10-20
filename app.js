@@ -455,7 +455,7 @@ const CAMPUS_TZ = CAMPUS.tz;
 const DAY_NAMES = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
 
 // ─── Data loading ─────────────────────────────────────────────────────────────
-const data = { classActivity: null, popularTimes: null, hours: null, gis: null, directory: null, checkins: loadLocalCheckins() };
+const data = { classActivity: null, popularTimes: null, hours: null, gis: null, directory: null, tenants: null, ground: null, checkins: loadLocalCheckins() };
 
 // Bookable study rooms, from the libraries' own systems via /api/rooms.
 // Not part of `data` above: everything there is a file shipped with the site,
@@ -1033,7 +1033,7 @@ function estimateFor(name) {
     }
     if (hours.state === 'closed') {
       return { value: 0, source: 'closed', assumed: true,
-               note: 'Probably closed \u00b7 no home game is scheduled, and other events are not on that schedule' };
+               note: 'Probably closed \u00b7 no game is on the athletics schedule, and other events are not on it' };
     }
     if (hours.event) {
       return { value: 0, source: 'unknown', venue: true, headline: 'Event day', note: hours.event };
@@ -1424,6 +1424,13 @@ const BUILDINGS_UMD = {
   // Deck"; everybody, and the athletics schedule, says SECU Stadium.
   'SECU Stadium': { label: 'SECU Stadium', labelPriority: 1 },
   'Cole Student Activities Building': { label: 'Cole Student Activities', labelPriority: 1 },
+  // The other athletic venues the schedule names explicitly. Keyed on the name the
+  // 3D tiles carry where they carry one (XFINITY, in capitals); the rest are placed
+  // from the register's footprint.
+  'XFINITY Center': { label: 'Xfinity Center', labelPriority: 1 },
+  'Bob "Turtle" Smith Stadium': { label: 'Turtle Smith Stadium' },
+  'Field Hockey & Lacrosse Complex': { label: 'Field Hockey & Lacrosse' },
+  'Kehoe Track at Ludwig Field': { label: 'Ludwig Field' },
 
   // Long official names crowd out their neighbours on the map, so these show a
   // shorter form of the SAME name. Tooltips still show the full one.
@@ -1465,6 +1472,24 @@ const STUDY_SPOTS_UMD = {
   'Parren J. Mitchell Art-Sociology Bldg.': 0.75,   // Art Library
   'Architecture Bldg.': 0.75,                       // Architecture Library
   'Clarice Smith Performing Arts Center': 0.75,     // Michelle Smith Performing Arts Library
+
+  // From the university's own "Campus Quiet Spaces" list, published by
+  // Undergraduate Studies (ugst.umd.edu/quietspaces), which replaces what this
+  // table used to lack: someone who knows which buildings students actually use.
+  // Read directly, 2026-10-20.
+  'Edward St. John Learning and Teaching Center': 0.75,  // lists study tables on four levels and small group rooms
+  'Jeong H. Kim Engineering Building': 0.75,             // lists four study lounges; its own door hours are published
+  // "Buildings with Classrooms Open After Instruction. When the day's teaching
+  // hours are over, these buildings have classrooms that may be available for
+  // student use. Some rooms may be scheduled for evening classes." -- hence the
+  // lower tier: a room is not guaranteed, only likely.
+  'Tydings Hall': 0.5,
+  'Taliaferro Hall': 0.5,
+  'Francis Scott Key Hall': 0.5,
+  'Skinner Bldg.': 0.5,
+  'Woods Hall': 0.5,
+  'Marie Mount Hall': 0.5,
+  'LeFrak Hall (Social Sciences)': 0.5,                  // "study spaces ... available after hours of instruction"
 };
 
 // Shorter still for the picks card, where three names wrap to three lines each.
@@ -1492,6 +1517,10 @@ const GIS_ALIASES_UMD = {
   'Aquatic Center': '399',
   'SECU Stadium': '368',
   'Cole Student Activities Building': '162',
+  'XFINITY Center': '360',
+  'Bob "Turtle" Smith Stadium': '159',
+  'Field Hockey & Lacrosse Complex': '414',
+  'Kehoe Track at Ludwig Field': '388',
 };
 
 // From the university's own semester calendar:
@@ -1549,6 +1578,15 @@ const CAMPUS_CONTENT = {
           // darker than the roof on the ones the app draws itself. Off for the two
           // launched campuses, whose maps would change under their users.
           buildingEdges: true,
+          // data/<campus>/tenants.json: what is inside each building. Loaded after the
+          // map is up, never on the way to first paint.
+          tenants: true,
+          // data/<campus>/ground.json: terrain sampled on an 80 m grid. One ground
+          // height was fine for Illinois (about 3 m of relief) and wrong for College
+          // Park, where the 60 buildings span -12.8 m to +20.7 m: the buildings the
+          // app draws itself sat 15 m in the air on the low side and were buried on
+          // the high side, and Stamp (ground 14.6 m, drawn from 3 m) was a sunken slab.
+          groundGrid: true,
           // Class buildings MD iMAP has no footprint for -- all three opened after
           // that layer was last drawn. Without this, offMap() dropped them from the
           // map entirely, which took Thurgood Marshall Hall (one of the larger
@@ -1895,47 +1933,58 @@ function browseIsOpen() {
 }
 
 /**
- * What inside a building publishes hours of its own, for a building that has none
- * as a whole. Cole is the case: a football performance centre, a sports medicine
- * clinic, an academy, a gallery and a bike shop under one roof, with separate
- * doors. A tenant's hours are not the building's, so each is shown as what it is
- * -- open or closed -- under "Inside", and nothing here says the building is open.
+ * What inside a building publishes hours of its own: a cafe, a branch library, a
+ * bike shop. A tenant's hours are not the building's, so each is listed under
+ * "Inside this building" with its own open or closed, and nothing here says the
+ * building itself is open.
  */
-function renderTenants(box, tenants) {
+function tenantsHtml(tenants) {
   const { date, time } = campusNow();
   const rows = tenants.map(t => {
     const ranges = publishedRanges(t, date);
     const now = ranges?.find(([o, c]) => time >= o && time < c);
+    const later = ranges?.find(([o]) => o > time);
     const state = ranges == null ? ''
       : now ? `<span class="rooms-count">open now</span> until ${fmtHour(now[1])}`
-      : `<span class="rooms-none">closed now</span>`;
-    const hrs = t.hoursText ? ` \u00b7 ${t.hoursText}` : '';
-    const small = [t.where, t.caveat].filter(Boolean).join(' \u00b7 ');
-    return `<div style="margin-top:6px"><b>${t.name}</b> \u00b7 ${state || 'hours below'}${hrs}`
+      : later ? `<span class="rooms-none">closed now</span> · opens ${fmtHour(later[0])}`
+      : ranges.length ? `<span class="rooms-none">closed now</span>`
+      : `<span class="rooms-none">closed today</span>`;
+    const hrs = t.hoursText ? ` · ${t.hoursText}` : '';
+    const small = [t.kind === 'library' ? 'Library' : t.kind === 'food' ? 'Food' : '', t.where, t.caveat]
+      .filter(Boolean).join(' · ');
+    return `<div style="margin-top:6px"><b>${t.name}</b> · ${state || 'hours below'}${hrs}`
          + `${small ? `<span class="rooms-where">${small}</span>` : ''}</div>`;
   });
-  box.innerHTML = `<span class="rooms-where" style="margin:0 0 2px">Inside this building</span>${rows.join('')}`;
-  box.hidden = false;
+  return `<span class="rooms-where" style="margin:8px 0 0">Inside this building</span>${rows.join('')}`;
 }
 
 function renderRooms(name) {
   const box = document.getElementById('panel-rooms');
   if (!box) return;
-  const tenants = data.hours?.buildings?.[name]?.tenants;
-  if (tenants?.length) { renderTenants(box, tenants); return; }
+  const tenants = [...(data.hours?.buildings?.[name]?.tenants ?? []), ...(data.tenants?.[name] ?? [])];
+  const inside = tenants.length ? tenantsHtml(tenants) : '';
   const entry = roomAvailability?.[name];
-  if (!entry || !entry.total) { box.hidden = true; return; }
-  const { free, total, bookable, sources = [] } = entry;
-  const word = total === 1 ? 'room' : 'rooms';
-  // No slot covers this instant, so the library is not taking bookings now.
-  // Saying "0 of 7 free" here would read as "all seven are taken".
-  const body = bookable === 0
-    ? `<span class="rooms-none">Not bookable now</span> · ${total} study ${word} here`
-    : `<span class="${free ? 'rooms-count' : 'rooms-none'}">${free} of ${total}</span>`
-      + ` study ${word} free to book right now`;
-  box.innerHTML = body
-    + (sources.length ? `<span class="rooms-where">${sources.join(' · ')}</span>` : '');
+  let rooms = '';
+  if (entry && entry.total) {
+    const { free, total, bookable, sources = [] } = entry;
+    const word = total === 1 ? 'room' : 'rooms';
+    // No slot covers this instant, so the library is not taking bookings now.
+    // Saying "0 of 7 free" here would read as "all seven are taken".
+    const body = bookable === 0
+      ? `<span class="rooms-none">Not bookable now</span> · ${total} study ${word} here`
+      : `<span class="${free ? 'rooms-count' : 'rooms-none'}">${free} of ${total}</span>`
+        + ` study ${word} free to book right now`;
+    rooms = body + (sources.length ? `<span class="rooms-where">${sources.join(' · ')}</span>` : '');
+  }
+  if (!rooms && !inside) { box.hidden = true; return; }
+  box.innerHTML = rooms + inside;
   box.hidden = false;
+}
+
+async function loadTenants() {
+  if (!CAMPUS_CONTENT.tenants) return;
+  const json = await loadJson(`${CAMPUS.dataDir}/tenants.json`);
+  data.tenants = json?.buildings ?? null;
 }
 
 function closureReason(note) {
@@ -2753,6 +2802,23 @@ const QUIET_LABEL_RANGE_M = 2000;
 // this instead of looking up terrain under every label (that cost dozens of
 // extra terrain downloads on page load).
 const APPROX_GROUND_M = CAMPUS.groundM;
+
+/**
+ * Ground height (ellipsoid metres) at a point: bilinear over the sampled terrain
+ * grid where a campus has one, else the single figure the campus is configured
+ * with. Illinois and Ohio State have no grid and so behave exactly as before.
+ */
+function groundAt(lon, lat) {
+  const g = data.ground;
+  if (!g) return CAMPUS.groundM;
+  const fx = Math.min(Math.max((lon - g.west) / g.dLon, 0), g.nx - 1);
+  const fy = Math.min(Math.max((lat - g.south) / g.dLat, 0), g.ny - 1);
+  const i = Math.min(Math.floor(fx), g.nx - 2), j = Math.min(Math.floor(fy), g.ny - 2);
+  const tx = fx - i, ty = fy - j;
+  const h = (a, b) => g.h[b * g.nx + a];
+  return h(i, j) * (1 - tx) * (1 - ty) + h(i + 1, j) * tx * (1 - ty)
+       + h(i, j + 1) * (1 - tx) * ty + h(i + 1, j + 1) * tx * ty;
+}
 const labelLayer = document.getElementById('labels');
 
 // Places students go to study or hang out get their labels first.
@@ -2795,7 +2861,7 @@ function addLabel(name, lon, lat, aboveGroundM, absoluteM, quiet = false) {
 
   const label = {
     name, el, lines, visible: false, quiet,
-    position: Cesium.Cartesian3.fromDegrees(lon, lat, absoluteM ?? APPROX_GROUND_M + aboveGroundM),
+    position: Cesium.Cartesian3.fromDegrees(lon, lat, absoluteM ?? groundAt(lon, lat) + aboveGroundM),
   };
   labels.push(label);
   scene.requestRender();
@@ -2886,7 +2952,14 @@ function gisFor(name) {
 // Draw a building the tiles don't carry, from the university's own footprint.
 // Same treatment Illinois gives Morrill Hall, just sourced rather than typed.
 function addGisOverlay(name, b) {
-  const base = CAMPUS.groundM;
+  // Stand on the terrain: the base at the LOWEST corner (so nothing floats), the
+  // roof a fixed height above the average ground (so it reads as one building).
+  // On a flat campus these are all CAMPUS.groundM, as before.
+  const heights = b.outline.map(([lon, lat]) => groundAt(lon, lat));
+  const low = Math.min(...heights);
+  const mean = heights.reduce((a, x) => a + x, 0) / heights.length;
+  const base = data.ground ? low - 1 : CAMPUS.groundM;
+  const roofFrom = data.ground ? mean : CAMPUS.groundM;
   overlays.set(name, {
     outline: b.outline,
     baseM: base,
@@ -2894,7 +2967,7 @@ function addGisOverlay(name, b) {
     // No height is published for any Ohio State building, so heightM is storeys
     // inferred from gross floor area over footprint area. It decides how tall
     // the block looks and nothing else — never a number we show.
-    topM: base + (b.heightM ?? 12),
+    topM: roofFrom + (b.heightM ?? 12),
   });
 }
 
@@ -3447,7 +3520,7 @@ function openPanel(name, keepThanks = false) {
   panelNote.textContent = occ && (occ.source === 'event' || occ.venue)
     ? occ.note
     : housing
-    ? "The university lists this as campus housing and publishes no public hours for it."
+    ? "The university lists this as campus housing: entrance requires a specific access card, and no public hours are published."
     : unmapped
     ? "On the map, but nobody publishes hours for it — so there's nothing to show."
     : closed
@@ -4149,7 +4222,7 @@ function refresh({ keepThanks = false } = {}) {
   // Buildings take longest, so start them first; they're coloured once our
   // data arrives.
   const buildingsLoading = loadBuildings();
-  const [classActivity, popularTimes, hours, gis, drawTile, directory] = await Promise.all([
+  const [classActivity, popularTimes, hours, gis, drawTile, directory, ground] = await Promise.all([
     loadJson(`${CAMPUS.dataDir}/class_activity.json`),
     loadJson(`${CAMPUS.dataDir}/popular_times.json`),
     loadJson(`${CAMPUS.dataDir}/building_hours.json`),
@@ -4161,6 +4234,7 @@ function refresh({ keepThanks = false } = {}) {
     // administrative, key places, or housing. Only a campus that labels the
     // whole register needs it, and asking the others would be a 404 each visit.
     CAMPUS_CONTENT.labelRegisterBuildings ? loadJson(`${CAMPUS.dataDir}/directory.json`) : null,
+    CAMPUS_CONTENT.groundGrid ? loadJson(`${CAMPUS.dataDir}/ground.json`) : null,
   ]);
   performance.mark('data-and-basemap-ready');
   if (drawTile) {
@@ -4171,6 +4245,7 @@ function refresh({ keepThanks = false } = {}) {
   data.hours = hours;
   data.gis = gis;
   data.directory = directory;
+  data.ground = ground;
 
   updateHeader();
   createOverlays();
@@ -4185,6 +4260,7 @@ function refresh({ keepThanks = false } = {}) {
   loadRoomAvailability();
   await buildingsLoading;
   refresh();
+  loadTenants();   // background: nothing waits on it, the panel picks it up when it lands
 
   // Keep the live bookings current on the same cadence as everything else.
   setInterval(loadRoomAvailability, 5 * 60 * 1000);

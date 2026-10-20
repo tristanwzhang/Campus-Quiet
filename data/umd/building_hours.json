@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-20T01:45:02+00:00",
+ "built_at": "2026-10-20T05:21:43+00:00",
  "campus": "Maryland \u2014 College Park",
  "term": "2026/fall",
  "campusClosedDates": [
@@ -3704,6 +3704,247 @@
    ],
    "noExtension": true
   },
+  "Field Hockey & Lacrosse Complex": {
+   "source": "Maryland Athletics schedule",
+   "sourceUrl": "https://umterps.com/sports/football/schedule",
+   "eventVenue": true,
+   "weekly": {
+    "monday": [],
+    "tuesday": [],
+    "wednesday": [],
+    "thursday": [],
+    "friday": [],
+    "saturday": [],
+    "sunday": []
+   },
+   "dates": {
+    "2026-09-20": [
+     [
+      12.0,
+      15.0
+     ]
+    ],
+    "2026-09-25": [
+     [
+      16.0,
+      19.0
+     ]
+    ],
+    "2026-10-02": [
+     [
+      18.0,
+      23.5
+     ]
+    ],
+    "2026-10-04": [
+     [
+      12.0,
+      15.0
+     ]
+    ],
+    "2026-10-07": [
+     [
+      19.0,
+      22.0
+     ]
+    ],
+    "2026-10-16": [
+     [
+      16.0,
+      19.0
+     ]
+    ],
+    "2026-10-18": [
+     [
+      12.0,
+      15.0
+     ]
+    ],
+    "2026-10-24": [
+     [
+      12.0,
+      16.333333333333332
+     ]
+    ],
+    "2026-10-25": [
+     [
+      10.0,
+      18.0
+     ]
+    ],
+    "2026-10-30": [
+     [
+      13.0,
+      16.0
+     ]
+    ],
+    "2026-09-11": [
+     [
+      18.0,
+      21.0
+     ]
+    ],
+    "2026-09-13": [
+     [
+      12.0,
+      15.0
+     ]
+    ]
+   },
+   "events": {
+    "2026-09-20": "Maryland Field Hockey vs Wake Forest \u00b7 12pm",
+    "2026-09-25": "Maryland Field Hockey vs Rutgers \u00b7 4pm",
+    "2026-10-02": "Maryland Women's Lacrosse vs Navy (Exh.) \u00b7 6pm ; Maryland Women's Lacrosse vs Georgetown (Exh.) \u00b7 8:30pm",
+    "2026-10-04": "Maryland Field Hockey vs Delaware \u00b7 12pm",
+    "2026-10-07": "Maryland Women's Lacrosse vs Loyola (Exh.) \u00b7 7pm",
+    "2026-10-16": "Maryland Field Hockey vs Michigan State \u00b7 4pm",
+    "2026-10-18": "Maryland Field Hockey vs Ohio State \u00b7 12pm",
+    "2026-10-24": "Maryland Women's Lacrosse vs Virginia (Exh.) \u00b7 12pm ; Maryland Women's Lacrosse vs Virginia Tech (Exh.) \u00b7 1:20pm",
+    "2026-10-25": "Maryland Women's Lacrosse vs San Diego State (Exh.) \u00b7 10am ; Maryland Women's Lacrosse vs James Madison (Exh.) \u00b7 12pm ; Maryland Women's Lacrosse vs Temple (Exh.) \u00b7 3pm",
+    "2026-10-30": "Maryland Field Hockey vs Iowa \u00b7 1pm",
+    "2026-09-11": "Maryland Field Hockey vs Towson \u00b7 6pm",
+    "2026-09-13": "Maryland Field Hockey vs Saint Joseph's \u00b7 12pm"
+   },
+   "unknownDuring": [],
+   "valid": [
+    "2026-08-31",
+    "2026-10-30"
+   ],
+   "noExtension": true
+  },
+  "Kehoe Track at Ludwig Field": {
+   "source": "Maryland Athletics schedule",
+   "sourceUrl": "https://umterps.com/sports/football/schedule",
+   "eventVenue": true,
+   "weekly": {
+    "monday": [],
+    "tuesday": [],
+    "wednesday": [],
+    "thursday": [],
+    "friday": [],
+    "saturday": [],
+    "sunday": []
+   },
+   "dates": {
+    "2026-09-24": [
+     [
+      18.0,
+      20.0
+     ]
+    ],
+    "2026-09-25": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-09-27": [
+     [
+      12.0,
+      14.0
+     ]
+    ],
+    "2026-10-08": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-10-09": [
+     [
+      19.5,
+      21.5
+     ]
+    ],
+    "2026-10-11": [
+     [
+      12.0,
+      14.0
+     ]
+    ],
+    "2026-10-16": [
+     [
+      17.0,
+      19.0
+     ]
+    ],
+    "2026-10-20": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-10-24": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-11-04": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-09-04": [
+     [
+      19.5,
+      21.5
+     ]
+    ],
+    "2026-09-07": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-09-18": [
+     [
+      17.0,
+      19.0
+     ],
+     [
+      20.0,
+      22.0
+     ]
+    ],
+    "2026-09-03": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-09-06": [
+     [
+      12.0,
+      14.0
+     ]
+    ]
+   },
+   "events": {
+    "2026-09-24": "Maryland Women's Soccer vs #14 Wisconsin \u00b7 6pm",
+    "2026-09-25": "Maryland Men's Soccer vs UCLA \u00b7 7pm",
+    "2026-09-27": "Maryland Women's Soccer vs #12 UCLA \u00b7 12pm",
+    "2026-10-08": "Maryland Women's Soccer vs Nebraska \u00b7 7pm",
+    "2026-10-09": "Maryland Men's Soccer vs Michigan State \u00b7 7:30pm",
+    "2026-10-11": "Maryland Women's Soccer vs Northwestern \u00b7 12pm",
+    "2026-10-16": "Maryland Women's Soccer vs Iowa \u00b7 5pm",
+    "2026-10-20": "Maryland Men's Soccer vs St. John's \u00b7 7pm",
+    "2026-10-24": "Maryland Men's Soccer vs Ohio State \u00b7 7pm",
+    "2026-11-04": "Maryland Men's Soccer vs Penn State \u00b7 7pm",
+    "2026-09-04": "Maryland Men's Soccer vs Delaware \u00b7 7:30pm",
+    "2026-09-07": "Maryland Men's Soccer vs Georgetown \u00b7 7pm",
+    "2026-09-18": "Maryland Men's Soccer vs Wisconsin \u00b7 8pm ; Maryland Women's Soccer vs Penn State \u00b7 5pm",
+    "2026-09-03": "Maryland Women's Soccer vs Old Dominion \u00b7 7pm",
+    "2026-09-06": "Maryland Women's Soccer vs Binghamton - Senior Day \u00b7 12pm"
+   },
+   "unknownDuring": [],
+   "valid": [
+    "2026-08-31",
+    "2026-11-04"
+   ],
+   "noExtension": true
+  },
   "SECU Stadium": {
    "source": "Maryland Athletics schedule",
    "sourceUrl": "https://umterps.com/sports/football/schedule",
@@ -3718,18 +3959,6 @@
     "sunday": []
    },
    "dates": {
-    "2026-09-05": [
-     [
-      20.0,
-      23.0
-     ]
-    ],
-    "2026-09-19": [
-     [
-      19.5,
-      22.5
-     ]
-    ],
     "2026-09-26": [
      [
       13.5,
@@ -3747,16 +3976,28 @@
       12.0,
       15.0
      ]
+    ],
+    "2026-09-05": [
+     [
+      20.0,
+      23.0
+     ]
+    ],
+    "2026-09-19": [
+     [
+      19.5,
+      22.5
+     ]
     ]
    },
    "events": {
-    "2026-09-05": "Maryland Football vs Hampton \u00b7 kickoff 8pm",
-    "2026-09-19": "Maryland Football vs Virginia Tech \u00b7 kickoff 7:30pm",
-    "2026-09-26": "Maryland Football vs UCLA - FAMILY WEEKEND \u00b7 kickoff 1:30pm",
-    "2026-10-17": "Maryland Football vs Rutgers - HOMECOMING \u00b7 kickoff 12:30pm",
-    "2026-10-31": "Maryland Football vs Illinois \u00b7 kickoff 12pm",
-    "2026-11-14": "Maryland Football vs Wisconsin - MILITARY APPRECIATION \u00b7 kickoff time not announced yet",
-    "2026-11-28": "Maryland Football vs Penn State \u00b7 kickoff time not announced yet"
+    "2026-09-26": "Maryland Football vs UCLA - FAMILY WEEKEND \u00b7 1:30pm",
+    "2026-10-17": "Maryland Football vs Rutgers - HOMECOMING \u00b7 12:30pm",
+    "2026-10-31": "Maryland Football vs Illinois \u00b7 12pm",
+    "2026-11-14": "Maryland Football vs Wisconsin - MILITARY APPRECIATION \u00b7 start time not announced yet",
+    "2026-11-28": "Maryland Football vs Penn State \u00b7 start time not announced yet",
+    "2026-09-05": "Maryland Football vs Hampton \u00b7 8pm",
+    "2026-09-19": "Maryland Football vs Virginia Tech \u00b7 7:30pm"
    },
    "unknownDuring": [
     [
@@ -3771,6 +4012,492 @@
    "valid": [
     "2026-08-31",
     "2026-11-28"
+   ],
+   "noExtension": true
+  },
+  "XFINITY Center": {
+   "source": "Maryland Athletics schedule",
+   "sourceUrl": "https://umterps.com/sports/football/schedule",
+   "eventVenue": true,
+   "weekly": {
+    "monday": [],
+    "tuesday": [],
+    "wednesday": [],
+    "thursday": [],
+    "friday": [],
+    "saturday": [],
+    "sunday": []
+   },
+   "dates": {
+    "2026-10-01": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-10-03": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-10-09": [
+     [
+      18.5,
+      20.5
+     ]
+    ],
+    "2026-10-10": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-10-19": [
+     [
+      18.0,
+      20.0
+     ]
+    ],
+    "2026-10-23": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-10-24": [
+     [
+      13.0,
+      15.0
+     ],
+     [
+      18.0,
+      21.0
+     ]
+    ],
+    "2026-10-25": [
+     [
+      12.0,
+      14.0
+     ]
+    ],
+    "2026-11-05": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-11-07": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-11-08": [
+     [
+      13.0,
+      15.0
+     ]
+    ],
+    "2026-11-11": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-11-15": [
+     [
+      13.0,
+      15.0
+     ]
+    ],
+    "2026-11-18": [
+     [
+      18.0,
+      20.0
+     ]
+    ],
+    "2026-11-21": [
+     [
+      12.0,
+      14.0
+     ]
+    ],
+    "2026-11-24": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-12-01": [
+     [
+      18.5,
+      20.5
+     ]
+    ],
+    "2026-12-07": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-12-11": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-12-13": [
+     [
+      12.0,
+      14.0
+     ]
+    ],
+    "2026-12-18": [
+     [
+      11.0,
+      13.0
+     ]
+    ],
+    "2026-12-30": [
+     [
+      16.0,
+      18.0
+     ]
+    ],
+    "2027-01-08": [
+     [
+      20.0,
+      22.0
+     ]
+    ],
+    "2027-01-21": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2027-01-24": [
+     [
+      12.0,
+      14.0
+     ]
+    ],
+    "2027-02-01": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2027-02-14": [
+     [
+      12.0,
+      14.0
+     ]
+    ],
+    "2027-02-17": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2027-02-28": [
+     [
+      12.0,
+      14.0
+     ]
+    ]
+   },
+   "events": {
+    "2026-10-01": "Maryland Volleyball vs Iowa \u00b7 7pm",
+    "2026-10-03": "Maryland Volleyball vs Nebraska - Kids Night Out \u00b7 7pm",
+    "2026-10-09": "Maryland Volleyball vs UCLA - My Cause, My Match \u00b7 6:30pm",
+    "2026-10-10": "Maryland Volleyball vs Northwestern \u00b7 7pm",
+    "2026-10-19": "Maryland Women's Basketball vs Virginia Tech \u00b7 6pm",
+    "2026-10-23": "Maryland Volleyball vs Illinois \u00b7 7pm",
+    "2026-10-24": "Maryland Women's Basketball vs North Carolina \u00b7 1pm ; Maryland Wrestling vs Red vs Black Scrimmage \u00b7 6pm",
+    "2026-10-25": "Maryland Volleyball vs Michigan State \u00b7 12pm",
+    "2026-11-05": "Maryland Volleyball vs USC \u00b7 7pm",
+    "2026-11-07": "Maryland Volleyball vs Michigan \u00b7 7pm",
+    "2026-11-08": "Maryland Women's Basketball vs George Mason \u00b7 1pm",
+    "2026-11-11": "Maryland Volleyball vs Penn State - Military Appreciation Night \u00b7 7pm",
+    "2026-11-15": "Maryland Women's Basketball vs Columbia \u00b7 1pm",
+    "2026-11-18": "Maryland Women's Basketball vs Coppin State \u00b7 6pm",
+    "2026-11-21": "Maryland Women's Basketball vs Morgan State \u00b7 12pm",
+    "2026-11-24": "Maryland Women's Basketball vs Monmouth \u00b7 7pm",
+    "2026-12-01": "Maryland Women's Basketball vs Ball State \u00b7 6:30pm",
+    "2026-12-07": "Maryland Women's Basketball vs Lehigh \u00b7 7pm",
+    "2026-12-11": "Maryland Women's Basketball vs Michigan \u00b7 7pm",
+    "2026-12-13": "Maryland Women's Basketball vs Mount St. Mary's \u00b7 12pm",
+    "2026-12-18": "Maryland Women's Basketball vs UMBC \u00b7 11am",
+    "2026-12-30": "Maryland Women's Basketball vs Minnesota \u00b7 4pm",
+    "2027-01-08": "Maryland Women's Basketball vs USC \u00b7 8pm",
+    "2027-01-15": "Maryland Wrestling vs Michigan State \u00b7 start time not announced yet",
+    "2027-01-21": "Maryland Women's Basketball vs Ohio State \u00b7 7pm",
+    "2027-01-22": "Maryland Wrestling vs Nebraska \u00b7 start time not announced yet",
+    "2027-01-24": "Maryland Women's Basketball vs UCLA \u00b7 12pm",
+    "2027-02-01": "Maryland Women's Basketball vs Michigan State \u00b7 7pm",
+    "2027-02-07": "Maryland Wrestling vs Northwestern \u00b7 start time not announced yet",
+    "2027-02-12": "Maryland Wrestling vs Rutgers \u00b7 start time not announced yet",
+    "2027-02-14": "Maryland Women's Basketball vs Nebraska \u00b7 12pm",
+    "2027-02-17": "Maryland Women's Basketball vs Illinois \u00b7 7pm",
+    "2027-02-28": "Maryland Women's Basketball vs Rutgers \u00b7 12pm"
+   },
+   "unknownDuring": [
+    [
+     "2027-01-15",
+     "2027-01-15"
+    ],
+    [
+     "2027-01-22",
+     "2027-01-22"
+    ],
+    [
+     "2027-02-07",
+     "2027-02-07"
+    ],
+    [
+     "2027-02-12",
+     "2027-02-12"
+    ]
+   ],
+   "valid": [
+    "2026-08-31",
+    "2027-02-28"
+   ],
+   "noExtension": true
+  },
+  "Bob \"Turtle\" Smith Stadium": {
+   "source": "Maryland Athletics schedule",
+   "sourceUrl": "https://umterps.com/sports/football/schedule",
+   "eventVenue": true,
+   "weekly": {
+    "monday": [],
+    "tuesday": [],
+    "wednesday": [],
+    "thursday": [],
+    "friday": [],
+    "saturday": [],
+    "sunday": []
+   },
+   "dates": {
+    "2026-10-10": [
+     [
+      13.0,
+      16.0
+     ]
+    ],
+    "2026-10-18": [
+     [
+      13.0,
+      16.0
+     ]
+    ],
+    "2027-03-02": [
+     [
+      16.0,
+      19.0
+     ]
+    ],
+    "2027-03-09": [
+     [
+      16.0,
+      19.0
+     ]
+    ],
+    "2027-03-12": [
+     [
+      18.0,
+      21.0
+     ]
+    ],
+    "2027-03-13": [
+     [
+      15.0,
+      18.0
+     ]
+    ],
+    "2027-03-14": [
+     [
+      13.0,
+      16.0
+     ]
+    ],
+    "2027-03-16": [
+     [
+      18.0,
+      21.0
+     ]
+    ],
+    "2027-03-26": [
+     [
+      18.0,
+      21.0
+     ]
+    ],
+    "2027-03-27": [
+     [
+      15.0,
+      18.0
+     ]
+    ],
+    "2027-03-28": [
+     [
+      13.0,
+      16.0
+     ]
+    ],
+    "2027-03-31": [
+     [
+      16.0,
+      19.0
+     ]
+    ],
+    "2027-04-09": [
+     [
+      18.0,
+      21.0
+     ]
+    ],
+    "2027-04-10": [
+     [
+      15.0,
+      18.0
+     ]
+    ],
+    "2027-04-11": [
+     [
+      13.0,
+      16.0
+     ]
+    ],
+    "2027-04-20": [
+     [
+      16.0,
+      19.0
+     ]
+    ],
+    "2027-04-21": [
+     [
+      16.0,
+      19.0
+     ]
+    ],
+    "2027-04-23": [
+     [
+      18.0,
+      21.0
+     ]
+    ],
+    "2027-04-24": [
+     [
+      15.0,
+      18.0
+     ]
+    ],
+    "2027-04-25": [
+     [
+      13.0,
+      16.0
+     ]
+    ],
+    "2027-04-27": [
+     [
+      16.0,
+      19.0
+     ]
+    ],
+    "2027-05-07": [
+     [
+      18.0,
+      21.0
+     ]
+    ],
+    "2027-05-08": [
+     [
+      15.0,
+      18.0
+     ]
+    ],
+    "2027-05-09": [
+     [
+      13.0,
+      16.0
+     ]
+    ],
+    "2027-05-14": [
+     [
+      18.0,
+      21.0
+     ]
+    ],
+    "2027-05-15": [
+     [
+      15.0,
+      18.0
+     ]
+    ],
+    "2027-05-16": [
+     [
+      13.0,
+      16.0
+     ]
+    ]
+   },
+   "events": {
+    "2026-10-10": "Maryland Baseball vs Towson \u00b7 1pm",
+    "2026-10-18": "Maryland Baseball vs Georgetown \u00b7 1pm",
+    "2026-10-29": "Maryland Baseball vs Fall WS Game 1 \u00b7 start time not announced yet",
+    "2026-10-30": "Maryland Baseball vs Fall WS Game 2 \u00b7 start time not announced yet",
+    "2026-10-31": "Maryland Baseball vs Fall WS Game 3 \u00b7 start time not announced yet",
+    "2026-11-08": "Maryland Baseball vs Navy \u00b7 start time not announced yet",
+    "2027-03-02": "Maryland Baseball vs Georgetown \u00b7 4pm",
+    "2027-03-09": "Maryland Baseball vs UMBC \u00b7 4pm",
+    "2027-03-12": "Maryland Baseball vs Michigan State \u00b7 6pm",
+    "2027-03-13": "Maryland Baseball vs Michigan State \u00b7 3pm",
+    "2027-03-14": "Maryland Baseball vs Michigan State \u00b7 1pm",
+    "2027-03-16": "Maryland Baseball vs Delaware \u00b7 6pm",
+    "2027-03-26": "Maryland Baseball vs UCLA \u00b7 6pm",
+    "2027-03-27": "Maryland Baseball vs UCLA \u00b7 3pm",
+    "2027-03-28": "Maryland Baseball vs UCLA \u00b7 1pm",
+    "2027-03-31": "Maryland Baseball vs George Washington \u00b7 4pm",
+    "2027-04-09": "Maryland Baseball vs Illinois \u00b7 6pm",
+    "2027-04-10": "Maryland Baseball vs Illinois \u00b7 3pm",
+    "2027-04-11": "Maryland Baseball vs Illinois \u00b7 1pm",
+    "2027-04-20": "Maryland Baseball vs Navy \u00b7 4pm",
+    "2027-04-21": "Maryland Baseball vs Towson \u00b7 4pm",
+    "2027-04-23": "Maryland Baseball vs Rutgers \u00b7 6pm",
+    "2027-04-24": "Maryland Baseball vs Rutgers \u00b7 3pm",
+    "2027-04-25": "Maryland Baseball vs Rutgers \u00b7 1pm",
+    "2027-04-27": "Maryland Baseball vs George Mason \u00b7 4pm",
+    "2027-05-07": "Maryland Baseball vs Ohio State \u00b7 6pm",
+    "2027-05-08": "Maryland Baseball vs Ohio State \u00b7 3pm",
+    "2027-05-09": "Maryland Baseball vs Ohio State \u00b7 1pm",
+    "2027-05-14": "Maryland Baseball vs Winthrop \u00b7 6pm",
+    "2027-05-15": "Maryland Baseball vs Winthrop \u00b7 3pm",
+    "2027-05-16": "Maryland Baseball vs Winthrop \u00b7 1pm"
+   },
+   "unknownDuring": [
+    [
+     "2026-10-29",
+     "2026-10-29"
+    ],
+    [
+     "2026-10-30",
+     "2026-10-30"
+    ],
+    [
+     "2026-10-31",
+     "2026-10-31"
+    ],
+    [
+     "2026-11-08",
+     "2026-11-08"
+    ]
+   ],
+   "valid": [
+    "2026-08-31",
+    "2027-05-16"
    ],
    "noExtension": true
   },
@@ -3888,38 +4615,38 @@
    ]
   },
   "A James Clark Hall": {
-   "source": "UMD Police Building Security Services \u2014 general academic building hours",
-   "sourceUrl": "https://umpd.umd.edu/about-us/our-units/building-security-systems",
+   "source": "College of Engineering building policy",
+   "sourceUrl": "https://clarknet.eng.umd.edu/policies-clark-hall-reservable-spaces",
    "code": "AJC",
    "weekly": {
     "monday": [
      [
-      7.0,
+      6.5,
       21.0
      ]
     ],
     "tuesday": [
      [
-      7.0,
-      21.0
+      6.5,
+      20.0
      ]
     ],
     "wednesday": [
      [
-      7.0,
+      6.5,
       22.0
      ]
     ],
     "thursday": [
      [
-      7.0,
-      21.0
+      6.5,
+      20.0
      ]
     ],
     "friday": [
      [
-      7.0,
-      21.0
+      6.5,
+      20.0
      ]
     ],
     "saturday": [],
@@ -3930,8 +4657,8 @@
     "2026-12-21"
    ],
    "followsCampusClosures": true,
-   "generalRule": true,
-   "weeklyNote": "7am-9pm on weekdays plus the hours classes are scheduled; closed weekends and university holidays unless something is scheduled"
+   "generalRule": false,
+   "weeklyNote": "\"Clark Hall exterior doors are open from 6:30am-8:00pm, Monday through Friday\"; weekends by arrangement, plus the hours classes are scheduled"
   },
   "A. V. Williams": {
    "source": "UMD Police Building Security Services \u2014 general academic building hours",
@@ -4210,38 +4937,38 @@
    "weeklyNote": "7am-9pm on weekdays plus the hours classes are scheduled; closed weekends and university holidays unless something is scheduled"
   },
   "Brendan Iribe Center": {
-   "source": "UMD Police Building Security Services \u2014 general academic building hours",
+   "source": "UMD Police Building Security Services \u2014 general academic building hours (closing time from the Computer Science department)",
    "sourceUrl": "https://umpd.umd.edu/about-us/our-units/building-security-systems",
    "code": "IRB",
    "weekly": {
     "monday": [
      [
       7.0,
-      21.0
+      22.0
      ]
     ],
     "tuesday": [
      [
       7.0,
-      21.0
+      22.0
      ]
     ],
     "wednesday": [
      [
       7.0,
-      21.0
+      22.0
      ]
     ],
     "thursday": [
      [
       7.0,
-      21.0
+      22.0
      ]
     ],
     "friday": [
      [
       7.0,
-      21.0
+      22.0
      ]
     ],
     "saturday": [],
@@ -4253,7 +4980,8 @@
    ],
    "followsCampusClosures": true,
    "generalRule": true,
-   "weeklyNote": "7am-9pm on weekdays plus the hours classes are scheduled; closed weekends and university holidays unless something is scheduled"
+   "weeklyNote": "7am to 10:00 p.m on weekdays: opening from the general rule, closing published by CS",
+   "closingSourceUrl": "https://www.cs.umd.edu/meeting-event-request"
   },
   "Chemical Engineering Bldg.": {
    "source": "UMD Police Building Security Services \u2014 general academic building hours",
@@ -4854,38 +5582,38 @@
    "weeklyNote": "7am-9pm on weekdays plus the hours classes are scheduled; closed weekends and university holidays unless something is scheduled"
   },
   "Jeong H. Kim Engineering Building": {
-   "source": "UMD Police Building Security Services \u2014 general academic building hours",
-   "sourceUrl": "https://umpd.umd.edu/about-us/our-units/building-security-systems",
+   "source": "College of Engineering building policy",
+   "sourceUrl": "https://clarknet.eng.umd.edu/reservation-policies",
    "code": "KEB",
    "weekly": {
     "monday": [
      [
-      7.0,
-      21.0
+      6.5,
+      20.0
      ]
     ],
     "tuesday": [
      [
-      7.0,
-      21.0
+      6.5,
+      20.0
      ]
     ],
     "wednesday": [
      [
-      7.0,
+      6.5,
       21.0
      ]
     ],
     "thursday": [
      [
-      7.0,
-      21.0
+      6.5,
+      20.0
      ]
     ],
     "friday": [
      [
-      7.0,
-      21.0
+      6.5,
+      20.0
      ]
     ],
     "saturday": [],
@@ -4896,8 +5624,8 @@
     "2026-12-21"
    ],
    "followsCampusClosures": true,
-   "generalRule": true,
-   "weeklyNote": "7am-9pm on weekdays plus the hours classes are scheduled; closed weekends and university holidays unless something is scheduled"
+   "generalRule": false,
+   "weeklyNote": "\"Kim Building exterior doors are open from 6:30am-8:00pm, Monday through Friday\"; weekends by arrangement, plus the hours classes are scheduled"
   },
   "Jimenez Bldg. (World Languages)": {
    "source": "UMD Police Building Security Services \u2014 general academic building hours",

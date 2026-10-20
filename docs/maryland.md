@@ -861,3 +861,123 @@ unchanged.
 basketball (5, 11) and gymnastics, wrestling and others, all of which play there.
 It would be an hour of work now that the mechanism exists. Not done because it
 was not asked for.
+
+
+## 2026-10-20, fourth pass: more accuracy, more coverage
+
+### Per-building door hours exist, for a few buildings, and they disagree with the rule
+
+Searching each college's own site found three buildings that publish their own
+door hours. Read directly, not from a search summary:
+
+| Building | Published | Source |
+|---|---|---|
+| Jeong H. Kim Engineering | exterior doors **6:30am-8:00pm** Mon-Fri | clarknet.eng.umd.edu/reservation-policies |
+| A. James Clark Hall | exterior doors **6:30am-8:00pm** Mon-Fri | clarknet.eng.umd.edu/policies-clark-hall-reservable-spaces |
+| Brendan Iribe Center | "closes at **10:00 p.m.**" | cs.umd.edu/meeting-event-request |
+
+All three disagree with UMPD's 7am-9pm: Kim and Clark close an hour earlier, Iribe
+an hour later. Kim and Clark replace the rule outright (a full schedule, so no
+longer marked `generalRule`); Iribe keeps the rule's opening and takes CS's
+closing. **Clark has an unresolved conflict:** a newer reservation form is
+reported to say 8:00am instead of 6:30am, but it returns 403 to a script and
+could not be read.
+
+**This is the first real test of the rule, and it is small.** Over the weekday
+hours the harness samples, the general rule agrees with those three published
+schedules on **45 of 48 hours (94%)**, and every disagreement is the hour next to
+closing. Three buildings, weekdays only, all engineering or computer science:
+a sample too small and too uniform to be a campus-wide figure. It is evidence
+that the 70-90% guess for the rule was not too pessimistic, not a measurement.
+
+Searches for other buildings (Tydings, Tawes, Key, Jimenez, Toll, Chemistry, the
+Benjamin Building, Van Munching, SPH, ESJ and others) found **no** door hours. Van
+Munching publishes only summer and winter-break patterns (weekdays 6am-5pm, card
+swipe after, weekends by card), not the academic year.
+
+### The harness number moved, and nothing about the doors did
+
+Maryland's rated estimate rose from 69.4% to about 77% in this pass. **That is a
+bookkeeping change.** Kim and Clark moved out of the unmeasured `campus-wide rule`
+row into `published schedule`, which carries an assumed 93%. The 45/48 check above
+is the actual evidence; the 77% is not an improvement in truth.
+
+### The university's own list of study spaces
+
+Undergraduate Studies publishes "Campus Quiet Spaces"
+(`ugst.umd.edu/quietspaces`, four pages: central, north, south, residence halls).
+It is exactly what `STUDY_SPOTS_UMD` lacked, which was someone who knows where
+students actually study:
+
+- **0.75 tier:** Edward St. John (study tables on four levels and small group
+  rooms) and the Jeong H. Kim Engineering Building (four study lounges).
+- **0.5 tier:** Tydings, Taliaferro, Key, Skinner, Woods, Marie Mount and LeFrak,
+  which the page lists under "Buildings with Classrooms Open After Instruction",
+  with its own caveat that "some rooms may be scheduled for evening classes", hence
+  the lower tier.
+
+The same page says "Entrance to residence halls requires a specific access card",
+which turns the housing panel's reason from an absence of hours into a stated
+rule.
+
+### What is inside each building
+
+`data/umd/tenants.json` (55 KB, 5 KB compressed) lists 25 venues in 14 buildings,
+shown in the panel under "Inside this building" with live open or closed. It is
+loaded after the map is up and never on the way to first paint.
+
+- **Food (21 venues).** The dining page's own script names each venue and the
+  building it is in ("Footnotes - McKeldin Library"), and a sheet tab per group
+  holds dated hours. Read from the page at build time rather than hardcoded.
+  Includes the eight venues in the Stamp, three in Kirwan, and cafes in McKeldin,
+  Tawes, Iribe, ESJ, Van Munching, Patterson, the Physical Sciences Complex, the
+  Clarice and the IDEA Factory.
+- **Branch libraries (4).** STEM (Kirwan), Art (Art-Sociology), Architecture and
+  the Michelle Smith Performing Arts Library (the Clarice), from LibCal's dated
+  hours. This is also what makes the picks card's "until 9pm" for Kirwan a library
+  hour rather than a guess.
+
+A tenant's hours are never merged into the building's. "Open now" appears next to
+the tenant's name only.
+
+Not covered: Engage (ESJ) publishes "TBD". The campus pantry, golf grill and the
+residential-community markets are not in a building the map holds.
+
+### More athletic venues
+
+The football-only stadium code is now `athletics_venues()`, reading the all-sports
+feed and every per-sport feed (the two cover different windows: 112 events are in
+the per-sport feeds only, 107 in the all-sports one only). Five venues are named
+explicitly in the feeds and now carry their schedules: **SECU Stadium, XFINITY
+Center** (volleyball plays in the Schanwald Pavilion inside it), **Bob "Turtle"
+Smith Stadium, Field Hockey & Lacrosse Complex** and **Ludwig Field**. Same limits
+as the stadium: placeholder end times, date-only games shown as "start time not
+announced", and a day with no game is "probably closed".
+
+**Not covered, deliberately:** 18 basketball and 17 softball games list only
+"College Park, MD" or nothing as their location. Which building that is would be a
+guess, so those are left out rather than assigned. Home basketball is almost
+certainly the Xfinity Center, but "almost certainly" is not what the feed says.
+
+### Terrain: one ground height was wrong for this campus
+
+`groundM: 3` was a median. Terrain at the 60 placed buildings runs from -12.8 m to
++20.7 m, so the buildings the app draws itself were wrong everywhere that differed:
+Stamp (ground 14.3 m, drawn from 3 m) was a sunken slab, and a building on the low
+side floated.
+
+`data/umd/ground.json` is Cesium World Terrain sampled on an 80 m grid over the
+whole camera area (4,130 points, none missing, 20 KB, 6 KB compressed), the same
+datum the 3D buildings use. `groundAt(lon, lat)` interpolates it. Labels and
+self-drawn buildings now stand on it: the base at the lowest corner so nothing
+floats, the roof a fixed height above the average ground so it reads as one
+building. Illinois and Ohio State have no grid and `groundAt` returns exactly their
+configured height, so they are unchanged.
+
+### Still not found
+
+- **The four lost buildings** (BMS, HIL, PWS, SEN). A search for an official
+  UMD building-code list found none. Not guessed.
+- **Cole's own hours.** There are none; what is inside it is now listed.
+- **Per-building door hours for the other ~40 academic buildings.** The college
+  sites do not publish them.
