@@ -24,6 +24,7 @@ import json
 import os
 import re
 import sys
+import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
@@ -269,9 +270,20 @@ def main():
             result = fetch(name, query, expect, api_key, campus["ll"])
             existing["buildings"][name] = result
             print(f"OK    {name}: '{result['google_title']}' — {result['weekly']['monday']} Mon")
+        except urllib.error.HTTPError as e:
+            # A rejected key is rejected for every place, so say so once and stop
+            # instead of sending the other nineteen -- and never write an empty
+            # results file over a good one.
+            if e.code in (401, 403):
+                sys.exit(f"\nSerpApi rejected the key (HTTP {e.code}) on the first request, so "
+                         f"the other searches were not sent and nothing was written.\n"
+                         f"Check that SERPAPI_KEY holds your real key, not a placeholder.")
+            print(f"SKIP  {name}: {e}")
         except Exception as e:
             print(f"SKIP  {name}: {e}")
 
+    if not existing["buildings"]:
+        sys.exit("\nNo place returned usable hours, so nothing was written.")
     existing["built_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     out_file.parent.mkdir(parents=True, exist_ok=True)
     out_file.write_text(json.dumps(existing, indent=1))
@@ -279,8 +291,8 @@ def main():
     if campus["then"]:
         print(f"Now run: python3 {campus['then']}")
     else:
-        print("Nothing reads this yet -- compare the two control buildings against\n"
-              "the registrar's published hours before wiring it into build_osu_hours.py.")
+        print("Nothing reads this yet -- compare the control buildings against the\n"
+              "hours the campus already publishes before wiring this into anything.")
 
 
 if __name__ == "__main__":
