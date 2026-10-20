@@ -2353,11 +2353,6 @@ const BUILDING_TILESET_OPTIONS = {
 async function loadBuildings() {
   try {
     buildingsTileset = scene.primitives.add(await Cesium.createOsmBuildingsAsync(BUILDING_TILESET_OPTIONS));
-    // The OSM tileset ships outlines and has always drawn them, in black, one
-    // pixel wide. Black on this map's dark buildings and dark ground is
-    // invisible, so every roof read as one unbroken colour. A light rim is what
-    // shows on both the dark no-data blocks and the green-to-red ones.
-    if (CAMPUS_CONTENT.buildingEdges) buildingsTileset.outlineColor = EDGE_COLOR;
     performance.mark('buildings-tileset-ready');
     buildingsTileset.tileLoad.addEventListener(claimTileBuildings);
     // Waiting for every tile in view before admitting the map is here costs
@@ -2475,7 +2470,9 @@ let overlayPrimitive = null;
 let overlayEdgePrimitive = null;
 const overlayColors = new Map();
 
-const EDGE_COLOR = Cesium.Color.fromCssColorString('#ffffff').withAlpha(0.78);
+// The same black the tileset draws its own outlines in, so a building we draw and
+// a building Cesium draws read as one map across all three campuses.
+const EDGE_COLOR = Cesium.Color.BLACK;
 const WALL_SHADE = 0.78;
 
 /** A hex colour with each channel scaled, for the wall that is turned from the light. */
