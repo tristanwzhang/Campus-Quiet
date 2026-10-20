@@ -62,6 +62,10 @@ const ASSUMED = {
   // general rule turned Maryland from 51.6% to 92.2% on paper without a single
   // door being checked. It is left out of the composite and reported beside it.
   'campus-wide rule':   null,
+  // A venue's game schedule says when a game is on, not when the doors are open:
+  // a day with no game is "probably closed", which the schedule cannot confirm
+  // (the stadium hosts other events). Unmeasured for the same reason as the rule.
+  'event schedule':     null,
 };
 
 // What assumedStatus() stamps on a claim it derived from the class timetable.
@@ -163,6 +167,7 @@ function pathOf(status, entry, date) {
   if (status.state === 'unknown') return null;
   if (status.source === FALLBACK_SOURCE) return FALLBACK;
   if (entry?.generalRule) return 'campus-wide rule';
+  if (entry?.eventVenue) return 'event schedule';
   if (entry?.dates && date in entry.dates) return 'dated feed';
   return 'published schedule';
 }
@@ -173,7 +178,7 @@ function holdOut(api, days, hours) {
     // A general rule is not independent ground truth: Maryland's is built from
     // the same class windows the fallback reads, plus 7am-9pm, so scoring the
     // fallback against it measures how well it agrees with itself.
-    if (entry.generalRule) continue;
+    if (entry.generalRule || entry.eventVenue) continue;
     for (const day of days) {
       const truth = api.publishedRanges(entry, day);
       if (truth == null) continue;                 // nothing published to score against
@@ -216,7 +221,7 @@ function report(campus, weekStart) {
   const fbAll = holdOut(api, days, SAMPLED);
   const fbEve = holdOut(api, days, EVENING);
   const rateOf = (p, fb) => p === FALLBACK ? fb : ASSUMED[p];
-  const ruled = all.counts['campus-wide rule'] ?? 0;
+  const ruled = (all.counts['campus-wide rule'] ?? 0) + (all.counts['event schedule'] ?? 0);
 
   console.log(`\n=== ${campus.toUpperCase()} — week of ${weekStart} ===`);
   console.log(`${api.knownBuildings().length} buildings · ${all.total} building-hours · ` +
@@ -225,7 +230,7 @@ function report(campus, weekStart) {
   for (const [p, n] of Object.entries(all.counts).sort((a, b) => b[1] - a[1])) {
     console.log(`  ${p.padEnd(24)} ${pct(n / all.claims)}  ${pct(rateOf(p, fbAll.accuracy))}  ` +
                 (p === FALLBACK ? 'MEASURED (hold-out)'
-                  : p === 'campus-wide rule' ? 'UNMEASURED — no ground truth'
+                  : (p === 'campus-wide rule' || p === 'event schedule') ? 'UNMEASURED — no ground truth'
                   : 'assumed'));
   }
 
@@ -247,7 +252,7 @@ function report(campus, weekStart) {
               `   evening ${pct(evening == null ? null : evening * (1 - all.silentShare))}   (silence counted as wrong)`);
   if (ruled) {
     console.log(`\n  NOT IN THE ESTIMATE  ${pct(ruled / all.claims)} of claims come from a campus-wide rule ` +
-                `with no ground truth to score it against.`);
+                `or an event schedule, with no ground truth to score them against.`);
     console.log('  The figures above cover only the other ' + pct(rated / all.claims).trim() + '.');
   }
 }

@@ -756,3 +756,84 @@ and the 3D tiles carry it by its exact class-data name inside the map area.
 - 4 class buildings lost to Testudo's HTTP 500 (BMS, HIL, PWS, SEN) — unchanged.
 - No ground truth for the campus-wide rule.
 - `/umd.html` and the picker card are still held back: nothing here is public.
+
+
+## 2026-10-20: the two big blocks, SECU Stadium and Cole
+
+The two largest grey blocks on the map are event venues. Nobody teaches in
+either, so there is no class data, and neither publishes standing hours. What
+exists for each is different, and so is what the map says.
+
+### SECU Stadium: a game schedule
+
+Maryland Athletics (Sidearm Sports) publishes an iCalendar feed per sport:
+`umterps.com/calendar.ashx/calendar.ics?sport_id=N`. Football is 3 and men's
+lacrosse is 7, and an event is a stadium event when its `LOCATION` says SECU
+Stadium (away games name another city). `build_umd_hours.py` reads both.
+
+Three limits shape what the map is allowed to claim:
+
+- **End times are a placeholder.** Every football game's `DTEND` is exactly
+  kickoff + 3 hours. It is used as published, not stretched.
+- **Two games have no kickoff yet** (14 and 28 November are date-only). Those
+  days read "game day, kickoff time not announced", never an open window.
+- **The schedule lists games and nothing else.** The stadium may host other
+  events, so a day with no game is "Probably closed · other events are not on
+  that schedule", not "Closed".
+
+The states, each tested with a simulated clock:
+
+| | map | panel |
+|---|---|---|
+| game on | red | Event in progress · "Maryland Football vs Illinois · kickoff 12pm" |
+| game day, not on yet or over | grey | Event day · same note |
+| game listed, no kickoff yet | grey | Event day · "kickoff time not announced yet" |
+| no game | dark | Probably closed · no home game is scheduled |
+
+A game in progress is drawn red because a game is a crowd. **That is the one
+inference in it**, and the note says where it comes from. There is no attendance
+number and none is shown: the panel never prints a "% full" for an event.
+
+**A pre-game state was deliberately not added.** Gates open some time before
+kickoff and tailgating starts earlier, but neither is in the feed.
+
+**The bowl was a separate problem.** The register holds the stadium as nine
+footprints (upper deck, six concession stands, ticket booth, maintenance
+building). The bowl's own tile block is 41 m tall and its centre sits 0.00002
+degrees outside the upper deck's outline, so nothing claimed it and the stadium
+was colour-coded as a thin red sliver beside a brown bowl.
+`CAMPUS_CONTENT.complexes` lets an unnamed tile block inside the combined
+extent of those official footprints (plus about 20 m) belong to the stadium. Nine
+blocks are now claimed and the flat prism the app was drawing is gone.
+
+Registered as `SECU Stadium`, register number 368 (the printed directory calls it
+"SECU Stadium Building (Upper Deck)"; the register says "Maryland Stadium
+Building Upper Deck").
+
+### Cole Student Activities Building: nothing, said plainly
+
+No standing hours exist for it. The only Cole schedule found is the RecWell Bike
+Shop's, and a tenant's hours are not the building's. It is carried as a known
+building with `noStandingHours`, so it gets a footprint, a name and a panel that
+reads "Event venue · No standing hours are published for this building" instead
+of an unexplained grey block. It stays grey, deliberately, because anything else
+would be a claim with no source. Directory #162, listed under Key Places of
+Interest.
+
+A tile block inside Cole's footprint is named "Jones-Hill House" in
+OpenStreetMap, a 41 m block that is probably Cole itself mislabelled. Named
+blocks are never reassigned, so the app currently draws its own flat prism for
+Cole beside it. Not verified, and not fixed.
+
+### The harness
+
+Event venues are an unmeasured row beside the campus-wide rule, for the same
+reason: the schedule cannot confirm a "no game" day. Illinois and Ohio State are
+unchanged.
+
+### Available and not done
+
+**Xfinity Center** is the same pattern. The football feed's siblings are
+basketball (5, 11) and gymnastics, wrestling and others, all of which play there.
+It would be an hour of work now that the mechanism exists. Not done because it
+was not asked for.

@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-19T23:24:46+00:00",
+ "built_at": "2026-10-20T01:16:13+00:00",
  "campus": "Maryland \u2014 College Park",
  "term": "2026/fall",
  "campusClosedDates": [
@@ -3703,6 +3703,82 @@
     "2026-12-11"
    ],
    "noExtension": true
+  },
+  "SECU Stadium": {
+   "source": "Maryland Athletics schedule",
+   "sourceUrl": "https://umterps.com/sports/football/schedule",
+   "eventVenue": true,
+   "weekly": {
+    "monday": [],
+    "tuesday": [],
+    "wednesday": [],
+    "thursday": [],
+    "friday": [],
+    "saturday": [],
+    "sunday": []
+   },
+   "dates": {
+    "2026-09-05": [
+     [
+      20.0,
+      23.0
+     ]
+    ],
+    "2026-09-19": [
+     [
+      19.5,
+      22.5
+     ]
+    ],
+    "2026-09-26": [
+     [
+      13.5,
+      16.5
+     ]
+    ],
+    "2026-10-17": [
+     [
+      12.5,
+      15.5
+     ]
+    ],
+    "2026-10-31": [
+     [
+      12.0,
+      15.0
+     ]
+    ]
+   },
+   "events": {
+    "2026-09-05": "Maryland Football vs Hampton \u00b7 kickoff 8pm",
+    "2026-09-19": "Maryland Football vs Virginia Tech \u00b7 kickoff 7:30pm",
+    "2026-09-26": "Maryland Football vs UCLA - FAMILY WEEKEND \u00b7 kickoff 1:30pm",
+    "2026-10-17": "Maryland Football vs Rutgers - HOMECOMING \u00b7 kickoff 12:30pm",
+    "2026-10-31": "Maryland Football vs Illinois \u00b7 kickoff 12pm",
+    "2026-11-14": "Maryland Football vs Wisconsin - MILITARY APPRECIATION \u00b7 kickoff time not announced yet",
+    "2026-11-28": "Maryland Football vs Penn State \u00b7 kickoff time not announced yet"
+   },
+   "unknownDuring": [
+    [
+     "2026-11-14",
+     "2026-11-14"
+    ],
+    [
+     "2026-11-28",
+     "2026-11-28"
+    ]
+   ],
+   "valid": [
+    "2026-08-31",
+    "2026-11-28"
+   ],
+   "noExtension": true
+  },
+  "Cole Student Activities Building": {
+   "source": "University of Maryland campus directory",
+   "eventVenue": true,
+   "noStandingHours": true,
+   "note": "No standing hours are published for this building."
   },
   "A James Clark Hall": {
    "source": "UMD Police Building Security Services \u2014 general academic building hours",

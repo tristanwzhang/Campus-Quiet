@@ -147,6 +147,25 @@ RECWELL = {
         ("Ritchie Coliseum", None, "Ritchie Coliseum"),
 }
 POOL_URL = "https://recwell.umd.edu/outdoor-aquatic-center"
+
+# ── event venues ──
+# Maryland Athletics publishes an iCalendar feed per sport (Sidearm Sports). The
+# stadium has no hours, only games, so the feed is the whole of what is known.
+ATHLETICS_ICS = "https://umterps.com/calendar.ashx/calendar.ics?sport_id=%d"
+ATHLETICS_SPORTS = (3, 7)          # football, men's lacrosse: the two that play at SECU Stadium
+STADIUM_SCHEDULE_URL = "https://umterps.com/sports/football/schedule"
+STADIUM_SOURCE = "Maryland Athletics schedule"
+STADIUM_BUILDING = "SECU Stadium"  # register name: "Maryland Stadium Building Upper Deck", #368
+
+# Buildings that are real, public-facing and have NO standing hours or schedule
+# anywhere. They are carried as known buildings so they get a footprint, a name
+# and a panel that says so, instead of an unexplained grey block.
+EVENT_VENUES_NO_HOURS = {
+    # Listed under "Key Places of Interest" in the printed campus directory (#162).
+    # The only schedule found for anything in it belongs to a tenant, the RecWell
+    # Bike Shop, and a tenant's hours are not the building's.
+    "Cole Student Activities Building": "No standing hours are published for this building.",
+}
 # The register calls it "Aquatic Center" (building 399); RecWell calls it the
 # Outdoor Aquatic Center and places it "on the west end of Eppley Recreation
 # Center". The directory puts both in map grid D7. The identification is an
@@ -882,6 +901,98 @@ def umpd_rule(existing, skipped):
 
 
 
+# ── 8. SECU Stadium: games, not hours ─────────────────────────────────────────
+
+def ics_events(text):
+    """Minimal iCalendar reader: [{start, end, location, summary}] with raw values.
+    Folded lines (a continuation starts with a space or tab) are joined first."""
+    text = re.sub(r"\r?\n[ \t]", "", text)
+    out = []
+    for block in re.findall(r"BEGIN:VEVENT(.*?)END:VEVENT", text, re.S):
+        def field(name):
+            m = re.search(rf"^{name}[^:\n]*:(.*)$", block, re.M)
+            return (m.group(1).strip() if m else "").replace("\\,", ",").replace("\\n", " ")
+        out.append({"start": field("DTSTART"), "end": field("DTEND"),
+                    "location": field("LOCATION"), "summary": field("SUMMARY")})
+    return out
+
+
+def stadium(skipped):
+    """Home games at SECU Stadium, from the athletics calendar feeds.
+
+    Three honest limits, each of which shapes what the map is allowed to say:
+
+      * The feed's end time is a fixed placeholder (every game is kickoff + 3h),
+        not an end anyone announced. It is used as published and not stretched.
+      * Two late-season games are listed by DATE only, with no kickoff yet. Those
+        days are "a game is scheduled, time not announced" — never an open window.
+      * The schedule lists games and nothing else. The stadium may host other
+        events, so a day with no game is "probably closed", not "closed".
+    """
+    from zoneinfo import ZoneInfo
+    local = ZoneInfo("America/New_York")
+    dates, events, tba, seen = {}, {}, [], set()
+    for sport in ATHLETICS_SPORTS:
+        raw = fetch(ATHLETICS_ICS % sport)
+        if not raw:
+            skipped.append(f"athletics feed sport_id={sport} unreachable")
+            continue
+        for ev in ics_events(raw):
+            if not re.search(r"SECU Stadium", ev["location"], re.I):
+                continue                 # an away game: the location is another city
+            title = re.sub(r"^\[[A-Z]\]\s*", "", ev["summary"]).strip()
+            key = (ev["start"], title)
+            if key in seen:
+                continue
+            seen.add(key)
+            if re.fullmatch(r"\d{8}", ev["start"]):
+                iso = f"{ev['start'][:4]}-{ev['start'][4:6]}-{ev['start'][6:]}"
+                tba.append(iso)
+                events[iso] = f"{title} · kickoff time not announced yet"
+                continue
+            try:
+                a = datetime.strptime(ev["start"], "%Y%m%dT%H%M%SZ").replace(tzinfo=timezone.utc).astimezone(local)
+                b = datetime.strptime(ev["end"], "%Y%m%dT%H%M%SZ").replace(tzinfo=timezone.utc).astimezone(local)
+            except ValueError:
+                skipped.append(f"stadium event {ev['start']!r} {title[:40]!r}")
+                continue
+            iso = a.date().isoformat()
+            start, end = a.hour + a.minute / 60, b.hour + b.minute / 60
+            if end <= start:
+                end += 24
+            dates.setdefault(iso, []).append([start, end])
+            clock12 = a.strftime("%-I:%M%p").lower().replace(":00", "")
+            events[iso] = f"{title} · kickoff {clock12}"
+    # The lacrosse feed still carries last spring. Nothing before the term is
+    # claimed, and the app ignores it anyway, so it is not written.
+    dates = {d: r for d, r in dates.items() if d >= "2026-08-31"}
+    events = {d: t for d, t in events.items() if d >= "2026-08-31"}
+    tba = [d for d in tba if d >= "2026-08-31"]
+    if not (dates or tba):
+        return {}
+    for iso in dates:
+        dates[iso] = merge_ranges(dates[iso])
+    last = max(list(dates) + tba)
+    return {STADIUM_BUILDING: {
+        "source": STADIUM_SOURCE,
+        "sourceUrl": STADIUM_SCHEDULE_URL,
+        "eventVenue": True,
+        "weekly": empty_week(),
+        "dates": dates,
+        "events": events,
+        "unknownDuring": [[d, d] for d in sorted(tba)],
+        "valid": ["2026-08-31", last],
+        "noExtension": True,
+    }}
+
+
+def event_venues():
+    return {name: {"source": "University of Maryland campus directory",
+                   "eventVenue": True, "noStandingHours": True, "note": note}
+            for name, note in EVENT_VENUES_NO_HOURS.items()}
+
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--print-skipped", action="store_true")
@@ -894,7 +1005,9 @@ def main():
                        ("RecWell", recwell(skipped)),
                        ("dining", dining(skipped)),
                        ("health", health(skipped)),
-                       ("pool", pool(skipped))):
+                       ("pool", pool(skipped)),
+                       ("stadium", stadium(skipped)),
+                       ("venues", event_venues())):
         print(f"{label:<10} {len(got)} building(s): {', '.join(got) or '—'}")
         buildings.update(got)
     # Last, and never over a building that publishes its own: the campus rule is

@@ -819,7 +819,16 @@ function hoursStatus(id, date, time) {
   }
 
   const today = publishedRanges(entry, date);
-  if (today == null) return assumedStatus(id, date, time);
+  if (today == null) {
+    const assumed = assumedStatus(id, date, time);
+    // A venue with a game listed but no kickoff yet: there IS something known
+    // about the day, and it is not "no data".
+    if (entry.eventVenue) {
+      return { ...assumed, eventVenue: true, event: entry.events?.[date], noStandingHours: !!entry.noStandingHours,
+               venueNote: entry.note };
+    }
+    return assumed;
+  }
   const open = today.some(([o, c]) => time >= o && time < c);
   // Past the end of the published schedule the same hours are assumed to hold,
   // but they are no longer a published fact, so they stop being labelled as one.
@@ -833,6 +842,8 @@ function hoursStatus(id, date, time) {
       ? 'Probably closed \u00b7 its published hours stop before finals week'
       : undefined,
     cardAccess: !extended && !!entry.cardAccess,
+    eventVenue: !!entry.eventVenue,
+    event: entry.events?.[date],
   };
 }
 
@@ -999,6 +1010,35 @@ function estimateFor(name) {
   const withPeriod = note => period.label ? `${note} · ${period.label}` : note;
 
   const hours = hoursStatus(name, date, time);
+
+  // A venue that has games, not hours. Three states, each saying only what the
+  // schedule says: a game is on now; a game is listed today but has no kickoff
+  // yet; nothing is listed. None of them is a measurement of how many people are
+  // there, and none claims one -- a game in progress is drawn busy because a
+  // game is a crowd, and the note says that is where it comes from.
+  if (hours.eventVenue) {
+    if (hours.noStandingHours) {
+      return { value: 0, source: 'unknown', venue: true,
+               note: `Event venue \u00b7 ${hours.venueNote ?? 'no standing hours are published'}` };
+    }
+    if (hours.state === 'open') {
+      return { value: 0.9, source: 'event', note: `${hours.event ?? 'Event in progress'} \u00b7 from the Maryland Athletics schedule` };
+    }
+    // A game is listed for today but it is not on yet (or is over): that is a
+    // game day, not a day with no game, and saying "no home game scheduled"
+    // at 11am on game day would be flatly wrong.
+    if (hours.event) {
+      return { value: 0, source: 'unknown', venue: true, note: hours.event };
+    }
+    if (hours.state === 'closed') {
+      return { value: 0, source: 'closed', assumed: true,
+               note: 'Probably closed \u00b7 no home game is scheduled, and other events are not on that schedule' };
+    }
+    if (hours.event) {
+      return { value: 0, source: 'unknown', venue: true, note: hours.event };
+    }
+  }
+
   if (hours.state === 'closed') {
     const from = hours.official ? ` · hours from ${hours.source}` : '';
     // Never let an assumption read like a published fact. "Closed right now"
@@ -1379,6 +1419,10 @@ const BUILDINGS_UMD = {
   // No type on purpose: a health centre has no "typical busyness" shape that
   // would be anything but invented, so it shows open or closed and nothing more.
   'University Health Center': { label: 'Health Center' },
+  // Event venues. The register calls the stadium "Maryland Stadium Building Upper
+  // Deck"; everybody, and the athletics schedule, says SECU Stadium.
+  'SECU Stadium': { label: 'SECU Stadium', labelPriority: 1 },
+  'Cole Student Activities Building': { label: 'Cole Student Activities', labelPriority: 1 },
 
   // Long official names crowd out their neighbours on the map, so these show a
   // shorter form of the SAME name. Tooltips still show the full one.
@@ -1445,6 +1489,8 @@ const GIS_ALIASES_UMD = {
   'Ritchie Coliseum': '004',
   'University Health Center': '140',
   'Aquatic Center': '399',
+  'SECU Stadium': '368',
+  'Cole Student Activities Building': '162',
 };
 
 // From the university's own semester calendar:
@@ -1490,6 +1536,14 @@ const CAMPUS_CONTENT = {
           // Off for the two live campuses: Ohio State's register has 534 records and
           // turning this on there would change a launched map.
           labelRegisterBuildings: true,
+          // A building the register holds as several footprints, each too small to
+          // contain the tile block that is actually the building. The stadium is nine:
+          // the upper deck, six concession stands, the ticket booth and the
+          // maintenance building -- and the bowl's own block, 41 m tall, sits 0.00002
+          // degrees outside the upper deck's outline, so nothing claimed it and the
+          // stadium was colour-coded as a thin sliver beside a brown bowl. Register
+          // numbers; an unnamed tile block inside their combined extent is the stadium.
+          complexes: { 'SECU Stadium': ['362', '363', '364', '365', '366', '367', '368', '369', '370'] },
           // Give buildings edges: a light rim on every roof, and walls a shade
           // darker than the roof on the ones the app draws itself. Off for the two
           // launched campuses, whose maps would change under their users.
@@ -2027,6 +2081,7 @@ const SOURCE_LABELS = {
   typical:   'Estimated',
   closed:    'Closed',
   unknown:   'No data right now',
+  event:     'Event',
 };
 
 // ─── Map area: Champaign–Urbana only ──────────────────────────────────────────
@@ -2905,6 +2960,27 @@ function footprintAt(lon, lat) {
 // is better than drawing a second block on top of it: the tiles' shapes are
 // more detailed than the footprints we extrude, and two blocks in one place
 // fight over every pixel they share.
+// Combined extents of the footprints that make up a multi-part building, with a
+// margin of about 20 m so a block whose centre sits just outside every part is
+// still caught.
+let complexBoxes = null;
+function complexAt(lon, lat) {
+  const defs = CAMPUS_CONTENT.complexes;
+  if (!defs || !data.gis) return null;
+  if (!complexBoxes) {
+    const MARGIN = 0.0002;
+    complexBoxes = Object.entries(defs).map(([name, numbers]) => {
+      const pts = numbers.flatMap(n => data.gis.buildings?.[n]?.outline ?? []);
+      if (!pts.length) return null;
+      const lons = pts.map(p => p[0]), lats = pts.map(p => p[1]);
+      return { name, w: Math.min(...lons) - MARGIN, e: Math.max(...lons) + MARGIN,
+               s: Math.min(...lats) - MARGIN, n: Math.max(...lats) + MARGIN };
+    }).filter(Boolean);
+  }
+  const hit = complexBoxes.find(b => lon > b.w && lon < b.e && lat > b.s && lat < b.n);
+  return hit ? hit.name : null;
+}
+
 function claimTileBuildings(tile) {
   if (!data.classActivity && !data.hours) {   // data not here yet — do it later
     pendingTiles.push(tile);
@@ -2926,7 +3002,7 @@ function claimTileBuildings(tile) {
     if (!name && tileName) name = join.get(normaliseName(tileName)) ?? null;
     // A block carrying no name of its own can't contradict one: if it stands
     // inside a footprint the university publishes, that is what it is.
-    if (!name && !tileName && lon != null) name = footprintAt(lon, lat);
+    if (!name && !tileName && lon != null) name = footprintAt(lon, lat) ?? complexAt(lon, lat);
 
     if (!name) {
       // Still nothing, and it stands where we are drawing our own shape. Hide
@@ -3334,12 +3410,16 @@ function openPanel(name, keepThanks = false) {
     : !occ ? 'No data yet'
     : closed ? (occ.cardAccess ? 'Public doors locked · i-card may work'
                 : occ.assumed ? 'Probably closed' : 'Closed right now')
+    : occ.source === 'event' ? 'Event in progress'
+    : occ.venue ? (occ.note.startsWith('Event venue') ? 'Event venue' : 'Event day')
     : occ.source === 'unknown' ? 'Hours not published — no estimate right now'
     : `${SOURCE_LABELS[occ.source]} · ${Math.round(occ.value * 100)}% full`;
   panelQ.hidden = closed || unmapped;
   checkinRow.hidden = closed || unmapped;
   renderRooms(name);
-  panelNote.textContent = housing
+  panelNote.textContent = occ && (occ.source === 'event' || occ.venue)
+    ? occ.note.replace(/^Event venue \u00b7 /, '')
+    : housing
     ? "The university lists this as campus housing and publishes no public hours for it."
     : unmapped
     ? "On the map, but nobody publishes hours for it — so there's nothing to show."
