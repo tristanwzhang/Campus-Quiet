@@ -1490,6 +1490,10 @@ const CAMPUS_CONTENT = {
           // Off for the two live campuses: Ohio State's register has 534 records and
           // turning this on there would change a launched map.
           labelRegisterBuildings: true,
+          // Give buildings edges: a light rim on every roof, and walls a shade
+          // darker than the roof on the ones the app draws itself. Off for the two
+          // launched campuses, whose maps would change under their users.
+          buildingEdges: true,
           // Class buildings MD iMAP has no footprint for -- all three opened after
           // that layer was last drawn. Without this, offMap() dropped them from the
           // map entirely, which took Thurgood Marshall Hall (one of the larger
@@ -2349,6 +2353,11 @@ const BUILDING_TILESET_OPTIONS = {
 async function loadBuildings() {
   try {
     buildingsTileset = scene.primitives.add(await Cesium.createOsmBuildingsAsync(BUILDING_TILESET_OPTIONS));
+    // The OSM tileset ships outlines and has always drawn them, in black, one
+    // pixel wide. Black on this map's dark buildings and dark ground is
+    // invisible, so every roof read as one unbroken colour. A light rim is what
+    // shows on both the dark no-data blocks and the green-to-red ones.
+    if (CAMPUS_CONTENT.buildingEdges) buildingsTileset.outlineColor = EDGE_COLOR;
     performance.mark('buildings-tileset-ready');
     buildingsTileset.tileLoad.addEventListener(claimTileBuildings);
     // Waiting for every tile in view before admitting the map is here costs
@@ -2454,21 +2463,83 @@ function createOverlays() {
 // leaves them visibly darker than the building tiles standing next to them —
 // the tiles are styled flat. Flat here means our shapes and the tiles read as
 // the same colour, which is the whole point of colouring them.
+//
+// Flat all the way down was the problem on a campus where 15 of the 69 buildings
+// are drawn this way (McKeldin, Stamp, Tawes, Toll, Martin, Plant Sciences...):
+// the roof and the walls came out the identical colour with no edge between
+// them, so each building was a featureless slab and neighbours of the same
+// status ran together. With buildingEdges the roof and the walls are separate
+// instances — walls a fixed shade darker, which is what the tiles do — and a
+// thin light rim traces the roof.
 let overlayPrimitive = null;
+let overlayEdgePrimitive = null;
 const overlayColors = new Map();
 
-function overlayInstance(name, shape) {
+const EDGE_COLOR = Cesium.Color.fromCssColorString('#ffffff').withAlpha(0.78);
+const WALL_SHADE = 0.78;
+
+/** A hex colour with each channel scaled, for the wall that is turned from the light. */
+function shadeHex(hex, factor) {
+  const n = parseInt(hex.slice(1), 16);
+  const ch = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(v => Math.max(0, Math.min(255, Math.round(v * factor))));
+  return '#' + ch.map(v => v.toString(16).padStart(2, '0')).join('');
+}
+
+const colorAttr = hex => ({ color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.fromCssColorString(hex)) });
+
+function overlayInstances(name, shape) {
   const { hex } = colorFor(buildingOccupancy(name));
   overlayColors.set(name, hex);
-  return new Cesium.GeometryInstance({
-    id: name,
-    geometry: new Cesium.PolygonGeometry({
-      polygonHierarchy: new Cesium.PolygonHierarchy(Cesium.Cartesian3.fromDegreesArray(shape.outline.flat())),
-      height: shape.baseM,
-      extrudedHeight: shape.topM,
-      vertexFormat: Cesium.PerInstanceColorAppearance.FLAT_VERTEX_FORMAT,
+  const ring = Cesium.Cartesian3.fromDegreesArray(shape.outline.flat());
+
+  if (!CAMPUS_CONTENT.buildingEdges) {
+    return [new Cesium.GeometryInstance({
+      id: name,
+      geometry: new Cesium.PolygonGeometry({
+        polygonHierarchy: new Cesium.PolygonHierarchy(ring),
+        height: shape.baseM,
+        extrudedHeight: shape.topM,
+        vertexFormat: Cesium.PerInstanceColorAppearance.FLAT_VERTEX_FORMAT,
+      }),
+      attributes: colorAttr(hex),
+    })];
+  }
+
+  // The roof, and the walls as their own instance so they can be a shade darker.
+  // The wall is closed on itself by repeating the first point.
+  const loop = [...shape.outline, shape.outline[0]];
+  return [
+    new Cesium.GeometryInstance({
+      id: name,
+      geometry: new Cesium.PolygonGeometry({
+        polygonHierarchy: new Cesium.PolygonHierarchy(ring),
+        height: shape.topM,
+        vertexFormat: Cesium.PerInstanceColorAppearance.FLAT_VERTEX_FORMAT,
+      }),
+      attributes: colorAttr(hex),
     }),
-    attributes: { color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.fromCssColorString(hex)) },
+    new Cesium.GeometryInstance({
+      id: name + '|walls',
+      geometry: new Cesium.WallGeometry({
+        positions: Cesium.Cartesian3.fromDegreesArray(loop.flat()),
+        minimumHeights: loop.map(() => shape.baseM),
+        maximumHeights: loop.map(() => shape.topM),
+        vertexFormat: Cesium.PerInstanceColorAppearance.FLAT_VERTEX_FORMAT,
+      }),
+      attributes: colorAttr(shadeHex(hex, WALL_SHADE)),
+    }),
+  ];
+}
+
+function overlayEdgeInstance(name, shape) {
+  return new Cesium.GeometryInstance({
+    id: name + '|rim',
+    geometry: new Cesium.PolygonOutlineGeometry({
+      polygonHierarchy: new Cesium.PolygonHierarchy(Cesium.Cartesian3.fromDegreesArray(shape.outline.flat())),
+      // A hair above the roof: coplanar with it, the rim z-fights and breaks up.
+      height: shape.topM + 0.08,
+    }),
+    attributes: { color: Cesium.ColorGeometryInstanceAttribute.fromColor(EDGE_COLOR) },
   });
 }
 
@@ -2476,16 +2547,32 @@ function overlayInstance(name, shape) {
 // at startup, once when the tiles have shown us what they don't carry.
 function drawOverlays() {
   if (overlayPrimitive) scene.primitives.remove(overlayPrimitive);
+  if (overlayEdgePrimitive) scene.primitives.remove(overlayEdgePrimitive);
   overlayPrimitive = null;
+  overlayEdgePrimitive = null;
   overlayColors.clear();
   if (!overlays.size) return;
   const instances = [];
-  for (const [name, shape] of overlays) instances.push(overlayInstance(name, shape));
+  for (const [name, shape] of overlays) instances.push(...overlayInstances(name, shape));
   overlayPrimitive = scene.primitives.add(new Cesium.Primitive({
     geometryInstances: instances,
-    appearance: new Cesium.PerInstanceColorAppearance({ flat: true, closed: true, translucent: false }),
+    // Not closed once the walls are separate: a wall and a roof are single
+    // surfaces, and back-face culling would drop whichever faces the wrong way.
+    appearance: new Cesium.PerInstanceColorAppearance({
+      flat: true, closed: !CAMPUS_CONTENT.buildingEdges, translucent: false,
+    }),
     asynchronous: false,
   }));
+  if (CAMPUS_CONTENT.buildingEdges) {
+    overlayEdgePrimitive = scene.primitives.add(new Cesium.Primitive({
+      geometryInstances: [...overlays].map(([name, shape]) => overlayEdgeInstance(name, shape)),
+      appearance: new Cesium.PerInstanceColorAppearance({
+        flat: true, translucent: true,
+        renderState: { lineWidth: 1, blending: Cesium.BlendingState.ALPHA_BLEND },
+      }),
+      asynchronous: false,
+    }));
+  }
   scene.requestRender();
 }
 
@@ -2500,6 +2587,11 @@ function applyOverlayColors() {
     const attrs = overlayPrimitive.getGeometryInstanceAttributes(name);
     if (!attrs) continue;
     attrs.color = Cesium.ColorGeometryInstanceAttribute.toValue(Cesium.Color.fromCssColorString(hex));
+    if (CAMPUS_CONTENT.buildingEdges) {
+      const walls = overlayPrimitive.getGeometryInstanceAttributes(name + '|walls');
+      if (walls) walls.color = Cesium.ColorGeometryInstanceAttribute.toValue(
+        Cesium.Color.fromCssColorString(shadeHex(hex, WALL_SHADE)));
+    }
     overlayColors.set(name, hex);
     changed = true;
   }
