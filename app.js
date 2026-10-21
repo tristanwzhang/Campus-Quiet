@@ -971,7 +971,7 @@ function occupancyFor(name) {
   if (trust >= 0.5) {
     return { value, source: 'reported', note: reports + detail };
   }
-  return { value, source: estimate.source, note: `${estimate.note} + ${reports}${detail}` };
+  return { value, source: estimate.source, note: addToNote(estimate.note, reports + detail, ' + ') };
 }
 
 /**
@@ -1093,7 +1093,7 @@ function estimateFor(name) {
   // exactly where that comes from so it cannot read as a measurement.
   if (hours.state === 'open') {
     const general = hours.general ? ' \u00b7 generally open weekdays 7am\u20139pm (campus default)' : '';
-    if (estimate) return general ? { ...estimate, note: `${estimate.note}${general}` } : estimate;
+    if (estimate) return general ? { ...estimate, note: addToNote(estimate.note, general.slice(3)) } : estimate;
     const from = hours.official ? ` · hours from ${hours.source}` : '';
     return {
       value: 0,
@@ -1107,12 +1107,12 @@ function estimateFor(name) {
   // actually scheduled there right now (so the building must be open). Typical
   // patterns are guesses and would imply the building is open, so they don't count.
   if (estimate.source === 'estimated' && estimate.value >= 0.03) {
-    return { ...estimate, note: `${estimate.note} · building hours not published` };
+    return { ...estimate, note: addToNote(estimate.note, 'building hours not published') };
   }
   // Open only because its own timetable says a class runs through now.
   if (hours.assumed) {
     return estimate
-      ? { ...estimate, assumed: true, note: `${estimate.note} · hours assumed from the class timetable` }
+      ? { ...estimate, assumed: true, note: addToNote(estimate.note, 'hours assumed from the class timetable') }
       : { value: 0, source: 'unknown', note: 'Opening hours not published for today' };
   }
   return { value: 0, source: 'unknown', note: 'Opening hours not published for today' };
@@ -1160,9 +1160,8 @@ function estimateWhileOpen(name, day, hour, peak, period, effect, withPeriod, ti
     return {
       value: classes * peak,
       source: 'estimated',
-      note: period.classesMeet
-        ? 'Estimated from class schedules'
-        : `No classes scheduled · ${period.label}`,
+      // The header says "estimated from class schedules" once; only the exception is worth a note.
+      note: period.classesMeet ? '' : `No classes scheduled · ${period.label}`,
     };
   }
 
@@ -2232,6 +2231,15 @@ function statusLabel(t) {
   if (t < 0.8)  return 'Busy';
   return 'Very busy';
 }
+
+// The header already says the numbers are estimated from class schedules, so a
+// building repeating "Estimated" says nothing new. Only the sources that differ
+// from that default -- a person's report, Google's data, an event -- are named.
+const isDefaultEstimate = (source) => source === 'estimated' || source === 'typical';
+// A note can now be empty (the default estimate says nothing), so extra detail
+// must not be left hanging off a separator with nothing in front of it.
+const addToNote = (base, extra, sep = ' \u00b7 ') =>
+  base ? `${base}${sep}${extra}` : extra.charAt(0).toUpperCase() + extra.slice(1);
 
 const SOURCE_LABELS = {
   reported:  'Student reported',
@@ -3381,7 +3389,7 @@ function showTooltip(x, y, name, occ) {
     : occ.source === 'unknown' ? 'Hours unknown'
     : statusLabel(occ.value);
   ttStatus.style.color = inactive ? '#5a6478' : cssColor(occ.value);
-  ttSource.textContent = SOURCE_LABELS[occ.source] || '';
+  ttSource.textContent = isDefaultEstimate(occ.source) ? '' : (SOURCE_LABELS[occ.source] || '');
   ttNote.textContent = occ.note || '';
   renderSpaces(ttSpaces, occ.spaces);
   ttFill.style.width = (occ.value * 100) + '%';
@@ -3600,6 +3608,8 @@ function openPanel(name, keepThanks = false) {
     : occ.source === 'event' ? 'Event in progress'
     : occ.venue ? (occ.headline ?? 'Event day')
     : occ.source === 'unknown' ? 'Hours not published — no estimate right now'
+    : occ.source === 'open' ? 'Open now \u00b7 no classes in session'
+    : isDefaultEstimate(occ.source) ? `About ${Math.round(occ.value * 100)}% full`
     : `${SOURCE_LABELS[occ.source]} · ${Math.round(occ.value * 100)}% full`;
   panelQ.hidden = closed || unmapped;
   checkinRow.hidden = closed || unmapped;
