@@ -1211,7 +1211,7 @@ function estimateWhileOpen(name, day, hour, peak, period, effect, withPeriod, ti
   if (live) {
     return {
       value: Math.min(live.value, 1),
-      source: 'measured',
+      source: 'bookings',
       note: `${live.booked} of ${live.of} study rooms booked right now (live)`,
     };
   }
@@ -2453,6 +2453,7 @@ const addToNote = (base, extra, sep = ' \u00b7 ') =>
 const SOURCE_LABELS = {
   reported:  'Student reported',
   measured:  'Google data',
+  bookings:  'Live room bookings',
   estimated: 'Estimated',
   typical:   'Estimated',
   closed:    'Closed',
