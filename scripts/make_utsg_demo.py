@@ -16,6 +16,7 @@ INJECT = """<script>/* LOCAL DEMO ONLY: fake clock starting at ?t= (Toronto), ru
 (function(){const q=new URLSearchParams(location.search).get('t')||'2026-10-20T11:00';
 const F=new Date(q+(q.length<=16?':00-04:00':'')).getTime(),R=Date,T0=R.now();
 const now=()=>F+(R.now()-T0);
+const F0=window.fetch;window.fetch=(u,...a)=>F0(typeof u==='string'&&u.startsWith('/api/rooms')?'http://127.0.0.1:9099/'+u.slice('/api/rooms'.length):u,...a);
 window.Date=class extends R{constructor(...a){a.length?super(...a):super(now())}static now(){return now()}};
 addEventListener('DOMContentLoaded',()=>{const b=document.createElement('div');
 b.textContent='DEMO CLOCK: started at '+new R(F).toLocaleString('en-CA',{timeZone:'America/Toronto',weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})+' Toronto time. Not live.';
