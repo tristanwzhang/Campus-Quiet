@@ -174,3 +174,25 @@ buildings that matter. Revisit only if the vendor or the university objects.
 
 There is **no campus-wide lock schedule** in public. The one thing that would settle the
 rest is a request to Facilities & Services / Campus Safety for the programmed door schedules.
+
+
+## Second push, 2026-10-21 (owner: "try your hardest") -- 22 of 69 buildings with real evidence
+
+- **Library-inside evidence (10 buildings).** A library open to patrons means its building's
+  doors are open, so `tenantLibraries` in `building_hours.json` proves "open AT LEAST now" for
+  Sandford Fleming, Lash Miller, McLennan, Bahen, Sidney Smith, Edward Johnson, University
+  College, Emmanuel College, Wilson Hall and Daniels. `app.js` (`tenantOpen`/`withTenant`) uses
+  it only to override "probably closed", never to claim closed; the panel says which library,
+  and the hours report records basis `library inside`. Each link is an address match or the
+  map's own record. Earth Sciences did not match and is out. Other campuses: no such data,
+  harness unchanged to the decimal.
+- These 22 buildings hold ~40% of peak class load (was ~8% with own hours alone).
+- **Study rooms: 69 in 9 buildings** (added Music, UC, Pratt).
+- **Placed 3 more codes:** BY 255 Beverley Street, SD Sir Daniel Wilson Residence, TL Lawson
+  Centre (from LSM's public classroom list). UP left out: two official sources disagree.
+- **Dead ends, do not redo:** Campus Room Finder (room availability for every room) requires a
+  UTORid login. LSM's public Classroom Specification app (`lsm.utoronto.ca/webapp/f?p=210`)
+  lists the central classroom pool with capacities but no hours; its availability calendar
+  (app 200) is retired. LSM's FAQ/policy pages state no lock rules.
+- **LSM publishes `documents/Academic Calendar 2026-2027.pdf`** -- an official calendar source
+  for the Winter update.

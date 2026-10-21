@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-21T17:08:42+00:00",
+ "built_at": "2026-10-21T17:40:48+00:00",
  "campus": "University of Toronto \u2014 St. George",
  "source": "map.utoronto.ca (names, numbers, coordinates); OpenStreetMap (footprints)",
  "sourceUrl": "https://map.utoronto.ca/",
@@ -631,6 +631,46 @@
    "number": "509",
    "address": "93 Charles Street West, Toronto, ON\u00a0M5S 1K9",
    "source": "map.utoronto.ca"
+  },
+  "BY": {
+   "name": "255 Beverley Street",
+   "code": "BY",
+   "aliases": [],
+   "lat": 43.65847,
+   "lon": -79.395569,
+   "outline": [
+    [
+     -79.395599,
+     43.6583397
+    ],
+    [
+     -79.3957063,
+     43.6585919
+    ],
+    [
+     -79.3957029,
+     43.6586152
+    ],
+    [
+     -79.3956781,
+     43.6586322
+    ],
+    [
+     -79.3956258,
+     43.6586463
+    ],
+    [
+     -79.3952711,
+     43.6587195
+    ],
+    [
+     -79.3951564,
+     43.6584357
+    ]
+   ],
+   "number": null,
+   "address": null,
+   "source": "map record 794300 '255 Beverley Street | BY'"
   },
   "CH": {
    "name": "Convocation Hall",
@@ -4208,6 +4248,70 @@
    "address": "487 Spadina Crescent, Toronto, ON\u00a0M5S 2T4",
    "source": "map.utoronto.ca"
   },
+  "SD": {
+   "name": "Sir Daniel Wilson Residence",
+   "code": "SD",
+   "aliases": [],
+   "lat": 43.662518,
+   "lon": -79.397476,
+   "outline": [
+    [
+     -79.397473,
+     43.6629666
+    ],
+    [
+     -79.3975459,
+     43.6629509
+    ],
+    [
+     -79.3977303,
+     43.6629112
+    ],
+    [
+     -79.3975773,
+     43.6625259
+    ],
+    [
+     -79.3975625,
+     43.6624886
+    ],
+    [
+     -79.3974167,
+     43.6621214
+    ],
+    [
+     -79.3966392,
+     43.6622764
+    ],
+    [
+     -79.3966653,
+     43.6623381
+    ],
+    [
+     -79.3966878,
+     43.6623913
+    ],
+    [
+     -79.3973079,
+     43.6622584
+    ],
+    [
+     -79.3974259,
+     43.6625431
+    ],
+    [
+     -79.3975523,
+     43.6628484
+    ],
+    [
+     -79.3974323,
+     43.6628751
+    ]
+   ],
+   "number": null,
+   "address": null,
+   "source": "map record 986014 'Sir Daniel Wilson Residence | SD'"
+  },
   "SF": {
    "name": "Sandford Fleming Building",
    "code": "SF",
@@ -4677,6 +4781,46 @@
    "number": "421",
    "address": "57 Queen's Park Crescent East, Toronto, ON\u00a0M5S 2C4",
    "source": "map.utoronto.ca"
+  },
+  "TL": {
+   "name": "Lawson Centre for Sustainability",
+   "code": "TL",
+   "aliases": [],
+   "lat": 43.665707,
+   "lon": -79.397156,
+   "outline": [
+    [
+     -79.3972581,
+     43.6657234
+    ],
+    [
+     -79.3972056,
+     43.6657348
+    ],
+    [
+     -79.3970171,
+     43.6657758
+    ],
+    [
+     -79.3967186,
+     43.6658387
+    ],
+    [
+     -79.3966316,
+     43.665624
+    ],
+    [
+     -79.3971723,
+     43.6655061
+    ],
+    [
+     -79.3972553,
+     43.6657163
+    ]
+   ],
+   "number": null,
+   "address": null,
+   "source": "LSM classroom list 'TL Lawson Centre'; point from map record 1242831 (its roof farm)"
   },
   "UC": {
    "name": "University College",

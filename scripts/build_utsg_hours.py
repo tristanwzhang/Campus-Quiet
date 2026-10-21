@@ -55,6 +55,26 @@ LIBRARIES = {
     8454: ("John M. Kelly Library", "KL", "John M. Kelly Library"),
 }
 
+# Libraries INSIDE a building with no published hours of its own. A library that is
+# open to patrons means its building's doors are open too, so these hours prove "open AT
+# LEAST then" -- never "closed outside them" (app.js uses them only to override a
+# "probably closed"). Each link is the library's own address on library.utoronto.ca
+# matching the map's address for the building, or the map's own record naming the
+# library inside it. Earth Sciences (5 Bancroft Ave vs the map's 22 Ursula Franklin)
+# did not match and is left out.
+TENANTS = {
+    8400: ("Sandford Fleming Building", "Engineering & Computer Science Library"),  # 10 King's College Rd; map record names it
+    8322: ("Lash Miller Chemical Laboratories", "Chemistry Library"),               # 80 St. George
+    8323: ("McLennan Physical Laboratories", "Physics Library"),                    # physics.utoronto.ca: Burton Tower, McLennan
+    8325: ("Bahen Centre for Information Technology", "Mathematical Sciences Library"),  # 40 St. George, Rm 6141
+    8363: ("Sidney Smith Hall", "Department of Art Library"),                        # "Sidney Smith Hall, Room 6034"
+    8344: ("Edward Johnson Building", "Music Library"),                             # 80 Queen's Park; map record names it
+    8435: ("University College", "University College Library"),                     # 15 King's College Circle
+    8416: ("Emmanuel College", "Emmanuel College Library"),                         # 75 Queen's Park Cres E
+    8442: ("Wilson Hall", "D.G. Ivey Library (New College)"),                       # 40 Willcocks St
+    8163: ("Daniels Building", "Eberhard Zeidler Library"),                          # 1 Spadina Crescent
+}
+
 # Locations whose LibCal dates carry no closures at all (checked 2026-10-21: Kelly
 # lists every one of 84 days as open, Christmas included).
 NO_HOLIDAYS_IN_FEED = {8454}
@@ -218,6 +238,24 @@ def main():
             buildings[name]["followsCampusClosures"] = True
         print(f"{name}: {len(dates)} days {ks[0]}..{ks[-1]}; closed {sum(1 for v in dates.values() if not v)}")
 
+    tenants = {}
+    for lid, (building, label) in TENANTS.items():
+        if lid not in feed:
+            print(f"!! LibCal location {lid} ({label}) is missing from the feed", file=sys.stderr)
+            continue
+        dates = {}
+        for iso, day in sorted(feed[lid][1].items()):
+            try:
+                r = ranges(day)
+            except ValueError:
+                continue
+            if r is not None:
+                dates[iso] = r
+        if dates:
+            tenants.setdefault(building, []).append(
+                {"label": label, "sourceUrl": "https://libcal.library.utoronto.ca/hours/", "dates": dates})
+    print(f"library-inside evidence for {len(tenants)} buildings")
+
     buildings.update(WEEKLY)
 
     OUT.write_text(json.dumps({
@@ -227,6 +265,7 @@ def main():
         "campusClosedDates": CAMPUS_CLOSED,
         "classesOutDates": CLASSES_OUT,
         "buildings": buildings,
+        "tenantLibraries": tenants,
     }, indent=1) + "\n")
     print(f"-> {OUT.relative_to(ROOT)}")
     return 0

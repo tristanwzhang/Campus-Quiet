@@ -57,6 +57,14 @@ FALLBACKS = {
     "WO": ("Woodsworth College Residence", 43.667267, -79.399429, "map: 'Rotman Commerce | WO'; Wikipedia list"),
     "RL": ("Robarts Library", 43.664902, -79.399551, "map record 959690 'Robarts Library | RL'"),
     "IN": ("Innis College", 43.66555, -79.399529, "map: 'Registrar | Innis College | IN'"),
+    # Resolved 2026-10-21 from the map's own records, and LSM's public classroom list
+    # (lsm.utoronto.ca/webapp/f?p=210) for TL. UP stays unplaced on purpose: the timetable
+    # links UP to the map's Robarts Common record, while the map labels "University
+    # College Union | UP" -- two official sources disagree, so neither is guessed.
+    "BY": ("255 Beverley Street", 43.65847, -79.395569, "map record 794300 '255 Beverley Street | BY'"),
+    "SD": ("Sir Daniel Wilson Residence", 43.662518, -79.397476, "map record 986014 'Sir Daniel Wilson Residence | SD'"),
+    "TL": ("Lawson Centre for Sustainability", 43.665707, -79.397156,
+           "LSM classroom list 'TL Lawson Centre'; point from map record 1242831 (its roof farm)"),
     # Not a U of T code: the university files Robarts Common under Robarts (RL), but its
     # hours are its own (24 h on weekdays), so it is placed separately. Point: the map's
     # own record 516384 "Correct rendering of Robarts Common" (entrance: record 961125).
