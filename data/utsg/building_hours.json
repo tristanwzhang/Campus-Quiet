@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-21T04:59:22+00:00",
+ "built_at": "2026-10-21T06:02:02+00:00",
  "campus": "University of Toronto \u2014 St. George",
  "term": "2026/fall",
  "campusClosedDates": [
@@ -951,6 +951,112 @@
    "valid": [
     "2026-10-18",
     "2027-01-09"
+   ]
+  },
+  "Warren Stevens Building": {
+   "source": "Faculty of Kinesiology & Physical Education: Athletic Centre hours",
+   "sourceUrl": "https://kpe.utoronto.ca/facility/athletic-centre",
+   "code": "WS",
+   "weekly": {
+    "monday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "saturday": [
+     [
+      9,
+      17
+     ]
+    ],
+    "sunday": [
+     [
+      9,
+      17
+     ]
+    ]
+   },
+   "valid": [
+    "2026-09-08",
+    "2026-12-23"
+   ]
+  },
+  "Hart House": {
+   "source": "Hart House published building hours",
+   "sourceUrl": "https://harthouse.ca/contact/hours",
+   "code": "HH",
+   "weekly": {
+    "monday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "tuesday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "wednesday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "thursday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "friday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "saturday": [
+     [
+      7,
+      23
+     ]
+    ],
+    "sunday": [
+     [
+      7,
+      23
+     ]
+    ]
+   },
+   "valid": [
+    "2026-09-08",
+    "2026-12-23"
    ]
   }
  }

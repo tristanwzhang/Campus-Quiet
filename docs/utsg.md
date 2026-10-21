@@ -47,6 +47,32 @@ end 7 Dec; **8 Dec is "Makeup Monday"** (runs the Monday timetable, NOT modelled
 reads as an ordinary Tuesday); F-term exams to 22 Dec; winter break 24 Dec–5 Jan.
 Finals are assumed the same as ordinary weeks, the rule the owner set 2026-10-18.
 
+## Hours added 2026-10-21 ("fill what you can")
+
+Searched for official hours for the biggest class buildings and the obvious study spaces.
+**Found and added (4 of 63):**
+- Robarts, Sigmund Samuel/Gerstein: dated, 84 days (library pages).
+- **Athletic Centre** (map's `Warren Stevens Building`, WS): weekly, M-F 7-23, Sa-Su 9-17,
+  from KPE's own page; address 55 Harbord St matches the map. Carries `type: 'rec'`, which
+  is safe now that it has real hours. Valid 8 Sep-23 Dec; no closure is claimed for
+  Thanksgiving or the study break because the page names none.
+- **Hart House** (HH): "Mon-Sun 7:00 am-11:00 pm", from harthouse.ca/contact/hours. Cloudflare
+  blocks scripts, so it was read in a browser. It has no classes, so it enters through the
+  hours file and the map's own record (id 494521); the 3D tiles carry its name, so it draws.
+  Its fitness centre and pool print separate holiday hours, so no building holiday rule.
+
+**Searched, nothing official, so NOT filled (by the no-assumptions rule):** Bahen (a CS
+department FAQ says 8am-11pm Mon-Fri and a CS labs page says 24 hours; they conflict and
+neither is the building's page), Myhal (a 2018 PDF whose hours section I could not read),
+Sidney Smith (only the Commons study room: Mon-Thu 10-7:30, Fri 10-5, two pages disagree),
+OISE, Student Commons (a pre-opening news piece said "24 hours a day", a plan not a
+schedule). **The one move that would settle these is asking Facilities / Campus Safety for the
+lock schedules**, as with Maryland's UMPD and Ohio State's Lock and Key.
+
+**The harness got worse by adding real data.** `hours_accuracy.mjs` now holds out FOUR
+buildings (two libraries, a gym, Hart House) and reports 50.0%, down from 59.8%, because
+all four are classless and the fallback has nothing to go on. It still is not U of T's accuracy.
+
 ## What was measured, and what the numbers mean
 
 - 62 of 67 building codes placed. **Unplaced, no source: BY, ON, SD, TL, UP.**
@@ -76,10 +102,6 @@ classrooms. App Store and Reddit were not checked.
 
 ## Not done
 
-- **Hart House, the Athletic Centre and the Student Commons hours** — they publish their
-  own, none is in the file. Hart House has no classes so it is not in the class data either.
-- **The Athletic Centre (Warren Stevens Building, WS) has no `type: 'rec'`** — without
-  published hours a rec type would claim a gym is busy at 8pm on a guess. Add both together.
 - **Winter 2027** — sweep session `20271` before January; the calendar block is Fall only.
 - **Robarts study rooms** — booking is on LibCal's newer `/r/search/robarts` with no lid
   the existing call can reach.

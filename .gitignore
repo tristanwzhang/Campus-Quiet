@@ -21,3 +21,4 @@ data/osu/.cache/
 # hangs, and a department page takes 20 seconds even when it answers.
 data/umd/.cache/
 data/utsg/.cache/
+utsg-demo.html

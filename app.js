@@ -1598,6 +1598,12 @@ const BUILDINGS_UTSG = {
   'Leslie Dan Pharmacy Building':    { label: 'Leslie Dan Pharmacy' },
   'Munk School of Global Affairs & Public Policy': { label: 'Munk School' },
   'Factor-Inwentash Faculty of Social Work': { label: 'Social Work' },
+  // The map calls WS "Athletic Centre | WS | Warren Stevens Building"; KPE and
+  // everyone else say Athletic Centre. It publishes its hours, so a rec profile
+  // (busy evenings, empty mornings) cannot claim it is open when it is not.
+  'Warren Stevens Building': { type: 'rec', label: 'Athletic Centre', labelPriority: 1 },
+  // No classes, so it is known only through its published hours and the map's record.
+  'Hart House':             { label: 'Hart House', labelPriority: 1 },
 };
 
 // Each entry traces to the library's own page on library.utoronto.ca, whose address

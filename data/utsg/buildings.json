@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-21T04:55:46+00:00",
+ "built_at": "2026-10-21T06:02:30+00:00",
  "campus": "University of Toronto \u2014 St. George",
  "source": "map.utoronto.ca (names, numbers, coordinates); OpenStreetMap (footprints)",
  "sourceUrl": "https://map.utoronto.ca/",
@@ -1672,6 +1672,17 @@
    ],
    "number": "024",
    "address": "170 College Street (rear), Toronto, ON\u00a0M5S 3E3",
+   "source": "map.utoronto.ca"
+  },
+  "HH": {
+   "name": "Hart House",
+   "code": "HH",
+   "aliases": [],
+   "lat": 43.663776,
+   "lon": -79.394524,
+   "outline": null,
+   "number": "002",
+   "address": "7 Hart House Circle, Toronto, ON\u00a0M5S 3H3",
    "source": "map.utoronto.ca"
   },
   "HI": {

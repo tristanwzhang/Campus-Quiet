@@ -151,7 +151,19 @@ def main():
         if m["code"] and mm:
             ids.setdefault(m["code"], set()).add(mm.group(1))
 
-    codes = sorted(activity["buildings"])
+    # Buildings with published hours but no classes (Hart House) are not in the class
+    # data, so the hours file is the second place a code can come from. Their map record
+    # id is read from the map itself (Hart House: 494521, "Hart House | HH", category 48654).
+    EXTRA_IDS = {"HH": "494521"}
+    hours_file = DATA / "building_hours.json"
+    extra = sorted({e["code"] for e in json.loads(hours_file.read_text())["buildings"].values()
+                    if e.get("code") in EXTRA_IDS}) if hours_file.exists() else []
+    for c in extra:
+        ids.setdefault(c, set()).add(EXTRA_IDS[c])
+
+    # Codes come from each record's own `code`, not its key: the keys are names once this
+    # script has run, and it must be safe to run twice.
+    codes = sorted({v.get("code", k) for k, v in activity["buildings"].items()} | set(extra))
     shapes = footprints()
     print(f"footprints: {len(shapes)}", file=sys.stderr)
 

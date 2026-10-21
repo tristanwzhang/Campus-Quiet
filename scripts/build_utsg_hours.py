@@ -51,6 +51,37 @@ CAMPUS_CLOSED = (["2026-09-07", "2026-10-12", "2027-02-15"] +
 CLASSES_OUT = [(date(2026, 10, 26) + timedelta(days=i)).isoformat() for i in range(5)]
 
 
+# Published as a WEEKLY pattern on the unit's own page, read 2026-10-21. No dated feed
+# exists, so these are valid only for the term the page describes and hold nothing for
+# the days it does not mention (the winter break after 23 Dec reads "unknown").
+#   Athletic Centre  https://kpe.utoronto.ca/facility/athletic-centre
+#       "Monday to Friday: 7 a.m. - 11 p.m.  Saturday & Sunday: 9 a.m. - 5 p.m."
+#       55 Harbord St, which is the map's address for WS ("Athletic Centre | WS | Warren
+#       Stevens Building"). Open gym is listed to 23 Dec 2026; the page names no
+#       Thanksgiving, study-break or winter closure, so none is claimed.
+#   Hart House       https://harthouse.ca/contact/hours   (Cloudflare blocks scripts, so it
+#       was read in a browser) -- Building, "Mon - Sun 7:00 am - 11:00 pm". Its fitness
+#       centre and pool print separate HOLIDAY hours, so the building's holiday hours are
+#       not known and no closure rule is applied.
+def _week(weekday, weekend):
+    return {d: [list(weekday)] for d in ("monday", "tuesday", "wednesday", "thursday", "friday")} | \
+           {d: [list(weekend)] for d in ("saturday", "sunday")}
+
+
+WEEKLY = {
+    "Warren Stevens Building": {
+        "source": "Faculty of Kinesiology & Physical Education: Athletic Centre hours",
+        "sourceUrl": "https://kpe.utoronto.ca/facility/athletic-centre", "code": "WS",
+        "weekly": _week((7, 23), (9, 17)), "valid": ["2026-09-08", "2026-12-23"],
+    },
+    "Hart House": {
+        "source": "Hart House published building hours",
+        "sourceUrl": "https://harthouse.ca/contact/hours", "code": "HH",
+        "weekly": _week((7, 23), (7, 23)), "valid": ["2026-09-08", "2026-12-23"],
+    },
+}
+
+
 def clock(text):
     m = re.fullmatch(r"(\d{1,2})(?::(\d{2}))?\s*([ap])m", text.strip().lower())
     if not m:
@@ -101,6 +132,8 @@ def main():
             "code": code, "dates": dates, "valid": [ks[0], ks[-1]],
         }
         print(f"{name}: {len(dates)} days {ks[0]}..{ks[-1]}; closed {sum(1 for v in dates.values() if not v)}")
+
+    buildings.update(WEEKLY)
 
     OUT.write_text(json.dumps({
         "built_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),

@@ -3,7 +3,7 @@
  "campus": "University of Toronto \u2014 St. George",
  "source": "University of Toronto Timetable Builder",
  "sourceUrl": "https://ttb.utoronto.ca/",
- "built_at": "2026-10-21T04:54:16+00:00",
+ "built_at": "2026-10-21T06:02:17+00:00",
  "note": "Weighted count of class meetings in progress. Not people. Weights and hour counting match the other campuses. `seats` is students ENROLLED in the sections meeting then, summed over distinct sections. Keyed by building CODE until build_utsg_buildings.py renames it to the official name. Meetings that repeat every second week are counted as weekly.",
  "buildings": {
   "Sandford Fleming Building": {
