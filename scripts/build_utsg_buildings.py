@@ -43,6 +43,7 @@ CACHE = DATA / ".cache"
 KEY = "0001085cc708b9cef47080f064612ca5"          # the map site's own public key
 MAP_ID = 1809
 NEAR_M = 30.0
+NO_OUTLINE = {"RC"}
 BBOX = (43.650, -79.415, 43.675, -79.375)          # S, W, N, E
 
 # Codes whose own map id 404s. Name: Wikipedia's list of U of T buildings AND the
@@ -56,6 +57,10 @@ FALLBACKS = {
     "WO": ("Woodsworth College Residence", 43.667267, -79.399429, "map: 'Rotman Commerce | WO'; Wikipedia list"),
     "RL": ("Robarts Library", 43.664902, -79.399551, "map record 959690 'Robarts Library | RL'"),
     "IN": ("Innis College", 43.66555, -79.399529, "map: 'Registrar | Innis College | IN'"),
+    # Not a U of T code: the university files Robarts Common under Robarts (RL), but its
+    # hours are its own (24 h on weekdays), so it is placed separately. Point: the map's
+    # own record 516384 "Correct rendering of Robarts Common" (entrance: record 961125).
+    "RC": ("Robarts Common", 43.664314, -79.400192, "map record 516384 (Robarts Common), filed under RL"),
     "WS": ("Warren Stevens Building", 43.662861, -79.401039, "map record 959693 'Athletic Centre | WS | Warren Stevens Building'"),
 }
 
@@ -154,12 +159,16 @@ def main():
     # Buildings with published hours but no classes (Hart House) are not in the class
     # data, so the hours file is the second place a code can come from. Their map record
     # id is read from the map itself (Hart House: 494521, "Hart House | HH", category 48654).
-    EXTRA_IDS = {"HH": "494521"}
+    EXTRA_IDS = {"HH": "494521",      # "Hart House | HH"
+                 "KL": "959669",      # "John M. Kelly Library | KL"
+                 "PR": "959687"}      # "E.J. Pratt Library | PR"
     hours_file = DATA / "building_hours.json"
-    extra = sorted({e["code"] for e in json.loads(hours_file.read_text())["buildings"].values()
-                    if e.get("code") in EXTRA_IDS}) if hours_file.exists() else []
+    extra = (sorted({e["code"] for e in json.loads(hours_file.read_text())["buildings"].values()
+                    if e.get("code") in EXTRA_IDS or e.get("code") in FALLBACKS})
+             if hours_file.exists() else [])
     for c in extra:
-        ids.setdefault(c, set()).add(EXTRA_IDS[c])
+        if c in EXTRA_IDS:
+            ids.setdefault(c, set()).add(EXTRA_IDS[c])
 
     # Codes come from each record's own `code`, not its key: the keys are names once this
     # script has run, and it must be safe to run twice.
@@ -184,8 +193,20 @@ def main():
         best = min(shapes, key=lambda s: distance(pt, s[1]))
         d = distance(pt, best[1])
         rec["outline"] = [list(p) for p in simplify(best[0])] if d <= NEAR_M else None
+        # OSM has no footprint of its own for Robarts Common; the nearest one is OSM's
+        # "Robarts Library". A point label beats drawing it as the wrong building.
+        if code in NO_OUTLINE:
+            rec["outline"] = None
         rec["outlineDistM"] = round(d, 1)
         records[code] = rec
+
+    # A building added only for its hours must not take over a class building's footprint
+    # (Robarts Common's point is closest to Robarts' outline): label it by point instead.
+    class_codes = {v.get("code", k) for k, v in activity["buildings"].items()}
+    taken = {json.dumps(r["outline"]) for c, r in records.items() if c in class_codes and r["outline"]}
+    for c, r in records.items():
+        if c not in class_codes and r["outline"] and json.dumps(r["outline"]) in taken:
+            r["outline"] = None
 
     # Several codes can land on one footprint (Bahen/VN, the Borden halves). Keep the
     # shared outline -- a building the register holds twice is still one building.

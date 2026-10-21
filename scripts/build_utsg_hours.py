@@ -4,22 +4,27 @@ Build data/utsg/building_hours.json for U of T St. George.
 
 What is published, and what is not.
 
-PUBLISHED, dated, 12 weeks ahead, with the holiday closures already in it:
-    https://library.utoronto.ca/library/<slug>  -- each library page embeds
-    `hoursJson` {"2026-10-18": {"status": "open", "hours": [{"from": "10am", "to": "10pm"}]}, ...}
-    Closed days are explicit (Dec 24-26, Jan 1-5 ...). The window rolls, so this runs weekly.
+PUBLISHED, dated, 12 weeks ahead, closures explicit -- ONE feed for every library:
+    https://libcal.library.utoronto.ca/api_hours_grid.php?iid=478&format=json&weeks=12
+    (the public hours widget behind libcal.library.utoronto.ca/hours). The window rolls,
+    so this runs weekly. It replaced reading each library's own page.
 
 A building gets library hours ONLY where the building IS the library (the rule the
 other campuses use; a library inside a faculty building says nothing about its doors):
-    Robarts Library                      <- Robarts Library (RL)
-    Sigmund Samuel Library Building      <- Gerstein Science Information Centre (SM)
-                                            (the map's record for SM is "7 & 9 King's College
-                                            Circle"; Gerstein's address is 9 King's College Circle)
+    Robarts Library                  <- "Robarts" (8158)                     RL
+    Robarts Common                   <- "Robarts Common Building Hours" (8315; LibCal
+                                        names these BUILDING hours. 24 h Mon-Thu.)  RC
+    Sigmund Samuel Library Building  <- "Gerstein" (8321; the map's SM record is
+                                        "7 & 9 King's College Circle", Gerstein is 9)  SM
+    E.J. Pratt Library               <- "E.J. Pratt" (8438)                  PR
+    John M. Kelly Library            <- "Kelly" (8454)                       KL
+RC is this file's own key: U of T files Robarts Common under Robarts (RL), but its
+hours are not Robarts' (24 h vs 8:30am-11pm), so it is placed separately.
 
-Every other building has NO published hours and rides the class-timetable fallback in
-app.js, exactly as most of Ohio State and Maryland do. Searched and found nothing public
-for the academic buildings; the Athletic Centre and Hart House publish their own but are
-not in this file yet (Hart House has no classes, so it is not in the class data either).
+PUBLISHED as a weekly pattern on the building's own page: see WEEKLY below.
+
+Searched and NOT found (official building hours do not exist publicly, or conflict):
+see docs/utsg.md. Those buildings ride the class-timetable fallback in app.js.
 
 Calendar, all from U of T's own pages (engineering.calendar.utoronto.ca "Fall 2026 and
 Winter 2027 Key Dates" and the SGS sessional dates PDF):
@@ -40,11 +45,19 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "utsg" / "building_hours.json"
 
-# library page slug -> (building name as in class_activity.json, code, label for the source)
+GRID = "https://libcal.library.utoronto.ca/api_hours_grid.php?iid=478&format=json&weeks=12&systemTime=0"
+# LibCal location id -> (building name as the map/class data has it, code, label)
 LIBRARIES = {
-    "robarts": ("Robarts Library", "RL", "Robarts Library"),
-    "gerstein": ("Sigmund Samuel Library Building", "SM", "Gerstein Science Information Centre"),
+    8158: ("Robarts Library", "RL", "Robarts Library"),
+    8315: ("Robarts Common", "RC", "Robarts Common"),
+    8321: ("Sigmund Samuel Library Building", "SM", "Gerstein Science Information Centre"),
+    8438: ("E.J. Pratt Library", "PR", "E.J. Pratt Library"),
+    8454: ("John M. Kelly Library", "KL", "John M. Kelly Library"),
 }
+
+# Locations whose LibCal dates carry no closures at all (checked 2026-10-21: Kelly
+# lists every one of 84 days as open, Christmas included).
+NO_HOLIDAYS_IN_FEED = {8454}
 
 CAMPUS_CLOSED = (["2026-09-07", "2026-10-12", "2027-02-15"] +
                  [(date(2026, 12, 24) + timedelta(days=i)).isoformat() for i in range(13)])  # to Jan 5
@@ -64,8 +77,9 @@ CLASSES_OUT = [(date(2026, 10, 26) + timedelta(days=i)).isoformat() for i in ran
 #       centre and pool print separate HOLIDAY hours, so the building's holiday hours are
 #       not known and no closure rule is applied.
 def _week(weekday, weekend):
+    """weekend=None means published as closed (e.g. key-fob only)."""
     return {d: [list(weekday)] for d in ("monday", "tuesday", "wednesday", "thursday", "friday")} | \
-           {d: [list(weekend)] for d in ("saturday", "sunday")}
+           {d: ([list(weekend)] if weekend else []) for d in ("saturday", "sunday")}
 
 
 WEEKLY = {
@@ -73,6 +87,39 @@ WEEKLY = {
         "source": "Faculty of Kinesiology & Physical Education: Athletic Centre hours",
         "sourceUrl": "https://kpe.utoronto.ca/facility/athletic-centre", "code": "WS",
         "weekly": _week((7, 23), (9, 17)), "valid": ["2026-09-08", "2026-12-23"],
+    },
+    # oise.utoronto.ca/about/cao/facilities, read 2026-10-21: "Building Hours
+    # Monday-Friday: 7:00AM - 9:00PM | Saturday & Sunday: 9:00AM - 9:00PM". No holiday note.
+    "Ontario Institute for Studies in Education": {
+        "source": "OISE Building & Facilities Information",
+        "sourceUrl": "https://www.oise.utoronto.ca/about/cao/facilities", "code": "OI",
+        "weekly": _week((7, 21), (9, 21)), "valid": ["2026-09-08", "2026-12-23"],
+    },
+    # wdw.utoronto.ca/contact, read 2026-10-21, under "Building Hours: The building is
+    # open: Monday - Friday: 8:30 am - 8:00 pm; Saturday - Sunday: 10:00 am - 6:00 pm".
+    "Woodsworth College": {
+        "source": "Woodsworth College building hours",
+        "sourceUrl": "https://wdw.utoronto.ca/contact", "code": "WW",
+        "weekly": _week((8.5, 20), (10, 18)), "valid": ["2026-09-08", "2026-12-23"],
+    },
+    # innis.utoronto.ca/contact, read 2026-10-21: "The college building is typically open
+    # Monday-Friday, 8am-9pm" and "2 Sussex Avenue will be closed for renovation October
+    # 26-30." Weekends are not stated, so they are left out (unknown), not closed.
+    "Innis College": {
+        "source": "Innis College building hours",
+        "sourceUrl": "https://innis.utoronto.ca/contact/", "code": "IN",
+        "weekly": {d: [[8, 21]] for d in ("monday", "tuesday", "wednesday", "thursday", "friday")},
+        "valid": ["2026-09-08", "2026-12-23"],
+        "dates": {f"2026-10-{d}": [] for d in range(26, 31)},
+    },
+    # rotman.utoronto.ca/registrar/resources/rotman-administrative-services, read
+    # 2026-10-21: "hours of operation are Monday through Friday from 6:30 a.m. to 9:00 p.m.
+    # Access from 9:00 p.m. to 6:30 a.m. and on weekends requires the use of an access key
+    # fob" -- so weekends are closed to anyone without a Rotman fob.
+    "Rotman School of Management": {
+        "source": "Rotman School of Management hours of operation",
+        "sourceUrl": "https://www.rotman.utoronto.ca/registrar/resources/rotman-administrative-services/",
+        "code": "RT", "weekly": _week((6.5, 21), None), "valid": ["2026-09-08", "2026-12-23"],
     },
     "Hart House": {
         "source": "Hart House published building hours",
@@ -92,45 +139,74 @@ def clock(text):
 
 
 def ranges(day):
-    if day["status"] == "closed" or not day["hours"]:
+    """[[open, close], ...], [] for closed, None for a day the library has not set."""
+    if day["status"] == "not-set":
+        return None
+    if day["status"] == "24hours":
+        return [[0, 24]]
+    if day["status"] in ("closed", "text") or not day.get("hours"):
         return []
     out = []
     for r in day["hours"]:
         a, b = clock(r["from"]), clock(r["to"])
+        if r["to"].strip().lower() == "11:59pm":
+            b = 24
         if b <= a:                      # "to 12am" or past midnight
             b += 24
         out.append([round(a, 4), round(b, 4)])
     return out
 
 
-def hours_json(slug):
-    html = urllib.request.urlopen(urllib.request.Request(
-        f"https://library.utoronto.ca/library/{slug}", headers={"User-Agent": "CampusQuiet/1.0"}),
-        timeout=60).read().decode("utf8", "replace").replace('\\"', '"')
-    i = html.find('"hoursJson":')
-    if i < 0:
-        raise RuntimeError(f"{slug}: no hoursJson in page")
-    return json.JSONDecoder().raw_decode(html[i + 12:])[0]
+def grid():
+    """{lid: {date: day}} for every location and sub-location in the feed."""
+    body = urllib.request.urlopen(urllib.request.Request(GRID, headers={"User-Agent": "CampusQuiet/1.0"}),
+                                  timeout=60).read()
+    out = {}
+
+    def walk(locs):
+        for loc in locs:
+            days = {}
+            for wk in loc.get("weeks", []):
+                for day in wk.values():
+                    days[day["date"]] = day["times"]
+            out[int(loc["lid"])] = (loc["name"], days)
+            walk(loc.get("children", []))
+    walk(json.loads(body)["locations"])
+    return out
 
 
 def main():
+    feed = grid()
     buildings = {}
-    for slug, (name, code, label) in LIBRARIES.items():
-        hj = hours_json(slug)
+    for lid, (name, code, label) in LIBRARIES.items():
+        if lid not in feed:
+            print(f"!! LibCal location {lid} ({label}) is missing from the feed", file=sys.stderr)
+            continue
         dates = {}
-        for iso, day in sorted(hj.items()):
+        for iso, day in sorted(feed[lid][1].items()):
             try:
-                dates[iso] = ranges(day)
+                r = ranges(day)
             except ValueError as e:
-                print(f"!! {slug} {iso}: unreadable time {e!r}; {day}", file=sys.stderr)
+                print(f"!! {label} {iso}: unreadable time {e!r}; {day}", file=sys.stderr)
+                continue
+            if r is None:
+                continue              # not set: unknown, never "closed"
+            # Kelly's feed is its regular week copied onto every date -- it says open
+            # 8:30am-11:30pm on Christmas Day. Where a feed never marks a closure, the
+            # university's own closure days are applied instead of its dated hours.
+            if lid in NO_HOLIDAYS_IN_FEED and iso in CAMPUS_CLOSED:
+                continue
+            dates[iso] = r
         if not dates:
             continue
         ks = sorted(dates)
         buildings[name] = {
-            "source": f"{label} published hours",
-            "sourceUrl": f"https://library.utoronto.ca/library/{slug}",
+            "source": f"{label} published hours (U of T Libraries)",
+            "sourceUrl": "https://libcal.library.utoronto.ca/hours/",
             "code": code, "dates": dates, "valid": [ks[0], ks[-1]],
         }
+        if lid in NO_HOLIDAYS_IN_FEED:
+            buildings[name]["followsCampusClosures"] = True
         print(f"{name}: {len(dates)} days {ks[0]}..{ks[-1]}; closed {sum(1 for v in dates.values() if not v)}")
 
     buildings.update(WEEKLY)

@@ -1584,6 +1584,11 @@ const ACADEMIC_CALENDAR_UMD = {
 // are keyed on. Labels are shortened only to forms already in use on campus.
 const BUILDINGS_UTSG = {
   'Robarts Library':                 { type: 'library' },
+  // Its own building hours in LibCal ("Robarts Common Building Hours"): 24 h Mon-Thu.
+  // U of T files it under Robarts (RL); placed by the map's own point for it.
+  'Robarts Common':                  { type: 'library', labelPriority: 1 },
+  'E.J. Pratt Library':              { type: 'library', label: 'Pratt Library' },
+  'John M. Kelly Library':           { type: 'library', label: 'Kelly Library' },
   // The map's record for this building is "Sigmund Samuel Library Building"; the
   // library inside it is the Gerstein Science Information Centre, whose published
   // hours are the building's.
@@ -1616,6 +1621,11 @@ const BUILDINGS_UTSG = {
 const STUDY_SPOTS_UTSG = {
   'Robarts Library': 1,
   'Sigmund Samuel Library Building': 1,                // Gerstein
+  'Robarts Common': 1,                                 // 24 h study building, Mon-Thu
+  'E.J. Pratt Library': 1,                             // Victoria's library, its own building
+  'John M. Kelly Library': 1,                          // St. Michael's library, its own building
+  'Ontario Institute for Studies in Education': 0.75,  // OISE Library is inside; building hours published
+  'Innis College': 0.75,                               // Innis College Library is inside; building hours published
   'Sandford Fleming Building': 0.75,                   // Engineering & Computer Science Library
   'Lash Miller Chemical Laboratories': 0.75,           // Chemistry Library
   'Daniels Building': 0.75,                            // Architecture, Landscape, and Design Library
@@ -1629,6 +1639,9 @@ const PICK_LABELS_UTSG = {
   'Sandford Fleming Building': 'Sandford Fleming',
   'Lash Miller Chemical Laboratories': 'Lash Miller',
   'Rotman School of Management': 'Rotman',
+  'E.J. Pratt Library': 'Pratt Library',
+  'John M. Kelly Library': 'Kelly Library',
+  'Ontario Institute for Studies in Education': 'OISE',
 };
 
 // Joined on the scheduling code through the register; nothing needs pointing by hand.

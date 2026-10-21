@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-21T06:02:30+00:00",
+ "built_at": "2026-10-21T17:06:23+00:00",
  "source": "map.utoronto.ca",
  "codes": {
   "AB": "Astronomy & Astrophysics Building",
@@ -27,6 +27,7 @@
   "IN": "Innis College",
   "JH": "Jackman Humanities Building",
   "JP": "90 Wellesley Street West",
+  "KL": "John M. Kelly Library",
   "KP": "Koffler House",
   "LA": "Gerald Larkin Building",
   "LI": "Lillian Massey Building",
@@ -43,7 +44,9 @@
   "OH": "Odette (Louis) Hall",
   "OI": "Ontario Institute for Studies in Education",
   "PB": "Leslie Dan Pharmacy Building",
+  "PR": "E.J. Pratt Library",
   "PT": "D.L. Pratt Building",
+  "RC": "Robarts Common",
   "RL": "Robarts Library",
   "RS": "Rosebrugh Building",
   "RT": "Rotman School of Management",
