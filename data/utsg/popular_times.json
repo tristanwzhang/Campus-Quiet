@@ -1,0 +1,2509 @@
+{
+ "built_at": "2026-10-21T20:08:39+00:00",
+ "source": "Google \"Popular times\" (typical visits by hour, 100 = that place's busiest hour of the week)",
+ "method": "Read from Google Search's popular-times chart in a browser on 2026-10-21, one place at a time; each place's name was checked against the building. Not a live reading.",
+ "places": {
+  "Robarts Library": {
+   "googleName": "John P. Robarts Research Library",
+   "weekly": {
+    "monday": [
+     {
+      "hour": 8,
+      "busyness": 19
+     },
+     {
+      "hour": 9,
+      "busyness": 31
+     },
+     {
+      "hour": 10,
+      "busyness": 44
+     },
+     {
+      "hour": 11,
+      "busyness": 58
+     },
+     {
+      "hour": 12,
+      "busyness": 67
+     },
+     {
+      "hour": 13,
+      "busyness": 74
+     },
+     {
+      "hour": 14,
+      "busyness": 76
+     },
+     {
+      "hour": 15,
+      "busyness": 78
+     },
+     {
+      "hour": 16,
+      "busyness": 75
+     },
+     {
+      "hour": 17,
+      "busyness": 67
+     },
+     {
+      "hour": 18,
+      "busyness": 54
+     },
+     {
+      "hour": 19,
+      "busyness": 43
+     },
+     {
+      "hour": 20,
+      "busyness": 34
+     },
+     {
+      "hour": 21,
+      "busyness": 27
+     },
+     {
+      "hour": 22,
+      "busyness": 21
+     }
+    ],
+    "tuesday": [
+     {
+      "hour": 8,
+      "busyness": 25
+     },
+     {
+      "hour": 9,
+      "busyness": 41
+     },
+     {
+      "hour": 10,
+      "busyness": 57
+     },
+     {
+      "hour": 11,
+      "busyness": 74
+     },
+     {
+      "hour": 12,
+      "busyness": 88
+     },
+     {
+      "hour": 13,
+      "busyness": 98
+     },
+     {
+      "hour": 14,
+      "busyness": 100
+     },
+     {
+      "hour": 15,
+      "busyness": 99
+     },
+     {
+      "hour": 16,
+      "busyness": 93
+     },
+     {
+      "hour": 17,
+      "busyness": 81
+     },
+     {
+      "hour": 18,
+      "busyness": 66
+     },
+     {
+      "hour": 19,
+      "busyness": 54
+     },
+     {
+      "hour": 20,
+      "busyness": 44
+     },
+     {
+      "hour": 21,
+      "busyness": 34
+     },
+     {
+      "hour": 22,
+      "busyness": 26
+     }
+    ],
+    "wednesday": [
+     {
+      "hour": 8,
+      "busyness": 24
+     },
+     {
+      "hour": 9,
+      "busyness": 39
+     },
+     {
+      "hour": 10,
+      "busyness": 56
+     },
+     {
+      "hour": 11,
+      "busyness": 73
+     },
+     {
+      "hour": 12,
+      "busyness": 86
+     },
+     {
+      "hour": 13,
+      "busyness": 95
+     },
+     {
+      "hour": 14,
+      "busyness": 98
+     },
+     {
+      "hour": 15,
+      "busyness": 97
+     },
+     {
+      "hour": 16,
+      "busyness": 91
+     },
+     {
+      "hour": 17,
+      "busyness": 81
+     },
+     {
+      "hour": 18,
+      "busyness": 67
+     },
+     {
+      "hour": 19,
+      "busyness": 56
+     },
+     {
+      "hour": 20,
+      "busyness": 45
+     },
+     {
+      "hour": 21,
+      "busyness": 34
+     },
+     {
+      "hour": 22,
+      "busyness": 25
+     }
+    ],
+    "thursday": [
+     {
+      "hour": 8,
+      "busyness": 26
+     },
+     {
+      "hour": 9,
+      "busyness": 40
+     },
+     {
+      "hour": 10,
+      "busyness": 54
+     },
+     {
+      "hour": 11,
+      "busyness": 67
+     },
+     {
+      "hour": 12,
+      "busyness": 81
+     },
+     {
+      "hour": 13,
+      "busyness": 87
+     },
+     {
+      "hour": 14,
+      "busyness": 89
+     },
+     {
+      "hour": 15,
+      "busyness": 85
+     },
+     {
+      "hour": 16,
+      "busyness": 78
+     },
+     {
+      "hour": 17,
+      "busyness": 66
+     },
+     {
+      "hour": 18,
+      "busyness": 56
+     },
+     {
+      "hour": 19,
+      "busyness": 46
+     },
+     {
+      "hour": 20,
+      "busyness": 36
+     },
+     {
+      "hour": 21,
+      "busyness": 27
+     },
+     {
+      "hour": 22,
+      "busyness": 19
+     }
+    ],
+    "friday": [
+     {
+      "hour": 8,
+      "busyness": 22
+     },
+     {
+      "hour": 9,
+      "busyness": 32
+     },
+     {
+      "hour": 10,
+      "busyness": 43
+     },
+     {
+      "hour": 11,
+      "busyness": 54
+     },
+     {
+      "hour": 12,
+      "busyness": 67
+     },
+     {
+      "hour": 13,
+      "busyness": 75
+     },
+     {
+      "hour": 14,
+      "busyness": 79
+     },
+     {
+      "hour": 15,
+      "busyness": 77
+     },
+     {
+      "hour": 16,
+      "busyness": 70
+     },
+     {
+      "hour": 17,
+      "busyness": 58
+     },
+     {
+      "hour": 18,
+      "busyness": 40
+     },
+     {
+      "hour": 19,
+      "busyness": 26
+     },
+     {
+      "hour": 20,
+      "busyness": 17
+     },
+     {
+      "hour": 21,
+      "busyness": 12
+     },
+     {
+      "hour": 22,
+      "busyness": 10
+     }
+    ],
+    "saturday": [
+     {
+      "hour": 9,
+      "busyness": 7
+     },
+     {
+      "hour": 10,
+      "busyness": 13
+     },
+     {
+      "hour": 11,
+      "busyness": 19
+     },
+     {
+      "hour": 12,
+      "busyness": 26
+     },
+     {
+      "hour": 13,
+      "busyness": 29
+     },
+     {
+      "hour": 14,
+      "busyness": 33
+     },
+     {
+      "hour": 15,
+      "busyness": 34
+     },
+     {
+      "hour": 16,
+      "busyness": 33
+     },
+     {
+      "hour": 17,
+      "busyness": 30
+     },
+     {
+      "hour": 18,
+      "busyness": 22
+     },
+     {
+      "hour": 19,
+      "busyness": 16
+     },
+     {
+      "hour": 20,
+      "busyness": 11
+     },
+     {
+      "hour": 21,
+      "busyness": 9
+     }
+    ],
+    "sunday": [
+     {
+      "hour": 10,
+      "busyness": 14
+     },
+     {
+      "hour": 11,
+      "busyness": 18
+     },
+     {
+      "hour": 12,
+      "busyness": 22
+     },
+     {
+      "hour": 13,
+      "busyness": 25
+     },
+     {
+      "hour": 14,
+      "busyness": 30
+     },
+     {
+      "hour": 15,
+      "busyness": 32
+     },
+     {
+      "hour": 16,
+      "busyness": 32
+     },
+     {
+      "hour": 17,
+      "busyness": 28
+     },
+     {
+      "hour": 18,
+      "busyness": 21
+     },
+     {
+      "hour": 19,
+      "busyness": 17
+     },
+     {
+      "hour": 20,
+      "busyness": 13
+     },
+     {
+      "hour": 21,
+      "busyness": 11
+     }
+    ]
+   }
+  },
+  "Sigmund Samuel Library Building": {
+   "googleName": "Gerstein Science Information Centre",
+   "weekly": {
+    "monday": [
+     {
+      "hour": 8,
+      "busyness": 21
+     },
+     {
+      "hour": 9,
+      "busyness": 31
+     },
+     {
+      "hour": 10,
+      "busyness": 40
+     },
+     {
+      "hour": 11,
+      "busyness": 47
+     },
+     {
+      "hour": 12,
+      "busyness": 54
+     },
+     {
+      "hour": 13,
+      "busyness": 65
+     },
+     {
+      "hour": 14,
+      "busyness": 72
+     },
+     {
+      "hour": 15,
+      "busyness": 71
+     },
+     {
+      "hour": 16,
+      "busyness": 70
+     },
+     {
+      "hour": 17,
+      "busyness": 65
+     },
+     {
+      "hour": 18,
+      "busyness": 56
+     },
+     {
+      "hour": 19,
+      "busyness": 40
+     },
+     {
+      "hour": 20,
+      "busyness": 31
+     },
+     {
+      "hour": 21,
+      "busyness": 20
+     },
+     {
+      "hour": 22,
+      "busyness": 17
+     }
+    ],
+    "tuesday": [
+     {
+      "hour": 8,
+      "busyness": 15
+     },
+     {
+      "hour": 9,
+      "busyness": 31
+     },
+     {
+      "hour": 10,
+      "busyness": 50
+     },
+     {
+      "hour": 11,
+      "busyness": 71
+     },
+     {
+      "hour": 12,
+      "busyness": 83
+     },
+     {
+      "hour": 13,
+      "busyness": 91
+     },
+     {
+      "hour": 14,
+      "busyness": 100
+     },
+     {
+      "hour": 15,
+      "busyness": 99
+     },
+     {
+      "hour": 16,
+      "busyness": 95
+     },
+     {
+      "hour": 17,
+      "busyness": 80
+     },
+     {
+      "hour": 18,
+      "busyness": 61
+     },
+     {
+      "hour": 19,
+      "busyness": 45
+     },
+     {
+      "hour": 20,
+      "busyness": 32
+     },
+     {
+      "hour": 21,
+      "busyness": 23
+     },
+     {
+      "hour": 22,
+      "busyness": 21
+     }
+    ],
+    "wednesday": [
+     {
+      "hour": 8,
+      "busyness": 27
+     },
+     {
+      "hour": 9,
+      "busyness": 38
+     },
+     {
+      "hour": 10,
+      "busyness": 54
+     },
+     {
+      "hour": 11,
+      "busyness": 70
+     },
+     {
+      "hour": 12,
+      "busyness": 83
+     },
+     {
+      "hour": 13,
+      "busyness": 87
+     },
+     {
+      "hour": 14,
+      "busyness": 92
+     },
+     {
+      "hour": 15,
+      "busyness": 88
+     },
+     {
+      "hour": 16,
+      "busyness": 85
+     },
+     {
+      "hour": 17,
+      "busyness": 77
+     },
+     {
+      "hour": 18,
+      "busyness": 69
+     },
+     {
+      "hour": 19,
+      "busyness": 56
+     },
+     {
+      "hour": 20,
+      "busyness": 42
+     },
+     {
+      "hour": 21,
+      "busyness": 27
+     },
+     {
+      "hour": 22,
+      "busyness": 18
+     }
+    ],
+    "thursday": [
+     {
+      "hour": 8,
+      "busyness": 25
+     },
+     {
+      "hour": 9,
+      "busyness": 36
+     },
+     {
+      "hour": 10,
+      "busyness": 50
+     },
+     {
+      "hour": 11,
+      "busyness": 61
+     },
+     {
+      "hour": 12,
+      "busyness": 74
+     },
+     {
+      "hour": 13,
+      "busyness": 84
+     },
+     {
+      "hour": 14,
+      "busyness": 85
+     },
+     {
+      "hour": 15,
+      "busyness": 76
+     },
+     {
+      "hour": 16,
+      "busyness": 64
+     },
+     {
+      "hour": 17,
+      "busyness": 55
+     },
+     {
+      "hour": 18,
+      "busyness": 44
+     },
+     {
+      "hour": 19,
+      "busyness": 37
+     },
+     {
+      "hour": 20,
+      "busyness": 30
+     },
+     {
+      "hour": 21,
+      "busyness": 23
+     },
+     {
+      "hour": 22,
+      "busyness": 18
+     }
+    ],
+    "friday": [
+     {
+      "hour": 8,
+      "busyness": 12
+     },
+     {
+      "hour": 9,
+      "busyness": 24
+     },
+     {
+      "hour": 10,
+      "busyness": 36
+     },
+     {
+      "hour": 11,
+      "busyness": 52
+     },
+     {
+      "hour": 12,
+      "busyness": 60
+     },
+     {
+      "hour": 13,
+      "busyness": 68
+     },
+     {
+      "hour": 14,
+      "busyness": 71
+     },
+     {
+      "hour": 15,
+      "busyness": 68
+     },
+     {
+      "hour": 16,
+      "busyness": 57
+     },
+     {
+      "hour": 17,
+      "busyness": 41
+     },
+     {
+      "hour": 18,
+      "busyness": 30
+     },
+     {
+      "hour": 19,
+      "busyness": 17
+     },
+     {
+      "hour": 20,
+      "busyness": 13
+     },
+     {
+      "hour": 21,
+      "busyness": 11
+     }
+    ],
+    "saturday": [
+     {
+      "hour": 9,
+      "busyness": 17
+     },
+     {
+      "hour": 10,
+      "busyness": 23
+     },
+     {
+      "hour": 11,
+      "busyness": 24
+     },
+     {
+      "hour": 12,
+      "busyness": 28
+     },
+     {
+      "hour": 13,
+      "busyness": 31
+     },
+     {
+      "hour": 14,
+      "busyness": 32
+     },
+     {
+      "hour": 15,
+      "busyness": 35
+     },
+     {
+      "hour": 16,
+      "busyness": 35
+     },
+     {
+      "hour": 17,
+      "busyness": 30
+     },
+     {
+      "hour": 18,
+      "busyness": 25
+     },
+     {
+      "hour": 19,
+      "busyness": 21
+     },
+     {
+      "hour": 20,
+      "busyness": 16
+     },
+     {
+      "hour": 21,
+      "busyness": 13
+     }
+    ],
+    "sunday": [
+     {
+      "hour": 10,
+      "busyness": 12
+     },
+     {
+      "hour": 11,
+      "busyness": 18
+     },
+     {
+      "hour": 12,
+      "busyness": 23
+     },
+     {
+      "hour": 13,
+      "busyness": 29
+     },
+     {
+      "hour": 14,
+      "busyness": 34
+     },
+     {
+      "hour": 15,
+      "busyness": 38
+     },
+     {
+      "hour": 16,
+      "busyness": 37
+     },
+     {
+      "hour": 17,
+      "busyness": 32
+     },
+     {
+      "hour": 18,
+      "busyness": 23
+     },
+     {
+      "hour": 19,
+      "busyness": 18
+     },
+     {
+      "hour": 20,
+      "busyness": 14
+     },
+     {
+      "hour": 21,
+      "busyness": 12
+     }
+    ]
+   }
+  },
+  "E.J. Pratt Library": {
+   "googleName": "E.J. Pratt Library",
+   "weekly": {
+    "monday": [
+     {
+      "hour": 9,
+      "busyness": 30
+     },
+     {
+      "hour": 10,
+      "busyness": 39
+     },
+     {
+      "hour": 11,
+      "busyness": 51
+     },
+     {
+      "hour": 12,
+      "busyness": 66
+     },
+     {
+      "hour": 13,
+      "busyness": 74
+     },
+     {
+      "hour": 14,
+      "busyness": 80
+     },
+     {
+      "hour": 15,
+      "busyness": 79
+     },
+     {
+      "hour": 16,
+      "busyness": 69
+     },
+     {
+      "hour": 17,
+      "busyness": 57
+     },
+     {
+      "hour": 18,
+      "busyness": 50
+     },
+     {
+      "hour": 19,
+      "busyness": 42
+     },
+     {
+      "hour": 20,
+      "busyness": 34
+     },
+     {
+      "hour": 21,
+      "busyness": 29
+     },
+     {
+      "hour": 22,
+      "busyness": 23
+     },
+     {
+      "hour": 23,
+      "busyness": 22
+     }
+    ],
+    "tuesday": [
+     {
+      "hour": 9,
+      "busyness": 41
+     },
+     {
+      "hour": 10,
+      "busyness": 52
+     },
+     {
+      "hour": 11,
+      "busyness": 56
+     },
+     {
+      "hour": 12,
+      "busyness": 69
+     },
+     {
+      "hour": 13,
+      "busyness": 85
+     },
+     {
+      "hour": 14,
+      "busyness": 99
+     },
+     {
+      "hour": 15,
+      "busyness": 100
+     },
+     {
+      "hour": 16,
+      "busyness": 72
+     },
+     {
+      "hour": 17,
+      "busyness": 49
+     },
+     {
+      "hour": 18,
+      "busyness": 37
+     },
+     {
+      "hour": 19,
+      "busyness": 34
+     },
+     {
+      "hour": 20,
+      "busyness": 35
+     },
+     {
+      "hour": 21,
+      "busyness": 37
+     },
+     {
+      "hour": 22,
+      "busyness": 31
+     },
+     {
+      "hour": 23,
+      "busyness": 26
+     }
+    ],
+    "wednesday": [
+     {
+      "hour": 9,
+      "busyness": 25
+     },
+     {
+      "hour": 10,
+      "busyness": 35
+     },
+     {
+      "hour": 11,
+      "busyness": 48
+     },
+     {
+      "hour": 12,
+      "busyness": 70
+     },
+     {
+      "hour": 13,
+      "busyness": 71
+     },
+     {
+      "hour": 14,
+      "busyness": 74
+     },
+     {
+      "hour": 15,
+      "busyness": 57
+     },
+     {
+      "hour": 16,
+      "busyness": 54
+     },
+     {
+      "hour": 17,
+      "busyness": 42
+     },
+     {
+      "hour": 18,
+      "busyness": 42
+     },
+     {
+      "hour": 19,
+      "busyness": 39
+     },
+     {
+      "hour": 20,
+      "busyness": 46
+     },
+     {
+      "hour": 21,
+      "busyness": 39
+     },
+     {
+      "hour": 22,
+      "busyness": 33
+     },
+     {
+      "hour": 23,
+      "busyness": 24
+     }
+    ],
+    "thursday": [
+     {
+      "hour": 9,
+      "busyness": 33
+     },
+     {
+      "hour": 10,
+      "busyness": 45
+     },
+     {
+      "hour": 11,
+      "busyness": 67
+     },
+     {
+      "hour": 12,
+      "busyness": 86
+     },
+     {
+      "hour": 13,
+      "busyness": 97
+     },
+     {
+      "hour": 14,
+      "busyness": 90
+     },
+     {
+      "hour": 15,
+      "busyness": 71
+     },
+     {
+      "hour": 16,
+      "busyness": 52
+     },
+     {
+      "hour": 17,
+      "busyness": 41
+     },
+     {
+      "hour": 18,
+      "busyness": 36
+     },
+     {
+      "hour": 19,
+      "busyness": 29
+     },
+     {
+      "hour": 20,
+      "busyness": 24
+     },
+     {
+      "hour": 21,
+      "busyness": 19
+     },
+     {
+      "hour": 22,
+      "busyness": 15
+     },
+     {
+      "hour": 23,
+      "busyness": 15
+     }
+    ],
+    "friday": [
+     {
+      "hour": 9,
+      "busyness": 39
+     },
+     {
+      "hour": 10,
+      "busyness": 43
+     },
+     {
+      "hour": 11,
+      "busyness": 54
+     },
+     {
+      "hour": 12,
+      "busyness": 62
+     },
+     {
+      "hour": 13,
+      "busyness": 76
+     },
+     {
+      "hour": 14,
+      "busyness": 82
+     },
+     {
+      "hour": 15,
+      "busyness": 78
+     },
+     {
+      "hour": 16,
+      "busyness": 66
+     }
+    ],
+    "saturday": [
+     {
+      "hour": 12,
+      "busyness": 29
+     },
+     {
+      "hour": 13,
+      "busyness": 36
+     },
+     {
+      "hour": 14,
+      "busyness": 35
+     },
+     {
+      "hour": 15,
+      "busyness": 30
+     },
+     {
+      "hour": 16,
+      "busyness": 35
+     },
+     {
+      "hour": 17,
+      "busyness": 33
+     }
+    ],
+    "sunday": [
+     {
+      "hour": 13,
+      "busyness": 29
+     },
+     {
+      "hour": 14,
+      "busyness": 28
+     },
+     {
+      "hour": 15,
+      "busyness": 33
+     },
+     {
+      "hour": 16,
+      "busyness": 35
+     },
+     {
+      "hour": 17,
+      "busyness": 43
+     },
+     {
+      "hour": 18,
+      "busyness": 37
+     },
+     {
+      "hour": 19,
+      "busyness": 32
+     },
+     {
+      "hour": 20,
+      "busyness": 24
+     },
+     {
+      "hour": 21,
+      "busyness": 22
+     },
+     {
+      "hour": 22,
+      "busyness": 22
+     },
+     {
+      "hour": 23,
+      "busyness": 19
+     }
+    ]
+   }
+  },
+  "John M. Kelly Library": {
+   "googleName": "John M. Kelly Library (University of St. Michael's College)",
+   "weekly": {
+    "monday": [
+     {
+      "hour": 8,
+      "busyness": 33
+     },
+     {
+      "hour": 9,
+      "busyness": 54
+     },
+     {
+      "hour": 10,
+      "busyness": 80
+     },
+     {
+      "hour": 11,
+      "busyness": 93
+     },
+     {
+      "hour": 12,
+      "busyness": 100
+     },
+     {
+      "hour": 13,
+      "busyness": 100
+     },
+     {
+      "hour": 14,
+      "busyness": 100
+     },
+     {
+      "hour": 15,
+      "busyness": 90
+     },
+     {
+      "hour": 16,
+      "busyness": 80
+     },
+     {
+      "hour": 17,
+      "busyness": 61
+     },
+     {
+      "hour": 18,
+      "busyness": 45
+     },
+     {
+      "hour": 19,
+      "busyness": 39
+     },
+     {
+      "hour": 20,
+      "busyness": 37
+     },
+     {
+      "hour": 21,
+      "busyness": 30
+     },
+     {
+      "hour": 22,
+      "busyness": 26
+     },
+     {
+      "hour": 23,
+      "busyness": 18
+     }
+    ],
+    "tuesday": [
+     {
+      "hour": 8,
+      "busyness": 31
+     },
+     {
+      "hour": 9,
+      "busyness": 51
+     },
+     {
+      "hour": 10,
+      "busyness": 59
+     },
+     {
+      "hour": 11,
+      "busyness": 75
+     },
+     {
+      "hour": 12,
+      "busyness": 86
+     },
+     {
+      "hour": 13,
+      "busyness": 91
+     },
+     {
+      "hour": 14,
+      "busyness": 86
+     },
+     {
+      "hour": 15,
+      "busyness": 72
+     },
+     {
+      "hour": 16,
+      "busyness": 59
+     },
+     {
+      "hour": 17,
+      "busyness": 42
+     },
+     {
+      "hour": 18,
+      "busyness": 38
+     },
+     {
+      "hour": 19,
+      "busyness": 38
+     },
+     {
+      "hour": 20,
+      "busyness": 39
+     },
+     {
+      "hour": 21,
+      "busyness": 29
+     },
+     {
+      "hour": 22,
+      "busyness": 21
+     },
+     {
+      "hour": 23,
+      "busyness": 18
+     }
+    ],
+    "wednesday": [
+     {
+      "hour": 8,
+      "busyness": 33
+     },
+     {
+      "hour": 9,
+      "busyness": 54
+     },
+     {
+      "hour": 10,
+      "busyness": 80
+     },
+     {
+      "hour": 11,
+      "busyness": 93
+     },
+     {
+      "hour": 12,
+      "busyness": 100
+     },
+     {
+      "hour": 13,
+      "busyness": 100
+     },
+     {
+      "hour": 14,
+      "busyness": 100
+     },
+     {
+      "hour": 15,
+      "busyness": 90
+     },
+     {
+      "hour": 16,
+      "busyness": 80
+     },
+     {
+      "hour": 17,
+      "busyness": 61
+     },
+     {
+      "hour": 18,
+      "busyness": 45
+     },
+     {
+      "hour": 19,
+      "busyness": 39
+     },
+     {
+      "hour": 20,
+      "busyness": 37
+     },
+     {
+      "hour": 21,
+      "busyness": 30
+     },
+     {
+      "hour": 22,
+      "busyness": 26
+     },
+     {
+      "hour": 23,
+      "busyness": 18
+     }
+    ],
+    "thursday": [
+     {
+      "hour": 8,
+      "busyness": 30
+     },
+     {
+      "hour": 9,
+      "busyness": 36
+     },
+     {
+      "hour": 10,
+      "busyness": 50
+     },
+     {
+      "hour": 11,
+      "busyness": 66
+     },
+     {
+      "hour": 12,
+      "busyness": 66
+     },
+     {
+      "hour": 13,
+      "busyness": 66
+     },
+     {
+      "hour": 14,
+      "busyness": 72
+     },
+     {
+      "hour": 15,
+      "busyness": 75
+     },
+     {
+      "hour": 16,
+      "busyness": 64
+     },
+     {
+      "hour": 17,
+      "busyness": 46
+     },
+     {
+      "hour": 18,
+      "busyness": 30
+     },
+     {
+      "hour": 19,
+      "busyness": 23
+     },
+     {
+      "hour": 20,
+      "busyness": 23
+     },
+     {
+      "hour": 21,
+      "busyness": 23
+     },
+     {
+      "hour": 22,
+      "busyness": 20
+     },
+     {
+      "hour": 23,
+      "busyness": 23
+     }
+    ],
+    "friday": [
+     {
+      "hour": 8,
+      "busyness": 40
+     },
+     {
+      "hour": 9,
+      "busyness": 53
+     },
+     {
+      "hour": 10,
+      "busyness": 57
+     },
+     {
+      "hour": 11,
+      "busyness": 58
+     },
+     {
+      "hour": 12,
+      "busyness": 67
+     },
+     {
+      "hour": 13,
+      "busyness": 71
+     },
+     {
+      "hour": 14,
+      "busyness": 73
+     },
+     {
+      "hour": 15,
+      "busyness": 61
+     },
+     {
+      "hour": 16,
+      "busyness": 43
+     },
+     {
+      "hour": 17,
+      "busyness": 30
+     },
+     {
+      "hour": 18,
+      "busyness": 21
+     },
+     {
+      "hour": 19,
+      "busyness": 23
+     },
+     {
+      "hour": 20,
+      "busyness": 23
+     },
+     {
+      "hour": 21,
+      "busyness": 30
+     },
+     {
+      "hour": 22,
+      "busyness": 25
+     },
+     {
+      "hour": 23,
+      "busyness": 19
+     }
+    ],
+    "saturday": [
+     {
+      "hour": 10,
+      "busyness": 19
+     },
+     {
+      "hour": 11,
+      "busyness": 20
+     },
+     {
+      "hour": 12,
+      "busyness": 23
+     },
+     {
+      "hour": 13,
+      "busyness": 26
+     },
+     {
+      "hour": 14,
+      "busyness": 30
+     },
+     {
+      "hour": 15,
+      "busyness": 30
+     },
+     {
+      "hour": 16,
+      "busyness": 36
+     },
+     {
+      "hour": 17,
+      "busyness": 34
+     },
+     {
+      "hour": 18,
+      "busyness": 30
+     },
+     {
+      "hour": 19,
+      "busyness": 25
+     },
+     {
+      "hour": 20,
+      "busyness": 21
+     },
+     {
+      "hour": 21,
+      "busyness": 25
+     },
+     {
+      "hour": 22,
+      "busyness": 23
+     },
+     {
+      "hour": 23,
+      "busyness": 22
+     }
+    ],
+    "sunday": [
+     {
+      "hour": 13,
+      "busyness": 27
+     },
+     {
+      "hour": 14,
+      "busyness": 26
+     },
+     {
+      "hour": 15,
+      "busyness": 31
+     },
+     {
+      "hour": 16,
+      "busyness": 33
+     },
+     {
+      "hour": 17,
+      "busyness": 34
+     },
+     {
+      "hour": 18,
+      "busyness": 40
+     },
+     {
+      "hour": 19,
+      "busyness": 34
+     },
+     {
+      "hour": 20,
+      "busyness": 28
+     },
+     {
+      "hour": 21,
+      "busyness": 23
+     },
+     {
+      "hour": 22,
+      "busyness": 19
+     },
+     {
+      "hour": 23,
+      "busyness": 13
+     }
+    ]
+   }
+  },
+  "Hart House": {
+   "googleName": "Hart House",
+   "weekly": {
+    "monday": [
+     {
+      "hour": 7,
+      "busyness": 17
+     },
+     {
+      "hour": 8,
+      "busyness": 21
+     },
+     {
+      "hour": 9,
+      "busyness": 28
+     },
+     {
+      "hour": 10,
+      "busyness": 35
+     },
+     {
+      "hour": 11,
+      "busyness": 47
+     },
+     {
+      "hour": 12,
+      "busyness": 53
+     },
+     {
+      "hour": 13,
+      "busyness": 58
+     },
+     {
+      "hour": 14,
+      "busyness": 63
+     },
+     {
+      "hour": 15,
+      "busyness": 69
+     },
+     {
+      "hour": 16,
+      "busyness": 75
+     },
+     {
+      "hour": 17,
+      "busyness": 78
+     },
+     {
+      "hour": 18,
+      "busyness": 82
+     },
+     {
+      "hour": 19,
+      "busyness": 76
+     },
+     {
+      "hour": 20,
+      "busyness": 66
+     },
+     {
+      "hour": 21,
+      "busyness": 43
+     },
+     {
+      "hour": 22,
+      "busyness": 22
+     }
+    ],
+    "tuesday": [
+     {
+      "hour": 7,
+      "busyness": 21
+     },
+     {
+      "hour": 8,
+      "busyness": 31
+     },
+     {
+      "hour": 9,
+      "busyness": 37
+     },
+     {
+      "hour": 10,
+      "busyness": 44
+     },
+     {
+      "hour": 11,
+      "busyness": 53
+     },
+     {
+      "hour": 12,
+      "busyness": 66
+     },
+     {
+      "hour": 13,
+      "busyness": 73
+     },
+     {
+      "hour": 14,
+      "busyness": 73
+     },
+     {
+      "hour": 15,
+      "busyness": 73
+     },
+     {
+      "hour": 16,
+      "busyness": 77
+     },
+     {
+      "hour": 17,
+      "busyness": 86
+     },
+     {
+      "hour": 18,
+      "busyness": 90
+     },
+     {
+      "hour": 19,
+      "busyness": 84
+     },
+     {
+      "hour": 20,
+      "busyness": 65
+     },
+     {
+      "hour": 21,
+      "busyness": 43
+     },
+     {
+      "hour": 22,
+      "busyness": 20
+     }
+    ],
+    "wednesday": [
+     {
+      "hour": 7,
+      "busyness": 16
+     },
+     {
+      "hour": 8,
+      "busyness": 25
+     },
+     {
+      "hour": 9,
+      "busyness": 36
+     },
+     {
+      "hour": 10,
+      "busyness": 46
+     },
+     {
+      "hour": 11,
+      "busyness": 59
+     },
+     {
+      "hour": 12,
+      "busyness": 69
+     },
+     {
+      "hour": 13,
+      "busyness": 73
+     },
+     {
+      "hour": 14,
+      "busyness": 70
+     },
+     {
+      "hour": 15,
+      "busyness": 71
+     },
+     {
+      "hour": 16,
+      "busyness": 83
+     },
+     {
+      "hour": 17,
+      "busyness": 93
+     },
+     {
+      "hour": 18,
+      "busyness": 92
+     },
+     {
+      "hour": 19,
+      "busyness": 79
+     },
+     {
+      "hour": 20,
+      "busyness": 57
+     },
+     {
+      "hour": 21,
+      "busyness": 38
+     },
+     {
+      "hour": 22,
+      "busyness": 24
+     }
+    ],
+    "thursday": [
+     {
+      "hour": 7,
+      "busyness": 23
+     },
+     {
+      "hour": 8,
+      "busyness": 30
+     },
+     {
+      "hour": 9,
+      "busyness": 35
+     },
+     {
+      "hour": 10,
+      "busyness": 40
+     },
+     {
+      "hour": 11,
+      "busyness": 52
+     },
+     {
+      "hour": 12,
+      "busyness": 65
+     },
+     {
+      "hour": 13,
+      "busyness": 74
+     },
+     {
+      "hour": 14,
+      "busyness": 73
+     },
+     {
+      "hour": 15,
+      "busyness": 69
+     },
+     {
+      "hour": 16,
+      "busyness": 66
+     },
+     {
+      "hour": 17,
+      "busyness": 70
+     },
+     {
+      "hour": 18,
+      "busyness": 73
+     },
+     {
+      "hour": 19,
+      "busyness": 67
+     },
+     {
+      "hour": 20,
+      "busyness": 52
+     },
+     {
+      "hour": 21,
+      "busyness": 36
+     },
+     {
+      "hour": 22,
+      "busyness": 20
+     }
+    ],
+    "friday": [
+     {
+      "hour": 7,
+      "busyness": 19
+     },
+     {
+      "hour": 8,
+      "busyness": 26
+     },
+     {
+      "hour": 9,
+      "busyness": 35
+     },
+     {
+      "hour": 10,
+      "busyness": 40
+     },
+     {
+      "hour": 11,
+      "busyness": 50
+     },
+     {
+      "hour": 12,
+      "busyness": 58
+     },
+     {
+      "hour": 13,
+      "busyness": 68
+     },
+     {
+      "hour": 14,
+      "busyness": 73
+     },
+     {
+      "hour": 15,
+      "busyness": 72
+     },
+     {
+      "hour": 16,
+      "busyness": 74
+     },
+     {
+      "hour": 17,
+      "busyness": 80
+     },
+     {
+      "hour": 18,
+      "busyness": 88
+     },
+     {
+      "hour": 19,
+      "busyness": 96
+     },
+     {
+      "hour": 20,
+      "busyness": 100
+     },
+     {
+      "hour": 21,
+      "busyness": 86
+     },
+     {
+      "hour": 22,
+      "busyness": 63
+     }
+    ],
+    "saturday": [
+     {
+      "hour": 7,
+      "busyness": 8
+     },
+     {
+      "hour": 8,
+      "busyness": 13
+     },
+     {
+      "hour": 9,
+      "busyness": 22
+     },
+     {
+      "hour": 10,
+      "busyness": 29
+     },
+     {
+      "hour": 11,
+      "busyness": 39
+     },
+     {
+      "hour": 12,
+      "busyness": 46
+     },
+     {
+      "hour": 13,
+      "busyness": 52
+     },
+     {
+      "hour": 14,
+      "busyness": 58
+     },
+     {
+      "hour": 15,
+      "busyness": 62
+     },
+     {
+      "hour": 16,
+      "busyness": 60
+     },
+     {
+      "hour": 17,
+      "busyness": 53
+     },
+     {
+      "hour": 18,
+      "busyness": 46
+     },
+     {
+      "hour": 19,
+      "busyness": 44
+     },
+     {
+      "hour": 20,
+      "busyness": 41
+     },
+     {
+      "hour": 21,
+      "busyness": 38
+     },
+     {
+      "hour": 22,
+      "busyness": 30
+     }
+    ],
+    "sunday": [
+     {
+      "hour": 7,
+      "busyness": 7
+     },
+     {
+      "hour": 8,
+      "busyness": 10
+     },
+     {
+      "hour": 9,
+      "busyness": 15
+     },
+     {
+      "hour": 10,
+      "busyness": 22
+     },
+     {
+      "hour": 11,
+      "busyness": 26
+     },
+     {
+      "hour": 12,
+      "busyness": 30
+     },
+     {
+      "hour": 13,
+      "busyness": 33
+     },
+     {
+      "hour": 14,
+      "busyness": 40
+     },
+     {
+      "hour": 15,
+      "busyness": 49
+     },
+     {
+      "hour": 16,
+      "busyness": 55
+     },
+     {
+      "hour": 17,
+      "busyness": 53
+     },
+     {
+      "hour": 18,
+      "busyness": 45
+     },
+     {
+      "hour": 19,
+      "busyness": 34
+     },
+     {
+      "hour": 20,
+      "busyness": 29
+     },
+     {
+      "hour": 21,
+      "busyness": 20
+     },
+     {
+      "hour": 22,
+      "busyness": 15
+     }
+    ]
+   }
+  },
+  "Warren Stevens Building": {
+   "googleName": "Athletic Centre",
+   "weekly": {
+    "monday": [
+     {
+      "hour": 7,
+      "busyness": 40
+     },
+     {
+      "hour": 8,
+      "busyness": 55
+     },
+     {
+      "hour": 9,
+      "busyness": 53
+     },
+     {
+      "hour": 10,
+      "busyness": 48
+     },
+     {
+      "hour": 11,
+      "busyness": 47
+     },
+     {
+      "hour": 12,
+      "busyness": 50
+     },
+     {
+      "hour": 13,
+      "busyness": 54
+     },
+     {
+      "hour": 14,
+      "busyness": 62
+     },
+     {
+      "hour": 15,
+      "busyness": 74
+     },
+     {
+      "hour": 16,
+      "busyness": 85
+     },
+     {
+      "hour": 17,
+      "busyness": 85
+     },
+     {
+      "hour": 18,
+      "busyness": 85
+     },
+     {
+      "hour": 19,
+      "busyness": 74
+     },
+     {
+      "hour": 20,
+      "busyness": 56
+     },
+     {
+      "hour": 21,
+      "busyness": 37
+     },
+     {
+      "hour": 22,
+      "busyness": 21
+     }
+    ],
+    "tuesday": [
+     {
+      "hour": 7,
+      "busyness": 38
+     },
+     {
+      "hour": 8,
+      "busyness": 48
+     },
+     {
+      "hour": 9,
+      "busyness": 49
+     },
+     {
+      "hour": 10,
+      "busyness": 50
+     },
+     {
+      "hour": 11,
+      "busyness": 53
+     },
+     {
+      "hour": 12,
+      "busyness": 58
+     },
+     {
+      "hour": 13,
+      "busyness": 64
+     },
+     {
+      "hour": 14,
+      "busyness": 73
+     },
+     {
+      "hour": 15,
+      "busyness": 85
+     },
+     {
+      "hour": 16,
+      "busyness": 98
+     },
+     {
+      "hour": 17,
+      "busyness": 94
+     },
+     {
+      "hour": 18,
+      "busyness": 94
+     },
+     {
+      "hour": 19,
+      "busyness": 88
+     },
+     {
+      "hour": 20,
+      "busyness": 71
+     },
+     {
+      "hour": 21,
+      "busyness": 48
+     },
+     {
+      "hour": 22,
+      "busyness": 28
+     }
+    ],
+    "wednesday": [
+     {
+      "hour": 7,
+      "busyness": 45
+     },
+     {
+      "hour": 8,
+      "busyness": 61
+     },
+     {
+      "hour": 9,
+      "busyness": 61
+     },
+     {
+      "hour": 10,
+      "busyness": 53
+     },
+     {
+      "hour": 11,
+      "busyness": 47
+     },
+     {
+      "hour": 12,
+      "busyness": 50
+     },
+     {
+      "hour": 13,
+      "busyness": 59
+     },
+     {
+      "hour": 14,
+      "busyness": 71
+     },
+     {
+      "hour": 15,
+      "busyness": 87
+     },
+     {
+      "hour": 16,
+      "busyness": 98
+     },
+     {
+      "hour": 17,
+      "busyness": 100
+     },
+     {
+      "hour": 18,
+      "busyness": 96
+     },
+     {
+      "hour": 19,
+      "busyness": 85
+     },
+     {
+      "hour": 20,
+      "busyness": 69
+     },
+     {
+      "hour": 21,
+      "busyness": 43
+     },
+     {
+      "hour": 22,
+      "busyness": 25
+     }
+    ],
+    "thursday": [
+     {
+      "hour": 7,
+      "busyness": 29
+     },
+     {
+      "hour": 8,
+      "busyness": 40
+     },
+     {
+      "hour": 9,
+      "busyness": 43
+     },
+     {
+      "hour": 10,
+      "busyness": 45
+     },
+     {
+      "hour": 11,
+      "busyness": 49
+     },
+     {
+      "hour": 12,
+      "busyness": 55
+     },
+     {
+      "hour": 13,
+      "busyness": 61
+     },
+     {
+      "hour": 14,
+      "busyness": 67
+     },
+     {
+      "hour": 15,
+      "busyness": 75
+     },
+     {
+      "hour": 16,
+      "busyness": 83
+     },
+     {
+      "hour": 17,
+      "busyness": 87
+     },
+     {
+      "hour": 18,
+      "busyness": 93
+     },
+     {
+      "hour": 19,
+      "busyness": 89
+     },
+     {
+      "hour": 20,
+      "busyness": 75
+     },
+     {
+      "hour": 21,
+      "busyness": 46
+     },
+     {
+      "hour": 22,
+      "busyness": 26
+     }
+    ],
+    "friday": [
+     {
+      "hour": 7,
+      "busyness": 33
+     },
+     {
+      "hour": 8,
+      "busyness": 49
+     },
+     {
+      "hour": 9,
+      "busyness": 54
+     },
+     {
+      "hour": 10,
+      "busyness": 52
+     },
+     {
+      "hour": 11,
+      "busyness": 50
+     },
+     {
+      "hour": 12,
+      "busyness": 50
+     },
+     {
+      "hour": 13,
+      "busyness": 53
+     },
+     {
+      "hour": 14,
+      "busyness": 63
+     },
+     {
+      "hour": 15,
+      "busyness": 79
+     },
+     {
+      "hour": 16,
+      "busyness": 98
+     },
+     {
+      "hour": 17,
+      "busyness": 98
+     },
+     {
+      "hour": 18,
+      "busyness": 95
+     },
+     {
+      "hour": 19,
+      "busyness": 78
+     },
+     {
+      "hour": 20,
+      "busyness": 60
+     },
+     {
+      "hour": 21,
+      "busyness": 37
+     },
+     {
+      "hour": 22,
+      "busyness": 23
+     }
+    ],
+    "saturday": [
+     {
+      "hour": 9,
+      "busyness": 29
+     },
+     {
+      "hour": 10,
+      "busyness": 39
+     },
+     {
+      "hour": 11,
+      "busyness": 45
+     },
+     {
+      "hour": 12,
+      "busyness": 46
+     },
+     {
+      "hour": 13,
+      "busyness": 49
+     },
+     {
+      "hour": 14,
+      "busyness": 50
+     },
+     {
+      "hour": 15,
+      "busyness": 54
+     },
+     {
+      "hour": 16,
+      "busyness": 50
+     }
+    ],
+    "sunday": [
+     {
+      "hour": 9,
+      "busyness": 28
+     },
+     {
+      "hour": 10,
+      "busyness": 37
+     },
+     {
+      "hour": 11,
+      "busyness": 48
+     },
+     {
+      "hour": 12,
+      "busyness": 53
+     },
+     {
+      "hour": 13,
+      "busyness": 52
+     },
+     {
+      "hour": 14,
+      "busyness": 50
+     },
+     {
+      "hour": 15,
+      "busyness": 52
+     },
+     {
+      "hour": 16,
+      "busyness": 46
+     }
+    ]
+   }
+  }
+ }
+}

@@ -222,3 +222,21 @@ gave office hours for OISE, library hours for Robarts Common, nothing for Hart H
 Sidney Smith closes 6:30pm while ~1,050 students are timetabled there 6-7pm Monday). U of T
 Food Services (foodservices.utoronto.ca refuses connections from this network). No official
 study-space directory exists (library.utoronto.ca/space is a 404).
+
+
+## Busyness, 2026-10-21 -- Google popular times for the six non-class buildings
+
+`data/utsg/popular_times.json` (same shape the Illinois file uses; `app.js` already reads it
+first, as "measured"). Robarts, Gerstein (Sigmund Samuel), E.J. Pratt, Kelly, Hart House and the
+Athletic Centre -- exactly the buildings that had no classes and rode a generic type curve.
+Read from Google Search's popular-times chart in the browser pane, one place at a time,
+name-checked; 100 = that place's busiest hour of the week. Cross-check: the Athletic Centre's
+weekend curve runs exactly 9am-5pm, its published weekend hours.
+
+How it was read (do not re-derive): the day tabs only switch on REAL clicks while the pane is
+hidden; scripted clicks silently returned one day seven times (caught by checking that days
+differ). Teaching buildings (Sidney Smith, Bahen, Myhal, Medical Sciences, UC), OISE, the
+Student Commons and Robarts Common have NO popular times on Google.
+
+Static, not live: refresh once a term. Kelly's Monday and Wednesday curves are identical as
+Google shows them.
