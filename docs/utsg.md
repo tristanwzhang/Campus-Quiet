@@ -257,3 +257,17 @@ booked slot is a `slots` entry with className `s-lc-eq-checkout` (drawn red, leg
 the current hour and only when >= 8 rooms are bookable; otherwise the library curve. No past
 bookings are exposed by LibCal (past dates return no slots), so there is no history to build a
 typical curve from.
+
+
+## 2026-10-21: flicker (Student Commons, Ramsay Wright) -- two causes, both fixed
+
+1. **Name.** The register carried only the university's name; the 3D tiles are OpenStreetMap and
+   say "Ramsay Wright Building", "North/South Borden Building", "Sanford Fleming Building" (sic),
+   "E. J. Pratt Library"... so the tile was never claimed and we drew our own copy over it. The
+   register now carries the footprint's OSM name as an alias, but only when it shares a
+   distinctive word with the official name (the first cut gave the Lawson Centre the Gerald
+   Larkin Building's name). 20 overlays became 8.
+2. **Courtyards.** A tile block reports one point (its centre). For a U- or L-shaped building
+   that centre is in the courtyard, outside our outline, so the existing "hide the tile under our
+   own shape" rule missed it and the two shapes z-fought. `coverByHull` (U of T only) tests the
+   outline's convex hull instead. Other campuses are unchanged.

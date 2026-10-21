@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-21T17:40:48+00:00",
+ "built_at": "2026-10-21T21:59:53+00:00",
  "campus": "University of Toronto \u2014 St. George",
  "source": "map.utoronto.ca (names, numbers, coordinates); OpenStreetMap (footprints)",
  "sourceUrl": "https://map.utoronto.ca/",
@@ -7,7 +7,9 @@
   "AB": {
    "name": "Astronomy & Astrophysics Building",
    "code": "AB",
-   "aliases": [],
+   "aliases": [
+    "Department of Astronomy and Astrophysics"
+   ],
    "lat": 43.660618,
    "lon": -79.397324,
    "outline": [
@@ -339,7 +341,9 @@
   "BF": {
    "name": "Bancroft Building",
    "code": "BF",
-   "aliases": [],
+   "aliases": [
+    "Bancroft Hall"
+   ],
    "lat": 43.660931,
    "lon": -79.399727,
    "outline": [
@@ -2144,7 +2148,9 @@
   "KL": {
    "name": "John M. Kelly Library",
    "code": "KL",
-   "aliases": [],
+   "aliases": [
+    "John M. Kelly Library - St. Michael\u2019s College"
+   ],
    "lat": 43.664852,
    "lon": -79.389519,
    "outline": [
@@ -3212,7 +3218,9 @@
   "MY": {
    "name": "Myhal Centre for Engineering Innovation & Entrepreneurship",
    "code": "MY",
-   "aliases": [],
+   "aliases": [
+    "Myhal Centre for Engineering Innovation and Entrepreneurship"
+   ],
    "lat": 43.660862,
    "lon": -79.396538,
    "outline": [
@@ -3280,7 +3288,9 @@
   "NB": {
    "name": "Borden Building North",
    "code": "NB",
-   "aliases": [],
+   "aliases": [
+    "North Borden Building"
+   ],
    "lat": 43.660477,
    "lon": -79.400253,
    "outline": [
@@ -3508,7 +3518,9 @@
   "OH": {
    "name": "Odette (Louis) Hall",
    "code": "OH",
-   "aliases": [],
+   "aliases": [
+    "Odette Hall"
+   ],
    "lat": 43.666409,
    "lon": -79.388664,
    "outline": [
@@ -3572,7 +3584,9 @@
   "OI": {
    "name": "Ontario Institute for Studies in Education",
    "code": "OI",
-   "aliases": [],
+   "aliases": [
+    "Ontario Institute for Studies in Education (University of Toronto)"
+   ],
    "lat": 43.668224,
    "lon": -79.398438,
    "outline": [
@@ -3676,7 +3690,9 @@
   "PR": {
    "name": "E.J. Pratt Library",
    "code": "PR",
-   "aliases": [],
+   "aliases": [
+    "E. J. Pratt Library"
+   ],
    "lat": 43.666313,
    "lon": -79.391396,
    "outline": [
@@ -3716,7 +3732,9 @@
   "PT": {
    "name": "D.L. Pratt Building",
    "code": "PT",
-   "aliases": [],
+   "aliases": [
+    "D. L. Pratt Building"
+   ],
    "lat": 43.659615,
    "lon": -79.394745,
    "outline": [
@@ -4047,7 +4065,9 @@
   "RW": {
    "name": "Ramsay Wright Laboratories",
    "code": "RW",
-   "aliases": [],
+   "aliases": [
+    "Ramsay Wright Building"
+   ],
    "lat": 43.663555,
    "lon": -79.398872,
    "outline": [
@@ -4175,7 +4195,9 @@
   "SB": {
    "name": "Borden Building South",
    "code": "SB",
-   "aliases": [],
+   "aliases": [
+    "South Borden Building"
+   ],
    "lat": 43.660175,
    "lon": -79.399742,
    "outline": [
@@ -4315,7 +4337,9 @@
   "SF": {
    "name": "Sandford Fleming Building",
    "code": "SF",
-   "aliases": [],
+   "aliases": [
+    "Sanford Fleming Building"
+   ],
    "lat": 43.660259,
    "lon": -79.395134,
    "outline": [
@@ -4682,7 +4706,9 @@
   "SU": {
    "name": "Student Commons",
    "code": "SU",
-   "aliases": [],
+   "aliases": [
+    "UTSU Student Commons"
+   ],
    "lat": 43.658752,
    "lon": -79.397919,
    "outline": [
@@ -5473,7 +5499,9 @@
   "VC": {
    "name": "Victoria College Building",
    "code": "VC",
-   "aliases": [],
+   "aliases": [
+    "Victoria College"
+   ],
    "lat": 43.666908,
    "lon": -79.392128,
    "outline": [
@@ -5585,7 +5613,9 @@
   "WB": {
    "name": "Wallberg Memorial Building",
    "code": "WB",
-   "aliases": [],
+   "aliases": [
+    "Wallberg Building"
+   ],
    "lat": 43.658966,
    "lon": -79.395599,
    "outline": [

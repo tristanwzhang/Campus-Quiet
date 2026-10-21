@@ -148,11 +148,29 @@ def footprints():
         g = w.get("geometry") or []
         if len(g) >= 4:
             ring = [(p["lon"], p["lat"]) for p in g[:-1]]
-            out.append((ring, [to_m(*p) for p in ring]))
+            out.append((ring, [to_m(*p) for p in ring], (w.get("tags") or {}).get("name")))
     return out
 
 
 import urllib.parse  # noqa: E402  (used by footprints)
+
+
+GENERIC = {"the", "of", "and", "for", "building", "hall", "centre", "center", "college", "university",
+           "library", "school", "house", "residence", "laboratories", "institute", "program", "faculty"}
+
+
+def _words(n):
+    out = set()
+    for w in re.findall(r"[a-z0-9]+", n.lower()):
+        out.add({"sanford": "sandford"}.get(w, w))     # OSM's own spelling slip for Sandford Fleming
+    return out - GENERIC
+
+
+def shares_a_name(a, b):
+    """A footprint 30 m from a point is not necessarily THAT building (it gave the Lawson
+    Centre the Gerald Larkin Building's name). Alias only when the names share a
+    distinctive word."""
+    return bool(_words(a) & _words(b))
 
 
 def main():
@@ -199,6 +217,7 @@ def main():
             continue
         pt = to_m(rec["lon"], rec["lat"])
         best = min(shapes, key=lambda s: distance(pt, s[1]))
+        osm_name = best[2]
         d = distance(pt, best[1])
         rec["outline"] = [list(p) for p in simplify(best[0])] if d <= NEAR_M else None
         # OSM has no footprint of its own for Robarts Common; the nearest one is OSM's
@@ -206,6 +225,13 @@ def main():
         if code in NO_OUTLINE:
             rec["outline"] = None
         rec["outlineDistM"] = round(d, 1)
+        # The 3D tiles are OpenStreetMap too, and name a building the way OSM does
+        # ("UTSU Student Commons", "E. J. Pratt Library"). Without that name as an
+        # alias the tile is never claimed, the app draws its own copy on top, and the
+        # two flicker. Only when the footprint really is this building's.
+        rec["aliases"] = [osm_name] if (osm_name and rec["outline"] and code not in NO_OUTLINE
+                                        and osm_name != rec["name"]
+                                        and shares_a_name(osm_name, rec["name"])) else []
         records[code] = rec
 
     # A building added only for its hours must not take over a class building's footprint
@@ -220,7 +246,7 @@ def main():
     # shared outline -- a building the register holds twice is still one building.
     reg = {}
     for code, r in records.items():
-        entry = {"name": r["name"], "code": code, "aliases": [], "lat": r["lat"], "lon": r["lon"],
+        entry = {"name": r["name"], "code": code, "aliases": r.get("aliases", []), "lat": r["lat"], "lon": r["lon"],
                  "outline": r["outline"], "number": r["number"], "address": r["address"],
                  "source": r["source"]}
         reg[code] = entry

@@ -1820,7 +1820,9 @@ const CAMPUS_CONTENT = {
           labelRegisterBuildings: true,
           buildingEdges: true,
           hoursReports: true,
-          groundGrid: true },
+          groundGrid: true,
+          // Hide a 3D block whose centre lies in the courtyard of a building we draw ourselves.
+          coverByHull: true },
 }[CAMPUS.id];
 
 const BUILDINGS = CAMPUS_CONTENT.buildings;
@@ -3645,8 +3647,28 @@ function overlayCovering(lon, lat) {
     const box = shape.box ?? (shape.box = boundingBox(shape.outline));
     if (lon < box.west || lon > box.east || lat < box.south || lat > box.north) continue;
     if (pointInOutline(lon, lat, shape.outline)) return name;
+    // A tile block reports ONE point, its centre. For a U- or L-shaped building that
+    // centre sits in the courtyard, outside the outline, so the block was never
+    // hidden and flickered against our own copy (Student Commons, Ramsay Wright).
+    // The hull of the outline includes the courtyard. U of T only.
+    if (CAMPUS_CONTENT.coverByHull) {
+      const hull = shape.hull ?? (shape.hull = convexHull(shape.outline));
+      if (pointInOutline(lon, lat, hull)) return name;
+    }
   }
   return null;
+}
+
+/** Andrew's monotone chain on [lon, lat] points. */
+function convexHull(points) {
+  const pts = [...points].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  if (pts.length < 3) return pts;
+  const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  const lower = [];
+  for (const p of pts) { while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], p) <= 0) lower.pop(); lower.push(p); }
+  const upper = [];
+  for (const p of [...pts].reverse()) { while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], p) <= 0) upper.pop(); upper.push(p); }
+  return lower.slice(0, -1).concat(upper.slice(0, -1));
 }
 
 function boundingBox(outline) {
