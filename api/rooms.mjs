@@ -55,10 +55,9 @@ const CAMPUSES = {
   // Sigmund Samuel building; the Map & Data Library is on Robarts' 5th floor).
   // Building names are the map's own, because that is what the class data joins on.
   //
-  // Measured 2026-10-21: 65 bookable rooms. NOT here: Robarts' own booking runs
+  // Measured 2026-10-21: 65 bookable rooms, 69 with the three added below. NOT here: Robarts' own booking runs
   // through LibCal's newer /r/search page with no lid this call can reach. The
-  // Music, University College, Graham and Pratt libraries have lids but are left out
-  // until their building is confirmed from a page rather than a library's name.
+  // Graham Library (lid 3483) is at 3 Devonshire Place, a building not on the map.
   utsg: {
     host: 'https://libcal.library.utoronto.ca',
     zone: 'America/Toronto',
@@ -69,6 +68,12 @@ const CAMPUSES = {
       { lid: '3320', building: 'Daniels Building',                         label: 'Eberhard Zeidler Library' },
       { lid: '3335', building: 'Ontario Institute for Studies in Education', label: 'OISE Library' },
       { lid: '3836', building: 'Robarts Library',                          label: 'Map & Data Library' },
+      // Added 2026-10-21 once each building was confirmed from a page: the Music
+      // Library's address is 80 Queen's Park (Edward Johnson, whose map record also
+      // names it); UC Library's is 15 King's College Circle; Pratt is its own building.
+      { lid: '3472', building: 'Edward Johnson Building',                  label: 'Music Library' },
+      { lid: '3482', building: 'University College',                       label: 'University College Library' },
+      { lid: '3484', building: 'E.J. Pratt Library',                       label: 'E.J. Pratt Library' },
     ],
   },
 };

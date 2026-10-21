@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-21T17:08:42+00:00",
+ "built_at": "2026-10-21T17:40:48+00:00",
  "source": "map.utoronto.ca",
  "codes": {
   "AB": "Astronomy & Astrophysics Building",
@@ -10,6 +10,7 @@
   "BN": "Clara Benson Building",
   "BR": "Brennan Hall",
   "BT": "Isabel Bader Theatre",
+  "BY": "255 Beverley Street",
   "CH": "Convocation Hall",
   "CR": "Carr Hall",
   "DA": "Daniels Building",
@@ -52,6 +53,7 @@
   "RT": "Rotman School of Management",
   "RW": "Ramsay Wright Laboratories",
   "SB": "Borden Building South",
+  "SD": "Sir Daniel Wilson Residence",
   "SF": "Sandford Fleming Building",
   "SK": "Factor-Inwentash Faculty of Social Work",
   "SM": "Sigmund Samuel Library Building",
@@ -59,6 +61,7 @@
   "SU": "Student Commons",
   "TC": "Trinity College & Residence",
   "TF": "Teefy Hall",
+  "TL": "Lawson Centre for Sustainability",
   "UC": "University College",
   "UY": "700 University Avenue",
   "VC": "Victoria College Building",

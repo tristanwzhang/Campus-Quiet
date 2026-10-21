@@ -823,9 +823,29 @@ function assumedStatus(id, date, time) {
   };
 }
 
+// A library open inside a building whose own hours nobody publishes. Its doors
+// must be open for the library to be, so this proves "open at least now" -- and
+// only that: it may override "probably closed", never cause "closed". Only U of T
+// carries tenantLibraries (data/utsg/building_hours.json).
+function tenantOpen(id, date, time) {
+  for (const lib of data.hours?.tenantLibraries?.[id] ?? []) {
+    const today = lib.dates?.[date];
+    const yesterday = lib.dates?.[shiftDate(date, -1)];
+    if ((today && today.some(([o, c]) => time >= o && time < c))
+      || (yesterday && yesterday.some(([, c]) => c > 24 && time < c - 24))) return lib.label;
+  }
+  return null;
+}
+
+function withTenant(status, id, date, time) {
+  if (status.state === 'open') return status;
+  const lib = tenantOpen(id, date, time);
+  return lib ? { state: 'open', source: lib, viaTenant: lib } : status;
+}
+
 function hoursStatus(id, date, time) {
   const entry = data.hours?.buildings?.[id];
-  if (!entry) return assumedStatus(id, date, time);
+  if (!entry) return withTenant(assumedStatus(id, date, time), id, date, time);
 
   // A day with no classes is not a day with locked doors, and the two campuses
   // publish the difference themselves. Ohio State's registrar prints both lists
@@ -850,7 +870,7 @@ function hoursStatus(id, date, time) {
       return { ...assumed, eventVenue: true, event: entry.events?.[date], noStandingHours: !!entry.noStandingHours,
                venueNote: entry.note, headline: entry.headline };
     }
-    return assumed;
+    return withTenant(assumed, id, date, time);
   }
   const open = today.some(([o, c]) => time >= o && time < c);
   // Past the end of the published schedule the same hours are assumed to hold,
@@ -1114,6 +1134,11 @@ function estimateFor(name) {
   // thing this map can say: the doors are open and no class is in there. The
   // value is 0 because that is what an empty room is, and the note says
   // exactly where that comes from so it cannot read as a measurement.
+  if (hours.state === 'open' && hours.viaTenant) {
+    const inside = `the ${hours.viaTenant} inside is open now (its published hours)`;
+    if (estimate) return { ...estimate, note: addToNote(estimate.note, inside) };
+    return { value: 0, source: 'open', note: `Open \u00b7 ${inside}` };
+  }
   if (hours.state === 'open') {
     const general = hours.general ? ' \u00b7 generally open weekdays 7am\u20139pm (campus default)' : '';
     if (estimate) return general ? { ...estimate, note: addToNote(estimate.note, general.slice(3)) } : estimate;
@@ -2139,6 +2164,7 @@ function hoursBasis(name) {
   const { date, time } = campusNow();
   const h = hoursStatus(name, date, time);
   if (h.eventVenue) return 'event schedule';
+  if (h.viaTenant) return 'library inside';
   if (h.general) return 'campus rule';
   if (h.assumed) return 'class timetable';
   return h.state === 'unknown' ? 'none' : 'published';
