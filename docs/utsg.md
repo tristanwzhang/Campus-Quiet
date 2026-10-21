@@ -85,7 +85,6 @@ classrooms. App Store and Reddit were not checked.
   the existing call can reach.
 - **Music, University College, Graham and Pratt libraries** have LibCal lids but are left
   out until a page, not a name, confirms their building.
-- **`logos/utsg.png`** — a trademark call for the site owner, not a download.
 - Biweekly meetings (`repetitionTime`) are counted as weekly.
 - Weekly refresh: the library window rolls, so `build_utsg_hours.py` belongs in the
   weekly workflow (wired, but the workflow file has not been pushed).
@@ -99,7 +98,7 @@ classrooms. App Store and Reddit were not checked.
    in the remembered-campus redirect.
 3. `sitemap.xml`: `https://campusquiet.com/utsg`.
 4. Create the PostHog dashboards (per-school + master `utsg` column) **only when asked**.
-5. Ask the owner about `logos/utsg.png`.
+5. `logos/utsg.png` is in (the owner supplied the crest 2026-10-21, resized to 300 px). Not yet referenced by any page.
 
 ## Rebuilding
 
