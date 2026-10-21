@@ -112,3 +112,12 @@ python3 scripts/build_campus_pages.py
 
 Run the class sweep BEFORE the buildings script: the buildings script renames the keys
 of `class_activity.json` from codes to names, and a fresh sweep writes codes again.
+
+## Decision on the map vendor (owner, 2026-10-21: "whatever is best and free")
+
+Keep the official names. The Concept3D backend is read **at build time only**, ~60
+cached requests per rebuild, with the map site's own published key; **no visitor's
+browser ever calls it** (`app.js` and `utsg.html` contain no reference). Only the
+resulting names, numbers and coordinates are shipped, as facts about buildings. The
+free alternative (OpenStreetMap names) was worse: it is wrong or silent on exactly the
+buildings that matter. Revisit only if the vendor or the university objects.
