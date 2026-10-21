@@ -121,6 +121,15 @@ WEEKLY = {
         "sourceUrl": "https://www.rotman.utoronto.ca/registrar/resources/rotman-administrative-services/",
         "code": "RT", "weekly": _week((6.5, 21), None), "valid": ["2026-09-08", "2026-12-23"],
     },
+    # utsu.ca/contact-us, read 2026-10-21: "The Student Commons is located at 230 College
+    # St. and the building is open from 9am to 9pm, Monday - Friday." The operator's own
+    # page, though its footer is (c) 2020. Weekends not stated, so left unknown.
+    "Student Commons": {
+        "source": "UTSU: Student Commons building hours",
+        "sourceUrl": "https://www.utsu.ca/contact-us/", "code": "SU",
+        "weekly": {d: [[9, 21]] for d in ("monday", "tuesday", "wednesday", "thursday", "friday")},
+        "valid": ["2026-09-08", "2026-12-23"],
+    },
     "Hart House": {
         "source": "Hart House published building hours",
         "sourceUrl": "https://harthouse.ca/contact/hours", "code": "HH",

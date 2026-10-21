@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-21T17:05:34+00:00",
+ "built_at": "2026-10-21T17:08:35+00:00",
  "campus": "University of Toronto \u2014 St. George",
  "term": "2026/fall",
  "campusClosedDates": [
@@ -2493,6 +2493,47 @@
     ],
     "saturday": [],
     "sunday": []
+   },
+   "valid": [
+    "2026-09-08",
+    "2026-12-23"
+   ]
+  },
+  "Student Commons": {
+   "source": "UTSU: Student Commons building hours",
+   "sourceUrl": "https://www.utsu.ca/contact-us/",
+   "code": "SU",
+   "weekly": {
+    "monday": [
+     [
+      9,
+      21
+     ]
+    ],
+    "tuesday": [
+     [
+      9,
+      21
+     ]
+    ],
+    "wednesday": [
+     [
+      9,
+      21
+     ]
+    ],
+    "thursday": [
+     [
+      9,
+      21
+     ]
+    ],
+    "friday": [
+     [
+      9,
+      21
+     ]
+    ]
    },
    "valid": [
     "2026-09-08",
