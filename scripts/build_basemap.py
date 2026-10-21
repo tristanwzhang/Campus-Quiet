@@ -31,6 +31,8 @@ CAMPUSES = {
              "bbox": (-83.063, 39.974, -82.984, 40.025)},
     "umd":  {"out": ROOT / "data" / "umd" / "basemap.json",
              "bbox": (-76.971, 38.970, -76.918, 39.019)},
+    "utsg": {"out": ROOT / "data" / "utsg" / "basemap.json",
+             "bbox": (-79.415, 43.6496, -79.375, 43.6775)},
 }
 
 _campus = "uiuc"

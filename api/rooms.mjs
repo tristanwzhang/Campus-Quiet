@@ -47,13 +47,30 @@ const CAMPUSES = {
     ],
   },
 
-  // Verified available and ready to switch on, but deliberately not enabled:
+  // U of T St. George, built 2026-10-21. Every lid below was checked against the
+  // library's own page: LibCal names the library ("Space Availability - Gerstein
+  // Library"), and library.utoronto.ca gives the address that places it in a
+  // building (10 King's College Road is Sandford Fleming, 80 St. George is Lash
+  // Miller, 1 Spadina Crescent is Daniels, 9 King's College Circle is Gerstein's
+  // Sigmund Samuel building; the Map & Data Library is on Robarts' 5th floor).
+  // Building names are the map's own, because that is what the class data joins on.
   //
-  //   uoft  https://libcal.library.utoronto.ca lid 3320 (Zeidler), more libraries exist
-  //
-  // It needs its lid-to-BUILDING mapping confirmed first — a lid names a
-  // library, and this map joins on the building that library sits in, which is
-  // the same distinction that made Ohio State's register work fiddly.
+  // Measured 2026-10-21: 65 bookable rooms. NOT here: Robarts' own booking runs
+  // through LibCal's newer /r/search page with no lid this call can reach. The
+  // Music, University College, Graham and Pratt libraries have lids but are left out
+  // until their building is confirmed from a page rather than a library's name.
+  utsg: {
+    host: 'https://libcal.library.utoronto.ca',
+    zone: 'America/Toronto',
+    locations: [
+      { lid: '3324', building: 'Sigmund Samuel Library Building',          label: 'Gerstein Library' },
+      { lid: '3473', building: 'Sandford Fleming Building',                label: 'Engineering & Computer Science Library' },
+      { lid: '3301', building: 'Lash Miller Chemical Laboratories',        label: 'Chemistry Library' },
+      { lid: '3320', building: 'Daniels Building',                         label: 'Eberhard Zeidler Library' },
+      { lid: '3335', building: 'Ontario Institute for Studies in Education', label: 'OISE Library' },
+      { lid: '3836', building: 'Robarts Library',                          label: 'Map & Data Library' },
+    ],
+  },
 };
 
 const WINDOW_MS = 5 * 60 * 1000;    // how long a cached answer stays fresh

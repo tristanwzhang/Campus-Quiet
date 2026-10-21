@@ -199,6 +199,29 @@ const CAMPUS_SITES = {
     // reads badly on screen.
     groundM: 3,
   },
+  utsg: {
+    id: 'utsg',
+    title: 'UofT Spaces',
+    subtitle: 'University of Toronto \u2014 St. George',
+    disclaimerRest: ' \u00b7 not affiliated with the University of Toronto',
+    tz: 'America/Toronto',
+    dataDir: 'data/utsg',
+    // Measured from the 62 buildings the register places: -79.4023..-79.3887 and
+    // 43.6588..43.6683, 1.1 km across -- the tightest campus yet. AREA clamps the
+    // CAMERA, so each side is padded past the outermost building by how far the
+    // camera sits behind its target (-38 degrees, 1200 m: ~946 m, which is 0.0085 of
+    // latitude and 0.0118 of longitude here).
+    area: { west: -79.415, south: 43.650, east: -79.375, north: 43.677 },
+    // Median of the placed buildings, which lands near the Sidney Smith / Hart House
+    // end of King's College Circle.
+    center: { lon: -79.3967, lat: 43.6624, height: 220 },
+    view: { pitchDeg: -38, range: 1200 },
+    viewNarrow: { pitchDeg: -50, range: 950 },
+    // Sampled from Cesium's terrain at the 62 placed buildings on 2026-10-21: median
+    // 71.2 m, range 62.6 to 76.4 m (14 m of relief, between Illinois' 3 and
+    // Maryland's 33). data/utsg/ground.json carries the full 80 m grid.
+    groundM: 71,
+  },
 };
 
 // Each campus has its own page (osu.html, built by scripts/build_campus_pages.py)
@@ -1555,6 +1578,74 @@ const ACADEMIC_CALENDAR_UMD = {
   ],
 };
 
+// ─── U of T St. George content ───────────────────────────────────────────────
+// Keyed on the name the register gives, which is the university's own map name
+// (map.utoronto.ca), because that is what class_activity.json and the hours file
+// are keyed on. Labels are shortened only to forms already in use on campus.
+const BUILDINGS_UTSG = {
+  'Robarts Library':                 { type: 'library' },
+  // The map's record for this building is "Sigmund Samuel Library Building"; the
+  // library inside it is the Gerstein Science Information Centre, whose published
+  // hours are the building's.
+  'Sigmund Samuel Library Building': { type: 'library', label: 'Gerstein Library', labelPriority: 1 },
+  'Bahen Centre for Information Technology': { label: 'Bahen Centre', labelPriority: 1 },
+  'Myhal Centre for Engineering Innovation & Entrepreneurship': { label: 'Myhal Centre', labelPriority: 1 },
+  'Sidney Smith Hall':               { labelPriority: 1 },
+  'McLennan Physical Laboratories':  { label: 'McLennan Physical Labs' },
+  'Ontario Institute for Studies in Education': { label: 'OISE' },
+  'Lash Miller Chemical Laboratories': { label: 'Lash Miller' },
+  'Astronomy & Astrophysics Building': { label: 'Astronomy & Astrophysics' },
+  'Leslie Dan Pharmacy Building':    { label: 'Leslie Dan Pharmacy' },
+  'Munk School of Global Affairs & Public Policy': { label: 'Munk School' },
+  'Factor-Inwentash Faculty of Social Work': { label: 'Social Work' },
+};
+
+// Each entry traces to the library's own page on library.utoronto.ca, whose address
+// names the building: 10 King's College Road is Sandford Fleming's, 80 St. George
+// is Lash Miller's, 1 Spadina Crescent is Daniels', 105 St. George is Rotman's,
+// and the Department of Art Library gives "Sidney Smith Hall, Room 6034". The two
+// libraries that ARE their building are 1; a building that merely CONTAINS one is
+// 0.75. Still short on purpose -- which atrium people actually work in is local
+// knowledge nothing published here supplies.
+const STUDY_SPOTS_UTSG = {
+  'Robarts Library': 1,
+  'Sigmund Samuel Library Building': 1,                // Gerstein
+  'Sandford Fleming Building': 0.75,                   // Engineering & Computer Science Library
+  'Lash Miller Chemical Laboratories': 0.75,           // Chemistry Library
+  'Daniels Building': 0.75,                            // Architecture, Landscape, and Design Library
+  'Rotman School of Management': 0.75,                 // Business (Milt Harris) Library
+  'Sidney Smith Hall': 0.75,                           // Department of Art Library
+};
+
+const PICK_LABELS_UTSG = {
+  'Sigmund Samuel Library Building': 'Gerstein',
+  'Bahen Centre for Information Technology': 'Bahen',
+  'Sandford Fleming Building': 'Sandford Fleming',
+  'Lash Miller Chemical Laboratories': 'Lash Miller',
+  'Rotman School of Management': 'Rotman',
+};
+
+// Joined on the scheduling code through the register; nothing needs pointing by hand.
+const GIS_ALIASES_UTSG = {};
+
+// From U of T's own pages -- the Engineering "Fall 2026 and Winter 2027 Key Dates"
+// and the SGS sessional dates -- read 2026-10-20. Arts & Science and Engineering
+// both take the Fall Study Break, and Thanksgiving and Labour Day close the
+// university. Monday December 8 runs the MONDAY timetable ("Makeup Monday"); that
+// is not modelled, so December 8 reads as an ordinary Tuesday.
+const ACADEMIC_CALENDAR_UTSG = {
+  term: 'Fall 2026',
+  classesStart: '2026-09-08',
+  classesEnd:   '2026-12-07',
+  termEnd:      '2026-12-22',   // last day of the F-term exam period
+  periods: [
+    { start: '2026-09-07', end: '2026-09-07', kind: 'holiday', label: 'Labour Day \u2014 university closed' },
+    { start: '2026-10-12', end: '2026-10-12', kind: 'holiday', label: 'Thanksgiving \u2014 university closed' },
+    { start: '2026-10-26', end: '2026-10-30', kind: 'break',   label: 'Fall Study Break \u2014 no classes' },
+    { start: '2026-12-24', end: '2027-01-05', kind: 'break',   label: 'Winter break \u2014 university closed' },
+  ],
+};
+
 // Resolve the campus-specific content. Everything below this point uses the
 // plain names, exactly as it did when there was only one campus.
 const CAMPUS_CONTENT = {
@@ -1613,6 +1704,16 @@ const CAMPUS_CONTENT = {
           // class buildings) and Yahentamitsi's dining hours with it. Directory
           // numbers 433, 228 and 436.
           registerGaps: ['Thurgood Marshall Hall', 'E.A. Fernandez IDEA Factory', 'Yahentamitsi Dining Hall'] },
+  utsg: { buildings: BUILDINGS_UTSG, studySpots: STUDY_SPOTS_UTSG,
+          pickLabels: PICK_LABELS_UTSG, calendar: ACADEMIC_CALENDAR_UTSG,
+          // Two libraries publish hours; the other 60 buildings ride the class
+          // timetable, so an evening map needs the same explanation Maryland gets.
+          // The timetable lists no Saturday or Sunday classes at all.
+          gisAliases: GIS_ALIASES_UTSG, sayWhenShut: true, assumeShutWithoutClasses: true,
+          labelRegisterBuildings: true,
+          buildingEdges: true,
+          hoursReports: true,
+          groundGrid: true },
 }[CAMPUS.id];
 
 const BUILDINGS = CAMPUS_CONTENT.buildings;

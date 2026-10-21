@@ -61,6 +61,24 @@ CAMPUSES = {
                   "walking over. Busyness comes from class schedules and published building "
                   "hours."),
     },
+    "utsg": {
+        "out": "utsg.html",
+        "path": "/utsg",
+        "title": "UofT Spaces",
+        "university": "the University of Toronto",
+        "short": "U of T",
+        "description": ("A live 3D map of how busy University of Toronto St. George campus buildings "
+                        "are right now \u2014 Robarts Library, Gerstein, Bahen, Sidney Smith and more "
+                        "\u2014 built from class schedules and published library hours."),
+        "og_description": "A live 3D map of how busy University of Toronto St. George buildings are right now.",
+        "preview": "utsg-preview.png",
+        "data_dir": "data/utsg",
+        "blurb": ("A live 3D map of how busy study spaces are around the University of Toronto "
+                  "St. George campus \u2014 Robarts and Gerstein libraries and the academic "
+                  "buildings around King's College Circle \u2014 so you can see how busy a spot "
+                  "is before walking over. Busyness comes from class schedules and published "
+                  "library hours."),
+    },
 }
 
 

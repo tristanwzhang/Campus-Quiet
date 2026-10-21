@@ -61,6 +61,12 @@ jobs:
         continue-on-error: true
         run: python3 scripts/build_umd_hours.py
 
+      # U of T's library pages carry 84 days of dated hours, a rolling window, so this
+      # belongs in the weekly run. Its own step so it cannot take another campus down.
+      - name: Rebuild hours — U of T St. George
+        continue-on-error: true
+        run: python3 scripts/build_utsg_hours.py
+
       # Refresh Google listing hours too, if a SERPAPI_KEY secret has been added.
       # (Checked in the shell: GitHub doesn't allow secrets in an `if:`.)
       #
@@ -104,7 +110,7 @@ jobs:
         run: |
           git config user.name "hours bot"
           git config user.email "actions@github.com"
-          git add data/building_hours.json data/google_hours.json data/osu/building_hours.json data/umd/building_hours.json 2>/dev/null || true
+          git add data/building_hours.json data/google_hours.json data/osu/building_hours.json data/umd/building_hours.json data/utsg/building_hours.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Hours unchanged."
           else
