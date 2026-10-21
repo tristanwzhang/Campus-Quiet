@@ -196,3 +196,29 @@ rest is a request to Facilities & Services / Campus Safety for the programmed do
   (app 200) is retired. LSM's FAQ/policy pages state no lock rules.
 - **LSM publishes `documents/Academic Calendar 2026-2027.pdf`** -- an official calendar source
   for the Winter update.
+
+
+## Third push, 2026-10-21 (owner: "do anything you can", no contacting the school)
+
+**Study rooms: 138 in 11 buildings** (was 69). LibCal's own location list
+(`libcal.library.utoronto.ca/spaces`) showed lid 3446 "Robarts Library and Robarts Common"
+(68 rooms) and 3348 Kelly (5). Robarts is asked per category (gid) so Robarts Common's 32
+rooms land on Robarts Common. Graham (3 Devonshire Pl) and IRHR (121 St. George) are not
+buildings on this map.
+
+**Weekday campus default (`buildingDay`, U of T only).** The six U of T buildings that publish
+hours AND hold classes all open by 6:30-9am and close 8-11pm on every weekday, Fridays
+included -- while the class window shut every building at 5pm Friday and 8pm mid-week, which
+is where all the fallback's errors were. Buildings with classes that day now read "Probably
+open" 8:30am-9pm (where >= 5 of 6 agree at every hour), with the reason shown and no
+busyness number. Not applied to Convocation Hall or the two theatres (venues). Weekends get
+nothing: the six disagree. Harness, week of 2026-10-19: UTSG all-day 72.1% -> 76.2%,
+evening 73.3% -> **81.0%**, only 5 of 416 "said open when closed". **Caveat: the hold-out
+buildings are the six the rule came from**, so this gain is partly circular; the real check
+is the hours_report events after launch. Other campuses unchanged to the decimal.
+
+**Tried and failed:** Google Maps (tested against 5 known buildings: right on Robarts only;
+gave office hours for OISE, library hours for Robarts Common, nothing for Hart House; says
+Sidney Smith closes 6:30pm while ~1,050 students are timetabled there 6-7pm Monday). U of T
+Food Services (foodservices.utoronto.ca refuses connections from this network). No official
+study-space directory exists (library.utoronto.ca/space is a 404).

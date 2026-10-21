@@ -55,8 +55,8 @@ const CAMPUSES = {
   // Sigmund Samuel building; the Map & Data Library is on Robarts' 5th floor).
   // Building names are the map's own, because that is what the class data joins on.
   //
-  // Measured 2026-10-21: 65 bookable rooms, 69 with the three added below. NOT here: Robarts' own booking runs
-  // through LibCal's newer /r/search page with no lid this call can reach. The
+  // Measured 2026-10-21: 138 bookable rooms in 11 buildings. NOT here: Robarts' own booking was
+  // first thought unreachable; it is lid 3446, split by category below. The
   // Graham Library (lid 3483) is at 3 Devonshire Place, a building not on the map.
   utsg: {
     host: 'https://libcal.library.utoronto.ca',
@@ -74,6 +74,16 @@ const CAMPUSES = {
       { lid: '3472', building: 'Edward Johnson Building',                  label: 'Music Library' },
       { lid: '3482', building: 'University College',                       label: 'University College Library' },
       { lid: '3484', building: 'E.J. Pratt Library',                       label: 'E.J. Pratt Library' },
+      // Robarts (lid 3446) lists its rooms by category, and one category is Robarts
+      // Common's, which is its own building on this map with its own (24 h) hours.
+      // Asking per category credits each room to the right building. Measured
+      // 2026-10-21: Common 32, Robarts 20 + 5 + 2 + 5 individual.
+      { lid: '3446', gid: '7314', building: 'Robarts Common',                 label: 'Robarts Common group study rooms' },
+      { lid: '3446', gid: '7466', building: 'Robarts Library',                label: 'Robarts group study rooms (stacks)' },
+      { lid: '3446', gid: '7474', building: 'Robarts Library',                label: 'Robarts group study rooms (ground floor)' },
+      { lid: '3446', gid: '7708', building: 'Robarts Library',                label: 'Robarts group study rooms (3rd floor)' },
+      { lid: '3446', gid: '7816', building: 'Robarts Library',                label: 'Robarts individual study rooms' },
+      { lid: '3348', building: 'John M. Kelly Library',                    label: 'John M. Kelly Library' },
     ],
   },
 };
