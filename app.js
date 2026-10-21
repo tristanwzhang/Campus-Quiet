@@ -492,7 +492,9 @@ async function loadRoomAvailability() {
     if (!res.ok) return;                       // 404 = campus not configured
     const body = await res.json();
     roomAvailability = body?.buildings ?? null;
-    if (panelBuilding) openPanel(panelBuilding, true);   // a panel is already open
+    // Some buildings take their busyness from these bookings, so recolour.
+    if (Object.keys(roomAvailability ?? {}).some(n => configFor(n)?.busyFromBookings)) refresh();
+    else if (panelBuilding) openPanel(panelBuilding, true);   // a panel is already open
   } catch (e) { /* never let a live feed break the map */ }
 }
 
@@ -1191,7 +1193,28 @@ function estimateFor(name) {
   return { value: 0, source: 'unknown', note: 'Opening hours not published for today' };
 }
 
+// Live, place-specific demand: the share of a building's bookable study rooms
+// that are booked right now, from the libraries' own system (/api/rooms). Used
+// only where a building opts in (busyFromBookings) because it has no measured
+// pattern of its own and enough rooms for the share to mean something.
+const MIN_ROOMS_FOR_BUSYNESS = 8;
+function bookingBusyness(name, hour) {
+  if (!configFor(name)?.busyFromBookings) return null;
+  if (hour !== campusNow().hour) return null;          // live data says nothing about other hours
+  const r = roomAvailability?.[name];
+  if (!r || r.bookable < MIN_ROOMS_FOR_BUSYNESS) return null;
+  return { value: (r.bookable - r.free) / r.bookable, booked: r.bookable - r.free, of: r.bookable };
+}
+
 function estimateWhileOpen(name, day, hour, peak, period, effect, withPeriod, time = hour) {
+  const live = bookingBusyness(name, hour);
+  if (live) {
+    return {
+      value: Math.min(live.value, 1),
+      source: 'measured',
+      note: `${live.booked} of ${live.of} study rooms booked right now (live)`,
+    };
+  }
   const google = googleBusyness(name, day, hour);
   if (google != null) {
     return {
@@ -1636,7 +1659,10 @@ const BUILDINGS_UTSG = {
   'Robarts Library':                 { type: 'library' },
   // Its own building hours in LibCal ("Robarts Common Building Hours"): 24 h Mon-Thu.
   // U of T files it under Robarts (RL); placed by the map's own point for it.
-  'Robarts Common':                  { type: 'library', labelPriority: 1 },
+  // No classes and no Google popular times, but 32 bookable group rooms: its busyness
+  // is the share of them booked right now. Falls back to the library curve when
+  // fewer than 8 are bookable (e.g. outside booking hours).
+  'Robarts Common':                  { type: 'library', labelPriority: 1, busyFromBookings: true },
   'E.J. Pratt Library':              { type: 'library', label: 'Pratt Library' },
   'John M. Kelly Library':           { type: 'library', label: 'Kelly Library' },
   // The map's record for this building is "Sigmund Samuel Library Building"; the
