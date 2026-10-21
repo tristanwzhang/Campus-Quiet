@@ -736,7 +736,24 @@ function assumedHours(id, day) {
   if (first < 0) return null;         // nothing timetabled: say nothing
   const campus = campusClassWindow(day);
   if (campus) { first = Math.min(first, campus[0]); last = Math.max(last, campus[1] - 1); }
+  // A campus whose own published hours show buildings open well beyond the class
+  // window (U of T: see buildingDay in CAMPUS_CONTENT). Only on a day this building
+  // has classes, and only ever as "probably".
+  const floor = !configFor(id)?.noCampusDefault && CAMPUS_CONTENT.buildingDay?.[day];
+  if (floor) return [Math.min(first, floor[0]), Math.max(last + 1, floor[1])];
   return [first, last + 1];           // the last class runs to the end of its hour
+}
+
+/** True when `time` is inside the campus default but outside this building's own classes. */
+function onlyByCampusDefault(id, day, time) {
+  const floor = !configFor(id)?.noCampusDefault && CAMPUS_CONTENT.buildingDay?.[day];
+  const grid = data.classActivity?.buildings?.[id]?.hours?.[day];
+  if (!floor || !grid) return false;
+  let first = -1, last = -1;
+  for (let h = 0; h < grid.length; h++) if (grid[h] > 0) { if (first < 0) first = h; last = h; }
+  const campus = campusClassWindow(day);
+  if (campus) { first = Math.min(first, campus[0]); last = Math.max(last, campus[1] - 1); }
+  return first >= 0 && (time < first || time >= last + 1);
 }
 
 function assumedStatus(id, date, time) {
@@ -816,10 +833,12 @@ function assumedStatus(id, date, time) {
   }
 
   const [open, close] = window;
+  const isOpen = time >= open && time < close;
   return {
-    state: time >= open && time < close ? 'open' : 'closed',
+    state: isOpen ? 'open' : 'closed',
     source: 'assumed from the class timetable',
     assumed: true,
+    campusDefault: isOpen && onlyByCampusDefault(id, weekdayOf(date), time),
   };
 }
 
@@ -1138,6 +1157,12 @@ function estimateFor(name) {
     const inside = `the ${hours.viaTenant} inside is open now (its published hours)`;
     if (estimate) return { ...estimate, note: addToNote(estimate.note, inside) };
     return { value: 0, source: 'open', note: `Open \u00b7 ${inside}` };
+  }
+  if (hours.state === 'open' && hours.campusDefault) {
+    const why = 'most U of T buildings that publish hours are open about 8:30am\u20139pm on weekdays';
+    // No class is on here now, so there is nothing to estimate busyness from: show it
+    // as open and empty-of-classes, never as a typical-curve number.
+    return { value: 0, source: 'open', assumed: true, note: `Probably open \u00b7 ${why}; nothing is timetabled here now` };
   }
   if (hours.state === 'open') {
     const general = hours.general ? ' \u00b7 generally open weekdays 7am\u20139pm (campus default)' : '';
@@ -1634,6 +1659,11 @@ const BUILDINGS_UTSG = {
   'Warren Stevens Building': { type: 'rec', label: 'Athletic Centre', labelPriority: 1 },
   // No classes, so it is known only through its published hours and the map's record.
   'Hart House':             { label: 'Hart House', labelPriority: 1 },
+  // Venues, not buildings people walk into: unlocked for what is scheduled in them,
+  // so the weekday campus default (buildingDay) does not apply.
+  'Convocation Hall':        { noCampusDefault: true },
+  'Isabel Bader Theatre':    { noCampusDefault: true },
+  'George Ignatieff Theatre': { noCampusDefault: true },
 };
 
 // Each entry traces to the library's own page on library.utoronto.ca, whose address
@@ -1754,6 +1784,13 @@ const CAMPUS_CONTENT = {
           // timetable, so an evening map needs the same explanation Maryland gets.
           // The timetable lists no Saturday or Sunday classes at all.
           gisAliases: GIS_ALIASES_UTSG, sayWhenShut: true, assumeShutWithoutClasses: true,
+          // Weekday doors, from the six U of T buildings that publish hours AND hold
+          // classes (OISE 7-21, Woodsworth 8:30-20, Innis 8-21, Rotman 6:30-21, Student
+          // Commons 9-21, Athletic Centre 7-23). The class window alone shut every
+          // building at 5pm on Fridays and 8pm mid-week, which all six contradict.
+          // 8:30-21 is where at least five of the six agree at every hour. Weekends get
+          // nothing: the six disagree (closed, 9-5, 9-9, 10-6, unstated).
+          buildingDay: Object.fromEntries(['monday', 'tuesday', 'wednesday', 'thursday', 'friday'].map(d => [d, [8.5, 21]])),
           labelRegisterBuildings: true,
           buildingEdges: true,
           hoursReports: true,
