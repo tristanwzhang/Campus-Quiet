@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-21T06:02:30+00:00",
+ "built_at": "2026-10-21T17:08:42+00:00",
  "campus": "University of Toronto \u2014 St. George",
  "source": "map.utoronto.ca (names, numbers, coordinates); OpenStreetMap (footprints)",
  "sourceUrl": "https://map.utoronto.ca/",
@@ -2101,6 +2101,50 @@
    "address": "90 Wellesley Street West, Toronto, ON M5S 1C5",
    "source": "map.utoronto.ca"
   },
+  "KL": {
+   "name": "John M. Kelly Library",
+   "code": "KL",
+   "aliases": [],
+   "lat": 43.664852,
+   "lon": -79.389519,
+   "outline": [
+    [
+     -79.389119,
+     43.6647047
+    ],
+    [
+     -79.3891693,
+     43.6648207
+    ],
+    [
+     -79.3892989,
+     43.6651353
+    ],
+    [
+     -79.3896638,
+     43.6650525
+    ],
+    [
+     -79.3896888,
+     43.6650469
+    ],
+    [
+     -79.3899023,
+     43.6649984
+    ],
+    [
+     -79.3897725,
+     43.664699
+    ],
+    [
+     -79.3897162,
+     43.6645692
+    ]
+   ],
+   "number": "429",
+   "address": null,
+   "source": "map.utoronto.ca"
+  },
   "KP": {
    "name": "Koffler House",
    "code": "KP",
@@ -3589,6 +3633,46 @@
    "address": "144 College Street, Toronto, ON M5S 3M2",
    "source": "map.utoronto.ca"
   },
+  "PR": {
+   "name": "E.J. Pratt Library",
+   "code": "PR",
+   "aliases": [],
+   "lat": 43.666313,
+   "lon": -79.391396,
+   "outline": [
+    [
+     -79.3914225,
+     43.6661144
+    ],
+    [
+     -79.3910283,
+     43.6662011
+    ],
+    [
+     -79.391042,
+     43.666235
+    ],
+    [
+     -79.3911511,
+     43.6665035
+    ],
+    [
+     -79.3911603,
+     43.6665259
+    ],
+    [
+     -79.3913228,
+     43.6664896
+    ],
+    [
+     -79.3915558,
+     43.6664422
+    ]
+   ],
+   "number": "514",
+   "address": "71 Queen's Park Crescent East, Toronto, ON M5S 1K7",
+   "source": "map.utoronto.ca"
+  },
   "PT": {
    "name": "D.L. Pratt Building",
    "code": "PT",
@@ -3700,6 +3784,17 @@
    "number": "008",
    "address": "6 King's College Road, Toronto, ON\u00a0M5S 3H5",
    "source": "map.utoronto.ca"
+  },
+  "RC": {
+   "name": "Robarts Common",
+   "code": "RC",
+   "aliases": [],
+   "lat": 43.664314,
+   "lon": -79.400192,
+   "outline": null,
+   "number": null,
+   "address": null,
+   "source": "map record 516384 (Robarts Common), filed under RL"
   },
   "RL": {
    "name": "Robarts Library",

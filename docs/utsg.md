@@ -143,3 +143,34 @@ browser ever calls it** (`app.js` and `utsg.html` contain no reference). Only th
 resulting names, numbers and coordinates are shipped, as facts about buildings. The
 free alternative (OpenStreetMap names) was worse: it is wrong or silent on exactly the
 buildings that matter. Revisit only if the vendor or the university objects.
+
+
+## Full hours search, 2026-10-21 (owner: "search everything") -- 12 of 66 buildings
+
+**Have published hours (12):**
+- Dated, 84 days, one feed (`libcal.library.utoronto.ca/api_hours_grid.php?iid=478`):
+  Robarts Library, **Robarts Common** (LibCal's "Robarts Common Building Hours": 24 h Mon-Thu,
+  to 11pm Fri), Sigmund Samuel/Gerstein, **E.J. Pratt Library**, **John M. Kelly Library**.
+  Kelly's feed never marks a closure (open on Christmas Day), so the university's own closure
+  days replace its dates there. Robarts Common's "not-set" days are unknown, not closed.
+- Weekly, from the building's own page: Athletic Centre (KPE), Hart House, **OISE**
+  (facilities page), **Woodsworth College** (contact page, "Building Hours"), **Innis College**
+  (weekdays only; closed for renovation 26-30 Oct), **Rotman** (weekdays 6:30am-9pm; weekends
+  fob-only so closed to the public), **Student Commons** (UTSU contact page, weekdays 9-9;
+  footer (c) 2020, so possibly dated).
+
+**Searched, nothing usable -- these stay on the class-timetable estimate:**
+| building(s) | what exists |
+|---|---|
+| Sidney Smith | only the Commons study room (Mon-Thu 10-7:30, Fri 10-5); OSM tag, community-edited |
+| Bahen | CS labs page: "available during term time 24 hours" but only CS students by TCard after "business hours" (undefined). A second CS FAQ (8am-11pm M-F public) could not be re-found |
+| Myhal | Facility Management protocol, **dated Oct 2018**: M-F 7am-10pm, Sa-Su 8am-8pm. Too old to assert (same rule as Ohio State's stale pages). The strongest candidate if someone confirms it |
+| Medical Sciences | 2022 construction notice (weekdays ~7am-6:30pm, fob after) -- expired |
+| Engineering (SF, GB, MC, WB, MB, HA, RS, PT) | ECF says "nightly and weekend building closures" exist; no times published |
+| McLennan, Lash Miller, Ramsay Wright, Earth Sciences, Clara Benson, Astronomy, Anthropology, Bancroft, Naylor | office hours only, or third-party listings |
+| University College, Victoria (VC, NF, BT, EM, LI), St. Michael's (CR, BR, TF, AH, OH), Trinity (TC, LA, GI, St. Hilda's) | office/desk hours only; residences have 24 h porters |
+| New College (Wilson, Wetmore) | "after 10pm the buildings are locked externally" (residence page); no opening time |
+| Daniels, Edward Johnson, Jackman Humanities, Munk, Social Work, Pharmacy, Health Sciences, Convocation Hall, Stewart, 700 University, 90 Wellesley, 371 Bloor, Borden, Koffler | nothing official |
+
+There is **no campus-wide lock schedule** in public. The one thing that would settle the
+rest is a request to Facilities & Services / Campus Safety for the programmed door schedules.
