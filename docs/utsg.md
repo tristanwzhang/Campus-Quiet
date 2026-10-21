@@ -240,3 +240,20 @@ Student Commons and Robarts Common have NO popular times on Google.
 
 Static, not live: refresh once a term. Kelly's Monday and Wednesday curves are identical as
 Google shows them.
+
+
+## 2026-10-21: Robarts Common busyness, and a room-count bug on EVERY campus
+
+**Bug (all campuses, live on UMD/OSU):** LibCal's grid returns `bookings: []` everywhere; a
+booked slot is a `slots` entry with className `s-lc-eq-checkout` (drawn red, legend
+"Unavailable/Padding" on LibCal's own page; free slots are `s-lc-eq-avail`, green).
+`countFree` read only `bookings`, so every booked room counted as free. Fixed in
+`api/rooms.mjs` on this branch. Live at 17:41 Wed: U of T 3 free of 88 bookable (Robarts Common
+0 of 32), Maryland 13 of 86, Ohio State 2 of 7 -- the old code would have said nearly all free.
+**Not deployed: the owner said not to push.**
+
+**Robarts Common busyness** now = share of its 32 group rooms booked right now (`busyFromBookings`,
+`bookingBusyness()` in app.js), labelled "N of M study rooms booked right now (live)", only for
+the current hour and only when >= 8 rooms are bookable; otherwise the library curve. No past
+bookings are exposed by LibCal (past dates return no slots), so there is no history to build a
+typical curve from.
