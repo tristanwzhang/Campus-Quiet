@@ -92,11 +92,19 @@ async function fetchGrid(host, lid, gid, day, nextDay) {
  */
 export function countFree(grid, nowIso) {
   const slots = grid?.slots ?? [];
-  const booked = new Set(
-    (grid?.bookings ?? [])
+  // A taken slot is NOT in `bookings` -- that array comes back empty on every
+  // campus (checked 2026-10-21: UMD, OSU, UIUC and U of T, all 0). LibCal marks a
+  // booked slot inside `slots` with className "s-lc-eq-checkout" instead; a free
+  // one has no className. Reading only `bookings` counted every booked room as free.
+  const takenSlot = s => !!s.className && /checkout|unavail|booked/i.test(s.className);
+  const booked = new Set([
+    ...(grid?.bookings ?? [])
       .filter(b => b.start <= nowIso && nowIso < b.end)
       .map(b => String(b.itemId)),
-  );
+    ...slots
+      .filter(s => s.start <= nowIso && nowIso < s.end && takenSlot(s))
+      .map(s => String(s.itemId)),
+  ]);
   const rooms = new Set(slots.map(s => String(s.itemId)));
   // Rooms with a slot covering this instant -- i.e. rooms the library is taking
   // bookings for right now. Outside opening hours there are none at all.
