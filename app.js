@@ -494,7 +494,10 @@ async function loadRoomAvailability() {
     roomAvailability = body?.buildings ?? null;
     // Some buildings take their busyness from these bookings, so recolour.
     if (Object.keys(roomAvailability ?? {}).some(n => configFor(n)?.busyFromBookings)) refresh();
-    else if (panelBuilding) openPanel(panelBuilding, true);   // a panel is already open
+    else {
+      renderRoomsSection();
+      if (panelBuilding) openPanel(panelBuilding, true);   // a panel is already open
+    }
   } catch (e) { /* never let a live feed break the map */ }
 }
 
@@ -1822,7 +1825,9 @@ const CAMPUS_CONTENT = {
           hoursReports: true,
           groundGrid: true,
           // Hide a 3D block whose centre lies in the courtyard of a building we draw ourselves.
-          coverByHull: true },
+          coverByHull: true,
+          // A "Study rooms free now" list in the picks sheet, from /api/rooms.
+          roomsList: true },
 }[CAMPUS.id];
 
 const BUILDINGS = CAMPUS_CONTENT.buildings;
@@ -4353,6 +4358,58 @@ pickToggle.addEventListener('click', () => {
   track('picks_toggled', { collapsed, device: deviceKind() });
 });
 
+// ─── Study rooms free now (a second section in the picks sheet) ───────────────
+// One row per building that is taking bookings right now, most free rooms first.
+// "Free" means nobody has reserved it, not that it is empty, and the sheet says so.
+const roomsSection = document.getElementById('rooms-section');
+const roomsList = document.getElementById('rooms-list');
+const roomsToggle = document.getElementById('rooms-toggle');
+let roomsCollapsed = false;
+
+function renderRoomsSection() {
+  if (!roomsSection || !roomsList) return;
+  // U of T only for now: this would otherwise change the launched Maryland and Ohio State
+  // sheets, which is the owner's call.
+  if (!CAMPUS_CONTENT.roomsList) return;
+  const rows = Object.entries(roomAvailability ?? {})
+    .filter(([name, e]) => e && e.bookable > 0 && knownBuildings().includes(name))
+    .sort((a, b) => (b[1].free - a[1].free) || a[0].localeCompare(b[0]));
+  // Nothing taking bookings now (e.g. 2am): say nothing rather than list zeros.
+  if (!rows.length) { roomsSection.hidden = true; publishSheetHeight(); return; }
+  roomsSection.hidden = false;
+  roomsSection.classList.toggle('is-collapsed', roomsCollapsed);
+  roomsToggle?.setAttribute('aria-expanded', String(!roomsCollapsed));
+  roomsList.replaceChildren(...rows.map(([name, e]) => {
+    const li = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'rooms-row';
+    btn.style.cssText = 'width:100%;background:none;border:0;font:inherit;text-align:left;cursor:pointer';
+    const where = document.createElement('span');
+    where.textContent = pickLabel(name);
+    const count = document.createElement('span');
+    count.className = e.free ? 'rooms-free' : 'rooms-full';
+    count.textContent = e.free ? `${e.free} of ${e.bookable} free` : `all ${e.bookable} booked`;
+    btn.append(where, count);
+    btn.addEventListener('click', () => {
+      zoomedPick = name;
+      zoomToPick(name);
+      openPanel(name);
+      markZoomedPick();
+      track('rooms_row_opened', { building: name, device: deviceKind() });
+    });
+    li.append(btn);
+    return li;
+  }));
+  publishSheetHeight();
+}
+
+roomsToggle?.addEventListener('click', () => {
+  roomsCollapsed = !roomsCollapsed;
+  renderRoomsSection();
+  track('rooms_toggled', { collapsed: roomsCollapsed, device: deviceKind() });
+});
+
 // Same tap-to-slide as the picks above it, with its own remembered state —
 // wanting the picks and wanting a room list are different wants.
 document.getElementById('browse-all')?.addEventListener('click', openBrowse);
@@ -4574,6 +4631,7 @@ function refresh({ keepThanks = false } = {}) {
   applyStyle();
   updateStats();
   renderPicks();
+  renderRoomsSection();
   if (panelBuilding) openPanel(panelBuilding, keepThanks);
 }
 

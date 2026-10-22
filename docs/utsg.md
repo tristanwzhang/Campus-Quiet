@@ -271,3 +271,14 @@ typical curve from.
    that centre is in the courtyard, outside our outline, so the existing "hide the tile under our
    own shape" rule missed it and the two shapes z-fought. `coverByHull` (U of T only) tests the
    outline's convex hull instead. Other campuses are unchanged.
+
+
+## 2026-10-22: "Study rooms free now" list (owner: "still no study room tab")
+
+The picks sheet already had the markup and CSS for a second section, "Study rooms free now"
+(`#rooms-section`), but nothing in `app.js` ever filled it. `renderRoomsSection()` now does:
+one row per building with rooms bookable right now, most free first ("9 of 23 free" /
+"all 32 booked"), tap to fly to the building; hidden when nothing is bookable (e.g. 2am), so it
+is invisible at night by design. Gated by `roomsList: true`, U of T only -- turning it on for
+Maryland and Ohio State would change their launched sheets. The per-building panel line
+("N of M study rooms free to book right now") was always there.
