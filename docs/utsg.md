@@ -282,3 +282,8 @@ one row per building with rooms bookable right now, most free first ("9 of 23 fr
 is invisible at night by design. Gated by `roomsList: true`, U of T only -- turning it on for
 Maryland and Ohio State would change their launched sheets. The per-building panel line
 ("N of M study rooms free to book right now") was always there.
+
+**Follow-up, same day:** the section no longer hides when nothing is bookable. At night it reads
+"Study rooms" with the five buildings that have the most rooms ("35 rooms") and "Not bookable right
+now -- libraries take bookings while they are open"; in the day it reads "Study rooms free now"
+with live counts. Capped at 5 rows plus "+ N more buildings".

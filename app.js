@@ -4371,15 +4371,29 @@ function renderRoomsSection() {
   // U of T only for now: this would otherwise change the launched Maryland and Ohio State
   // sheets, which is the owner's call.
   if (!CAMPUS_CONTENT.roomsList) return;
-  const rows = Object.entries(roomAvailability ?? {})
-    .filter(([name, e]) => e && e.bookable > 0 && knownBuildings().includes(name))
+  const all = Object.entries(roomAvailability ?? {})
+    .filter(([name, e]) => e && e.total > 0 && knownBuildings().includes(name));
+  // No feed at all (offline, or the API is down): nothing true to show.
+  if (!all.length) { roomsSection.hidden = true; publishSheetHeight(); return; }
+  const open = all.filter(([, e]) => e.bookable > 0)
     .sort((a, b) => (b[1].free - a[1].free) || a[0].localeCompare(b[0]));
-  // Nothing taking bookings now (e.g. 2am): say nothing rather than list zeros.
-  if (!rows.length) { roomsSection.hidden = true; publishSheetHeight(); return; }
+  // The section is always there. When no library is taking bookings (late night) it
+  // lists where the rooms are, so the answer is "not now", not a missing feature.
+  const rows = open.length ? open
+    : all.sort((a, b) => (b[1].total - a[1].total) || a[0].localeCompare(b[0]));
   roomsSection.hidden = false;
   roomsSection.classList.toggle('is-collapsed', roomsCollapsed);
   roomsToggle?.setAttribute('aria-expanded', String(!roomsCollapsed));
-  roomsList.replaceChildren(...rows.map(([name, e]) => {
+  const head = roomsToggle?.querySelector('.pick-head');
+  if (head) head.textContent = open.length ? 'Study rooms free now' : 'Study rooms';
+  const foot = roomsSection.querySelector('.rooms-foot');
+  if (foot) foot.textContent = open.length
+    ? 'Rooms nobody has booked \u2014 not necessarily empty.'
+    : 'Not bookable right now \u2014 libraries take bookings while they are open.';
+  const MAX_ROOM_ROWS = 5;
+  const shown = rows.slice(0, MAX_ROOM_ROWS);
+  const hiddenRows = rows.length - shown.length;
+  roomsList.replaceChildren(...shown.map(([name, e]) => {
     const li = document.createElement('li');
     const btn = document.createElement('button');
     btn.type = 'button';
@@ -4388,8 +4402,13 @@ function renderRoomsSection() {
     const where = document.createElement('span');
     where.textContent = pickLabel(name);
     const count = document.createElement('span');
-    count.className = e.free ? 'rooms-free' : 'rooms-full';
-    count.textContent = e.free ? `${e.free} of ${e.bookable} free` : `all ${e.bookable} booked`;
+    if (open.length) {
+      count.className = e.free ? 'rooms-free' : 'rooms-full';
+      count.textContent = e.free ? `${e.free} of ${e.bookable} free` : `all ${e.bookable} booked`;
+    } else {
+      count.style.cssText = 'color:#7b8498;font-weight:400;font-size:11px;flex:none';
+      count.textContent = `${e.total} room${e.total === 1 ? '' : 's'}`;
+    }
     btn.append(where, count);
     btn.addEventListener('click', () => {
       zoomedPick = name;
@@ -4401,6 +4420,13 @@ function renderRoomsSection() {
     li.append(btn);
     return li;
   }));
+  if (hiddenRows > 0) {
+    const more = document.createElement('li');
+    more.className = 'rooms-row';
+    more.style.cssText = 'color:#6b7589;font-size:11px';
+    more.textContent = `+ ${hiddenRows} more building${hiddenRows === 1 ? '' : 's'} with study rooms \u2014 tap one on the map`;
+    roomsList.append(more);
+  }
   publishSheetHeight();
 }
 
