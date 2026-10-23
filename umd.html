@@ -24,6 +24,10 @@
 <link rel="canonical" href="https://campusquiet.com/umd">
 <link rel="icon" href="favicon.svg?v=2" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
+<link rel="manifest" href="manifest-umd.webmanifest">
+<meta name="theme-color" content="#0a0e14">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Maryland Spaces">
 <meta property="og:title" content="Maryland Spaces">
@@ -454,6 +458,66 @@
   .pick-name { font-size: 13px; font-weight: 600; color: #f0f4f8; }
   .pick-meta { font-size: 11.5px; color: #8a94a8; }
   .pick-note { font-size: 11.5px; color: #8a94a8; padding: 2px 7px 1px; }
+
+  /* "Your spots": buildings the visitor saved, shown above the suggestions. */
+  #spots-section {
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .spots-head { padding: 0 1px 5px; }
+  #spots-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-height: 120px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.18) transparent;
+  }
+
+  #panel-pin {
+    margin-top: 10px;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 8px;
+    color: #c8d0e0;
+    font: inherit;
+    font-size: 12px;
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+  #panel-pin:hover, #panel-pin:focus-visible { background: rgba(255,255,255,0.06); }
+  #panel-pin[aria-pressed="true"] { color: #fde68a; border-color: rgba(253,230,138,0.35); }
+  #panel-pin[hidden], #install-nudge[hidden], #spots-section[hidden] { display: none; }
+
+  /* Shown once, inside the panel, after someone has looked at a second building. */
+  #install-nudge {
+    margin-top: 12px;
+    padding: 10px;
+    border-radius: 8px;
+    background: rgba(96,165,250,0.10);
+    border: 1px solid rgba(96,165,250,0.25);
+    font-size: 12px;
+    line-height: 1.45;
+    color: #cfe3ff;
+  }
+  #install-nudge .nudge-actions { margin-top: 8px; display: flex; gap: 8px; }
+  #install-nudge button {
+    font: inherit;
+    font-size: 12px;
+    border-radius: 7px;
+    padding: 6px 12px;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: none;
+    color: #c8d0e0;
+  }
+  #install-nudge button.primary { background: #cfe0ff; color: #0a0e14; border-color: transparent; font-weight: 600; }
 
   /* ── Study rooms, a second section inside the same sheet ──
      Its own tap target, because someone who wants the picks does not
@@ -1469,6 +1533,8 @@
     .checkin-btn { min-height: 44px; font-size: 13px; }
     .wish-btn { min-height: 40px; font-size: 12px; }
     .space-btn { min-height: 36px; padding: 6px 14px; font-size: 12.5px; }
+    #panel-pin { min-height: 40px; font-size: 12.5px; }
+    #install-nudge button { min-height: 40px; }
     /* The status line is the reason someone tapped the building. */
     #panel-now { font-size: 13px; }
   }
@@ -1639,6 +1705,10 @@
     <span id="pick-chevron" aria-hidden="true"></span>
   </button>
   <div id="pick-body">
+    <div id="spots-section" hidden>
+      <div class="pick-head spots-head">Your spots</div>
+      <ul id="spots-list"></ul>
+    </div>
     <ol id="pick-list"></ol>
     <div class="pick-note" id="pick-note" hidden></div>
     <div id="rooms-section" hidden>
@@ -1696,7 +1766,9 @@
   </div>
   <div id="panel-thanks"></div>
   <div id="panel-note"></div>
+  <button id="panel-pin" type="button" aria-pressed="false" hidden></button>
   <div id="panel-rooms" hidden></div>
+  <div id="install-nudge" hidden></div>
   <div id="wishlist">
     <div class="wish-q">Not built yet — which would you use?</div>
     <div class="wish-row" id="wish-row">
@@ -1758,6 +1830,6 @@
 </div>
 
 <script defer src="basemap-render.js?v=35"></script>
-<script defer src="app.js?v=147"></script>
+<script defer src="app.js?v=148"></script>
 </body>
 </html>

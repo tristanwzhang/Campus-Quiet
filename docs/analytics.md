@@ -79,6 +79,19 @@ This can only be driven by Claude in the Claude Browser pane if you log into Pos
 there first (it's a separate, logged-out browser context from your normal Chrome) —
 otherwise it's faster to just follow these steps yourself in your own Chrome.
 
+## Retention tooling (2026-10-22)
+
+Only ~5% of visitors came back on a second day, and the number understates it: the visitor id is in
+localStorage (no cookies, by choice), which every in-app browser keeps separately and Safari clears after
+a week unused. Every event now carries `browser_kind` = `installed` | `in-app` | `browser` so return rate
+can be read per group; only `installed` (home-screen app) is a trustworthy retention figure.
+
+New events: `spot_saved`, `spot_removed`, `myspot_opened` (the "Your spots" card and the save button in the
+building panel, stored in `cq:spots:<campus>` on the device), and `install_nudge_shown` / `_clicked` /
+`_dismissed` (property `kind`: prompt | ios | in-app | browser-menu) and `app_installed`. The nudge shows
+once in the panel after a second building is opened, phones only, at most 3 times and 14 days apart.
+Each campus has its own `manifest-<id>.webmanifest`, written by `scripts/build_campus_pages.py`.
+
 ## Notes
 
 - Watch events arrive live under **Activity** in the left sidebar.
