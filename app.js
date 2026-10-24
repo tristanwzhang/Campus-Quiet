@@ -1855,7 +1855,9 @@ const CAMPUS_CONTENT = {
           // hours: Athletic Centre 9-17, OISE 9-21, Woodsworth 10-18 are open, Rotman is fob-only
           // (closed to the public). 10-17 is the span where the open three agree. Approved by the
           // owner 2026-10-24, knowing it leans toward "open" where the evidence is one-in-four closed.
-          buildingWeekend: [10, 17] },
+          buildingWeekend: [10, 17],
+          // Shown 9pm-6am under the picks. Official: campussafety.utoronto.ca/travel-safer.
+          safetyNote: { from: 21, to: 6, html: 'Heading out late? <a href="https://www.campussafety.utoronto.ca/travel-safer" target="_blank" rel="noopener" style="color:#9fb4d6">TravelSafer</a> will walk you anywhere on campus or to the TTC, 24/7 \u00b7 <a href="tel:4169787233" style="color:#9fb4d6">416-978-7233</a> or the UofT Safety app.' } },
 }[CAMPUS.id];
 
 const BUILDINGS = CAMPUS_CONTENT.buildings;
@@ -4739,6 +4741,26 @@ function scarcityNote() {
        + `we have hours for ${open === 1 ? 'is' : 'are'} still open.`;
 }
 
+// Late at night, the walk home matters as much as the seat. U of T Campus Safety's
+// TravelSafer escort runs 24/7 to anywhere on campus or the abutting TTC stations
+// (campussafety.utoronto.ca/travel-safer, read 2026-10-24). U of T only (safetyNote).
+function renderSafetyNote() {
+  const cfg = CAMPUS_CONTENT.safetyNote;
+  let el = document.getElementById('safety-note');
+  const { hour } = campusNow();
+  const late = cfg && (hour >= cfg.from || hour < cfg.to);
+  if (!late) { if (el) el.hidden = true; return; }
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'safety-note';
+    el.className = 'pick-note';
+    el.style.cssText = 'margin-top:6px';
+    pickNote.after(el);
+  }
+  el.innerHTML = cfg.html;
+  el.hidden = false;
+}
+
 function renderPicks() {
   if (!pickCard) return;
   if (!picksEnabled()) { pickCard.hidden = true; publishSheetHeight(); return; }
@@ -4805,6 +4827,7 @@ function renderPicks() {
   const scarce = scarcityNote();
   pickNote.textContent = scarce ?? '';
   pickNote.hidden = !scarce;
+  renderSafetyNote();
   publishSheetHeight();   // the list just changed shape; the credits sit on it
 
   // Someone who reads the sheet and leaves looks exactly like someone who
