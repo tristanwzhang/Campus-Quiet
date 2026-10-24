@@ -1908,9 +1908,22 @@ async function loadRoomSchedule() {
 let studyRooms = null;       // id -> { building, where, name, floor, capacity, features }
 async function loadStudyRooms() {
   if (!CAMPUS_CONTENT.roomsList) return;
-  const json = await loadJson(`${CAMPUS.dataDir}/study_rooms.json`);
+  const [json, spaces] = await Promise.all([
+    loadJson(`${CAMPUS.dataDir}/study_rooms.json`),
+    loadJson(`${CAMPUS.dataDir}/library_spaces.json`),
+  ]);
   studyRooms = json?.rooms ?? null;
+  studyAreas = Object.values(spaces?.spaces ?? {}).filter(x => x.area);
 }
+
+// Open study areas with the libraries' own noise level (Silent / Quiet / Collaborative),
+// from library.utoronto.ca/space pages. U of T only.
+let studyAreas = [];
+const NOISE_LABEL = { Silent: 'Silent', Quiet: 'Quiet', Collaborative: 'Group work' };
+const areaName = a => a.name.replace(/\s+(at|in)\s+(Gerstein Library|ECSL)$/i, '').replace(/^Study space in the\s+/i, '').replace(/\s+area$/i, '');
+const areasIn = building => studyAreas.filter(a => a.building === building)
+  .sort((a, b) => ['Silent', 'Quiet', 'Collaborative'].indexOf(a.noise) - ['Silent', 'Quiet', 'Collaborative'].indexOf(b.noise));
+const noiseFilter = new Set();
 const studyRoomsIn = building => Object.entries(studyRooms ?? {}).filter(([, r]) => r.building === building);
 
 /** True where the sidebar is about live study rooms, not a classroom schedule. */
@@ -2127,7 +2140,10 @@ function renderBrowse({ seatWheels = true } = {}) {
   applyBrowseNote(date);
   const all = knownBuildings().sort((a, b) => pickLabel(a).localeCompare(pickLabel(b)));
   const q = browseQuery.trim().toLowerCase();
-  const names = q ? all.filter(n => pickLabel(n).toLowerCase().includes(q) || n.toLowerCase().includes(q)) : all;
+  let names = q ? all.filter(n => pickLabel(n).toLowerCase().includes(q) || n.toLowerCase().includes(q)) : all;
+  if (roomsMode() && noiseFilter.size) {
+    names = names.filter(n => areasIn(n).some(a => noiseFilter.has(a.noise)));
+  }
   const groups = { Library: [], Academic: [] };
   for (const n of names) {
     (BUILDINGS[n]?.type === 'library' || /librar/i.test(pickLabel(n)) ? groups.Library : groups.Academic).push(n);
@@ -2140,7 +2156,16 @@ function renderBrowse({ seatWheels = true } = {}) {
   sub.textContent = `${q ? `${names.length} of ${all.length}` : names.length} buildings · ${h12}:${String(mm).padStart(2, '0')} ${am ? 'am' : 'pm'}`;
 
   let html = '';
-  if (q && !names.length) html = `<div class="browse-foot">No building matches \u201c${escapeHtml(browseQuery.trim())}\u201d.</div>`;
+  if (roomsMode() && studyAreas.length) {
+    html += '<div style="display:flex;flex-wrap:wrap;gap:6px;padding:8px 16px 4px">'
+      + [['Silent', 'Silent'], ['Quiet', 'Quiet'], ['Collaborative', 'Group work']].map(([k, label]) =>
+        `<button type="button" class="noise-chip" data-noise="${k}" aria-pressed="${noiseFilter.has(k)}" `
+        + `style="font:inherit;font-size:11.5px;padding:4px 10px;border-radius:999px;cursor:pointer;`
+        + `border:1px solid ${noiseFilter.has(k) ? '#58c047' : 'rgba(255,255,255,0.15)'};`
+        + `background:${noiseFilter.has(k) ? 'rgba(88,192,71,0.15)' : 'transparent'};color:#c9d1de">${label}</button>`).join('')
+      + '</div>';
+  }
+  if (q && !names.length) html += `<div class="browse-foot">No building matches \u201c${escapeHtml(browseQuery.trim())}\u201d.</div>`;
   for (const [label, list] of Object.entries(groups)) {
     if (!list.length) continue;
     html += `<div class="browse-group">${label}</div>`;
@@ -2160,8 +2185,10 @@ function renderBrowse({ seatWheels = true } = {}) {
       else if (st.state !== 'open') badge = `<span class="badge badge-closed">${st.assumed ? 'Probably closed' : 'Closed'}</span>`;
       else if (rooms && rooms.total) badge = `<span class="badge ${rooms.free ? 'badge-open' : 'badge-none'}">${rooms.free}/${rooms.total}</span>`;
       else badge = '<span class="badge badge-open">Open</span>';
+      const match = roomsMode() && noiseFilter.size
+        ? areasIn(n).filter(a => noiseFilter.has(a.noise)).map(areaName).slice(0, 2).join(' \u00b7 ') : '';
       html += `<button class="browse-row" data-building="${encodeURIComponent(n)}">`
-            + `<span class="browse-name">${pickLabel(n)}</span>${badge}</button>`;
+            + `<span class="browse-name">${pickLabel(n)}${match ? `<span style="display:block;font-size:11px;color:#7b8498">${escapeHtml(match)}</span>` : ''}</span>${badge}</button>`;
     }
   }
   html += roomsMode()
@@ -2366,6 +2393,14 @@ function renderRooms(name) {
     rooms += `<div style="margin-top:${rooms ? 8 : 0}px"><span class="${pcs.free ? 'rooms-count' : 'rooms-none'}">${pcs.free} of ${pcs.total}</span>`
       + ` library computer${pcs.total === 1 ? '' : 's'} free right now`
       + `<span class="rooms-where">${pcs.sources.join(' \u00b7 ')} \u00b7 UTORid login</span></div>`;
+  }
+  const areas = CAMPUS_CONTENT.roomsList ? areasIn(name) : [];
+  if (areas.length) {
+    const colour = { Silent: '#8fb8e8', Quiet: '#8fd4a8', Collaborative: '#e8c48f' };
+    rooms += `<div style="margin-top:${rooms ? 10 : 0}px"><span class="rooms-where" style="margin:0 0 4px">Study areas (the library\u2019s own noise levels)</span>`
+      + areas.map(a => `<div style="font-size:12px;padding:1px 0"><span style="color:${colour[a.noise]};font-weight:600">${NOISE_LABEL[a.noise]}</span>`
+        + ` \u00b7 <a href="${escapeHtml(a.url)}" target="_blank" rel="noopener" style="color:#c9d1de">${escapeHtml(areaName(a))}</a></div>`).join('')
+      + '</div>';
   }
   if (!rooms && !inside) { box.hidden = true; return; }
   box.innerHTML = rooms + inside;
@@ -4654,6 +4689,14 @@ document.getElementById('browse-back')?.addEventListener('click', () => {
   renderBrowse();
 });
 document.getElementById('browse-body')?.addEventListener('click', ev => {
+  const chip = ev.target.closest('.noise-chip');
+  if (chip) {
+    const k = chip.dataset.noise;
+    noiseFilter.has(k) ? noiseFilter.delete(k) : noiseFilter.add(k);
+    renderBrowse({ seatWheels: false });
+    track('noise_filter', { noise: k, on: noiseFilter.has(k), device: deviceKind() });
+    return;
+  }
   const row = ev.target.closest('.browse-row');
   if (!row) return;
   const picked = decodeURIComponent(row.dataset.building);
