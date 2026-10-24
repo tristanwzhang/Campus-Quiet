@@ -1,0 +1,1119 @@
+{
+ "built_at": "2026-10-24T08:07:06.695Z",
+ "source": "https://libcal.library.utoronto.ca/space/<id> (the libraries' own booking pages)",
+ "note": "Static details only. Whether a room is free is live, from /api/rooms.",
+ "rooms": {
+  "30107": {
+   "building": "Lash Miller Chemical Laboratories",
+   "where": "Chemistry Library",
+   "name": "Theobromine",
+   "floor": null,
+   "capacity": 4,
+   "features": null
+  },
+  "30285": {
+   "building": "Daniels Building",
+   "where": "Eberhard Zeidler Library",
+   "name": "Group Study Room",
+   "floor": null,
+   "capacity": 6,
+   "features": null
+  },
+  "30384": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "2000",
+   "floor": "2nd Floor",
+   "capacity": 18,
+   "features": null
+  },
+  "30485": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M 1",
+   "floor": null,
+   "capacity": 2,
+   "features": null
+  },
+  "30486": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M 3",
+   "floor": null,
+   "capacity": 2,
+   "features": null
+  },
+  "30487": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M 5",
+   "floor": null,
+   "capacity": 1,
+   "features": null
+  },
+  "30488": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M 6",
+   "floor": null,
+   "capacity": 1,
+   "features": null
+  },
+  "30489": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M 7",
+   "floor": null,
+   "capacity": 1,
+   "features": null
+  },
+  "30490": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M 8",
+   "floor": null,
+   "capacity": 1,
+   "features": null
+  },
+  "30491": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M 9",
+   "floor": null,
+   "capacity": 1,
+   "features": null
+  },
+  "30492": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M10",
+   "floor": null,
+   "capacity": 1,
+   "features": null
+  },
+  "30493": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M11",
+   "floor": null,
+   "capacity": 1,
+   "features": null
+  },
+  "30494": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M12",
+   "floor": null,
+   "capacity": 1,
+   "features": null
+  },
+  "30495": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M13",
+   "floor": null,
+   "capacity": 1,
+   "features": null
+  },
+  "30496": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M14",
+   "floor": null,
+   "capacity": 1,
+   "features": null
+  },
+  "30497": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M15",
+   "floor": null,
+   "capacity": 1,
+   "features": null
+  },
+  "30498": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M28",
+   "floor": null,
+   "capacity": 2,
+   "features": null
+  },
+  "30499": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M30",
+   "floor": null,
+   "capacity": 2,
+   "features": null
+  },
+  "30500": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M32",
+   "floor": null,
+   "capacity": 2,
+   "features": null
+  },
+  "30501": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M34",
+   "floor": null,
+   "capacity": 2,
+   "features": null
+  },
+  "30502": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M36",
+   "floor": null,
+   "capacity": 2,
+   "features": null
+  },
+  "30503": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M40",
+   "floor": null,
+   "capacity": 8,
+   "features": null
+  },
+  "30504": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M42",
+   "floor": null,
+   "capacity": 8,
+   "features": null
+  },
+  "30505": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M46",
+   "floor": null,
+   "capacity": 6,
+   "features": null
+  },
+  "30506": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "M48",
+   "floor": null,
+   "capacity": 6,
+   "features": null
+  },
+  "30507": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "C130",
+   "floor": null,
+   "capacity": 6,
+   "features": null
+  },
+  "30508": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "C132",
+   "floor": null,
+   "capacity": 6,
+   "features": null
+  },
+  "30510": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "C136",
+   "floor": null,
+   "capacity": 6,
+   "features": null
+  },
+  "30514": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "2241 Group Study Room 2A",
+   "floor": "02nd Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30515": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "2243 Group Study Room 2B",
+   "floor": "02nd Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30516": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "2247 Group Study Room 2C",
+   "floor": "02nd Floor",
+   "capacity": 7,
+   "features": null
+  },
+  "30517": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "2253 Group Study Room 2D",
+   "floor": "02nd Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30518": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "2255 Group Study Room 2E",
+   "floor": "02nd Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30519": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "2261 Group Study Room 2F",
+   "floor": "02nd Floor",
+   "capacity": 4,
+   "features": null
+  },
+  "30520": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "2265 Group Study Room 2G",
+   "floor": "02nd Floor",
+   "capacity": 8,
+   "features": null
+  },
+  "30521": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "2266 Group Study Room 2H",
+   "floor": "02nd Floor",
+   "capacity": 10,
+   "features": null
+  },
+  "30522": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "3241 Group Study Room 3A",
+   "floor": "03rd Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30523": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "3243 Group Study Room 3B",
+   "floor": "03rd Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30524": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "3247 Group Study Room 3C",
+   "floor": "03rd Floor",
+   "capacity": 7,
+   "features": null
+  },
+  "30525": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "3253 Group Study Room 3D",
+   "floor": "03rd Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30526": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "3255 Group Study Room 3E",
+   "floor": "03rd Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30527": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "3261 Group Study Room 3F",
+   "floor": "03rd Floor",
+   "capacity": 4,
+   "features": null
+  },
+  "30528": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "3265 Group Study Room 3G",
+   "floor": "03rd Floor",
+   "capacity": 8,
+   "features": null
+  },
+  "30530": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "3266 Group Study Room 3H",
+   "floor": "03rd Floor",
+   "capacity": 10,
+   "features": null
+  },
+  "30531": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "4241 Group Study Room 4A",
+   "floor": "04th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30532": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "4243 Group Study Room 4B",
+   "floor": "04th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30533": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "4247 Group Study Room 4C",
+   "floor": "04th Floor",
+   "capacity": 7,
+   "features": null
+  },
+  "30534": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "4253 Group Study Room 4D",
+   "floor": "04th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30535": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "4255 Group Study Room 4E",
+   "floor": "04th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30536": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "4261 Group Study Room 4F",
+   "floor": "04th Floor",
+   "capacity": 4,
+   "features": null
+  },
+  "30537": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "4265 Group Study Room 4G",
+   "floor": "04th Floor",
+   "capacity": 8,
+   "features": null
+  },
+  "30538": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "4266 Group Study Room 4H",
+   "floor": "04th Floor",
+   "capacity": 10,
+   "features": null
+  },
+  "30588": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "5241 Group Study Room 5A",
+   "floor": "05th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30589": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "5243 Group Study Room 5B",
+   "floor": "05th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30590": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "5247 Group Study Room 5C",
+   "floor": "05th Floor",
+   "capacity": 7,
+   "features": null
+  },
+  "30591": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "5253 Group Study Room 5D",
+   "floor": "05th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30592": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "5255 Group Study Room 5E",
+   "floor": "05th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30593": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "5261 Group Study Room 5F",
+   "floor": "05th Floor",
+   "capacity": 4,
+   "features": null
+  },
+  "30594": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "5265 Group Study Room 5G",
+   "floor": "05th Floor",
+   "capacity": 8,
+   "features": null
+  },
+  "30595": {
+   "building": "Robarts Common",
+   "where": "Robarts Common group study rooms",
+   "name": "5266 Group Study Room 5H",
+   "floor": "05th Floor",
+   "capacity": 10,
+   "features": null
+  },
+  "30596": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "St. George 3",
+   "floor": "9th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30597": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "St. George 4",
+   "floor": "9th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30598": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "Sussex 1",
+   "floor": "9th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30599": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "Sussex 2",
+   "floor": "9th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30600": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "St. George 3",
+   "floor": "10th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30601": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "St. George 4",
+   "floor": "10th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30602": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "Sussex 1",
+   "floor": "10th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30603": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "Sussex 2",
+   "floor": "10th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30604": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "St. George 3",
+   "floor": "11th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30605": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "St. George 4",
+   "floor": "11th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30606": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "Sussex 1",
+   "floor": "11th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30607": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "Sussex 2",
+   "floor": "11th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30608": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "St. George 3",
+   "floor": "12th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30609": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "St. George 4",
+   "floor": "12th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30610": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "Sussex 1",
+   "floor": "12th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30611": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "Sussex 2",
+   "floor": "12th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30612": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "St. George 3",
+   "floor": "13th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30613": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "St. George 4",
+   "floor": "13th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30614": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "Sussex 1",
+   "floor": "13th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30615": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (stacks)",
+   "name": "Sussex 2",
+   "floor": "13th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "30618": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (ground floor)",
+   "name": "Suite 1",
+   "floor": "Ground Floor",
+   "capacity": 8,
+   "features": null
+  },
+  "30619": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (ground floor)",
+   "name": "Suite 2",
+   "floor": "Ground Floor",
+   "capacity": 8,
+   "features": null
+  },
+  "30620": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (ground floor)",
+   "name": "Suite 3",
+   "floor": "Ground Floor",
+   "capacity": 8,
+   "features": null
+  },
+  "30621": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (ground floor)",
+   "name": "Suite 4",
+   "floor": "Ground Floor",
+   "capacity": 8,
+   "features": null
+  },
+  "30622": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (ground floor)",
+   "name": "Suite 5",
+   "floor": "Ground Floor",
+   "capacity": 8,
+   "features": null
+  },
+  "30623": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "2100",
+   "floor": "2nd Floor",
+   "capacity": 10,
+   "features": null
+  },
+  "30624": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "2101",
+   "floor": "2nd Floor",
+   "capacity": 6,
+   "features": null
+  },
+  "30625": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "2102",
+   "floor": "2nd Floor",
+   "capacity": 6,
+   "features": null
+  },
+  "30626": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "2103",
+   "floor": "2nd Floor",
+   "capacity": 7,
+   "features": null
+  },
+  "30627": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "2104",
+   "floor": "2nd Floor",
+   "capacity": 9,
+   "features": null
+  },
+  "30628": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "2105",
+   "floor": "2nd Floor",
+   "capacity": 11,
+   "features": null
+  },
+  "30629": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "2106",
+   "floor": "2nd Floor",
+   "capacity": 7,
+   "features": null
+  },
+  "30630": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "2107",
+   "floor": "2nd Floor",
+   "capacity": 7,
+   "features": null
+  },
+  "30631": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "B105A",
+   "floor": null,
+   "capacity": 6,
+   "features": null
+  },
+  "30632": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "B105B",
+   "floor": null,
+   "capacity": 6,
+   "features": null
+  },
+  "30633": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "B105C",
+   "floor": null,
+   "capacity": 6,
+   "features": null
+  },
+  "30634": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "B105D",
+   "floor": null,
+   "capacity": 6,
+   "features": null
+  },
+  "30635": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "B105E",
+   "floor": null,
+   "capacity": 6,
+   "features": null
+  },
+  "30636": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "B105F",
+   "floor": null,
+   "capacity": 6,
+   "features": null
+  },
+  "30637": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "B170A",
+   "floor": null,
+   "capacity": 8,
+   "features": null
+  },
+  "30638": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "B170B",
+   "floor": null,
+   "capacity": 4,
+   "features": null
+  },
+  "30639": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "B172",
+   "floor": null,
+   "capacity": 8,
+   "features": null
+  },
+  "30640": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "B173",
+   "floor": null,
+   "capacity": 13,
+   "features": null
+  },
+  "30641": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "B174",
+   "floor": null,
+   "capacity": 8,
+   "features": null
+  },
+  "30642": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "B175",
+   "floor": null,
+   "capacity": 12,
+   "features": null
+  },
+  "30645": {
+   "building": "John M. Kelly Library",
+   "where": "John M. Kelly Library",
+   "name": "Room 201",
+   "floor": "2nd Floor",
+   "capacity": 6,
+   "features": null
+  },
+  "30646": {
+   "building": "John M. Kelly Library",
+   "where": "John M. Kelly Library",
+   "name": "Room 202",
+   "floor": "2nd Floor",
+   "capacity": 6,
+   "features": null
+  },
+  "30647": {
+   "building": "John M. Kelly Library",
+   "where": "John M. Kelly Library",
+   "name": "Room 231",
+   "floor": "2nd Floor",
+   "capacity": 6,
+   "features": null
+  },
+  "30648": {
+   "building": "John M. Kelly Library",
+   "where": "John M. Kelly Library",
+   "name": "Room 206",
+   "floor": "2nd Floor",
+   "capacity": 6,
+   "features": null
+  },
+  "30649": {
+   "building": "John M. Kelly Library",
+   "where": "John M. Kelly Library",
+   "name": "Room 205",
+   "floor": "2nd Floor",
+   "capacity": 6,
+   "features": null
+  },
+  "30650": {
+   "building": "Lash Miller Chemical Laboratories",
+   "where": "Chemistry Library",
+   "name": "Serotonin",
+   "floor": null,
+   "capacity": 4,
+   "features": null
+  },
+  "30651": {
+   "building": "Lash Miller Chemical Laboratories",
+   "where": "Chemistry Library",
+   "name": "Dopamine",
+   "floor": null,
+   "capacity": 3,
+   "features": null
+  },
+  "30652": {
+   "building": "Lash Miller Chemical Laboratories",
+   "where": "Chemistry Library",
+   "name": "Acetylcholine",
+   "floor": null,
+   "capacity": 2,
+   "features": null
+  },
+  "30653": {
+   "building": "Lash Miller Chemical Laboratories",
+   "where": "Chemistry Library",
+   "name": "Vanillin",
+   "floor": null,
+   "capacity": 4,
+   "features": null
+  },
+  "30654": {
+   "building": "Lash Miller Chemical Laboratories",
+   "where": "Chemistry Library",
+   "name": "Capsaicin",
+   "floor": null,
+   "capacity": 4,
+   "features": null
+  },
+  "30655": {
+   "building": "Lash Miller Chemical Laboratories",
+   "where": "Chemistry Library",
+   "name": "Caffeine",
+   "floor": null,
+   "capacity": 8,
+   "features": null
+  },
+  "31696": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (3rd floor)",
+   "name": "Group Study Room 2, 3-026",
+   "floor": "3rd Floor",
+   "capacity": 6,
+   "features": null
+  },
+  "31697": {
+   "building": "Robarts Library",
+   "where": "Robarts group study rooms (3rd floor)",
+   "name": "Group Study Room 3, 3-027",
+   "floor": "3rd Floor",
+   "capacity": 6,
+   "features": null
+  },
+  "32237": {
+   "building": "Robarts Library",
+   "where": "Robarts individual study rooms",
+   "name": "St. George 1",
+   "floor": "9th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "32238": {
+   "building": "Robarts Library",
+   "where": "Robarts individual study rooms",
+   "name": "St. George 1",
+   "floor": "10th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "32239": {
+   "building": "Robarts Library",
+   "where": "Robarts individual study rooms",
+   "name": "St. George 1",
+   "floor": "11th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "32240": {
+   "building": "Robarts Library",
+   "where": "Robarts individual study rooms",
+   "name": "St. George 1",
+   "floor": "12th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "32241": {
+   "building": "Robarts Library",
+   "where": "Robarts individual study rooms",
+   "name": "St. George 1",
+   "floor": "13th Floor",
+   "capacity": 5,
+   "features": null
+  },
+  "32928": {
+   "building": "Lash Miller Chemical Laboratories",
+   "where": "Chemistry Library",
+   "name": "WALL-E",
+   "floor": null,
+   "capacity": 1,
+   "features": null
+  },
+  "33143": {
+   "building": "Sandford Fleming Building",
+   "where": "Engineering & Computer Science Library",
+   "name": "Room A",
+   "floor": null,
+   "capacity": 6,
+   "features": null
+  },
+  "33144": {
+   "building": "Sandford Fleming Building",
+   "where": "Engineering & Computer Science Library",
+   "name": "Room B",
+   "floor": null,
+   "capacity": 6,
+   "features": null
+  },
+  "33145": {
+   "building": "Sandford Fleming Building",
+   "where": "Engineering & Computer Science Library",
+   "name": "Room D",
+   "floor": null,
+   "capacity": 8,
+   "features": null
+  },
+  "33146": {
+   "building": "Sandford Fleming Building",
+   "where": "Engineering & Computer Science Library",
+   "name": "Room E",
+   "floor": null,
+   "capacity": 8,
+   "features": null
+  },
+  "33213": {
+   "building": "Edward Johnson Building",
+   "where": "Music Library",
+   "name": "Group Study Room",
+   "floor": null,
+   "capacity": 6,
+   "features": null
+  },
+  "33255": {
+   "building": "E.J. Pratt Library",
+   "where": "E.J. Pratt Library",
+   "name": "Pratt Study Room 202",
+   "floor": null,
+   "capacity": 12,
+   "features": null
+  },
+  "33397": {
+   "building": "University College",
+   "where": "University College Library",
+   "name": "UC366A",
+   "floor": null,
+   "capacity": 4,
+   "features": null
+  },
+  "33398": {
+   "building": "University College",
+   "where": "University College Library",
+   "name": "UC366B",
+   "floor": null,
+   "capacity": 4,
+   "features": null
+  },
+  "34362": {
+   "building": "Lash Miller Chemical Laboratories",
+   "where": "Chemistry Library",
+   "name": "EVE",
+   "floor": null,
+   "capacity": 1,
+   "features": null
+  },
+  "35418": {
+   "building": "Ontario Institute for Studies in Education",
+   "where": "OISE Library",
+   "name": "3-138",
+   "floor": null,
+   "capacity": 8,
+   "features": null
+  },
+  "35838": {
+   "building": "Sandford Fleming Building",
+   "where": "Engineering & Computer Science Library",
+   "name": "Soundproof Booth",
+   "floor": null,
+   "capacity": 2,
+   "features": null
+  },
+  "38887": {
+   "building": "Sigmund Samuel Library Building",
+   "where": "Gerstein Library",
+   "name": "George Kiddell Room",
+   "floor": null,
+   "capacity": 8,
+   "features": null
+  },
+  "38955": {
+   "building": "Robarts Library",
+   "where": "Map & Data Library",
+   "name": "Collaboration room 1",
+   "floor": null,
+   "capacity": 10,
+   "features": null
+  },
+  "38956": {
+   "building": "Robarts Library",
+   "where": "Map & Data Library",
+   "name": "Collaboration room 2",
+   "floor": null,
+   "capacity": 6,
+   "features": null
+  },
+  "38957": {
+   "building": "Robarts Library",
+   "where": "Map & Data Library",
+   "name": "Collaboration room 3",
+   "floor": null,
+   "capacity": 10,
+   "features": null
+  }
+ }
+}
