@@ -309,3 +309,17 @@ weekend hours (Athletic Centre 9-17, OISE 9-21, Woodsworth 10-18 are open; Rotma
 Blended with weekdays, about **87%** for buildings like these. NOT changed: a "probably open 10-5"
 weekend default would score ~85% on those four, but it is the direction that sends someone to a
 locked door (Rotman), which the owner's rule rules out. It is the owner's call.
+
+
+## 2026-10-24: weekend rule ON (owner approved)
+
+`buildingWeekend: [10, 17]` (U of T only). On Saturday and Sunday a building that holds classes in
+the week reads "Probably open" 10am-5pm and "Probably closed" outside it, with the reason shown
+("the U of T buildings that publish weekend hours are mostly open about 10am-5pm"). Still closed:
+buildings with their own published hours (Rotman stays closed on weekends), venues
+(Convocation Hall, the theatres), and holidays/breaks (Dec 26 reads closed). Harness week of
+2026-10-19: UTSG all-day 76.2% -> 85.5%, evening 81.0% -> 84.4%, but "said open when closed" rose
+from 5 to 13 of 416 test slots (Rotman-like fob-only buildings). The rule came from the same
+four buildings it is scored on, so the gain is optimistic; the `hours_report` taps after launch
+are the real check on weekends. If weekends draw reports of "it's actually closed", set
+`buildingWeekend` to null in app.js to turn it off.
