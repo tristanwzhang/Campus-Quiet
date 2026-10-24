@@ -61,6 +61,26 @@ export const CAMPUSES = {
   utsg: {
     host: 'https://libcal.library.utoronto.ca',
     zone: 'America/Toronto',
+    // Live public-computer availability in the libraries, from U of T's own Information
+    // Commons status page (linked from the libraries' site as their "computer finder"; no
+    // login). Summary page lists each library with "Total: N  Available: M of N". Keyed to the
+    // building that library IS or sits in, by the address the page itself prints. Noranda
+    // Earth Sciences (5 Bancroft Ave) is left out: that address does not match the map's.
+    computers: {
+      url: 'https://cafstatus.icicle.utoronto.ca/frontend/Web/Summary/StGeorge',
+      buildings: {
+        'John P. Robarts Research Library': 'Robarts Library',
+        'Gerstein Science Information Centre': 'Sigmund Samuel Library Building',
+        'Engineering & Computer Science Library': 'Sandford Fleming Building',
+        'Mathematical Sciences Library': 'Bahen Centre for Information Technology',
+        'Music Library': 'Edward Johnson Building',
+        'OISE Library': 'Ontario Institute for Studies in Education',
+        'John W. Graham Library': 'Trinity College & Residence',
+        'John M. Kelly Library': 'John M. Kelly Library',
+        'E. J. Pratt Library': 'E.J. Pratt Library',
+        'Emmanuel College Library': 'Emmanuel College',
+      },
+    },
     locations: [
       { lid: '3324', building: 'Sigmund Samuel Library Building',          label: 'Gerstein Library' },
       { lid: '3473', building: 'Sandford Fleming Building',                label: 'Engineering & Computer Science Library' },
@@ -87,6 +107,34 @@ export const CAMPUSES = {
     ],
   },
 };
+
+/** Parse the status summary: [{ name, total, free }] per library. Exported for tests. */
+export function parseComputers(html) {
+  // Each library reads: | Name | Address | Total: N | Available: M of N |
+  const tokens = html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, ' ')
+    .replace(/<[^>]+>/g, '|').replace(/&amp;/g, '&').replace(/&#39;/g, "'").replace(/&nbsp;/g, ' ')
+    .split('|').map(x => x.replace(/\s+/g, ' ').trim()).filter(Boolean);
+  const out = [];
+  for (let i = 2; i < tokens.length - 1; i++) {
+    const t = tokens[i].match(/^Total:\s*(\d+)$/);
+    const a = tokens[i + 1].match(/^Available:\s*(\d+)\s*of\s*(\d+)$/);
+    if (t && a) out.push({ name: tokens[i - 2], total: +a[2], free: +a[1] });
+  }
+  return out;
+}
+
+async function fetchComputers(cfg) {
+  const res = await fetch(cfg.url, { headers: { 'User-Agent': 'Mozilla/5.0 (campusquiet.com library computers)' } });
+  if (!res.ok) throw new Error(`computers ${res.status}`);
+  const out = {};
+  for (const lib of parseComputers(await res.text())) {
+    const building = cfg.buildings[lib.name];
+    if (!building) continue;
+    const prev = out[building] ?? { free: 0, total: 0, sources: [] };
+    out[building] = { free: prev.free + lib.free, total: prev.total + lib.total, sources: [...prev.sources, lib.name] };
+  }
+  return out;
+}
 
 const WINDOW_MS = 5 * 60 * 1000;    // how long a cached answer stays fresh
 const cache = new Map();            // survives between invocations on a warm instance
@@ -245,7 +293,13 @@ export default async function handler(req, res) {
     }
   }));
 
-  const body = { campus: campusId, asOf: now, buildings, failed };
+  let computers = null;
+  if (campus.computers) {
+    try { computers = await fetchComputers(campus.computers); }
+    catch (err) { failed.push('library computers'); }
+  }
+
+  const body = { campus: campusId, asOf: now, buildings, failed, ...(computers ? { computers } : {}) };
   cache.set(campusId, { at: Date.now(), body });
   // Let Vercel's edge hold it too, so a traffic spike doesn't become a spike
   // of requests at the library's booking system.
