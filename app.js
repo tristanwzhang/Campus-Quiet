@@ -485,6 +485,7 @@ const data = { classActivity: null, popularTimes: null, hours: null, gis: null, 
 // while this is live and allowed to be missing. A campus with no configured
 // library simply never fills it, which is why Illinois shows nothing.
 let roomAvailability = null;
+let libraryComputers = null;   // U of T: live public computers per building, from /api/rooms
 
 async function loadRoomAvailability() {
   try {
@@ -492,6 +493,7 @@ async function loadRoomAvailability() {
     if (!res.ok) return;                       // 404 = campus not configured
     const body = await res.json();
     roomAvailability = body?.buildings ?? null;
+    libraryComputers = body?.computers ?? null;
     // Some buildings take their busyness from these bookings, so recolour.
     if (document.getElementById('browse')?.classList.contains('is-open')) renderBrowse({ seatWheels: false });
     if (Object.keys(roomAvailability ?? {}).some(n => configFor(n)?.busyFromBookings)) refresh();
@@ -2192,6 +2194,8 @@ function renderStudyRoomList(body, title, sub, back) {
   const bookable = rows.filter(x => x.st && (x.st.free || x.st.next !== undefined)).length;
   sub.textContent = !Object.keys(live).length ? `${rows.length} study rooms`
     : bookable ? `${free} of ${bookable} free to book right now` : `${rows.length} study rooms \u00b7 not bookable now`;
+  const pcs = libraryComputers?.[n];
+  if (pcs?.total) sub.textContent += ` \u00b7 ${pcs.free} of ${pcs.total} computers free`;
 
   let html = `<button class="browse-row" id="rooms-on-map" type="button"><span class="browse-name">Show this building on the map</span>`
            + `<span class="badge badge-open">Map</span></button>`;
@@ -2318,6 +2322,14 @@ function renderRooms(name) {
       : `<span class="${free ? 'rooms-count' : 'rooms-none'}">${free} of ${total}</span>`
         + ` study ${word} free to book right now`;
     rooms = body + (sources.length ? `<span class="rooms-where">${sources.join(' · ')}</span>` : '');
+  }
+  // Live public computers in the library inside (U of T). Shown as its own fact, never mixed
+  // into busyness: most students study on laptops, so computer use says little about crowding.
+  const pcs = libraryComputers?.[name];
+  if (pcs && pcs.total) {
+    rooms += `<div style="margin-top:${rooms ? 8 : 0}px"><span class="${pcs.free ? 'rooms-count' : 'rooms-none'}">${pcs.free} of ${pcs.total}</span>`
+      + ` library computer${pcs.total === 1 ? '' : 's'} free right now`
+      + `<span class="rooms-where">${pcs.sources.join(' \u00b7 ')} \u00b7 UTORid login</span></div>`;
   }
   if (!rooms && !inside) { box.hidden = true; return; }
   box.innerHTML = rooms + inside;

@@ -338,3 +338,18 @@ sidebar, tapping a building with rooms opens its list (free first, longest first
 5:00 pm", "Booked . free 4:00 pm", "Opens 9:00 am") with a "Show on the map" row on top.
 Other campuses' API responses gain the same `rooms` field, unused by their UI.
 Classrooms remain impossible: no room numbers are published and the schedule tool needs a login.
+
+
+## 2026-10-24: live library computers (and why they are NOT busyness)
+
+U of T's Information Commons publishes live public-computer availability for 11 St. George
+libraries, no login: `cafstatus.icicle.utoronto.ca/frontend/Web/Summary/StGeorge` (found via an
+archived copy of Gerstein's old "computer finder" link; the new library site dropped it). Parsed in
+`api/rooms.mjs` (`parseComputers`, tested live: Robarts 183/210, Gerstein 36/41, Kelly 34/40, Pratt
+36/38, OISE 16/16, Engineering 22/22, Graham 21/23, Music 2/9, Math 3/3, Emmanuel 4/4) and returned
+as `computers` per building, cached with the rooms. Noranda Earth Sciences is left out (address does
+not match the map's). Shown in the building panel ("36 of 41 library computers free right now ·
+UTORid login") and the study-room list subtitle.
+**Deliberately not used for busyness:** mid-afternoon Robarts had 28 of 210 computers in use while
+Google's typical curve says it is near its weekly peak -- students study on laptops, so computer
+use does not track crowding. Mixing it in would make busyness worse.
