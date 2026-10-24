@@ -817,6 +817,26 @@ function assumedStatus(id, date, time) {
   // change to what a launched map tells people, so it is the owner's call and
   // not a side effect of building a third campus.
   if (!window) {
+    // U of T weekends: nothing is timetabled, but the four buildings that publish weekend hours
+    // (Athletic Centre 9-5, OISE 9-9, Woodsworth 10-6; Rotman is fob-only) mostly open mid-
+    // morning to late afternoon. A building that holds classes in the week reads "probably
+    // open" 10am-5pm, labelled as a campus default; venues and holidays are excluded.
+    const wk = CAMPUS_CONTENT.buildingWeekend;
+    const dow = weekdayOf(date);
+    if (wk && (dow === 'saturday' || dow === 'sunday') && !configFor(id)?.noCampusDefault) {
+      const wkGrid = data.classActivity?.buildings?.[id]?.hours;
+      if (wkGrid && Object.values(wkGrid).some(g => g.some(v => v > 0))) {
+        const isOpen = time >= wk[0] && time < wk[1];
+        return {
+          state: isOpen ? 'open' : 'closed',
+          source: 'assumed from published weekend hours of similar buildings',
+          assumed: true,
+          campusDefault: isOpen,
+          defaultWhy: 'the U of T buildings that publish weekend hours are mostly open about 10am\u20135pm',
+          closedNote: 'Probably closed \u00b7 outside about 10am\u20135pm, when weekend buildings here are usually open',
+        };
+      }
+    }
     if (!CAMPUS_CONTENT.assumeShutWithoutClasses || finalsWeek) {
       // During finals there is no ordinary window for a day nothing ever
       // meets on, and the buildings are at their busiest. Guessing shut then
@@ -1164,7 +1184,7 @@ function estimateFor(name) {
     return { value: 0, source: 'open', note: `Open \u00b7 ${inside}` };
   }
   if (hours.state === 'open' && hours.campusDefault) {
-    const why = 'most U of T buildings that publish hours are open about 8:30am\u20139pm on weekdays';
+    const why = hours.defaultWhy ?? 'most U of T buildings that publish hours are open about 8:30am\u20139pm on weekdays';
     // No class is on here now, so there is nothing to estimate busyness from: show it
     // as open and empty-of-classes, never as a typical-curve number.
     return { value: 0, source: 'open', assumed: true, note: `Probably open \u00b7 ${why}; nothing is timetabled here now` };
@@ -1827,7 +1847,12 @@ const CAMPUS_CONTENT = {
           // Hide a 3D block whose centre lies in the courtyard of a building we draw ourselves.
           coverByHull: true,
           // A "Study rooms free now" list in the picks sheet, from /api/rooms.
-          roomsList: true },
+          roomsList: true,
+          // Weekend doors, [open, close]. From the four U of T buildings that publish weekend
+          // hours: Athletic Centre 9-17, OISE 9-21, Woodsworth 10-18 are open, Rotman is fob-only
+          // (closed to the public). 10-17 is the span where the open three agree. Approved by the
+          // owner 2026-10-24, knowing it leans toward "open" where the evidence is one-in-four closed.
+          buildingWeekend: [10, 17] },
 }[CAMPUS.id];
 
 const BUILDINGS = CAMPUS_CONTENT.buildings;
