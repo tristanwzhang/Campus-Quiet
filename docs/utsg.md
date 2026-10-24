@@ -287,3 +287,25 @@ Maryland and Ohio State would change their launched sheets. The per-building pan
 "Study rooms" with the five buildings that have the most rooms ("35 rooms") and "Not bookable right
 now -- libraries take bookings while they are open"; in the day it reads "Study rooms free now"
 with live counts. Capped at 5 rows plus "+ N more buildings".
+
+
+## 2026-10-24: "Study rooms" sidebar; the hours rule tested without circularity
+
+**Sidebar.** The "Find a free room" panel (`#browse-all`) only appeared where a campus had a
+classroom schedule (`rooms.json`). U of T has none (no room numbers), so with `roomsList` it now
+shows a "Study rooms" button that opens the same sidebar, titled "Study rooms & buildings": every
+building by library/academic, a badge of live study rooms free to book (e.g. 9/23), "Open" or
+"No hours" otherwise, and the time wheels to check opening hours at another time. Tapping a
+building closes the sidebar and opens it on the map (there is no per-room list to drill into). The
+badge describes NOW only. Maryland and Ohio State are unchanged.
+
+**Leave-one-out test of `buildingDay`.** The harness gain was circular (the rule came from the same
+six buildings it was scored on). Re-deriving the rule from five and scoring on the sixth, for each:
+weekday slot accuracy **93%**, evening (6pm-midnight) **92%** (Athletic Centre 85%, OISE 94%,
+Woodsworth 94%, Innis 98%, Rotman 92%, Student Commons 96%). Caveat: these six PUBLISH their hours,
+so they are probably more public-facing than Bahen, McLennan or Sandford Fleming.
+**Weekends are the weak spot:** saying "closed" scores only ~71% on the four with published
+weekend hours (Athletic Centre 9-17, OISE 9-21, Woodsworth 10-18 are open; Rotman is fob-only).
+Blended with weekdays, about **87%** for buildings like these. NOT changed: a "probably open 10-5"
+weekend default would score ~85% on those four, but it is the direction that sends someone to a
+locked door (Rotman), which the owner's rule rules out. It is the owner's call.
