@@ -2144,6 +2144,11 @@ function renderBrowse({ seatWheels = true } = {}) {
   if (roomsMode() && noiseFilter.size) {
     names = names.filter(n => areasIn(n).some(a => noiseFilter.has(a.noise)));
   }
+  // "Outlets" on the first screen: buildings where a study room or an open study area is
+  // tagged "Power Available" by the libraries. Carries into the building's room list.
+  const hasPower = n => studyRoomsIn(n).some(([, r]) => (r.tags ?? []).includes('Power Available'))
+    || areasIn(n).some(a => (a.features ?? []).includes('Power Available'));
+  if (roomsMode() && roomFilter.has('Power Available')) names = names.filter(hasPower);
   const groups = { Library: [], Academic: [] };
   for (const n of names) {
     (BUILDINGS[n]?.type === 'library' || /librar/i.test(pickLabel(n)) ? groups.Library : groups.Academic).push(n);
@@ -2163,6 +2168,10 @@ function renderBrowse({ seatWheels = true } = {}) {
         + `style="font:inherit;font-size:11.5px;padding:4px 10px;border-radius:999px;cursor:pointer;`
         + `border:1px solid ${noiseFilter.has(k) ? '#58c047' : 'rgba(255,255,255,0.15)'};`
         + `background:${noiseFilter.has(k) ? 'rgba(88,192,71,0.15)' : 'transparent'};color:#c9d1de">${label}</button>`).join('')
+      + (() => { const on = roomFilter.has('Power Available'); return `<button type="button" class="power-chip" aria-pressed="${on}" `
+        + `style="font:inherit;font-size:11.5px;padding:4px 10px;border-radius:999px;cursor:pointer;`
+        + `border:1px solid ${on ? '#58c047' : 'rgba(255,255,255,0.15)'};`
+        + `background:${on ? 'rgba(88,192,71,0.15)' : 'transparent'};color:#c9d1de">Outlets</button>`; })()
       + '</div>';
   }
   if (q && !names.length) html += `<div class="browse-foot">No building matches \u201c${escapeHtml(browseQuery.trim())}\u201d.</div>`;
@@ -4689,6 +4698,12 @@ document.getElementById('browse-back')?.addEventListener('click', () => {
   renderBrowse();
 });
 document.getElementById('browse-body')?.addEventListener('click', ev => {
+  if (ev.target.closest('.power-chip')) {
+    roomFilter.has('Power Available') ? roomFilter.delete('Power Available') : roomFilter.add('Power Available');
+    renderBrowse({ seatWheels: false });
+    track('room_filter', { tag: 'Power Available', on: roomFilter.has('Power Available'), level: 'list', device: deviceKind() });
+    return;
+  }
   const chip = ev.target.closest('.noise-chip');
   if (chip) {
     const k = chip.dataset.noise;
