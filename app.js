@@ -1857,14 +1857,24 @@ const GIS_ALIASES = CAMPUS_CONTENT.gisAliases;
 let roomSchedule = null;
 
 async function loadRoomSchedule() {
+  // U of T publishes no room numbers, so there is no classroom schedule; its sidebar lists
+  // buildings with LIVE study-room counts instead (see roomsMode()).
+  const showEntry = () => { const e = document.getElementById('browse-all'); if (e) e.hidden = false; };
+  if (CAMPUS_CONTENT.roomsList) {
+    showEntry();
+    const lbl = document.querySelector('#browse-all span');
+    if (lbl) lbl.textContent = 'Study rooms';
+  }
   try {
     const r = await fetch(`${CAMPUS.dataDir}/rooms.json`);
     if (!r.ok) return;
     roomSchedule = (await r.json()).buildings ?? null;
-    const entry = document.getElementById('browse-all');
-    if (entry && roomSchedule) entry.hidden = false;
+    if (roomSchedule) showEntry();
   } catch (e) { /* no room data for this campus */ }
 }
+
+/** True where the sidebar is about live study rooms, not a classroom schedule. */
+const roomsMode = () => !!CAMPUS_CONTENT.roomsList && !roomSchedule;
 
 /**
  * How long until a class takes this room, in hours, or null if one is in it now.
@@ -2037,7 +2047,9 @@ function browseNote(date) {
 function applyBrowseNote(date) {
   const el = document.getElementById('browse-note');
   if (!el) return;
-  const msg = browseNote(date);
+  // That notice is about classroom schedules ("nothing is timetabled, so no room
+  // counts"); live study rooms exist regardless of the calendar.
+  const msg = roomsMode() ? null : browseNote(date);
   el.textContent = msg ?? '';
   el.hidden = !msg;
 }
@@ -2067,7 +2079,7 @@ function renderBrowse({ seatWheels = true } = {}) {
   if (search) search.hidden = !!browseBuilding;
   if (browseBuilding) return renderBrowseRooms(body, title, sub, back, seatWheels);
   back.hidden = true;
-  title.textContent = 'Buildings';
+  title.textContent = roomsMode() ? 'Study rooms & buildings' : 'Buildings';
 
   applyBrowseWhen(seatWheels);
   const { date, time } = browseWhen();
@@ -2096,7 +2108,12 @@ function renderBrowse({ seatWheels = true } = {}) {
       // published week has rolled past is not shut, we just don't know — and
       // saying Closed there would send someone away from an open library.
       const st = hoursStatus(n, date, time);
-      const rooms = st.state === 'open' ? roomsFreeIn(n, browseWhen()) : null;
+      let rooms = st.state === 'open' ? roomsFreeIn(n, browseWhen()) : null;
+      // Study-room counts are live, so they only describe NOW -- not a time picked on the wheels.
+      if (roomsMode() && !browseAt) {
+        const live = roomAvailability?.[n];
+        rooms = live && live.bookable > 0 ? { free: live.free, total: live.bookable } : null;
+      }
       let badge;
       if (st.state === 'unknown') badge = '<span class="badge badge-closed">No hours</span>';
       else if (st.state !== 'open') badge = `<span class="badge badge-closed">${st.assumed ? 'Probably closed' : 'Closed'}</span>`;
@@ -2106,8 +2123,12 @@ function renderBrowse({ seatWheels = true } = {}) {
             + `<span class="browse-name">${pickLabel(n)}</span>${badge}</button>`;
     }
   }
-  html += '<div class="browse-foot">A count shows rooms with no class scheduled right now. '
-        + 'That is not the same as unlocked — many classrooms are locked outside class.</div>';
+  html += roomsMode()
+    ? '<div class="browse-foot">A count shows study rooms nobody has booked, live \u2014 not necessarily empty. '
+      + 'Buildings without a count have no bookable study rooms right now. Pick another time on the wheels '
+      + 'to check opening hours.</div>'
+    : '<div class="browse-foot">A count shows rooms with no class scheduled right now. '
+      + 'That is not the same as unlocked \u2014 many classrooms are locked outside class.</div>';
   body.innerHTML = html;
   body.scrollTop = 0;
 }
@@ -4500,7 +4521,17 @@ document.getElementById('browse-back')?.addEventListener('click', () => {
 document.getElementById('browse-body')?.addEventListener('click', ev => {
   const row = ev.target.closest('.browse-row');
   if (!row) return;
-  browseBuilding = decodeURIComponent(row.dataset.building);
+  const picked = decodeURIComponent(row.dataset.building);
+  if (roomsMode()) {
+    closeBrowse();
+    zoomedPick = picked;
+    zoomToPick(picked);
+    openPanel(picked);
+    markZoomedPick();
+    track('browse_building', { building: picked, device: deviceKind(), live: true });
+    return;
+  }
+  browseBuilding = picked;
   renderBrowse();
   track('browse_building', { building: browseBuilding, device: deviceKind() });
 });
