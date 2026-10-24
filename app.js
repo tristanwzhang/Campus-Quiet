@@ -2178,13 +2178,26 @@ function clock12(hm) {
   return `${h % 12 === 0 ? 12 : h % 12}:${String(m).padStart(2, '0')} ${h >= 12 && h < 24 ? 'pm' : 'am'}`;
 }
 
+// Room filters, from the libraries' own feature tags (LibCal filterIds). Short labels for chips.
+const ROOM_TAGS = [
+  ['Power Available', 'Outlets'],
+  ['Whiteboard or Chalkboard Available', 'Whiteboard'],
+  ['Monitor Available', 'Screen'],
+  ['Accessible Seat/Space', 'Accessible'],
+];
+const roomFilter = new Set();
+
 /** One building's study rooms with live free/booked state (U of T). */
 function renderStudyRoomList(body, title, sub, back) {
   const n = browseBuilding;
   back.hidden = false;
   title.textContent = pickLabel(n);
   const live = roomAvailability?.[n]?.rooms ?? {};
-  const rows = studyRoomsIn(n).map(([id, r]) => ({ id, r, st: live[id] }));
+  const allRows = studyRoomsIn(n).map(([id, r]) => ({ id, r, st: live[id] }));
+  // Only offer a filter this building can actually satisfy.
+  const offered = ROOM_TAGS.filter(([tag]) => allRows.some(x => (x.r.tags ?? []).includes(tag)));
+  for (const t of [...roomFilter]) if (!offered.some(([tag]) => tag === t)) roomFilter.delete(t);
+  const rows = allRows.filter(x => [...roomFilter].every(t => (x.r.tags ?? []).includes(t)));
   const rank = x => !x.st ? 3 : x.st.free ? 0 : x.st.next !== undefined ? 1 : 2;
   rows.sort((a, b) => rank(a) - rank(b)
     || (rank(a) === 0 ? (b.st.until > a.st.until ? 1 : -1) : 0)
@@ -2196,9 +2209,18 @@ function renderStudyRoomList(body, title, sub, back) {
     : bookable ? `${free} of ${bookable} free to book right now` : `${rows.length} study rooms \u00b7 not bookable now`;
   const pcs = libraryComputers?.[n];
   if (pcs?.total) sub.textContent += ` \u00b7 ${pcs.free} of ${pcs.total} computers free`;
+  if (roomFilter.size) sub.textContent = `${rows.length} of ${allRows.length} rooms match \u00b7 ` + sub.textContent;
 
   let html = `<button class="browse-row" id="rooms-on-map" type="button"><span class="browse-name">Show this building on the map</span>`
            + `<span class="badge badge-open">Map</span></button>`;
+  if (offered.length) {
+    html += '<div style="display:flex;flex-wrap:wrap;gap:6px;padding:8px 16px 4px">' + offered.map(([tag, label]) =>
+      `<button type="button" class="room-tag-chip" data-tag="${escapeHtml(tag)}" aria-pressed="${roomFilter.has(tag)}" `
+      + `style="font:inherit;font-size:11.5px;padding:4px 10px;border-radius:999px;cursor:pointer;`
+      + `border:1px solid ${roomFilter.has(tag) ? '#58c047' : 'rgba(255,255,255,0.15)'};`
+      + `background:${roomFilter.has(tag) ? 'rgba(88,192,71,0.15)' : 'transparent'};color:#c9d1de">${label}</button>`).join('') + '</div>';
+    if (roomFilter.size && !rows.length) html += '<div class="browse-foot">No room here has all of those.</div>';
+  }
   html += rows.map(({ r, st }) => {
     // "02nd Floor" -> "2nd Floor"; and say which library only when the building has several.
     const floor = r.floor ? r.floor.replace(/^0(\d)/, '$1') : null;
@@ -2208,13 +2230,25 @@ function renderStudyRoomList(body, title, sub, back) {
     if (st?.free) badge = `<span class="badge badge-open">Free until ${clock12(st.until)}</span>`;
     else if (st && st.next !== undefined) badge = `<span class="badge badge-closed">Booked${st.next ? ` \u00b7 free ${clock12(st.next)}` : ''}</span>`;
     else if (st?.opens) badge = `<span class="badge badge-closed">Opens ${clock12(st.opens)}</span>`;
-    return `<div class="room-row"><span><span class="room-id">${escapeHtml(r.name)}</span>`
-      + `<span class="room-for">${escapeHtml(facts)}${r.features ? ` \u00b7 ${escapeHtml(r.features.slice(0, 70))}` : ''}</span></span>${badge}</div>`;
+    const tagText = ROOM_TAGS.filter(([tag]) => (r.tags ?? []).includes(tag)).map(([, label]) => label).join(' \u00b7 ');
+    const photo = r.photo
+      ? `<img src="${escapeHtml(r.photo)}" alt="" loading="lazy" referrerpolicy="no-referrer" style="width:44px;height:44px;object-fit:cover;border-radius:6px;flex:none;margin-right:10px">`
+      : '';
+    return `<div class="room-row" style="align-items:center">${photo}<span style="flex:1;min-width:0"><span class="room-id">${escapeHtml(r.name)}</span>`
+      + `<span class="room-for">${escapeHtml(facts)}${tagText ? `<br>${escapeHtml(tagText)}` : ''}</span></span>${badge}</div>`;
   }).join('');
   html += '<div class="browse-foot">Straight from the libraries\u2019 booking system, refreshed every few minutes. '
         + '\u201cFree\u201d means nobody has reserved it \u2014 not necessarily empty. Book through the library.</div>';
   body.innerHTML = html;
   body.scrollTop = 0;
+  for (const chip of body.querySelectorAll('.room-tag-chip')) {
+    chip.addEventListener('click', () => {
+      const tag = chip.dataset.tag;
+      roomFilter.has(tag) ? roomFilter.delete(tag) : roomFilter.add(tag);
+      renderStudyRoomList(body, title, sub, back);
+      track('room_filter', { tag, on: roomFilter.has(tag), device: deviceKind() });
+    });
+  }
   document.getElementById('rooms-on-map')?.addEventListener('click', () => {
     closeBrowse();
     zoomedPick = n;
