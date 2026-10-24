@@ -1,0 +1,2258 @@
+{
+ "built_at": "2026-10-24T22:15:03+00:00",
+ "source": "University of Toronto Libraries space pages (library.utoronto.ca/space/...)",
+ "spaces": {
+  "/space/architecture/group-study-room": {
+   "name": "Group Study Room",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "Architecture, Landscape, and Design (Eberhard Zeidler Library)",
+   "building": "Daniels Building",
+   "url": "https://library.utoronto.ca/space/architecture/group-study-room",
+   "area": false
+  },
+  "/space/chemistry/chemistry-library-lower-level": {
+   "name": "Chemistry Library Lower Level",
+   "noise": "Collaborative",
+   "features": [
+    "Natural Light",
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "library_name": "Chemistry Library (A D Allen)",
+   "building": "Lash Miller Chemical Laboratories",
+   "url": "https://library.utoronto.ca/space/chemistry/chemistry-library-lower-level",
+   "area": true
+  },
+  "/space/chemistry/chemistry-library-study-rooms": {
+   "name": "Chemistry Library Study Rooms",
+   "noise": "Collaborative",
+   "features": [
+    "Accessible Seat/Space",
+    "Dimmable Lighting",
+    "Monitor Available",
+    "Power Available",
+    "Video Conferencing",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "library_name": "Chemistry Library (A D Allen)",
+   "building": "Lash Miller Chemical Laboratories",
+   "url": "https://library.utoronto.ca/space/chemistry/chemistry-library-study-rooms",
+   "area": false
+  },
+  "/space/chemistry/chemistry-library-upper-level": {
+   "name": "Chemistry Library Upper Level",
+   "noise": "Quiet",
+   "features": [
+    "Accessible Seat/Space",
+    "Natural Light",
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "library_name": "Chemistry Library (A D Allen)",
+   "building": "Lash Miller Chemical Laboratories",
+   "url": "https://library.utoronto.ca/space/chemistry/chemistry-library-upper-level",
+   "area": true
+  },
+  "/space/ej-pratt/pratt-study-room-202": {
+   "name": "Pratt Study Room 202",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Victoria University - E J Pratt Library",
+   "building": "E.J. Pratt Library",
+   "url": "https://library.utoronto.ca/space/ej-pratt/pratt-study-room-202",
+   "area": false
+  },
+  "/space/engineering-computer-science/room": {
+   "name": "Room A",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Engineering & Computer Science Library",
+   "building": "Sandford Fleming Building",
+   "url": "https://library.utoronto.ca/space/engineering-computer-science/room",
+   "area": false
+  },
+  "/space/engineering-computer-science/room-b": {
+   "name": "Room B",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Engineering & Computer Science Library",
+   "building": "Sandford Fleming Building",
+   "url": "https://library.utoronto.ca/space/engineering-computer-science/room-b",
+   "area": false
+  },
+  "/space/engineering-computer-science/room-d": {
+   "name": "Room D",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Video Conferencing",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Engineering & Computer Science Library",
+   "building": "Sandford Fleming Building",
+   "url": "https://library.utoronto.ca/space/engineering-computer-science/room-d",
+   "area": false
+  },
+  "/space/engineering-computer-science/room-e": {
+   "name": "Room E",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Engineering & Computer Science Library",
+   "building": "Sandford Fleming Building",
+   "url": "https://library.utoronto.ca/space/engineering-computer-science/room-e",
+   "area": false
+  },
+  "/space/engineering-computer-science/soundproof-booth": {
+   "name": "Soundproof Booth",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "Engineering & Computer Science Library",
+   "building": "Sandford Fleming Building",
+   "url": "https://library.utoronto.ca/space/engineering-computer-science/soundproof-booth",
+   "area": false
+  },
+  "/space/engineering/bookable-study-rooms": {
+   "name": "Bookable Study Rooms at ECSL",
+   "noise": "Collaborative",
+   "features": [
+    "Monitor Available",
+    "Natural Light",
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "library_name": "Engineering & Computer Science Library",
+   "building": "Sandford Fleming Building",
+   "url": "https://library.utoronto.ca/space/engineering/bookable-study-rooms",
+   "area": false
+  },
+  "/space/gerstein-library/2000-presentation-practice-space": {
+   "name": "2000 (Presentation Practice Space)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/2000-presentation-practice-space",
+   "area": false
+  },
+  "/space/gerstein-library/2100": {
+   "name": "2100",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Natural Light",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/2100",
+   "area": false
+  },
+  "/space/gerstein-library/2101": {
+   "name": "2101",
+   "noise": null,
+   "features": [
+    "Natural Light",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/2101",
+   "area": false
+  },
+  "/space/gerstein-library/2102": {
+   "name": "2102",
+   "noise": null,
+   "features": [
+    "Natural Light",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/2102",
+   "area": false
+  },
+  "/space/gerstein-library/2103": {
+   "name": "2103",
+   "noise": null,
+   "features": [
+    "Natural Light",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/2103",
+   "area": false
+  },
+  "/space/gerstein-library/2104": {
+   "name": "2104",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Natural Light",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/2104",
+   "area": false
+  },
+  "/space/gerstein-library/2105": {
+   "name": "2105",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Natural Light",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/2105",
+   "area": false
+  },
+  "/space/gerstein-library/2106": {
+   "name": "2106",
+   "noise": null,
+   "features": [
+    "Natural Light",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/2106",
+   "area": false
+  },
+  "/space/gerstein-library/2107": {
+   "name": "2107",
+   "noise": null,
+   "features": [
+    "Natural Light",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/2107",
+   "area": false
+  },
+  "/space/gerstein-library/b105a": {
+   "name": "B105A",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/b105a",
+   "area": false
+  },
+  "/space/gerstein-library/b105b": {
+   "name": "B105B",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/b105b",
+   "area": false
+  },
+  "/space/gerstein-library/b105c": {
+   "name": "B105C",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/b105c",
+   "area": false
+  },
+  "/space/gerstein-library/b105d": {
+   "name": "B105D",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/b105d",
+   "area": false
+  },
+  "/space/gerstein-library/b105e": {
+   "name": "B105E",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/b105e",
+   "area": false
+  },
+  "/space/gerstein-library/b105f": {
+   "name": "B105F",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/b105f",
+   "area": false
+  },
+  "/space/gerstein-library/b170a": {
+   "name": "B170A",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/b170a",
+   "area": false
+  },
+  "/space/gerstein-library/b170b": {
+   "name": "B170B",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/b170b",
+   "area": false
+  },
+  "/space/gerstein-library/b172": {
+   "name": "B172",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/b172",
+   "area": false
+  },
+  "/space/gerstein-library/b173": {
+   "name": "B173",
+   "noise": null,
+   "features": [
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/b173",
+   "area": false
+  },
+  "/space/gerstein-library/b174": {
+   "name": "B174",
+   "noise": null,
+   "features": [
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/b174",
+   "area": false
+  },
+  "/space/gerstein-library/b175": {
+   "name": "B175",
+   "noise": "Collaborative",
+   "features": [
+    "Whiteboard or Chalkboard Available"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/b175",
+   "area": false
+  },
+  "/space/gerstein-library/floor-plans-gerstein-library": {
+   "name": "Floor plans of Gerstein Library",
+   "noise": null,
+   "features": [],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/floor-plans-gerstein-library",
+   "area": false
+  },
+  "/space/gerstein-library/heritage-lounge-area-gerstein-library": {
+   "name": "Heritage lounge area in Gerstein Library",
+   "noise": "Collaborative",
+   "features": [
+    "Natural Light",
+    "Power Available"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/heritage-lounge-area-gerstein-library",
+   "area": true
+  },
+  "/space/gerstein-library/history-gerstein-library-spaces": {
+   "name": "History of Gerstein Library spaces",
+   "noise": null,
+   "features": [],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/history-gerstein-library-spaces",
+   "area": false
+  },
+  "/space/gerstein-library/instruction-lab-gerstein-library": {
+   "name": "Instruction Lab at Gerstein Library",
+   "noise": "Collaborative",
+   "features": [
+    "Accessible Seat/Space",
+    "Dimmable Lighting",
+    "Monitor Available",
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Gender-neutral washrooms available"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/instruction-lab-gerstein-library",
+   "area": false
+  },
+  "/space/gerstein-library/lower-reference-room-gerstein-library": {
+   "name": "Lower Reference Room at Gerstein Library",
+   "noise": "Collaborative",
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/lower-reference-room-gerstein-library",
+   "area": true
+  },
+  "/space/gerstein-library/mobile-application-development-lab-madlab-gerstein-library": {
+   "name": "Mobile Application Development Lab (MADLab) at Gerstein Library",
+   "noise": "Collaborative",
+   "features": [
+    "3D Printer Available",
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/mobile-application-development-lab-madlab-gerstein-library",
+   "area": false
+  },
+  "/space/gerstein-library/recording-booth": {
+   "name": "Recording booth",
+   "noise": null,
+   "features": [],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/recording-booth",
+   "area": false
+  },
+  "/space/gerstein-library/room-b110-gerstein-library": {
+   "name": "Room B110 at Gerstein Library",
+   "noise": "Collaborative",
+   "features": [
+    "Accessible Seat/Space",
+    "Natural Light",
+    "Power Available"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/room-b110-gerstein-library",
+   "area": true
+  },
+  "/space/gerstein-library/silent-study-room-gerstein-library": {
+   "name": "Silent Study Room at Gerstein Library",
+   "noise": "Silent",
+   "features": [
+    "Accessible Seat/Space",
+    "Natural Light",
+    "Power Available",
+    "Gender-neutral washrooms available"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-library/silent-study-room-gerstein-library",
+   "area": true
+  },
+  "/space/gerstein-science-information-centre/gerstein-family-workstation": {
+   "name": "Family Workstation at Gerstein Library",
+   "noise": "Collaborative",
+   "features": [
+    "Accessible Seat/Space",
+    "Natural Light",
+    "Power Available",
+    "Gender-neutral washrooms available"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-science-information-centre/gerstein-family-workstation",
+   "area": false
+  },
+  "/space/gerstein-science-information-centre/gerstein-reflection-room": {
+   "name": "Reflection Room at Gerstein Library",
+   "noise": "Quiet",
+   "features": [
+    "Accessible Seat/Space"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-science-information-centre/gerstein-reflection-room",
+   "area": false
+  },
+  "/space/gerstein-science-information-centre/lower-quiet-study-room": {
+   "name": "Lower Silent Study Room at Gerstein Library",
+   "noise": "Silent",
+   "features": [
+    "Natural Light",
+    "Power Available"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-science-information-centre/lower-quiet-study-room",
+   "area": true
+  },
+  "/space/gerstein-science-information-centre/morrison-pavilion": {
+   "name": "Study space in the Morrison Pavilion at Gerstein Library",
+   "noise": "Quiet",
+   "features": [
+    "Accessible Seat/Space",
+    "Natural Light",
+    "Power Available",
+    "Gender-neutral washrooms available"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-science-information-centre/morrison-pavilion",
+   "area": true
+  },
+  "/space/gerstein-science-information-centre/reading-room": {
+   "name": "Reading Room at Gerstein Library",
+   "noise": "Silent",
+   "features": [
+    "Accessible Seat/Space",
+    "Natural Light",
+    "Power Available",
+    "Gender-neutral washrooms available"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-science-information-centre/reading-room",
+   "area": true
+  },
+  "/space/gerstein-science-information-centre/remote-zone-wallace-room": {
+   "name": "Remote Zone in the Wallace Room at Gerstein Library",
+   "noise": "Collaborative",
+   "features": [
+    "Accessible Seat/Space",
+    "Natural Light",
+    "Power Available"
+   ],
+   "library_name": "Gerstein Science Information Centre",
+   "building": "Sigmund Samuel Library Building",
+   "url": "https://library.utoronto.ca/space/gerstein-science-information-centre/remote-zone-wallace-room",
+   "area": true
+  },
+  "/space/kelly/room-201": {
+   "name": "Room 201",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "St. Michael’s College - John M. Kelly Library",
+   "building": "John M. Kelly Library",
+   "url": "https://library.utoronto.ca/space/kelly/room-201",
+   "area": false
+  },
+  "/space/kelly/room-202": {
+   "name": "Room 202",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "St. Michael’s College - John M. Kelly Library",
+   "building": "John M. Kelly Library",
+   "url": "https://library.utoronto.ca/space/kelly/room-202",
+   "area": false
+  },
+  "/space/kelly/room-205": {
+   "name": "Room 205",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "St. Michael’s College - John M. Kelly Library",
+   "building": "John M. Kelly Library",
+   "url": "https://library.utoronto.ca/space/kelly/room-205",
+   "area": false
+  },
+  "/space/kelly/room-206": {
+   "name": "Room 206",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "St. Michael’s College - John M. Kelly Library",
+   "building": "John M. Kelly Library",
+   "url": "https://library.utoronto.ca/space/kelly/room-206",
+   "area": false
+  },
+  "/space/kelly/room-231": {
+   "name": "Room 231",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "St. Michael’s College - John M. Kelly Library",
+   "building": "John M. Kelly Library",
+   "url": "https://library.utoronto.ca/space/kelly/room-231",
+   "area": false
+  },
+  "/space/mdl/collaboration-room-1-5030": {
+   "name": "Collaboration room 1 (5030)",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Food and Drink Allowed",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Map & Data Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/mdl/collaboration-room-1-5030",
+   "area": false
+  },
+  "/space/mdl/collaboration-room-2-5025": {
+   "name": "Collaboration room 2 (5025)",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Food and Drink Allowed",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Map & Data Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/mdl/collaboration-room-2-5025",
+   "area": false
+  },
+  "/space/mdl/collaboration-room-3-5026": {
+   "name": "Collaboration room 3 (5026)",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Food and Drink Allowed",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Map & Data Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/mdl/collaboration-room-3-5026",
+   "area": false
+  },
+  "/space/music/group-study-room": {
+   "name": "Group Study Room",
+   "noise": "Collaborative",
+   "features": [
+    "Power Available"
+   ],
+   "library_name": "Music Library",
+   "building": "Edward Johnson Building",
+   "url": "https://library.utoronto.ca/space/music/group-study-room",
+   "area": false
+  },
+  "/space/music/harvey-olnick-reading-room": {
+   "name": "Harvey Olnick Reading Room",
+   "noise": "Silent",
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "library_name": "Music Library",
+   "building": "Edward Johnson Building",
+   "url": "https://library.utoronto.ca/space/music/harvey-olnick-reading-room",
+   "area": true
+  },
+  "/space/music/music-library-study-spaces": {
+   "name": "Music Library study spaces",
+   "noise": "Quiet",
+   "features": [
+    "Accessible Seat/Space",
+    "Natural Light",
+    "Power Available"
+   ],
+   "library_name": "Music Library",
+   "building": "Edward Johnson Building",
+   "url": "https://library.utoronto.ca/space/music/music-library-study-spaces",
+   "area": true
+  },
+  "/space/music/music-technology-lab": {
+   "name": "Music Technology Lab",
+   "noise": "Quiet",
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "library_name": "Music Library",
+   "building": "Edward Johnson Building",
+   "url": "https://library.utoronto.ca/space/music/music-technology-lab",
+   "area": false
+  },
+  "/space/music/teaching-and-learning-space-music-library": {
+   "name": "Teaching and Learning Space at the Music Library",
+   "noise": "Collaborative",
+   "features": [
+    "Accessible Seat/Space",
+    "Monitor Available",
+    "Power Available",
+    "Video Conferencing"
+   ],
+   "library_name": "Music Library",
+   "building": "Edward Johnson Building",
+   "url": "https://library.utoronto.ca/space/music/teaching-and-learning-space-music-library",
+   "area": false
+  },
+  "/space/oise-library/3-138": {
+   "name": "3-138",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/3-138",
+   "area": false
+  },
+  "/space/oise-library/c130": {
+   "name": "C130",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/c130",
+   "area": false
+  },
+  "/space/oise-library/c132": {
+   "name": "C132",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/c132",
+   "area": false
+  },
+  "/space/oise-library/c134": {
+   "name": "C134",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/c134",
+   "area": false
+  },
+  "/space/oise-library/c136": {
+   "name": "C136",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/c136",
+   "area": false
+  },
+  "/space/oise-library/m-1": {
+   "name": "M 1",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m-1",
+   "area": false
+  },
+  "/space/oise-library/m-3": {
+   "name": "M 3",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m-3",
+   "area": false
+  },
+  "/space/oise-library/m-5": {
+   "name": "M 5",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m-5",
+   "area": false
+  },
+  "/space/oise-library/m-6": {
+   "name": "M 6",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m-6",
+   "area": false
+  },
+  "/space/oise-library/m-7": {
+   "name": "M 7",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m-7",
+   "area": false
+  },
+  "/space/oise-library/m-8": {
+   "name": "M 8",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m-8",
+   "area": false
+  },
+  "/space/oise-library/m-9": {
+   "name": "M 9",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m-9",
+   "area": false
+  },
+  "/space/oise-library/m10": {
+   "name": "M10",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m10",
+   "area": false
+  },
+  "/space/oise-library/m11": {
+   "name": "M11",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m11",
+   "area": false
+  },
+  "/space/oise-library/m12": {
+   "name": "M12",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m12",
+   "area": false
+  },
+  "/space/oise-library/m13": {
+   "name": "M13",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m13",
+   "area": false
+  },
+  "/space/oise-library/m14": {
+   "name": "M14",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m14",
+   "area": false
+  },
+  "/space/oise-library/m15": {
+   "name": "M15",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m15",
+   "area": false
+  },
+  "/space/oise-library/m28": {
+   "name": "M28",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m28",
+   "area": false
+  },
+  "/space/oise-library/m30": {
+   "name": "M30",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m30",
+   "area": false
+  },
+  "/space/oise-library/m32": {
+   "name": "M32",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m32",
+   "area": false
+  },
+  "/space/oise-library/m34": {
+   "name": "M34",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m34",
+   "area": false
+  },
+  "/space/oise-library/m36": {
+   "name": "M36",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m36",
+   "area": false
+  },
+  "/space/oise-library/m40": {
+   "name": "M40",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m40",
+   "area": false
+  },
+  "/space/oise-library/m42": {
+   "name": "M42",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m42",
+   "area": false
+  },
+  "/space/oise-library/m46": {
+   "name": "M46",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m46",
+   "area": false
+  },
+  "/space/oise-library/m48": {
+   "name": "M48",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/m48",
+   "area": false
+  },
+  "/space/oise-library/oise-library-concourse-level": {
+   "name": "OISE Library Concourse Level",
+   "noise": "Quiet",
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/oise-library-concourse-level",
+   "area": true
+  },
+  "/space/oise-library/oise-library-ground-floor": {
+   "name": "OISE Library Ground Floor",
+   "noise": "Collaborative",
+   "features": [
+    "Accessible Seat/Space",
+    "Natural Light",
+    "Power Available",
+    "Gender-neutral washrooms available"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/oise-library-ground-floor",
+   "area": true
+  },
+  "/space/oise-library/oise-library-mezzanine-level": {
+   "name": "OISE Library Mezzanine Level",
+   "noise": "Collaborative",
+   "features": [
+    "Accessible Seat/Space",
+    "Natural Light",
+    "Power Available"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/oise-library-mezzanine-level",
+   "area": true
+  },
+  "/space/oise-library/oise-library-second-floor": {
+   "name": "OISE Library Second Floor",
+   "noise": "Quiet",
+   "features": [
+    "Accessible Seat/Space",
+    "Natural Light",
+    "Power Available"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/oise-library-second-floor",
+   "area": true
+  },
+  "/space/oise-library/oise-library-third-floor": {
+   "name": "OISE Library Third Floor",
+   "noise": "Collaborative",
+   "features": [
+    "Accessible Seat/Space",
+    "Natural Light",
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "library_name": "OISE Library",
+   "building": "Ontario Institute for Studies in Education",
+   "url": "https://library.utoronto.ca/space/oise-library/oise-library-third-floor",
+   "area": true
+  },
+  "/space/quiet-study-space/engineering": {
+   "name": "Quiet Study Space at ECSL",
+   "noise": "Silent",
+   "features": [
+    "Accessible Seat/Space",
+    "Natural Light",
+    "Power Available"
+   ],
+   "library_name": "Engineering & Computer Science Library",
+   "building": "Sandford Fleming Building",
+   "url": "https://library.utoronto.ca/space/quiet-study-space/engineering",
+   "area": true
+  },
+  "/space/robarts-library/family-study-space": {
+   "name": "Robarts Library Family Study Space",
+   "noise": "Collaborative",
+   "features": [
+    "Monitor Available",
+    "Power Available",
+    "Food and Drink Allowed"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts-library/family-study-space",
+   "area": false
+  },
+  "/space/robarts-library/research-education-user-services-workroom": {
+   "name": "Research & Education, User Services workroom",
+   "noise": "Quiet",
+   "features": [],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts-library/research-education-user-services-workroom",
+   "area": false
+  },
+  "/space/robarts-library/robarts-library-electronic-classroom": {
+   "name": "Robarts Library Electronic Classroom",
+   "noise": "Silent",
+   "features": [
+    "Dimmable Lighting",
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Gender-neutral washrooms available"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts-library/robarts-library-electronic-classroom",
+   "area": false
+  },
+  "/space/robarts-library/robarts-library-reflection-room": {
+   "name": "Robarts Library Reflection Room",
+   "noise": "Quiet",
+   "features": [
+    "Accessible Seat/Space"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts-library/robarts-library-reflection-room",
+   "area": false
+  },
+  "/space/robarts/2241-group-study-room-2a": {
+   "name": "2241 Group Study Room 2A",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/2241-group-study-room-2a",
+   "area": false
+  },
+  "/space/robarts/2243-group-study-room-2b": {
+   "name": "2243 Group Study Room 2B",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/2243-group-study-room-2b",
+   "area": false
+  },
+  "/space/robarts/2247-group-study-room-2c": {
+   "name": "2247 Group Study Room 2C",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/2247-group-study-room-2c",
+   "area": false
+  },
+  "/space/robarts/2253-group-study-room-2d": {
+   "name": "2253 Group Study Room 2D",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/2253-group-study-room-2d",
+   "area": false
+  },
+  "/space/robarts/2255-group-study-room-2e": {
+   "name": "2255 Group Study Room 2E",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/2255-group-study-room-2e",
+   "area": false
+  },
+  "/space/robarts/2261-group-study-room-2f": {
+   "name": "2261 Group Study Room 2F",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/2261-group-study-room-2f",
+   "area": false
+  },
+  "/space/robarts/2265-group-study-room-2g": {
+   "name": "2265 Group Study Room 2G",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/2265-group-study-room-2g",
+   "area": false
+  },
+  "/space/robarts/3241-group-study-room-3a": {
+   "name": "3241 Group Study Room 3A",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/3241-group-study-room-3a",
+   "area": false
+  },
+  "/space/robarts/3243-group-study-room-3b": {
+   "name": "3243 Group Study Room 3B",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/3243-group-study-room-3b",
+   "area": false
+  },
+  "/space/robarts/3247-group-study-room-3c": {
+   "name": "3247 Group Study Room 3C",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/3247-group-study-room-3c",
+   "area": false
+  },
+  "/space/robarts/3253-group-study-room-3d": {
+   "name": "3253 Group Study Room 3D",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/3253-group-study-room-3d",
+   "area": false
+  },
+  "/space/robarts/3255-group-study-room-3e": {
+   "name": "3255 Group Study Room 3E",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/3255-group-study-room-3e",
+   "area": false
+  },
+  "/space/robarts/3261-group-study-room-3f": {
+   "name": "3261 Group Study Room 3F",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/3261-group-study-room-3f",
+   "area": false
+  },
+  "/space/robarts/3265-group-study-room-3g": {
+   "name": "3265 Group Study Room 3G",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/3265-group-study-room-3g",
+   "area": false
+  },
+  "/space/robarts/3266-group-study-room-3h": {
+   "name": "3266 Group Study Room 3H",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/3266-group-study-room-3h",
+   "area": false
+  },
+  "/space/robarts/4241-group-study-room-4a": {
+   "name": "4241 Group Study Room 4A",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/4241-group-study-room-4a",
+   "area": false
+  },
+  "/space/robarts/4243-group-study-room-4b": {
+   "name": "4243 Group Study Room 4B",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/4243-group-study-room-4b",
+   "area": false
+  },
+  "/space/robarts/4247-group-study-room-4c": {
+   "name": "4247 Group Study Room 4C",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/4247-group-study-room-4c",
+   "area": false
+  },
+  "/space/robarts/4253-group-study-room-4d": {
+   "name": "4253 Group Study Room 4D",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/4253-group-study-room-4d",
+   "area": false
+  },
+  "/space/robarts/blackburn-room": {
+   "name": "Blackburn Room",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/blackburn-room",
+   "area": false
+  },
+  "/space/robarts/computer-access-facility": {
+   "name": "Computer Access Facility",
+   "noise": "Collaborative",
+   "features": [
+    "Monitor Available",
+    "Natural Light",
+    "Power Available",
+    "3D Printer Available",
+    "Food and Drink Allowed",
+    "Gender-neutral washrooms available"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/computer-access-facility",
+   "area": true
+  },
+  "/space/robarts/group-study-room-2-3-026-3rd-floor": {
+   "name": "Group Study Room 2, 3-026 (3rd Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/group-study-room-2-3-026-3rd-floor",
+   "area": false
+  },
+  "/space/robarts/group-study-room-3-3-027-3rd-floor": {
+   "name": "Group Study Room 3, 3-027 (3rd Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Dimmable Lighting",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/group-study-room-3-3-027-3rd-floor",
+   "area": false
+  },
+  "/space/robarts/information-commons": {
+   "name": "Information Commons",
+   "noise": "Collaborative",
+   "features": [
+    "Accessible Seat/Space",
+    "Monitor Available",
+    "Natural Light",
+    "Power Available",
+    "3D Printer Available",
+    "Food and Drink Allowed",
+    "Gender-neutral washrooms available"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/information-commons",
+   "area": true
+  },
+  "/space/robarts/pjrc-study-space": {
+   "name": "PJRC study space",
+   "noise": "Quiet",
+   "features": [
+    "Accessible Seat/Space",
+    "Monitor Available",
+    "Natural Light"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/pjrc-study-space",
+   "area": true
+  },
+  "/space/robarts/robarts-common": {
+   "name": "Robarts Common",
+   "noise": "Collaborative",
+   "features": [
+    "Accessible Seat/Space",
+    "Dimmable Lighting",
+    "Food and Drink Allowed",
+    "Natural Light",
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Gender-neutral washrooms available"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Common",
+   "url": "https://library.utoronto.ca/space/robarts/robarts-common",
+   "area": true
+  },
+  "/space/robarts/robarts-library-4th-floor-accessible-consultation-room-4004": {
+   "name": "Robarts Library 4th Floor Accessible Consultation Room 4004",
+   "noise": "Collaborative",
+   "features": [
+    "Accessible Seat/Space",
+    "Monitor Available",
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/robarts-library-4th-floor-accessible-consultation-room-4004",
+   "area": false
+  },
+  "/space/robarts/robarts-library-4th-floor-consultation-room-4005": {
+   "name": "Robarts Library 4th Floor Consultation Room 4005",
+   "noise": "Collaborative",
+   "features": [
+    "Monitor Available",
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/robarts-library-4th-floor-consultation-room-4005",
+   "area": false
+  },
+  "/space/robarts/robarts-library-4th-floor-consultation-room-4006": {
+   "name": "Robarts Library 4th Floor Consultation Room 4006",
+   "noise": "Collaborative",
+   "features": [
+    "Monitor Available",
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/robarts-library-4th-floor-consultation-room-4006",
+   "area": false
+  },
+  "/space/robarts/robarts-library-stacks": {
+   "name": "Robarts Library book stacks",
+   "noise": "Quiet",
+   "features": [],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/robarts-library-stacks",
+   "area": true
+  },
+  "/space/robarts/screening-room": {
+   "name": "Screening Room",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Dimmable Lighting",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/screening-room",
+   "area": false
+  },
+  "/space/robarts/st-george-1-10th-floor": {
+   "name": "St. George 1 (10th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/st-george-1-10th-floor",
+   "area": false
+  },
+  "/space/robarts/st-george-1-11th-floor": {
+   "name": "St. George 1 (11th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/st-george-1-11th-floor",
+   "area": false
+  },
+  "/space/robarts/st-george-1-12th-floor": {
+   "name": "St. George 1 (12th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/st-george-1-12th-floor",
+   "area": false
+  },
+  "/space/robarts/st-george-1-13th-floor": {
+   "name": "St. George 1 (13th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/st-george-1-13th-floor",
+   "area": false
+  },
+  "/space/robarts/st-george-1-9th-floor": {
+   "name": "St. George 1 (9th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/st-george-1-9th-floor",
+   "area": false
+  },
+  "/space/robarts/st-george-3-10th-floor": {
+   "name": "St. George 3 (10th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/st-george-3-10th-floor",
+   "area": false
+  },
+  "/space/robarts/st-george-3-11th-floor": {
+   "name": "St. George 3 (11th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/st-george-3-11th-floor",
+   "area": false
+  },
+  "/space/robarts/st-george-3-12th-floor": {
+   "name": "St. George 3 (12th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/st-george-3-12th-floor",
+   "area": false
+  },
+  "/space/robarts/st-george-3-13th-floor": {
+   "name": "St. George 3 (13th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/st-george-3-13th-floor",
+   "area": false
+  },
+  "/space/robarts/st-george-3-9th-floor": {
+   "name": "St. George 3 (9th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/st-george-3-9th-floor",
+   "area": false
+  },
+  "/space/robarts/st-george-4-10th-floor": {
+   "name": "St. George 4 (10th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/st-george-4-10th-floor",
+   "area": false
+  },
+  "/space/robarts/st-george-4-11th-floor": {
+   "name": "St. George 4 (11th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/st-george-4-11th-floor",
+   "area": false
+  },
+  "/space/robarts/st-george-4-12th-floor": {
+   "name": "St. George 4 (12th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/st-george-4-12th-floor",
+   "area": false
+  },
+  "/space/robarts/st-george-4-13th-floor": {
+   "name": "St. George 4 (13th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/st-george-4-13th-floor",
+   "area": false
+  },
+  "/space/robarts/st-george-4-9th-floor": {
+   "name": "St. George 4 (9th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/st-george-4-9th-floor",
+   "area": false
+  },
+  "/space/robarts/study-carrels": {
+   "name": "Robarts Library study carrels",
+   "noise": "Quiet",
+   "features": [
+    "Natural Light",
+    "Power Available"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/study-carrels",
+   "area": false
+  },
+  "/space/robarts/suite-1-ground-floor": {
+   "name": "Suite 1 (Ground Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/suite-1-ground-floor",
+   "area": false
+  },
+  "/space/robarts/suite-2-ground-floor": {
+   "name": "Suite 2 (Ground Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/suite-2-ground-floor",
+   "area": false
+  },
+  "/space/robarts/suite-3-ground-floor": {
+   "name": "Suite 3 (Ground Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/suite-3-ground-floor",
+   "area": false
+  },
+  "/space/robarts/suite-4-ground-floor": {
+   "name": "Suite 4 (Ground Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/suite-4-ground-floor",
+   "area": false
+  },
+  "/space/robarts/suite-5-ground-floor": {
+   "name": "Suite 5 (Ground Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/suite-5-ground-floor",
+   "area": false
+  },
+  "/space/robarts/sussex-1-10th-floor": {
+   "name": "Sussex 1 (10th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/sussex-1-10th-floor",
+   "area": false
+  },
+  "/space/robarts/sussex-1-11th-floor": {
+   "name": "Sussex 1 (11th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/sussex-1-11th-floor",
+   "area": false
+  },
+  "/space/robarts/sussex-1-12th-floor": {
+   "name": "Sussex 1 (12th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/sussex-1-12th-floor",
+   "area": false
+  },
+  "/space/robarts/sussex-1-13th-floor": {
+   "name": "Sussex 1 (13th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/sussex-1-13th-floor",
+   "area": false
+  },
+  "/space/robarts/sussex-1-9th-floor": {
+   "name": "Sussex 1 (9th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/sussex-1-9th-floor",
+   "area": false
+  },
+  "/space/robarts/sussex-2-10th-floor": {
+   "name": "Sussex 2 (10th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/sussex-2-10th-floor",
+   "area": false
+  },
+  "/space/robarts/sussex-2-11th-floor": {
+   "name": "Sussex 2 (11th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/sussex-2-11th-floor",
+   "area": false
+  },
+  "/space/robarts/sussex-2-12th-floor": {
+   "name": "Sussex 2 (12th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/sussex-2-12th-floor",
+   "area": false
+  },
+  "/space/robarts/sussex-2-13th-floor": {
+   "name": "Sussex 2 (13th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/sussex-2-13th-floor",
+   "area": false
+  },
+  "/space/robarts/sussex-2-9th-floor": {
+   "name": "Sussex 2 (9th Floor)",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/sussex-2-9th-floor",
+   "area": false
+  },
+  "/space/robarts/theatre": {
+   "name": "Theatre",
+   "noise": null,
+   "features": [
+    "Accessible Seat/Space",
+    "Dimmable Lighting",
+    "Whiteboard or Chalkboard Available",
+    "Book Now"
+   ],
+   "library_name": "Robarts Library",
+   "building": "Robarts Library",
+   "url": "https://library.utoronto.ca/space/robarts/theatre",
+   "area": false
+  },
+  "/space/sf-library/individual-study-space-ecsl": {
+   "name": "Individual Study Space at ECSL",
+   "noise": "Collaborative",
+   "features": [
+    "Accessible Seat/Space",
+    "Natural Light",
+    "Power Available",
+    "Food and Drink Allowed"
+   ],
+   "library_name": "Engineering & Computer Science Library",
+   "building": "Sandford Fleming Building",
+   "url": "https://library.utoronto.ca/space/sf-library/individual-study-space-ecsl",
+   "area": true
+  },
+  "/space/trinity/group-study-room-1": {
+   "name": "Group Study Room #1",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Natural Light",
+    "Book Now"
+   ],
+   "library_name": "Trinity College Library (John W Graham Library)",
+   "building": "Trinity College & Residence",
+   "url": "https://library.utoronto.ca/space/trinity/group-study-room-1",
+   "area": false
+  },
+  "/space/trinity/group-study-room-2": {
+   "name": "Group Study Room #2",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Natural Light",
+    "Book Now"
+   ],
+   "library_name": "Trinity College Library (John W Graham Library)",
+   "building": "Trinity College & Residence",
+   "url": "https://library.utoronto.ca/space/trinity/group-study-room-2",
+   "area": false
+  },
+  "/space/trinity/group-study-room-3": {
+   "name": "Group Study Room #3",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Natural Light",
+    "Book Now"
+   ],
+   "library_name": "Trinity College Library (John W Graham Library)",
+   "building": "Trinity College & Residence",
+   "url": "https://library.utoronto.ca/space/trinity/group-study-room-3",
+   "area": false
+  },
+  "/space/trinity/group-study-room-4": {
+   "name": "Group Study Room #4",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Natural Light",
+    "Book Now"
+   ],
+   "library_name": "Trinity College Library (John W Graham Library)",
+   "building": "Trinity College & Residence",
+   "url": "https://library.utoronto.ca/space/trinity/group-study-room-4",
+   "area": false
+  },
+  "/space/trinity/private-study-room": {
+   "name": "Private Study Room",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Natural Light",
+    "Book Now"
+   ],
+   "library_name": "Trinity College Library (John W Graham Library)",
+   "building": "Trinity College & Residence",
+   "url": "https://library.utoronto.ca/space/trinity/private-study-room",
+   "area": false
+  },
+  "/space/trinity/soundproof-booth": {
+   "name": "Soundproof Booth",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Book Now"
+   ],
+   "library_name": "Trinity College Library (John W Graham Library)",
+   "building": "Trinity College & Residence",
+   "url": "https://library.utoronto.ca/space/trinity/soundproof-booth",
+   "area": false
+  },
+  "/space/uc/uc366a": {
+   "name": "UC366A",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Book Now"
+   ],
+   "library_name": "University College Library",
+   "building": "University College",
+   "url": "https://library.utoronto.ca/space/uc/uc366a",
+   "area": false
+  },
+  "/space/uc/uc366b": {
+   "name": "UC366B",
+   "noise": null,
+   "features": [
+    "Power Available",
+    "Monitor Available",
+    "Book Now"
+   ],
+   "library_name": "University College Library",
+   "building": "University College",
+   "url": "https://library.utoronto.ca/space/uc/uc366b",
+   "area": false
+  }
+ }
+}

@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-24T08:07:06.695Z",
+ "built_at": "2026-10-24T21:55:10.346Z",
  "source": "https://libcal.library.utoronto.ca/space/<id> (the libraries' own booking pages)",
  "note": "Static details only. Whether a room is free is live, from /api/rooms.",
  "rooms": {
@@ -9,7 +9,12 @@
    "name": "Theobromine",
    "floor": null,
    "capacity": 4,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": null
   },
   "30285": {
    "building": "Daniels Building",
@@ -17,7 +22,12 @@
    "name": "Group Study Room",
    "floor": null,
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/resource11547660469.jpg"
   },
   "30384": {
    "building": "Sigmund Samuel Library Building",
@@ -25,7 +35,13 @@
    "name": "2000",
    "floor": "2nd Floor",
    "capacity": 18,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/2000.jpg"
   },
   "30485": {
    "building": "Ontario Institute for Studies in Education",
@@ -33,7 +49,12 @@
    "name": "M 1",
    "floor": null,
    "capacity": 2,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2025_05_29_14_08_20.jpg"
   },
   "30486": {
    "building": "Ontario Institute for Studies in Education",
@@ -41,7 +62,12 @@
    "name": "M 3",
    "floor": null,
    "capacity": 2,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/resource45.jpg"
   },
   "30487": {
    "building": "Ontario Institute for Studies in Education",
@@ -49,7 +75,11 @@
    "name": "M 5",
    "floor": null,
    "capacity": 1,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/resource35.jpg"
   },
   "30488": {
    "building": "Ontario Institute for Studies in Education",
@@ -57,7 +87,11 @@
    "name": "M 6",
    "floor": null,
    "capacity": 1,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/resource35.jpg"
   },
   "30489": {
    "building": "Ontario Institute for Studies in Education",
@@ -65,7 +99,11 @@
    "name": "M 7",
    "floor": null,
    "capacity": 1,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/resource35.jpg"
   },
   "30490": {
    "building": "Ontario Institute for Studies in Education",
@@ -73,7 +111,11 @@
    "name": "M 8",
    "floor": null,
    "capacity": 1,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/resource35.jpg"
   },
   "30491": {
    "building": "Ontario Institute for Studies in Education",
@@ -81,7 +123,11 @@
    "name": "M 9",
    "floor": null,
    "capacity": 1,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/resource35.jpg"
   },
   "30492": {
    "building": "Ontario Institute for Studies in Education",
@@ -89,7 +135,11 @@
    "name": "M10",
    "floor": null,
    "capacity": 1,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/resource35.jpg"
   },
   "30493": {
    "building": "Ontario Institute for Studies in Education",
@@ -97,7 +147,11 @@
    "name": "M11",
    "floor": null,
    "capacity": 1,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/resource35.jpg"
   },
   "30494": {
    "building": "Ontario Institute for Studies in Education",
@@ -105,7 +159,11 @@
    "name": "M12",
    "floor": null,
    "capacity": 1,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/resource35.jpg"
   },
   "30495": {
    "building": "Ontario Institute for Studies in Education",
@@ -113,7 +171,11 @@
    "name": "M13",
    "floor": null,
    "capacity": 1,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/resource35.jpg"
   },
   "30496": {
    "building": "Ontario Institute for Studies in Education",
@@ -121,7 +183,11 @@
    "name": "M14",
    "floor": null,
    "capacity": 1,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/resource35.jpg"
   },
   "30497": {
    "building": "Ontario Institute for Studies in Education",
@@ -129,7 +195,11 @@
    "name": "M15",
    "floor": null,
    "capacity": 1,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/resource44.jpg"
   },
   "30498": {
    "building": "Ontario Institute for Studies in Education",
@@ -137,7 +207,12 @@
    "name": "M28",
    "floor": null,
    "capacity": 2,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/resource45.jpg"
   },
   "30499": {
    "building": "Ontario Institute for Studies in Education",
@@ -145,7 +220,12 @@
    "name": "M30",
    "floor": null,
    "capacity": 2,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/resource45.jpg"
   },
   "30500": {
    "building": "Ontario Institute for Studies in Education",
@@ -153,7 +233,12 @@
    "name": "M32",
    "floor": null,
    "capacity": 2,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/resource45.jpg"
   },
   "30501": {
    "building": "Ontario Institute for Studies in Education",
@@ -161,7 +246,9 @@
    "name": "M34",
    "floor": null,
    "capacity": 2,
-   "features": null
+   "features": null,
+   "tags": [],
+   "photo": null
   },
   "30502": {
    "building": "Ontario Institute for Studies in Education",
@@ -169,7 +256,9 @@
    "name": "M36",
    "floor": null,
    "capacity": 2,
-   "features": null
+   "features": null,
+   "tags": [],
+   "photo": null
   },
   "30503": {
    "building": "Ontario Institute for Studies in Education",
@@ -177,7 +266,9 @@
    "name": "M40",
    "floor": null,
    "capacity": 8,
-   "features": null
+   "features": null,
+   "tags": [],
+   "photo": null
   },
   "30504": {
    "building": "Ontario Institute for Studies in Education",
@@ -185,7 +276,9 @@
    "name": "M42",
    "floor": null,
    "capacity": 8,
-   "features": null
+   "features": null,
+   "tags": [],
+   "photo": null
   },
   "30505": {
    "building": "Ontario Institute for Studies in Education",
@@ -193,7 +286,9 @@
    "name": "M46",
    "floor": null,
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [],
+   "photo": null
   },
   "30506": {
    "building": "Ontario Institute for Studies in Education",
@@ -201,7 +296,9 @@
    "name": "M48",
    "floor": null,
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [],
+   "photo": null
   },
   "30507": {
    "building": "Ontario Institute for Studies in Education",
@@ -209,7 +306,9 @@
    "name": "C130",
    "floor": null,
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [],
+   "photo": null
   },
   "30508": {
    "building": "Ontario Institute for Studies in Education",
@@ -217,7 +316,9 @@
    "name": "C132",
    "floor": null,
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [],
+   "photo": null
   },
   "30510": {
    "building": "Ontario Institute for Studies in Education",
@@ -225,7 +326,9 @@
    "name": "C136",
    "floor": null,
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [],
+   "photo": null
   },
   "30514": {
    "building": "Robarts Common",
@@ -233,7 +336,14 @@
    "name": "2241 Group Study Room 2A",
    "floor": "02nd Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_05_10_24_15.jpg"
   },
   "30515": {
    "building": "Robarts Common",
@@ -241,7 +351,13 @@
    "name": "2243 Group Study Room 2B",
    "floor": "02nd Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_05_10_22_20.jpg"
   },
   "30516": {
    "building": "Robarts Common",
@@ -249,7 +365,13 @@
    "name": "2247 Group Study Room 2C",
    "floor": "02nd Floor",
    "capacity": 7,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_05_11_02_49.jpg"
   },
   "30517": {
    "building": "Robarts Common",
@@ -257,7 +379,13 @@
    "name": "2253 Group Study Room 2D",
    "floor": "02nd Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_05_11_04_01.jpg"
   },
   "30518": {
    "building": "Robarts Common",
@@ -265,7 +393,13 @@
    "name": "2255 Group Study Room 2E",
    "floor": "02nd Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_05_11_05_38.jpg"
   },
   "30519": {
    "building": "Robarts Common",
@@ -273,7 +407,13 @@
    "name": "2261 Group Study Room 2F",
    "floor": "02nd Floor",
    "capacity": 4,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_10_37_06.jpg"
   },
   "30520": {
    "building": "Robarts Common",
@@ -281,7 +421,13 @@
    "name": "2265 Group Study Room 2G",
    "floor": "02nd Floor",
    "capacity": 8,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_05_11_12_54.jpg"
   },
   "30521": {
    "building": "Robarts Common",
@@ -289,7 +435,13 @@
    "name": "2266 Group Study Room 2H",
    "floor": "02nd Floor",
    "capacity": 10,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_05_11_11_49.jpg"
   },
   "30522": {
    "building": "Robarts Common",
@@ -297,7 +449,14 @@
    "name": "3241 Group Study Room 3A",
    "floor": "03rd Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_06_10_42_57.jpg"
   },
   "30523": {
    "building": "Robarts Common",
@@ -305,7 +464,13 @@
    "name": "3243 Group Study Room 3B",
    "floor": "03rd Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_10_45_46.jpg"
   },
   "30524": {
    "building": "Robarts Common",
@@ -313,7 +478,13 @@
    "name": "3247 Group Study Room 3C",
    "floor": "03rd Floor",
    "capacity": 7,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_10_38_19.jpg"
   },
   "30525": {
    "building": "Robarts Common",
@@ -321,7 +492,13 @@
    "name": "3253 Group Study Room 3D",
    "floor": "03rd Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_10_38_44.jpg"
   },
   "30526": {
    "building": "Robarts Common",
@@ -329,7 +506,13 @@
    "name": "3255 Group Study Room 3E",
    "floor": "03rd Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/41519/images/rc-3255.jpg"
   },
   "30527": {
    "building": "Robarts Common",
@@ -337,7 +520,13 @@
    "name": "3261 Group Study Room 3F",
    "floor": "03rd Floor",
    "capacity": 4,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_10_39_18.jpg"
   },
   "30528": {
    "building": "Robarts Common",
@@ -345,7 +534,13 @@
    "name": "3265 Group Study Room 3G",
    "floor": "03rd Floor",
    "capacity": 8,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_10_39_47.jpg"
   },
   "30530": {
    "building": "Robarts Common",
@@ -353,7 +548,13 @@
    "name": "3266 Group Study Room 3H",
    "floor": "03rd Floor",
    "capacity": 10,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_11_06_13.jpg"
   },
   "30531": {
    "building": "Robarts Common",
@@ -361,7 +562,14 @@
    "name": "4241 Group Study Room 4A",
    "floor": "04th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_11_06_54.jpg"
   },
   "30532": {
    "building": "Robarts Common",
@@ -369,7 +577,13 @@
    "name": "4243 Group Study Room 4B",
    "floor": "04th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_11_08_34.jpg"
   },
   "30533": {
    "building": "Robarts Common",
@@ -377,7 +591,13 @@
    "name": "4247 Group Study Room 4C",
    "floor": "04th Floor",
    "capacity": 7,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_11_08_54.jpg"
   },
   "30534": {
    "building": "Robarts Common",
@@ -385,7 +605,13 @@
    "name": "4253 Group Study Room 4D",
    "floor": "04th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_11_10_34.jpg"
   },
   "30535": {
    "building": "Robarts Common",
@@ -393,7 +619,13 @@
    "name": "4255 Group Study Room 4E",
    "floor": "04th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_11_13_43.jpg"
   },
   "30536": {
    "building": "Robarts Common",
@@ -401,7 +633,13 @@
    "name": "4261 Group Study Room 4F",
    "floor": "04th Floor",
    "capacity": 4,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_11_14_10.jpg"
   },
   "30537": {
    "building": "Robarts Common",
@@ -409,7 +647,13 @@
    "name": "4265 Group Study Room 4G",
    "floor": "04th Floor",
    "capacity": 8,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_10_40_37.jpg"
   },
   "30538": {
    "building": "Robarts Common",
@@ -417,7 +661,13 @@
    "name": "4266 Group Study Room 4H",
    "floor": "04th Floor",
    "capacity": 10,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_10_41_06.jpg"
   },
   "30588": {
    "building": "Robarts Common",
@@ -425,7 +675,14 @@
    "name": "5241 Group Study Room 5A",
    "floor": "05th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_11_15_28.jpg"
   },
   "30589": {
    "building": "Robarts Common",
@@ -433,7 +690,13 @@
    "name": "5243 Group Study Room 5B",
    "floor": "05th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_11_15_50.jpg"
   },
   "30590": {
    "building": "Robarts Common",
@@ -441,7 +704,13 @@
    "name": "5247 Group Study Room 5C",
    "floor": "05th Floor",
    "capacity": 7,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_11_16_15.jpg"
   },
   "30591": {
    "building": "Robarts Common",
@@ -449,7 +718,13 @@
    "name": "5253 Group Study Room 5D",
    "floor": "05th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_11_16_50.jpg"
   },
   "30592": {
    "building": "Robarts Common",
@@ -457,7 +732,13 @@
    "name": "5255 Group Study Room 5E",
    "floor": "05th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_11_11_19.jpg"
   },
   "30593": {
    "building": "Robarts Common",
@@ -465,7 +746,13 @@
    "name": "5261 Group Study Room 5F",
    "floor": "05th Floor",
    "capacity": 4,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_11_11_48.jpg"
   },
   "30594": {
    "building": "Robarts Common",
@@ -473,7 +760,13 @@
    "name": "5265 Group Study Room 5G",
    "floor": "05th Floor",
    "capacity": 8,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_11_18_07.jpg"
   },
   "30595": {
    "building": "Robarts Common",
@@ -481,7 +774,13 @@
    "name": "5266 Group Study Room 5H",
    "floor": "05th Floor",
    "capacity": 10,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_07_11_18_32.jpg"
   },
   "30596": {
    "building": "Robarts Library",
@@ -489,7 +788,12 @@
    "name": "St. George 3",
    "floor": "9th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_14_14_24_21.jpg"
   },
   "30597": {
    "building": "Robarts Library",
@@ -497,7 +801,12 @@
    "name": "St. George 4",
    "floor": "9th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_18_10_41_33.jpg"
   },
   "30598": {
    "building": "Robarts Library",
@@ -505,7 +814,12 @@
    "name": "Sussex 1",
    "floor": "9th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_18_10_43_02.jpg"
   },
   "30599": {
    "building": "Robarts Library",
@@ -513,7 +827,12 @@
    "name": "Sussex 2",
    "floor": "9th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_18_10_44_33.jpg"
   },
   "30600": {
    "building": "Robarts Library",
@@ -521,7 +840,12 @@
    "name": "St. George 3",
    "floor": "10th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_14_14_36_43.jpg"
   },
   "30601": {
    "building": "Robarts Library",
@@ -529,7 +853,12 @@
    "name": "St. George 4",
    "floor": "10th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_18_10_45_40.jpg"
   },
   "30602": {
    "building": "Robarts Library",
@@ -537,7 +866,12 @@
    "name": "Sussex 1",
    "floor": "10th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_17_10_26_03.jpg"
   },
   "30603": {
    "building": "Robarts Library",
@@ -545,7 +879,12 @@
    "name": "Sussex 2",
    "floor": "10th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_17_10_28_10.jpg"
   },
   "30604": {
    "building": "Robarts Library",
@@ -553,7 +892,12 @@
    "name": "St. George 3",
    "floor": "11th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_14_15_04_39.jpg"
   },
   "30605": {
    "building": "Robarts Library",
@@ -561,7 +905,12 @@
    "name": "St. George 4",
    "floor": "11th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_17_10_18_14.jpg"
   },
   "30606": {
    "building": "Robarts Library",
@@ -569,7 +918,12 @@
    "name": "Sussex 1",
    "floor": "11th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_17_10_31_24.jpg"
   },
   "30607": {
    "building": "Robarts Library",
@@ -577,7 +931,12 @@
    "name": "Sussex 2",
    "floor": "11th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_18_10_46_50.jpg"
   },
   "30608": {
    "building": "Robarts Library",
@@ -585,7 +944,12 @@
    "name": "St. George 3",
    "floor": "12th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_18_10_48_34.jpg"
   },
   "30609": {
    "building": "Robarts Library",
@@ -593,7 +957,12 @@
    "name": "St. George 4",
    "floor": "12th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_17_10_22_50.jpg"
   },
   "30610": {
    "building": "Robarts Library",
@@ -601,7 +970,12 @@
    "name": "Sussex 1",
    "floor": "12th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_18_10_50_12.jpg"
   },
   "30611": {
    "building": "Robarts Library",
@@ -609,7 +983,12 @@
    "name": "Sussex 2",
    "floor": "12th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_17_10_45_52.jpg"
   },
   "30612": {
    "building": "Robarts Library",
@@ -617,7 +996,12 @@
    "name": "St. George 3",
    "floor": "13th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_18_10_55_05.jpg"
   },
   "30613": {
    "building": "Robarts Library",
@@ -625,7 +1009,12 @@
    "name": "St. George 4",
    "floor": "13th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_18_10_56_44.jpg"
   },
   "30614": {
    "building": "Robarts Library",
@@ -633,7 +1022,12 @@
    "name": "Sussex 1",
    "floor": "13th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_18_10_51_22.jpg"
   },
   "30615": {
    "building": "Robarts Library",
@@ -641,7 +1035,12 @@
    "name": "Sussex 2",
    "floor": "13th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_18_10_52_57.jpg"
   },
   "30618": {
    "building": "Robarts Library",
@@ -649,7 +1048,13 @@
    "name": "Suite 1",
    "floor": "Ground Floor",
    "capacity": 8,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_18_11_06_16.jpg"
   },
   "30619": {
    "building": "Robarts Library",
@@ -657,7 +1062,13 @@
    "name": "Suite 2",
    "floor": "Ground Floor",
    "capacity": 8,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_18_11_06_46.jpg"
   },
   "30620": {
    "building": "Robarts Library",
@@ -665,7 +1076,13 @@
    "name": "Suite 3",
    "floor": "Ground Floor",
    "capacity": 8,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_18_11_07_05.jpg"
   },
   "30621": {
    "building": "Robarts Library",
@@ -673,7 +1090,13 @@
    "name": "Suite 4",
    "floor": "Ground Floor",
    "capacity": 8,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_18_11_07_22.jpg"
   },
   "30622": {
    "building": "Robarts Library",
@@ -681,7 +1104,13 @@
    "name": "Suite 5",
    "floor": "Ground Floor",
    "capacity": 8,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_18_11_07_40.jpg"
   },
   "30623": {
    "building": "Sigmund Samuel Library Building",
@@ -689,7 +1118,13 @@
    "name": "2100",
    "floor": "2nd Floor",
    "capacity": 10,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Natural Light",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/2100.jpg"
   },
   "30624": {
    "building": "Sigmund Samuel Library Building",
@@ -697,7 +1132,12 @@
    "name": "2101",
    "floor": "2nd Floor",
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Natural Light",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/2101.jpg"
   },
   "30625": {
    "building": "Sigmund Samuel Library Building",
@@ -705,7 +1145,12 @@
    "name": "2102",
    "floor": "2nd Floor",
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Natural Light",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/2102.jpg"
   },
   "30626": {
    "building": "Sigmund Samuel Library Building",
@@ -713,7 +1158,12 @@
    "name": "2103",
    "floor": "2nd Floor",
    "capacity": 7,
-   "features": null
+   "features": null,
+   "tags": [
+    "Natural Light",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/2103.jpg"
   },
   "30627": {
    "building": "Sigmund Samuel Library Building",
@@ -721,7 +1171,13 @@
    "name": "2104",
    "floor": "2nd Floor",
    "capacity": 9,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Natural Light",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/2104.jpg"
   },
   "30628": {
    "building": "Sigmund Samuel Library Building",
@@ -729,7 +1185,13 @@
    "name": "2105",
    "floor": "2nd Floor",
    "capacity": 11,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Natural Light",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/2105.jpg"
   },
   "30629": {
    "building": "Sigmund Samuel Library Building",
@@ -737,7 +1199,12 @@
    "name": "2106",
    "floor": "2nd Floor",
    "capacity": 7,
-   "features": null
+   "features": null,
+   "tags": [
+    "Natural Light",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/2106.jpg"
   },
   "30630": {
    "building": "Sigmund Samuel Library Building",
@@ -745,7 +1212,12 @@
    "name": "2107",
    "floor": "2nd Floor",
    "capacity": 7,
-   "features": null
+   "features": null,
+   "tags": [
+    "Natural Light",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/2106.jpg"
   },
   "30631": {
    "building": "Sigmund Samuel Library Building",
@@ -753,7 +1225,13 @@
    "name": "B105A",
    "floor": null,
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/B105A.jpg"
   },
   "30632": {
    "building": "Sigmund Samuel Library Building",
@@ -761,7 +1239,13 @@
    "name": "B105B",
    "floor": null,
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/B105A.jpg"
   },
   "30633": {
    "building": "Sigmund Samuel Library Building",
@@ -769,7 +1253,13 @@
    "name": "B105C",
    "floor": null,
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/B105A.jpg"
   },
   "30634": {
    "building": "Sigmund Samuel Library Building",
@@ -777,7 +1267,13 @@
    "name": "B105D",
    "floor": null,
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/B105A.jpg"
   },
   "30635": {
    "building": "Sigmund Samuel Library Building",
@@ -785,7 +1281,13 @@
    "name": "B105E",
    "floor": null,
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/B105A.jpg"
   },
   "30636": {
    "building": "Sigmund Samuel Library Building",
@@ -793,7 +1295,13 @@
    "name": "B105F",
    "floor": null,
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/B105A.jpg"
   },
   "30637": {
    "building": "Sigmund Samuel Library Building",
@@ -801,7 +1309,14 @@
    "name": "B170A",
    "floor": null,
    "capacity": 8,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/B170A.jpg"
   },
   "30638": {
    "building": "Sigmund Samuel Library Building",
@@ -809,7 +1324,13 @@
    "name": "B170B",
    "floor": null,
    "capacity": 4,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/b170b.jpg"
   },
   "30639": {
    "building": "Sigmund Samuel Library Building",
@@ -817,7 +1338,11 @@
    "name": "B172",
    "floor": null,
    "capacity": 8,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/B172.jpg"
   },
   "30640": {
    "building": "Sigmund Samuel Library Building",
@@ -825,7 +1350,11 @@
    "name": "B173",
    "floor": null,
    "capacity": 13,
-   "features": null
+   "features": null,
+   "tags": [
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/b173.jpg"
   },
   "30641": {
    "building": "Sigmund Samuel Library Building",
@@ -833,7 +1362,11 @@
    "name": "B174",
    "floor": null,
    "capacity": 8,
-   "features": null
+   "features": null,
+   "tags": [
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/B174.jpg"
   },
   "30642": {
    "building": "Sigmund Samuel Library Building",
@@ -841,7 +1374,11 @@
    "name": "B175",
    "floor": null,
    "capacity": 12,
-   "features": null
+   "features": null,
+   "tags": [
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/B175.jpg"
   },
   "30645": {
    "building": "John M. Kelly Library",
@@ -849,7 +1386,14 @@
    "name": "Room 201",
    "floor": "2nd Floor",
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": null
   },
   "30646": {
    "building": "John M. Kelly Library",
@@ -857,7 +1401,14 @@
    "name": "Room 202",
    "floor": "2nd Floor",
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": null
   },
   "30647": {
    "building": "John M. Kelly Library",
@@ -865,7 +1416,14 @@
    "name": "Room 231",
    "floor": "2nd Floor",
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": null
   },
   "30648": {
    "building": "John M. Kelly Library",
@@ -873,7 +1431,14 @@
    "name": "Room 206",
    "floor": "2nd Floor",
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": null
   },
   "30649": {
    "building": "John M. Kelly Library",
@@ -881,7 +1446,14 @@
    "name": "Room 205",
    "floor": "2nd Floor",
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": null
   },
   "30650": {
    "building": "Lash Miller Chemical Laboratories",
@@ -889,7 +1461,12 @@
    "name": "Serotonin",
    "floor": null,
    "capacity": 4,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": null
   },
   "30651": {
    "building": "Lash Miller Chemical Laboratories",
@@ -897,7 +1474,12 @@
    "name": "Dopamine",
    "floor": null,
    "capacity": 3,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": null
   },
   "30652": {
    "building": "Lash Miller Chemical Laboratories",
@@ -905,7 +1487,12 @@
    "name": "Acetylcholine",
    "floor": null,
    "capacity": 2,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": null
   },
   "30653": {
    "building": "Lash Miller Chemical Laboratories",
@@ -913,7 +1500,13 @@
    "name": "Vanillin",
    "floor": null,
    "capacity": 4,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Video Conferencing"
+   ],
+   "photo": null
   },
   "30654": {
    "building": "Lash Miller Chemical Laboratories",
@@ -921,7 +1514,13 @@
    "name": "Capsaicin",
    "floor": null,
    "capacity": 4,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available",
+    "Video Conferencing"
+   ],
+   "photo": null
   },
   "30655": {
    "building": "Lash Miller Chemical Laboratories",
@@ -929,7 +1528,12 @@
    "name": "Caffeine",
    "floor": null,
    "capacity": 8,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": null
   },
   "31696": {
    "building": "Robarts Library",
@@ -937,7 +1541,14 @@
    "name": "Group Study Room 2, 3-026",
    "floor": "3rd Floor",
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_18_11_17_20.jpg"
   },
   "31697": {
    "building": "Robarts Library",
@@ -945,7 +1556,14 @@
    "name": "Group Study Room 3, 3-027",
    "floor": "3rd Floor",
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_18_11_17_47.jpg"
   },
   "32237": {
    "building": "Robarts Library",
@@ -953,7 +1571,12 @@
    "name": "St. George 1",
    "floor": "9th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_19_15_42_59.jpg"
   },
   "32238": {
    "building": "Robarts Library",
@@ -961,7 +1584,12 @@
    "name": "St. George 1",
    "floor": "10th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_20_10_53_47.jpg"
   },
   "32239": {
    "building": "Robarts Library",
@@ -969,7 +1597,12 @@
    "name": "St. George 1",
    "floor": "11th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_20_10_54_24.jpg"
   },
   "32240": {
    "building": "Robarts Library",
@@ -977,7 +1610,12 @@
    "name": "St. George 1",
    "floor": "12th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_20_10_55_29.jpg"
   },
   "32241": {
    "building": "Robarts Library",
@@ -985,7 +1623,12 @@
    "name": "St. George 1",
    "floor": "13th Floor",
    "capacity": 5,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_08_21_10_22_24.jpg"
   },
   "32928": {
    "building": "Lash Miller Chemical Laboratories",
@@ -993,7 +1636,9 @@
    "name": "WALL-E",
    "floor": null,
    "capacity": 1,
-   "features": null
+   "features": null,
+   "tags": [],
+   "photo": null
   },
   "33143": {
    "building": "Sandford Fleming Building",
@@ -1001,7 +1646,14 @@
    "name": "Room A",
    "floor": null,
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/164964/images/Study_Room_A.jpg"
   },
   "33144": {
    "building": "Sandford Fleming Building",
@@ -1009,7 +1661,14 @@
    "name": "Room B",
    "floor": null,
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/164964/images/Study_Room_B.jpg"
   },
   "33145": {
    "building": "Sandford Fleming Building",
@@ -1017,7 +1676,15 @@
    "name": "Room D",
    "floor": null,
    "capacity": 8,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Video Conferencing",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/164964/images/Study_Room_D.jpg"
   },
   "33146": {
    "building": "Sandford Fleming Building",
@@ -1025,7 +1692,14 @@
    "name": "Room E",
    "floor": null,
    "capacity": 8,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available",
+    "Whiteboard or Chalkboard Available",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/164964/images/Study_Room_C_2.jpg"
   },
   "33213": {
    "building": "Edward Johnson Building",
@@ -1033,7 +1707,11 @@
    "name": "Group Study Room",
    "floor": null,
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2025_12_01_12_22_47.png"
   },
   "33255": {
    "building": "E.J. Pratt Library",
@@ -1041,7 +1719,12 @@
    "name": "Pratt Study Room 202",
    "floor": null,
    "capacity": 12,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": null
   },
   "33397": {
    "building": "University College",
@@ -1049,7 +1732,12 @@
    "name": "UC366A",
    "floor": null,
    "capacity": 4,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/resource51667319878.jpg"
   },
   "33398": {
    "building": "University College",
@@ -1057,7 +1745,12 @@
    "name": "UC366B",
    "floor": null,
    "capacity": 4,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Monitor Available"
+   ],
+   "photo": "https://d1qywhc7l90rsa.cloudfront.net/accounts/153242/images/resource61667319896.jpg"
   },
   "34362": {
    "building": "Lash Miller Chemical Laboratories",
@@ -1065,7 +1758,9 @@
    "name": "EVE",
    "floor": null,
    "capacity": 1,
-   "features": null
+   "features": null,
+   "tags": [],
+   "photo": null
   },
   "35418": {
    "building": "Ontario Institute for Studies in Education",
@@ -1073,7 +1768,9 @@
    "name": "3-138",
    "floor": null,
    "capacity": 8,
-   "features": null
+   "features": null,
+   "tags": [],
+   "photo": null
   },
   "35838": {
    "building": "Sandford Fleming Building",
@@ -1081,7 +1778,9 @@
    "name": "Soundproof Booth",
    "floor": null,
    "capacity": 2,
-   "features": null
+   "features": null,
+   "tags": [],
+   "photo": null
   },
   "38887": {
    "building": "Sigmund Samuel Library Building",
@@ -1089,7 +1788,12 @@
    "name": "George Kiddell Room",
    "floor": null,
    "capacity": 8,
-   "features": null
+   "features": null,
+   "tags": [
+    "Power Available",
+    "Whiteboard or Chalkboard Available"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_09_02_18_11_58.jpeg"
   },
   "38955": {
    "building": "Robarts Library",
@@ -1097,7 +1801,15 @@
    "name": "Collaboration room 1",
    "floor": null,
    "capacity": 10,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Food and Drink Allowed",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_09_08_10_17_47.jpg"
   },
   "38956": {
    "building": "Robarts Library",
@@ -1105,7 +1817,15 @@
    "name": "Collaboration room 2",
    "floor": null,
    "capacity": 6,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Food and Drink Allowed",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_09_08_10_20_49.jpg"
   },
   "38957": {
    "building": "Robarts Library",
@@ -1113,7 +1833,15 @@
    "name": "Collaboration room 3",
    "floor": null,
    "capacity": 10,
-   "features": null
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available",
+    "Monitor Available",
+    "Food and Drink Allowed",
+    "Dimmable Lighting"
+   ],
+   "photo": "https://devgj00vx92jb.cloudfront.net/misc/478/eq/item/2026_09_08_10_22_22.jpg"
   }
  }
 }

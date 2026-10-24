@@ -1855,7 +1855,9 @@ const CAMPUS_CONTENT = {
           // hours: Athletic Centre 9-17, OISE 9-21, Woodsworth 10-18 are open, Rotman is fob-only
           // (closed to the public). 10-17 is the span where the open three agree. Approved by the
           // owner 2026-10-24, knowing it leans toward "open" where the evidence is one-in-four closed.
-          buildingWeekend: [10, 17] },
+          buildingWeekend: [10, 17],
+          // Shown 9pm-6am under the picks. Official: campussafety.utoronto.ca/travel-safer.
+          safetyNote: { from: 21, to: 6, html: 'Heading out late? <a href="https://www.campussafety.utoronto.ca/travel-safer" target="_blank" rel="noopener" style="color:#9fb4d6">TravelSafer</a> will walk you anywhere on campus or to the TTC, 24/7 \u00b7 <a href="tel:4169787233" style="color:#9fb4d6">416-978-7233</a> or the UofT Safety app.' } },
 }[CAMPUS.id];
 
 const BUILDINGS = CAMPUS_CONTENT.buildings;
@@ -1906,9 +1908,22 @@ async function loadRoomSchedule() {
 let studyRooms = null;       // id -> { building, where, name, floor, capacity, features }
 async function loadStudyRooms() {
   if (!CAMPUS_CONTENT.roomsList) return;
-  const json = await loadJson(`${CAMPUS.dataDir}/study_rooms.json`);
+  const [json, spaces] = await Promise.all([
+    loadJson(`${CAMPUS.dataDir}/study_rooms.json`),
+    loadJson(`${CAMPUS.dataDir}/library_spaces.json`),
+  ]);
   studyRooms = json?.rooms ?? null;
+  studyAreas = Object.values(spaces?.spaces ?? {}).filter(x => x.area);
 }
+
+// Open study areas with the libraries' own noise level (Silent / Quiet / Collaborative),
+// from library.utoronto.ca/space pages. U of T only.
+let studyAreas = [];
+const NOISE_LABEL = { Silent: 'Silent', Quiet: 'Quiet', Collaborative: 'Group work' };
+const areaName = a => a.name.replace(/\s+(at|in)\s+(Gerstein Library|ECSL)$/i, '').replace(/^Study space in the\s+/i, '').replace(/\s+area$/i, '');
+const areasIn = building => studyAreas.filter(a => a.building === building)
+  .sort((a, b) => ['Silent', 'Quiet', 'Collaborative'].indexOf(a.noise) - ['Silent', 'Quiet', 'Collaborative'].indexOf(b.noise));
+const noiseFilter = new Set();
 const studyRoomsIn = building => Object.entries(studyRooms ?? {}).filter(([, r]) => r.building === building);
 
 /** True where the sidebar is about live study rooms, not a classroom schedule. */
@@ -2125,7 +2140,10 @@ function renderBrowse({ seatWheels = true } = {}) {
   applyBrowseNote(date);
   const all = knownBuildings().sort((a, b) => pickLabel(a).localeCompare(pickLabel(b)));
   const q = browseQuery.trim().toLowerCase();
-  const names = q ? all.filter(n => pickLabel(n).toLowerCase().includes(q) || n.toLowerCase().includes(q)) : all;
+  let names = q ? all.filter(n => pickLabel(n).toLowerCase().includes(q) || n.toLowerCase().includes(q)) : all;
+  if (roomsMode() && noiseFilter.size) {
+    names = names.filter(n => areasIn(n).some(a => noiseFilter.has(a.noise)));
+  }
   const groups = { Library: [], Academic: [] };
   for (const n of names) {
     (BUILDINGS[n]?.type === 'library' || /librar/i.test(pickLabel(n)) ? groups.Library : groups.Academic).push(n);
@@ -2138,7 +2156,16 @@ function renderBrowse({ seatWheels = true } = {}) {
   sub.textContent = `${q ? `${names.length} of ${all.length}` : names.length} buildings · ${h12}:${String(mm).padStart(2, '0')} ${am ? 'am' : 'pm'}`;
 
   let html = '';
-  if (q && !names.length) html = `<div class="browse-foot">No building matches \u201c${escapeHtml(browseQuery.trim())}\u201d.</div>`;
+  if (roomsMode() && studyAreas.length) {
+    html += '<div style="display:flex;flex-wrap:wrap;gap:6px;padding:8px 16px 4px">'
+      + [['Silent', 'Silent'], ['Quiet', 'Quiet'], ['Collaborative', 'Group work']].map(([k, label]) =>
+        `<button type="button" class="noise-chip" data-noise="${k}" aria-pressed="${noiseFilter.has(k)}" `
+        + `style="font:inherit;font-size:11.5px;padding:4px 10px;border-radius:999px;cursor:pointer;`
+        + `border:1px solid ${noiseFilter.has(k) ? '#58c047' : 'rgba(255,255,255,0.15)'};`
+        + `background:${noiseFilter.has(k) ? 'rgba(88,192,71,0.15)' : 'transparent'};color:#c9d1de">${label}</button>`).join('')
+      + '</div>';
+  }
+  if (q && !names.length) html += `<div class="browse-foot">No building matches \u201c${escapeHtml(browseQuery.trim())}\u201d.</div>`;
   for (const [label, list] of Object.entries(groups)) {
     if (!list.length) continue;
     html += `<div class="browse-group">${label}</div>`;
@@ -2158,8 +2185,10 @@ function renderBrowse({ seatWheels = true } = {}) {
       else if (st.state !== 'open') badge = `<span class="badge badge-closed">${st.assumed ? 'Probably closed' : 'Closed'}</span>`;
       else if (rooms && rooms.total) badge = `<span class="badge ${rooms.free ? 'badge-open' : 'badge-none'}">${rooms.free}/${rooms.total}</span>`;
       else badge = '<span class="badge badge-open">Open</span>';
+      const match = roomsMode() && noiseFilter.size
+        ? areasIn(n).filter(a => noiseFilter.has(a.noise)).map(areaName).slice(0, 2).join(' \u00b7 ') : '';
       html += `<button class="browse-row" data-building="${encodeURIComponent(n)}">`
-            + `<span class="browse-name">${pickLabel(n)}</span>${badge}</button>`;
+            + `<span class="browse-name">${pickLabel(n)}${match ? `<span style="display:block;font-size:11px;color:#7b8498">${escapeHtml(match)}</span>` : ''}</span>${badge}</button>`;
     }
   }
   html += roomsMode()
@@ -2178,13 +2207,26 @@ function clock12(hm) {
   return `${h % 12 === 0 ? 12 : h % 12}:${String(m).padStart(2, '0')} ${h >= 12 && h < 24 ? 'pm' : 'am'}`;
 }
 
+// Room filters, from the libraries' own feature tags (LibCal filterIds). Short labels for chips.
+const ROOM_TAGS = [
+  ['Power Available', 'Outlets'],
+  ['Whiteboard or Chalkboard Available', 'Whiteboard'],
+  ['Monitor Available', 'Screen'],
+  ['Accessible Seat/Space', 'Accessible'],
+];
+const roomFilter = new Set();
+
 /** One building's study rooms with live free/booked state (U of T). */
 function renderStudyRoomList(body, title, sub, back) {
   const n = browseBuilding;
   back.hidden = false;
   title.textContent = pickLabel(n);
   const live = roomAvailability?.[n]?.rooms ?? {};
-  const rows = studyRoomsIn(n).map(([id, r]) => ({ id, r, st: live[id] }));
+  const allRows = studyRoomsIn(n).map(([id, r]) => ({ id, r, st: live[id] }));
+  // Only offer a filter this building can actually satisfy.
+  const offered = ROOM_TAGS.filter(([tag]) => allRows.some(x => (x.r.tags ?? []).includes(tag)));
+  for (const t of [...roomFilter]) if (!offered.some(([tag]) => tag === t)) roomFilter.delete(t);
+  const rows = allRows.filter(x => [...roomFilter].every(t => (x.r.tags ?? []).includes(t)));
   const rank = x => !x.st ? 3 : x.st.free ? 0 : x.st.next !== undefined ? 1 : 2;
   rows.sort((a, b) => rank(a) - rank(b)
     || (rank(a) === 0 ? (b.st.until > a.st.until ? 1 : -1) : 0)
@@ -2196,9 +2238,18 @@ function renderStudyRoomList(body, title, sub, back) {
     : bookable ? `${free} of ${bookable} free to book right now` : `${rows.length} study rooms \u00b7 not bookable now`;
   const pcs = libraryComputers?.[n];
   if (pcs?.total) sub.textContent += ` \u00b7 ${pcs.free} of ${pcs.total} computers free`;
+  if (roomFilter.size) sub.textContent = `${rows.length} of ${allRows.length} rooms match \u00b7 ` + sub.textContent;
 
   let html = `<button class="browse-row" id="rooms-on-map" type="button"><span class="browse-name">Show this building on the map</span>`
            + `<span class="badge badge-open">Map</span></button>`;
+  if (offered.length) {
+    html += '<div style="display:flex;flex-wrap:wrap;gap:6px;padding:8px 16px 4px">' + offered.map(([tag, label]) =>
+      `<button type="button" class="room-tag-chip" data-tag="${escapeHtml(tag)}" aria-pressed="${roomFilter.has(tag)}" `
+      + `style="font:inherit;font-size:11.5px;padding:4px 10px;border-radius:999px;cursor:pointer;`
+      + `border:1px solid ${roomFilter.has(tag) ? '#58c047' : 'rgba(255,255,255,0.15)'};`
+      + `background:${roomFilter.has(tag) ? 'rgba(88,192,71,0.15)' : 'transparent'};color:#c9d1de">${label}</button>`).join('') + '</div>';
+    if (roomFilter.size && !rows.length) html += '<div class="browse-foot">No room here has all of those.</div>';
+  }
   html += rows.map(({ r, st }) => {
     // "02nd Floor" -> "2nd Floor"; and say which library only when the building has several.
     const floor = r.floor ? r.floor.replace(/^0(\d)/, '$1') : null;
@@ -2208,13 +2259,25 @@ function renderStudyRoomList(body, title, sub, back) {
     if (st?.free) badge = `<span class="badge badge-open">Free until ${clock12(st.until)}</span>`;
     else if (st && st.next !== undefined) badge = `<span class="badge badge-closed">Booked${st.next ? ` \u00b7 free ${clock12(st.next)}` : ''}</span>`;
     else if (st?.opens) badge = `<span class="badge badge-closed">Opens ${clock12(st.opens)}</span>`;
-    return `<div class="room-row"><span><span class="room-id">${escapeHtml(r.name)}</span>`
-      + `<span class="room-for">${escapeHtml(facts)}${r.features ? ` \u00b7 ${escapeHtml(r.features.slice(0, 70))}` : ''}</span></span>${badge}</div>`;
+    const tagText = ROOM_TAGS.filter(([tag]) => (r.tags ?? []).includes(tag)).map(([, label]) => label).join(' \u00b7 ');
+    const photo = r.photo
+      ? `<img src="${escapeHtml(r.photo)}" alt="" loading="lazy" referrerpolicy="no-referrer" style="width:44px;height:44px;object-fit:cover;border-radius:6px;flex:none;margin-right:10px">`
+      : '';
+    return `<div class="room-row" style="align-items:center">${photo}<span style="flex:1;min-width:0"><span class="room-id">${escapeHtml(r.name)}</span>`
+      + `<span class="room-for">${escapeHtml(facts)}${tagText ? `<br>${escapeHtml(tagText)}` : ''}</span></span>${badge}</div>`;
   }).join('');
   html += '<div class="browse-foot">Straight from the libraries\u2019 booking system, refreshed every few minutes. '
         + '\u201cFree\u201d means nobody has reserved it \u2014 not necessarily empty. Book through the library.</div>';
   body.innerHTML = html;
   body.scrollTop = 0;
+  for (const chip of body.querySelectorAll('.room-tag-chip')) {
+    chip.addEventListener('click', () => {
+      const tag = chip.dataset.tag;
+      roomFilter.has(tag) ? roomFilter.delete(tag) : roomFilter.add(tag);
+      renderStudyRoomList(body, title, sub, back);
+      track('room_filter', { tag, on: roomFilter.has(tag), device: deviceKind() });
+    });
+  }
   document.getElementById('rooms-on-map')?.addEventListener('click', () => {
     closeBrowse();
     zoomedPick = n;
@@ -2330,6 +2393,14 @@ function renderRooms(name) {
     rooms += `<div style="margin-top:${rooms ? 8 : 0}px"><span class="${pcs.free ? 'rooms-count' : 'rooms-none'}">${pcs.free} of ${pcs.total}</span>`
       + ` library computer${pcs.total === 1 ? '' : 's'} free right now`
       + `<span class="rooms-where">${pcs.sources.join(' \u00b7 ')} \u00b7 UTORid login</span></div>`;
+  }
+  const areas = CAMPUS_CONTENT.roomsList ? areasIn(name) : [];
+  if (areas.length) {
+    const colour = { Silent: '#8fb8e8', Quiet: '#8fd4a8', Collaborative: '#e8c48f' };
+    rooms += `<div style="margin-top:${rooms ? 10 : 0}px"><span class="rooms-where" style="margin:0 0 4px">Study areas (the library\u2019s own noise levels)</span>`
+      + areas.map(a => `<div style="font-size:12px;padding:1px 0"><span style="color:${colour[a.noise]};font-weight:600">${NOISE_LABEL[a.noise]}</span>`
+        + ` \u00b7 <a href="${escapeHtml(a.url)}" target="_blank" rel="noopener" style="color:#c9d1de">${escapeHtml(areaName(a))}</a></div>`).join('')
+      + '</div>';
   }
   if (!rooms && !inside) { box.hidden = true; return; }
   box.innerHTML = rooms + inside;
@@ -4618,6 +4689,14 @@ document.getElementById('browse-back')?.addEventListener('click', () => {
   renderBrowse();
 });
 document.getElementById('browse-body')?.addEventListener('click', ev => {
+  const chip = ev.target.closest('.noise-chip');
+  if (chip) {
+    const k = chip.dataset.noise;
+    noiseFilter.has(k) ? noiseFilter.delete(k) : noiseFilter.add(k);
+    renderBrowse({ seatWheels: false });
+    track('noise_filter', { noise: k, on: noiseFilter.has(k), device: deviceKind() });
+    return;
+  }
   const row = ev.target.closest('.browse-row');
   if (!row) return;
   const picked = decodeURIComponent(row.dataset.building);
@@ -4705,6 +4784,26 @@ function scarcityNote() {
        + `we have hours for ${open === 1 ? 'is' : 'are'} still open.`;
 }
 
+// Late at night, the walk home matters as much as the seat. U of T Campus Safety's
+// TravelSafer escort runs 24/7 to anywhere on campus or the abutting TTC stations
+// (campussafety.utoronto.ca/travel-safer, read 2026-10-24). U of T only (safetyNote).
+function renderSafetyNote() {
+  const cfg = CAMPUS_CONTENT.safetyNote;
+  let el = document.getElementById('safety-note');
+  const { hour } = campusNow();
+  const late = cfg && (hour >= cfg.from || hour < cfg.to);
+  if (!late) { if (el) el.hidden = true; return; }
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'safety-note';
+    el.className = 'pick-note';
+    el.style.cssText = 'margin-top:6px';
+    pickNote.after(el);
+  }
+  el.innerHTML = cfg.html;
+  el.hidden = false;
+}
+
 function renderPicks() {
   if (!pickCard) return;
   if (!picksEnabled()) { pickCard.hidden = true; publishSheetHeight(); return; }
@@ -4771,6 +4870,7 @@ function renderPicks() {
   const scarce = scarcityNote();
   pickNote.textContent = scarce ?? '';
   pickNote.hidden = !scarce;
+  renderSafetyNote();
   publishSheetHeight();   // the list just changed shape; the credits sit on it
 
   // Someone who reads the sheet and leaves looks exactly like someone who

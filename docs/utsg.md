@@ -353,3 +353,25 @@ UTORid login") and the study-room list subtitle.
 **Deliberately not used for busyness:** mid-afternoon Robarts had 28 of 210 computers in use while
 Google's typical curve says it is near its weekly peak -- students study on laptops, so computer
 use does not track crowding. Mixing it in would make busyness worse.
+
+
+## 2026-10-24: quiet vs group, room features, late-night safety (all official U of T sources)
+
+- **Room features and photos** (`build_utsg_study_rooms.mjs`): each LibCal location page lists its
+  rooms with LibCal's own filter tags (`filterIds` -> "Power Available", "Monitor Available",
+  "Whiteboard or Chalkboard Available", "Accessible Seat/Space", ...) and a photo. 126 of 139 rooms
+  tagged (117 outlets, 70 whiteboard, 62 screen, 20 accessible); 113 photos (LibCal's CDN, hotlinked,
+  lazy). Room list has Outlets / Whiteboard / Screen / Accessible filter chips.
+- **Quiet vs group** (`build_utsg_library_spaces.py`): every `/space/` page in library.utoronto.ca's
+  sitemap (213; robots.txt allows) carries "Noise Level" (Silent / Quiet / Collaborative), "Space
+  features" and its library. 169 map to St. George buildings; **24 open study areas in 7 buildings**
+  are kept (`area: true`) -- prayer/reflection rooms, workrooms, labs, consultation and bookable rooms
+  (already in the room list), and ASSIGNED carrels are excluded. Shown in the building panel ("Study
+  areas (the library's own noise levels)") and as Silent / Quiet / Group work chips in the sidebar.
+  The libraries' own "Find a space" page never finishes loading (checked in a browser and by script),
+  which is why the sitemap route was used. Re-run once a term (slow: ~10 min).
+- **Late-night safety**: TravelSafer (Campus Safety, 24/7, any campus location or abutting TTC
+  station, 416-978-7233 / UofT Safety app) shown 9pm-6am under the picks (`safetyNote`).
+- **Not done, and why:** laptop/charger loans -- LibCal equipment at St. George is only the Music
+  Library's AV gear. Food hours -- foodservices.utoronto.ca refuses connections from this network,
+  and search snippets are not solid data; it may work from Vercel, untested.
