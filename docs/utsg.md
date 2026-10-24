@@ -375,3 +375,20 @@ use does not track crowding. Mixing it in would make busyness worse.
 - **Not done, and why:** laptop/charger loans -- LibCal equipment at St. George is only the Music
   Library's AV gear. Food hours -- foodservices.utoronto.ca refuses connections from this network,
   and search snippets are not solid data; it may work from Vercel, untested.
+
+
+## 2026-10-24: the study-spot hub (owner: "hard to even find those features")
+
+The features lived behind a small "Study rooms" button and a 69-building list, and on a phone the
+bottom sheet showed two picks and four room counts. U of T's picks sheet is now one **"Find a study
+spot"** sheet with four tabs, on every screen size (`hubTabs`; `renderHub()`):
+- **Open now** -- the existing picks, scarcity note and the late-night TravelSafer line.
+- **Rooms** (badge = rooms free right now) -- buildings by free study rooms, with Outlets /
+  Whiteboard / Screen / Accessible chips that recount free rooms (27 of 35 with outlets). Tap a
+  building for each room (the sidebar room list, filters carried across).
+- **Quiet** -- the 24 open study areas grouped Silent / Quiet / Group work, "Has outlets" chip, tap to fly there.
+- **Computers** -- 406 library computers, per library, with a bar.
+The tab bar stays put; the list scrolls inside (max 46vh / 380px) so the map stays visible; rows are
+48px tall; desktop card widened to 336px so labels stay on one line. The separate "Study rooms free
+now" box is replaced. The top "Study rooms" button still opens the full sidebar (all 69 buildings,
+hours at another time, noise and outlet filters). Other campuses are unchanged.

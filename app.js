@@ -494,6 +494,7 @@ async function loadRoomAvailability() {
     const body = await res.json();
     roomAvailability = body?.buildings ?? null;
     libraryComputers = body?.computers ?? null;
+    if (CAMPUS_CONTENT.hubTabs) renderHub();
     // Some buildings take their busyness from these bookings, so recolour.
     if (document.getElementById('browse')?.classList.contains('is-open')) renderBrowse({ seatWheels: false });
     if (Object.keys(roomAvailability ?? {}).some(n => configFor(n)?.busyFromBookings)) refresh();
@@ -1851,6 +1852,8 @@ const CAMPUS_CONTENT = {
           coverByHull: true,
           // A "Study rooms free now" list in the picks sheet, from /api/rooms.
           roomsList: true,
+          // One sheet with Open now / Rooms / Quiet / Computers tabs (replaces the separate rooms box).
+          hubTabs: true,
           // Weekend doors, [open, close]. From the four U of T buildings that publish weekend
           // hours: Athletic Centre 9-17, OISE 9-21, Woodsworth 10-18 are open, Rotman is fob-only
           // (closed to the public). 10-17 is the span where the open three agree. Approved by the
@@ -2342,6 +2345,16 @@ function openBrowse() {
   // so Escape has somewhere sensible to come from.
   document.getElementById('browse-close')?.focus({ preventScroll: true });
   track('browse_opened', { device: deviceKind() });
+}
+/** Open the sidebar on one building's study-room list (U of T). */
+function openRoomList(building) {
+  browseBuilding = building;
+  browseQuery = '';
+  browseAt = null;
+  renderBrowse();
+  document.getElementById('browse')?.classList.add('is-open');
+  document.getElementById('browse-backdrop')?.classList.add('is-open');
+  track('hub_room_list', { building, device: deviceKind() });
 }
 function closeBrowse() {
   document.getElementById('browse')?.classList.remove('is-open');
@@ -4571,6 +4584,7 @@ function renderRoomsSection() {
   // U of T only for now: this would otherwise change the launched Maryland and Ohio State
   // sheets, which is the owner's call.
   if (!CAMPUS_CONTENT.roomsList) return;
+  if (CAMPUS_CONTENT.hubTabs) { roomsSection.hidden = true; return; }   // the Rooms tab replaces this box
   const all = Object.entries(roomAvailability ?? {})
     .filter(([name, e]) => e && e.total > 0 && knownBuildings().includes(name));
   // No feed at all (offline, or the API is down): nothing true to show.
@@ -4802,6 +4816,146 @@ function scarcityNote() {
 // Late at night, the walk home matters as much as the seat. U of T Campus Safety's
 // TravelSafer escort runs 24/7 to anywhere on campus or the abutting TTC stations
 // (campussafety.utoronto.ca/travel-safer, read 2026-10-24). U of T only (safetyNote).
+// ─── The study-spot hub (U of T): one sheet, four tabs ────────────────────────────
+// Open now . Rooms . Quiet . Computers. The features used to sit behind a small button and
+// a long building list; the sheet is the first thing on screen on every device, so they live
+// here. Each tab is a plain list with 44px+ rows, readable at 375px.
+let hubTab = 'now';
+
+function hubChip(label, on, attrs) {
+  return `<button type="button" ${attrs} aria-pressed="${on}" style="font:inherit;font-size:12.5px;min-height:34px;padding:0 13px;`
+    + `border-radius:999px;cursor:pointer;border:1px solid ${on ? '#58c047' : 'rgba(255,255,255,0.16)'};`
+    + `background:${on ? 'rgba(88,192,71,0.16)' : 'transparent'};color:#d5dce8">${label}</button>`;
+}
+
+function hubRow(main, sub, right, attrs) {
+  return `<button type="button" ${attrs} style="display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;`
+    + `min-height:48px;padding:6px 4px;background:none;border:0;border-top:1px solid rgba(255,255,255,0.06);font:inherit;`
+    + `text-align:left;cursor:pointer;color:#e6ebf3"><span style="min-width:0"><span style="font-size:14.5px;font-weight:600;display:block">${main}</span>`
+    + `${sub ? `<span style="font-size:11.5px;color:#7b8498;display:block;margin-top:1px">${sub}</span>` : ''}</span>${right}</button>`;
+}
+
+function hubRooms() {
+  const pretty = n => pickLabel(n);
+  const live = roomAvailability ?? {};
+  const need = [...roomFilter];
+  const rows = [];
+  let freeTotal = 0, anyBookable = false;
+  for (const building of new Set(Object.values(studyRooms ?? {}).map(r => r.building))) {
+    const rooms = studyRoomsIn(building).filter(([, r]) => need.every(t => (r.tags ?? []).includes(t)));
+    if (!rooms.length) continue;
+    const st = live[building]?.rooms ?? {};
+    const free = rooms.filter(([id]) => st[id]?.free).length;
+    const open = live[building]?.bookable > 0;
+    anyBookable ||= open;
+    freeTotal += free;
+    rows.push({ building, total: rooms.length, free, open });
+  }
+  rows.sort((a, b) => (b.open - a.open) || (b.free - a.free) || pretty(a.building).localeCompare(pretty(b.building)));
+  const head = `<div style="font-size:13px;color:#aab4c6;padding:2px 2px 8px">${anyBookable
+    ? `<b style="color:#8fd4a8">${freeTotal}</b> room${freeTotal === 1 ? '' : 's'} free to book right now${need.length ? ' with your filters' : ''}`
+    : 'Booking is closed right now — rooms open when the libraries do'}</div>`;
+  const chips = '<div style="display:flex;flex-wrap:wrap;gap:7px;padding:0 0 8px">'
+    + ROOM_TAGS.map(([tag, label]) => hubChip(label, roomFilter.has(tag), `data-hub-tag="${escapeHtml(tag)}"`)).join('') + '</div>';
+  const list = rows.map(r => hubRow(
+    pretty(r.building),
+    r.open ? `${r.total} room${r.total === 1 ? '' : 's'}${need.length ? ' match' : ''}` : `${r.total} room${r.total === 1 ? '' : 's'} · not bookable now`,
+    `<span style="flex:none;font-size:13.5px;font-weight:700;color:${r.open ? (r.free ? '#8fd4a8' : '#c08a8a') : '#6b7589'}">${
+      r.open ? (r.free ? `${r.free} free` : 'all booked') : '—'}</span>`,
+    `data-hub-rooms="${encodeURIComponent(r.building)}"`)).join('');
+  return head + chips + (list || '<div class="pick-note">No room has all of those.</div>')
+    + '<div class="pick-note" style="padding:8px 2px 0">Free = nobody has reserved it, not necessarily empty. Tap a building for each room.</div>';
+}
+
+function hubQuiet() {
+  const need = roomFilter.has('Power Available');
+  const groups = [['Silent', 'Silent', '#8fb8e8'], ['Quiet', 'Quiet', '#8fd4a8'], ['Collaborative', 'Group work', '#e8c48f']];
+  let html = '<div style="font-size:13px;color:#aab4c6;padding:2px 2px 8px">Open study areas, by the library’s own noise level</div>'
+    + '<div style="display:flex;gap:7px;padding:0 0 6px">' + hubChip('Has outlets', need, 'data-hub-tag="Power Available"') + '</div>';
+  for (const [key, label, colour] of groups) {
+    const rows = studyAreas.filter(a => a.noise === key && (!need || (a.features ?? []).includes('Power Available')))
+      .sort((a, b) => pickLabel(a.building).localeCompare(pickLabel(b.building)) || a.name.localeCompare(b.name));
+    if (!rows.length) continue;
+    html += `<div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:${colour};font-weight:700;padding:12px 2px 2px">${label} · ${rows.length}</div>`;
+    html += rows.map(a => hubRow(escapeHtml(areaName(a)),
+      `${escapeHtml(pickLabel(a.building))}${(a.features ?? []).includes('Power Available') ? ' · outlets' : ''}`,
+      '<span style="flex:none;color:#6b7589;font-size:18px">›</span>', `data-hub-go="${encodeURIComponent(a.building)}"`)).join('');
+  }
+  return html + '<div class="pick-note" style="padding:8px 2px 0">From library.utoronto.ca. Walk-in areas only; bookable rooms are under Rooms.</div>';
+}
+
+function hubComputers() {
+  const rows = Object.entries(libraryComputers ?? {}).filter(([, c]) => c.total)
+    .sort((a, b) => (b[1].free - a[1].free) || pickLabel(a[0]).localeCompare(pickLabel(b[0])));
+  if (!rows.length) return '<div class="pick-note">Computer availability isn’t loading right now.</div>';
+  const free = rows.reduce((n, [, c]) => n + c.free, 0), total = rows.reduce((n, [, c]) => n + c.total, 0);
+  return `<div style="font-size:13px;color:#aab4c6;padding:2px 2px 8px"><b style="color:#8fd4a8">${free}</b> of ${total} library computers free right now</div>`
+    + rows.map(([b, c]) => hubRow(escapeHtml(pickLabel(b)), escapeHtml(c.sources.join(' · ')),
+      `<span style="flex:none;text-align:right"><span style="font-size:13.5px;font-weight:700;color:${c.free ? '#8fd4a8' : '#c08a8a'}">${c.free} / ${c.total}</span>`
+      + `<span style="display:block;height:4px;width:54px;margin-top:4px;border-radius:2px;background:rgba(255,255,255,0.1)"><span style="display:block;height:4px;width:${Math.round(100 * c.free / c.total)}%;border-radius:2px;background:${c.free ? '#58c047' : '#c08a8a'}"></span></span></span>`,
+      `data-hub-go="${encodeURIComponent(b)}"`)).join('')
+    + '<div class="pick-note" style="padding:8px 2px 0">Live from U of T’s Information Commons. A UTORid is needed to log in.</div>';
+}
+
+function renderHub() {
+  if (!CAMPUS_CONTENT.hubTabs || !pickCard || pickCard.hidden) return;
+  let tabs = document.getElementById('hub-tabs');
+  let panel = document.getElementById('hub-panel');
+  if (!tabs) {
+    tabs = document.createElement('div');
+    tabs.id = 'hub-tabs';
+    if (innerWidth > 640) pickCard.style.width = '336px';   // room for four tab labels on one line
+    tabs.setAttribute('role', 'tablist');
+    tabs.style.cssText = 'display:flex;gap:2px;margin:2px 0 8px;border-bottom:1px solid rgba(255,255,255,0.1)';
+    panel = document.createElement('div');
+    panel.id = 'hub-panel';
+    // Tall enough to read several rows, short enough that the map stays in view; the tab bar above stays put.
+    panel.style.cssText = 'max-height:min(46vh,380px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding-right:2px';
+    pickList.before(tabs);
+    pickList.after(panel);
+    const onTab = ev => {
+      const t = ev.target.closest('[data-tab]');
+      if (!t) return;
+      hubTab = t.dataset.tab;
+      track('hub_tab', { tab: hubTab, device: deviceKind() });
+      renderHub();
+    };
+    tabs.addEventListener('click', onTab);
+    panel.addEventListener('click', ev => {
+      const tag = ev.target.closest('[data-hub-tag]');
+      if (tag) { const k = tag.dataset.hubTag; roomFilter.has(k) ? roomFilter.delete(k) : roomFilter.add(k); track('room_filter', { tag: k, on: roomFilter.has(k), level: 'hub', device: deviceKind() }); renderHub(); return; }
+      const rooms = ev.target.closest('[data-hub-rooms]');
+      if (rooms) { openRoomList(decodeURIComponent(rooms.dataset.hubRooms)); return; }
+      const go = ev.target.closest('[data-hub-go]');
+      if (go) {
+        const b = decodeURIComponent(go.dataset.hubGo);
+        zoomedPick = b; zoomToPick(b); openPanel(b); markZoomedPick();
+        track('hub_go', { tab: hubTab, building: b, device: deviceKind() });
+      }
+    });
+  }
+  const live = roomAvailability ?? {};
+  const freeRooms = Object.values(live).reduce((n, b) => n + (b.bookable > 0 ? b.free : 0), 0);
+  const names = { now: 'Open now', rooms: 'Rooms', quiet: 'Quiet', computers: 'Computers' };
+  const badge = { rooms: freeRooms > 0 ? ` <span style="color:#8fd4a8">${freeRooms}</span>` : '' };
+  tabs.innerHTML = Object.entries(names).map(([k, label]) => {
+    const on = hubTab === k;
+    return `<button type="button" role="tab" aria-selected="${on}" data-tab="${k}" style="flex:1;font:inherit;font-size:13px;min-height:44px;`
+      + `padding:0 4px;white-space:nowrap;background:none;border:0;border-bottom:2px solid ${on ? '#58c047' : 'transparent'};margin-bottom:-1px;`
+      + `color:${on ? '#f0f4f8' : '#7b8498'};font-weight:${on ? 700 : 500};cursor:pointer">${label}${badge[k] ?? ''}</button>`;
+  }).join('');
+  const head = pickToggle.querySelector('.pick-head');
+  if (head) head.textContent = 'Find a study spot';
+  const showNow = hubTab === 'now';
+  pickList.hidden = !showNow;
+  if (!showNow) pickNote.hidden = true;
+  const safety = document.getElementById('safety-note');
+  if (safety && !showNow) safety.hidden = true;
+  panel.hidden = showNow;
+  if (!showNow) panel.innerHTML = hubTab === 'rooms' ? hubRooms() : hubTab === 'quiet' ? hubQuiet() : hubComputers();
+  publishSheetHeight();
+}
+
 function renderSafetyNote() {
   const cfg = CAMPUS_CONTENT.safetyNote;
   let el = document.getElementById('safety-note');
@@ -4820,6 +4974,11 @@ function renderSafetyNote() {
 }
 
 function renderPicks() {
+  renderPicksCore();
+  renderHub();
+}
+
+function renderPicksCore() {
   if (!pickCard) return;
   if (!picksEnabled()) { pickCard.hidden = true; publishSheetHeight(); return; }
 
