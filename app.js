@@ -493,6 +493,7 @@ async function loadRoomAvailability() {
     const body = await res.json();
     roomAvailability = body?.buildings ?? null;
     // Some buildings take their busyness from these bookings, so recolour.
+    if (document.getElementById('browse')?.classList.contains('is-open')) renderBrowse({ seatWheels: false });
     if (Object.keys(roomAvailability ?? {}).some(n => configFor(n)?.busyFromBookings)) refresh();
     else {
       renderRoomsSection();
@@ -1898,6 +1899,16 @@ async function loadRoomSchedule() {
   } catch (e) { /* no room data for this campus */ }
 }
 
+// Static details of each bookable study room (name, floor, seats, features), from
+// data/<campus>/study_rooms.json. Whether one is free is live, from /api/rooms.
+let studyRooms = null;       // id -> { building, where, name, floor, capacity, features }
+async function loadStudyRooms() {
+  if (!CAMPUS_CONTENT.roomsList) return;
+  const json = await loadJson(`${CAMPUS.dataDir}/study_rooms.json`);
+  studyRooms = json?.rooms ?? null;
+}
+const studyRoomsIn = building => Object.entries(studyRooms ?? {}).filter(([, r]) => r.building === building);
+
 /** True where the sidebar is about live study rooms, not a classroom schedule. */
 const roomsMode = () => !!CAMPUS_CONTENT.roomsList && !roomSchedule;
 
@@ -2102,6 +2113,7 @@ function renderBrowse({ seatWheels = true } = {}) {
 
   const search = document.getElementById('browse-search');
   if (search) search.hidden = !!browseBuilding;
+  if (browseBuilding && roomsMode()) return renderStudyRoomList(body, title, sub, back);
   if (browseBuilding) return renderBrowseRooms(body, title, sub, back, seatWheels);
   back.hidden = true;
   title.textContent = roomsMode() ? 'Study rooms & buildings' : 'Buildings';
@@ -2156,6 +2168,56 @@ function renderBrowse({ seatWheels = true } = {}) {
       + 'That is not the same as unlocked \u2014 many classrooms are locked outside class.</div>';
   body.innerHTML = html;
   body.scrollTop = 0;
+}
+
+/** "15:30" -> "3:30 pm" */
+function clock12(hm) {
+  const [h, m] = hm.split(':').map(Number);
+  return `${h % 12 === 0 ? 12 : h % 12}:${String(m).padStart(2, '0')} ${h >= 12 && h < 24 ? 'pm' : 'am'}`;
+}
+
+/** One building's study rooms with live free/booked state (U of T). */
+function renderStudyRoomList(body, title, sub, back) {
+  const n = browseBuilding;
+  back.hidden = false;
+  title.textContent = pickLabel(n);
+  const live = roomAvailability?.[n]?.rooms ?? {};
+  const rows = studyRoomsIn(n).map(([id, r]) => ({ id, r, st: live[id] }));
+  const rank = x => !x.st ? 3 : x.st.free ? 0 : x.st.next !== undefined ? 1 : 2;
+  rows.sort((a, b) => rank(a) - rank(b)
+    || (rank(a) === 0 ? (b.st.until > a.st.until ? 1 : -1) : 0)
+    || a.r.name.localeCompare(b.r.name, undefined, { numeric: true }));
+  const manyWheres = new Set(rows.map(x => x.r.where)).size > 1;
+  const free = rows.filter(x => x.st?.free).length;
+  const bookable = rows.filter(x => x.st && (x.st.free || x.st.next !== undefined)).length;
+  sub.textContent = !Object.keys(live).length ? `${rows.length} study rooms`
+    : bookable ? `${free} of ${bookable} free to book right now` : `${rows.length} study rooms \u00b7 not bookable now`;
+
+  let html = `<button class="browse-row" id="rooms-on-map" type="button"><span class="browse-name">Show this building on the map</span>`
+           + `<span class="badge badge-open">Map</span></button>`;
+  html += rows.map(({ r, st }) => {
+    // "02nd Floor" -> "2nd Floor"; and say which library only when the building has several.
+    const floor = r.floor ? r.floor.replace(/^0(\d)/, '$1') : null;
+    const facts = [floor, r.capacity ? `seats ${r.capacity}` : null, manyWheres ? r.where : null]
+      .filter(Boolean).join(' \u00b7 ');
+    let badge = '';
+    if (st?.free) badge = `<span class="badge badge-open">Free until ${clock12(st.until)}</span>`;
+    else if (st && st.next !== undefined) badge = `<span class="badge badge-closed">Booked${st.next ? ` \u00b7 free ${clock12(st.next)}` : ''}</span>`;
+    else if (st?.opens) badge = `<span class="badge badge-closed">Opens ${clock12(st.opens)}</span>`;
+    return `<div class="room-row"><span><span class="room-id">${escapeHtml(r.name)}</span>`
+      + `<span class="room-for">${escapeHtml(facts)}${r.features ? ` \u00b7 ${escapeHtml(r.features.slice(0, 70))}` : ''}</span></span>${badge}</div>`;
+  }).join('');
+  html += '<div class="browse-foot">Straight from the libraries\u2019 booking system, refreshed every few minutes. '
+        + '\u201cFree\u201d means nobody has reserved it \u2014 not necessarily empty. Book through the library.</div>';
+  body.innerHTML = html;
+  body.scrollTop = 0;
+  document.getElementById('rooms-on-map')?.addEventListener('click', () => {
+    closeBrowse();
+    zoomedPick = n;
+    zoomToPick(n);
+    openPanel(n);
+    markZoomedPick();
+  });
 }
 
 function renderBrowseRooms(body, title, sub, back, seatWheels = true) {
@@ -4547,6 +4609,12 @@ document.getElementById('browse-body')?.addEventListener('click', ev => {
   const row = ev.target.closest('.browse-row');
   if (!row) return;
   const picked = decodeURIComponent(row.dataset.building);
+  if (roomsMode() && studyRoomsIn(picked).length) {
+    browseBuilding = picked;
+    renderBrowse();
+    track('browse_building', { building: picked, device: deviceKind(), rooms: true });
+    return;
+  }
   if (roomsMode()) {
     closeBrowse();
     zoomedPick = picked;
@@ -4757,6 +4825,7 @@ function refresh({ keepThanks = false } = {}) {
   // queueing them behind it meant the room list arrived seconds late — or not
   // at all on a page where the tileset fails.
   loadRoomSchedule();
+  loadStudyRooms();
   loadRoomAvailability();
   await buildingsLoading;
   refresh();

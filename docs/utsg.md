@@ -323,3 +323,18 @@ from 5 to 13 of 416 test slots (Rotman-like fob-only buildings). The rule came f
 four buildings it is scored on, so the gain is optimistic; the `hours_report` taps after launch
 are the real check on weekends. If weekends draw reports of "it's actually closed", set
 `buildingWeekend` to null in app.js to turn it off.
+
+
+## 2026-10-24: per-room study room data
+
+Every bookable study room is now individual: **139 rooms** in `data/utsg/study_rooms.json`
+(`node scripts/build_utsg_study_rooms.mjs`, once a term): name ("2241 Group Study Room 2A"),
+floor, seats, features, building. Read from the libraries' own pages
+(`libcal.library.utoronto.ca/space/<id>`); 3 listed ids are dead pages and skipped.
+Availability is live: `/api/rooms` now also returns, per building, `rooms: {id: {free, until}}`
+(free until when), `{free:false, next}` (booked now, free at), or `{free:false, opens}` (library not
+yet taking bookings). `api/rooms.mjs` exports `roomStates` and `CAMPUSES`. In the "Study rooms"
+sidebar, tapping a building with rooms opens its list (free first, longest first; "Free until
+5:00 pm", "Booked . free 4:00 pm", "Opens 9:00 am") with a "Show on the map" row on top.
+Other campuses' API responses gain the same `rooms` field, unused by their UI.
+Classrooms remain impossible: no room numbers are published and the schedule tool needs a login.

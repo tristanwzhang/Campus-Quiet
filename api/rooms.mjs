@@ -11,7 +11,7 @@
 // are different claims and the map must not blur them, so this endpoint returns
 // counts of reservable rooms and the wording around it says reservable.
 
-const CAMPUSES = {
+export const CAMPUSES = {
   // Ohio State's main libraries (Thompson, 18th Avenue) are NOT here: their
   // booking app at libraryroombooking.cloud.osu.edu redirects to a university
   // login, so there is nothing public to read. Only the Health Sciences
@@ -156,6 +156,44 @@ export function countFree(grid, nowIso) {
   return { free: freeNow.size, total: rooms.size, bookable: bookableNow.size };
 }
 
+/**
+ * Per-room state at `nowIso`, from the same grid: for each room that has slots today,
+ *   free  -- a slot covers now and nobody has taken it
+ *   until -- when a free room stops being free (end of the unbroken run of untaken slots)
+ *   next  -- when a room that is booked right now next becomes free
+ *   opens -- when a room the library is not yet taking bookings for becomes bookable
+ * Times are the campus's local "YYYY-MM-DD HH:MM:SS" strings, returned as "HH:MM". Rooms
+ * the library is not taking bookings for right now are omitted (no slot covers now and
+ * none later today), so the list never claims a room we know nothing about.
+ */
+export function roomStates(grid, nowIso) {
+  const takenSlot = s => !!s.className && /checkout|unavail|booked/i.test(s.className);
+  const byRoom = new Map();
+  for (const s of grid?.slots ?? []) {
+    const id = String(s.itemId);
+    if (!byRoom.has(id)) byRoom.set(id, []);
+    byRoom.get(id).push(s);
+  }
+  const hm = t => t.slice(11, 16);
+  const out = {};
+  for (const [id, slots] of byRoom) {
+    slots.sort((a, b) => (a.start < b.start ? -1 : 1));
+    const nowSlot = slots.find(s => s.start <= nowIso && nowIso < s.end);
+    if (nowSlot && !takenSlot(nowSlot)) {
+      let end = nowSlot.end;
+      for (const s of slots) {
+        if (s.start === end && !takenSlot(s)) end = s.end; else if (s.start >= end) break;
+      }
+      out[id] = { free: true, until: hm(end) };
+    } else {
+      const later = slots.find(s => s.start >= nowIso && !takenSlot(s));
+      if (nowSlot) out[id] = { free: false, next: later ? hm(later.start) : null };   // booked now
+      else if (later) out[id] = { free: false, opens: hm(later.start) };              // not taking bookings yet
+    }
+  }
+  return out;
+}
+
 /** "2026-10-16 14:05:00" in the campus's own zone, which is what LibCal compares against. */
 function localStamp(zone, date = new Date()) {
   const p = new Intl.DateTimeFormat('en-CA', {
@@ -193,12 +231,13 @@ export default async function handler(req, res) {
       const { free, total, bookable } = countFree(grid, now);
       // Several libraries can share a building; add them up rather than
       // letting the last one win.
-      const prev = buildings[loc.building] ?? { free: 0, total: 0, bookable: 0, sources: [] };
+      const prev = buildings[loc.building] ?? { free: 0, total: 0, bookable: 0, sources: [], rooms: {} };
       buildings[loc.building] = {
         free: prev.free + free,
         total: prev.total + total,
         bookable: prev.bookable + bookable,
         sources: [...prev.sources, loc.label],
+        rooms: { ...prev.rooms, ...roomStates(grid, now) },
       };
     } catch (err) {
       // One library being unreachable must not blank the others.
