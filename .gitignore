@@ -20,3 +20,4 @@ data/osu/.cache/
 # Same, for Testudo. Maryland's needs it more: roughly one request in three
 # hangs, and a department page takes 20 seconds even when it answers.
 data/umd/.cache/
+*-demo.html

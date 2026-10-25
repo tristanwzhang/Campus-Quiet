@@ -1,0 +1,77 @@
+{
+ "built_at": "2026-10-25T00:38:50.290Z",
+ "source": "https://hsl-osu.libcal.com/space/<id> (the libraries' own booking pages)",
+ "note": "Static details only. Whether a room is free is live, from /api/rooms.",
+ "rooms": {
+  "93063": {
+   "building": "Prior Hall",
+   "where": "Health Sciences Library",
+   "name": "360A",
+   "floor": null,
+   "capacity": 5,
+   "features": "Whiteboard 43\" monitor with HDMI connector and power outlets Maximum capacity: 5",
+   "tags": [],
+   "photo": null
+  },
+  "93238": {
+   "building": "Prior Hall",
+   "where": "Health Sciences Library",
+   "name": "360B",
+   "floor": null,
+   "capacity": 5,
+   "features": "Whiteboard 43\" monitor with HDMI connector and power outlets Maximum capacity: 5",
+   "tags": [],
+   "photo": null
+  },
+  "93239": {
+   "building": "Prior Hall",
+   "where": "Health Sciences Library",
+   "name": "360C",
+   "floor": null,
+   "capacity": 5,
+   "features": "Whiteboard 43\" monitor with HDMI connector and power outlets Maximum capacity: 5",
+   "tags": [],
+   "photo": null
+  },
+  "93240": {
+   "building": "Prior Hall",
+   "where": "Health Sciences Library",
+   "name": "360D",
+   "floor": null,
+   "capacity": 5,
+   "features": "Whiteboard 43\" monitor with HDMI connector and power outlets Maximum capacity: 5",
+   "tags": [],
+   "photo": null
+  },
+  "93241": {
+   "building": "Prior Hall",
+   "where": "Health Sciences Library",
+   "name": "360F",
+   "floor": null,
+   "capacity": 5,
+   "features": "Window Whiteboard Maximum capacity: 5",
+   "tags": [],
+   "photo": null
+  },
+  "93242": {
+   "building": "Prior Hall",
+   "where": "Health Sciences Library",
+   "name": "360G",
+   "floor": null,
+   "capacity": 5,
+   "features": "Window Whiteboard 43\" monitor with HDMI connector and power outlets Maximum capacity: 5",
+   "tags": [],
+   "photo": null
+  },
+  "93243": {
+   "building": "Prior Hall",
+   "where": "Health Sciences Library",
+   "name": "360H",
+   "floor": null,
+   "capacity": 5,
+   "features": "Window Whiteboard 43\" monitor with HDMI connector and power outlets Maximum capacity: 5",
+   "tags": [],
+   "photo": null
+  }
+ }
+}
