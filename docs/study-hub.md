@@ -15,7 +15,7 @@ Computers: only U of T publishes live counts. Maryland's table (lib.umd.edu/visi
 is totals only; Illinois and Ohio State publish nothing live.
 
 Data, re-run once a term:
-- `node scripts/build_utsg_study_rooms.mjs osu|umd|utsg` -> `data/<campus>/study_rooms.json`
+- `node scripts/build_study_rooms.mjs osu|umd|utsg` -> `data/<campus>/study_rooms.json`
 - `python3 scripts/build_library_areas.py uiuc|umd` -> `data/library_spaces.json`, `data/umd/library_spaces.json`
   (lib.umd.edu refuses requests without browser headers; the script sends them.)
 

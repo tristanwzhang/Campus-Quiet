@@ -82,6 +82,31 @@ CAMPUSES = {
 }
 
 
+def manifest(title, short, path):
+    """The home-screen install file for one campus. A per-campus file because the
+    name on the icon and the page it opens must be the campus', not Illinois'."""
+    return {
+        "name": title,
+        "short_name": short,
+        "description": f"How busy {title.replace(' Spaces', '')} campus buildings are right now.",
+        "start_url": f"{path}?from=homescreen",
+        "scope": "/",
+        "display": "standalone",
+        "background_color": "#0a0e14",
+        "theme_color": "#0a0e14",
+        "icons": [
+            {"src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+            {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+            {"src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml"},
+        ],
+    }
+
+
+def write_manifest(cid, title, short, path):
+    (ROOT / f"manifest-{cid}.webmanifest").write_text(
+        json.dumps(manifest(title, short, path), indent=2, ensure_ascii=False) + "\n")
+
+
 def building_list(data_dir):
     """Every building the campus has data for, for the no-JavaScript fallback."""
     names = set()
@@ -145,6 +170,9 @@ def render(html, c):
     out = out.replace("Not affiliated with the University of Illinois",
                       f"Not affiliated with {c['university']}")
 
+    # --- the home-screen install file, which names the campus ---
+    out = out.replace('href="manifest-uiuc.webmanifest"', f'href="manifest-{c["id"]}.webmanifest"', 1)
+
     # --- tell app.js which campus this file is, so no query string is needed ---
     out = out.replace('<html lang="en">', f'<html lang="en" data-campus="{c["id"]}">', 1)
 
@@ -179,8 +207,10 @@ def render(html, c):
 
 def main():
     html = (ROOT / "uiuc.html").read_text()
+    write_manifest("uiuc", "UIUC Spaces", "UIUC", "/uiuc")
     for cid, c in CAMPUSES.items():
         c = {**c, "id": cid}
+        write_manifest(cid, c["title"], c["short"], c["path"])
         page = render(html, c)
         (ROOT / c["out"]).write_text(page)
         n = len(building_list(c["data_dir"]))
