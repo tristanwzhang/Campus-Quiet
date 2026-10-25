@@ -7,8 +7,8 @@ university's own.
 | Campus | Tabs | Rooms | Quiet | Late-night note (9pm on) |
 |---|---|---|---|---|
 | Illinois | Open now, Quiet | none, by the owner's choice (Illini Spots) | 29 spaces, the Library's Study Spaces Directory, rated on its own 1-4 "Expected Volume" scale | SafeWalks, 9pm-2:30am daily, 217-333-1216 (police.illinois.edu/safewalks) |
-| Ohio State | Open now, Rooms | 7 Health Sciences Library rooms (LibCal); Thompson/18th Ave book behind a login | none: no published noise ratings | Lyft Ride Smart, $4 off, 7pm-7am (ttm.osu.edu/ride-smart) |
-| Maryland | Open now, Rooms, Quiet | 96 rooms in 4 libraries (LibCal, with its Outlets / Accessible tags) | 23 walk-in spaces from lib.umd.edu space pages: Silent / Quiet / Collaborative + outlets | NITE Ride, 5:30pm-7:30am, Terp Ride app or 301-314-3687 (transportation.umd.edu) |
+| Ohio State | none (late-night note only) | 7 Health Sciences Library rooms (LibCal); Thompson/18th Ave book behind a login | none: no published noise ratings | Lyft Ride Smart, $4 off, 7pm-7am (ttm.osu.edu/ride-smart) |
+| Maryland | Open now, Quiet | 96 rooms in 4 libraries (LibCal, with its Outlets / Accessible tags) | 23 walk-in spaces from lib.umd.edu space pages: Silent / Quiet / Collaborative + outlets | NITE Ride, 5:30pm-7:30am, Terp Ride app or 301-314-3687 (transportation.umd.edu) |
 
 Computers: no live counts are published here. Maryland's table (lib.umd.edu/visit/tech/computers)
 is totals only; Illinois and Ohio State publish nothing live.
@@ -23,3 +23,5 @@ Music Building"), not Krannert; the Communications Library is in Gregory Hall; O
 campus) is left out. Maryland's "Undergraduate Library" is Hornbake.
 
 The "Not built yet" wish buttons for Quiet/group and Outlets disappear on a campus that now has them.
+
+2026-10-25: the Rooms tab was removed on every campus at the owner's request (it overlapped the sidebar). Library room counts still show on each building's panel.

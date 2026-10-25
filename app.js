@@ -1700,9 +1700,8 @@ const CAMPUS_CONTENT = {
   osu:  { buildings: BUILDINGS_OSU,  studySpots: STUDY_SPOTS_OSU,
           pickLabels: PICK_LABELS_OSU,  calendar: ACADEMIC_CALENDAR_OSU,
           gisAliases: GIS_ALIASES_OSU, sayWhenShut: true, assumeShutWithoutClasses: false,
-          // Rooms = the Health Sciences Library's 7 LibCal rooms (data/osu/study_rooms.json); Thompson
-          // and 18th Avenue book behind a login. No Quiet tab: Ohio State publishes no noise ratings.
-          hubTabs: ['now', 'rooms'],
+          // No study-spot tabs: Ohio State publishes no noise ratings, and the owner dropped the Rooms
+          // tab on every campus (2026-10-25). Its library rooms still show on the Prior Hall panel.
           // ttm.osu.edu/ride-smart, read 2026-10-24: Lyft, $4 off per ride, 7 p.m.-7 a.m., service area.
           safetyNote: { from: 21, to: 6, html: 'Heading out late? <a href="https://ttm.osu.edu/ride-smart" target="_blank" rel="noopener" style="color:#9fb4d6">Lyft Ride Smart</a> takes $4 off rides inside the campus area, 7pm\u20137am, for eligible students.' } },
   umd:  { buildings: BUILDINGS_UMD,  studySpots: STUDY_SPOTS_UMD,
@@ -1749,10 +1748,10 @@ const CAMPUS_CONTENT = {
           // class buildings) and Yahentamitsi's dining hours with it. Directory
           // numbers 433, 228 and 436.
           registerGaps: ['Thurgood Marshall Hall', 'E.A. Fernandez IDEA Factory', 'Yahentamitsi Dining Hall'],
-          // Rooms = 96 LibCal rooms in four libraries (data/umd/study_rooms.json). Quiet = the
-          // libraries' own space pages, each stating Silent / Quiet / Collaborative and outlets
-          // (data/umd/library_spaces.json). No live computer counts are published.
-          hubTabs: ['now', 'rooms', 'quiet'],
+          // Quiet = the libraries' own space pages, each stating Silent / Quiet / Collaborative and
+          // outlets (data/umd/library_spaces.json). No Rooms tab: the owner dropped it on every campus
+          // (2026-10-25); room counts stay on each library's panel.
+          hubTabs: ['now', 'quiet'],
           quietSource: 'From lib.umd.edu\u2019s space pages (the libraries\u2019 own noise levels).',
           // transportation.umd.edu/Shuttle-UM/NITE-Ride, read 2026-10-24: "5:30 p.m. to 7:30 a.m.,
           // seven days a week when the university is open"; Terp Ride app or 301-314-3687.
@@ -4904,6 +4903,7 @@ function renderPicksCore() {
     pickList.replaceChildren();
     pickNote.textContent = 'Nothing on the study list is open right now.';
     pickNote.hidden = false;
+    renderSafetyNote();   // the empty small hours are exactly when the walk home matters
     return;
   }
 
