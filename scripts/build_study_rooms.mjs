@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 // Build data/<campus>/study_rooms.json: one record per bookable library study room, read from the
-// libraries' own booking pages (libcal.library.utoronto.ca/space/<id>): name, floor, seats,
+// libraries' own booking pages (<libcal host>/space/<id>): name, floor, seats,
 // features. Availability is NOT here -- that is live, from /api/rooms. Re-run once a term, or
 // when the Libraries add rooms.
 //
-//   node scripts/build_utsg_study_rooms.mjs [utsg|umd|osu]   (default utsg)
+//   node scripts/build_study_rooms.mjs umd|osu
 import fs from 'node:fs';
 import { CAMPUSES } from '../api/rooms.mjs';
 

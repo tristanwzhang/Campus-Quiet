@@ -328,7 +328,7 @@ are the real check on weekends. If weekends draw reports of "it's actually close
 ## 2026-10-24: per-room study room data
 
 Every bookable study room is now individual: **139 rooms** in `data/utsg/study_rooms.json`
-(`node scripts/build_utsg_study_rooms.mjs`, once a term): name ("2241 Group Study Room 2A"),
+(`node scripts/build_study_rooms.mjs`, once a term): name ("2241 Group Study Room 2A"),
 floor, seats, features, building. Read from the libraries' own pages
 (`libcal.library.utoronto.ca/space/<id>`); 3 listed ids are dead pages and skipped.
 Availability is live: `/api/rooms` now also returns, per building, `rooms: {id: {free, until}}`
@@ -357,7 +357,7 @@ use does not track crowding. Mixing it in would make busyness worse.
 
 ## 2026-10-24: quiet vs group, room features, late-night safety (all official U of T sources)
 
-- **Room features and photos** (`build_utsg_study_rooms.mjs`): each LibCal location page lists its
+- **Room features and photos** (`build_study_rooms.mjs`): each LibCal location page lists its
   rooms with LibCal's own filter tags (`filterIds` -> "Power Available", "Monitor Available",
   "Whiteboard or Chalkboard Available", "Accessible Seat/Space", ...) and a photo. 126 of 139 rooms
   tagged (117 outlets, 70 whiteboard, 62 screen, 20 accessible); 113 photos (LibCal's CDN, hotlinked,

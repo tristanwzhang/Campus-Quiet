@@ -81,13 +81,34 @@ function startAnalytics() {
       capture_pageleave: true,       // gives time-on-site
       person_profiles: 'never',
       // Registered so the automatic pageview and pageleave carry it too.
-      loaded: ph => ph.register({ design: DESIGN, school: CAMPUS.id }),
+      loaded: ph => ph.register({ design: DESIGN, school: CAMPUS.id, browser_kind: browserKind() }),
     });
     analyticsReady = true;
     for (const [event, props] of analyticsQueue.splice(0)) track(event, props);
   };
   script.onerror = () => { analyticsQueue.length = 0; };
   document.head.append(script);
+}
+
+/**
+ * How this visit is being viewed, registered on every event so retention can be
+ * read honestly. The visitor id lives in localStorage (no cookies, by choice),
+ * and that storage is separate in every in-app browser and wiped by Safari after
+ * a week unused, so the same person can look like a new visitor. Only an
+ * installed home-screen app keeps its storage, which is why 'installed' is the
+ * one group whose return rate can be trusted.
+ */
+function isStandalone() {
+  return window.matchMedia?.('(display-mode: standalone)').matches || navigator.standalone === true;
+}
+
+function browserKind() {
+  if (isStandalone()) return 'installed';
+  const ua = navigator.userAgent || '';
+  const from = document.referrer || '';
+  if (/FBAN|FBAV|Instagram|Snapchat|Line\/|MicroMessenger|Twitter|GSA\/|Reddit/i.test(ua)
+      || from.startsWith('android-app://')) return 'in-app';
+  return 'browser';
 }
 
 function deviceKind() {
@@ -4101,6 +4122,8 @@ function openPanel(name, keepThanks = false) {
   checkinRow.hidden = closed || unmapped;
   renderRooms(name);
   renderHoursReport(name, occ);
+  renderPin(name);
+  noteBuildingForNudge(name);
   panelNote.textContent = occ && (occ.source === 'event' || occ.venue)
     ? occ.note
     : housing
@@ -5106,8 +5129,186 @@ function refresh({ keepThanks = false } = {}) {
   applyStyle();
   updateStats();
   renderPicks();
+  renderSpots();
   renderRoomsSection();
   if (panelBuilding) openPanel(panelBuilding, keepThanks);
+}
+
+
+// ─── Your spots ───────────────────────────────────────────────────────────────
+// Visitors who come back open the same few buildings (about five each, against
+// one or two for people who never return), so let them keep those at the top.
+// Saved on the device only: no account, no cookie, and nothing sent anywhere
+// except that a spot was saved or tapped.
+const MAX_SPOTS = 8;
+const SPOTS_KEY = `cq:spots:${CAMPUS.id}`;
+const spotsSection = document.getElementById('spots-section');
+const spotsList = document.getElementById('spots-list');
+const panelPin = document.getElementById('panel-pin');
+
+function getSpots() {
+  try {
+    const v = JSON.parse(localStorage.getItem(SPOTS_KEY) || '[]');
+    return Array.isArray(v) ? v.filter(n => typeof n === 'string').slice(0, MAX_SPOTS) : [];
+  } catch (e) { return []; }
+}
+
+function saveSpots(list) {
+  try { localStorage.setItem(SPOTS_KEY, JSON.stringify(list.slice(0, MAX_SPOTS))); } catch (e) { /* storage blocked */ }
+}
+
+function spotStatus(name) {
+  const { date, time } = campusNow();
+  const occ = buildingOccupancy(name);
+  if (!occ) return 'No data yet';
+  if (occ.source === 'closed') {
+    return occ.cardAccess ? 'Public doors locked' : occ.assumed ? 'Probably closed' : 'Closed right now';
+  }
+  if (occ.source === 'unknown') return 'Hours not published';
+  if (occ.source === 'event') return 'Event in progress';
+  const base = occ.source === 'open' ? 'Open · no classes in session' : busyWord(occ);
+  const until = closingHour(name, date, time);
+  return until == null ? base : `${base} · until ${fmtHour(until)}`;
+}
+
+function renderSpots() {
+  if (!spotsSection) return;
+  const spots = getSpots();
+  spotsSection.hidden = !spots.length;
+  spotsList.replaceChildren(...spots.map(name => {
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'pick-item';
+    const label = document.createElement('span');
+    label.className = 'pick-name';
+    label.textContent = pickLabel(name);
+    const meta = document.createElement('span');
+    meta.className = 'pick-meta';
+    meta.textContent = spotStatus(name);
+    item.append(label, meta);
+    item.addEventListener('click', () => {
+      zoomedPick = name;
+      zoomToPick(name);
+      openPanel(name);
+      markZoomedPick();
+      track('myspot_opened', { building: name, device: deviceKind() });
+    });
+    const li = document.createElement('li');
+    li.append(item);
+    return li;
+  }));
+  publishSheetHeight();   // the card just changed height; the credits sit on it
+}
+
+function renderPin(name) {
+  if (!panelPin) return;
+  const saved = getSpots().includes(name);
+  panelPin.hidden = false;
+  panelPin.setAttribute('aria-pressed', String(saved));
+  panelPin.textContent = saved ? '★ In your spots · tap to remove' : '☆ Save to your spots';
+  panelPin.onclick = () => {
+    const spots = getSpots();
+    if (spots.includes(name)) {
+      saveSpots(spots.filter(n => n !== name));
+      track('spot_removed', { building: name, device: deviceKind() });
+    } else {
+      // Newest first, and the oldest drops off rather than refusing the save.
+      saveSpots([name, ...spots]);
+      track('spot_saved', { building: name, count: Math.min(spots.length + 1, MAX_SPOTS), device: deviceKind() });
+    }
+    renderSpots();
+    renderPin(name);
+  };
+}
+
+// ─── Add to home screen ───────────────────────────────────────────────────────
+// Offered once, in the panel, after someone has looked at a second building in
+// a visit, and only on a phone that has not installed it. Installing matters
+// beyond convenience: an installed app keeps its own storage, so it is the one
+// way a returning visitor is reliably recognised as the same person.
+const NUDGE_KEY = 'cq:install';
+const nudgeEl = document.getElementById('install-nudge');
+const buildingsLookedAt = new Set();
+let deferredInstall = null;
+let nudgeShownThisVisit = false;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredInstall = e;
+});
+window.addEventListener('appinstalled', () => {
+  deferredInstall = null;
+  if (nudgeEl) nudgeEl.hidden = true;
+  track('app_installed', { device: deviceKind() });
+});
+
+function nudgeState() {
+  try { return JSON.parse(localStorage.getItem(NUDGE_KEY) || '{}'); } catch (e) { return {}; }
+}
+function setNudgeState(state) {
+  try { localStorage.setItem(NUDGE_KEY, JSON.stringify(state)); } catch (e) { /* storage blocked */ }
+}
+
+function installKind() {
+  if (deferredInstall) return 'prompt';
+  if (browserKind() === 'in-app') return 'in-app';
+  const ios = /iPad|iPhone|iPod/.test(navigator.userAgent)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  return ios ? 'ios' : 'browser-menu';
+}
+
+function noteBuildingForNudge(name) {
+  if (!nudgeEl || !name) return;
+  buildingsLookedAt.add(name);
+  if (nudgeShownThisVisit || buildingsLookedAt.size < 2) return;
+  if (deviceKind() !== 'phone' || isStandalone()) return;
+  const state = nudgeState();
+  const DAY = 86400000;
+  if ((state.shown || 0) >= 3) return;
+  if (state.last && Date.now() - state.last < 14 * DAY) return;
+  showInstallNudge(state);
+}
+
+function showInstallNudge(state) {
+  const kind = installKind();
+  const words = {
+    'prompt':       `Add ${document.querySelector('h1')?.textContent || 'this'} to your home screen to check it in one tap.`,
+    'ios':          'To check this in one tap, tap the Share button, then “Add to Home Screen”.',
+    'in-app':       'To check this in one tap, open it in your browser (⋯ menu), then add it to your home screen.',
+    'browser-menu': 'To check this in one tap, open your browser menu and choose “Add to Home screen”.',
+  }[kind];
+  nudgeEl.replaceChildren();
+  const text = document.createElement('div');
+  text.textContent = words;
+  const actions = document.createElement('div');
+  actions.className = 'nudge-actions';
+  const later = document.createElement('button');
+  later.type = 'button';
+  later.textContent = kind === 'prompt' ? 'Not now' : 'Got it';
+  later.addEventListener('click', () => {
+    nudgeEl.hidden = true;
+    setNudgeState({ ...nudgeState(), last: Date.now() });
+    track('install_nudge_dismissed', { kind, device: deviceKind() });
+  });
+  if (kind === 'prompt') {
+    const add = document.createElement('button');
+    add.type = 'button';
+    add.className = 'primary';
+    add.textContent = 'Add';
+    add.addEventListener('click', async () => {
+      track('install_nudge_clicked', { kind, device: deviceKind() });
+      try { await deferredInstall.prompt(); } catch (e) { /* the browser declined to show it */ }
+      deferredInstall = null;
+      nudgeEl.hidden = true;
+    });
+    actions.append(add);
+  }
+  actions.append(later);
+  nudgeEl.append(text, actions);
+  nudgeEl.hidden = false;
+  nudgeShownThisVisit = true;
+  setNudgeState({ shown: (state.shown || 0) + 1, last: Date.now() });
+  track('install_nudge_shown', { kind, device: deviceKind() });
 }
 
 // ─── Start ────────────────────────────────────────────────────────────────────
