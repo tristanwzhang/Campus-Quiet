@@ -1,0 +1,296 @@
+{
+ "built_at": "2026-10-25T00:43:38+00:00",
+ "source": "University Library Study Spaces Directory (library.illinois.edu/using-library-spaces/study-space-directory/)",
+ "spaces": {
+  "MPAL-alcove": {
+   "name": "MPAL Alcove",
+   "noise": "Level 3",
+   "features": [],
+   "capacity": 8,
+   "library_name": "MPAL Alcove",
+   "building": "Music Building",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/MPAL-alcove/",
+   "area": true
+  },
+  "MPAL-computer-area": {
+   "name": "MPAL Computer Area",
+   "noise": "Level 3",
+   "features": [],
+   "capacity": 5,
+   "library_name": "MPAL Computer Area",
+   "building": "Music Building",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/MPAL-computer-area/",
+   "area": true
+  },
+  "MPAL-first-floor": {
+   "name": "MPAL First Floor",
+   "noise": "Level 2",
+   "features": [],
+   "capacity": 14,
+   "library_name": "MPAL First Floor",
+   "building": "Music Building",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/MPAL-first-floor/",
+   "area": true
+  },
+  "MPAL-reading-room": {
+   "name": "MPAL Reading Room",
+   "noise": "Level 1",
+   "features": [],
+   "capacity": 79,
+   "library_name": "MPAL Reading Room",
+   "building": "Music Building",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/MPAL-reading-room/",
+   "area": true
+  },
+  "MPAL-second-floor": {
+   "name": "MPAL Second Floor",
+   "noise": "Level 2",
+   "features": [],
+   "capacity": 40,
+   "library_name": "MPAL Second Floor",
+   "building": "Music Building",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/MPAL-second-floor/",
+   "area": true
+  },
+  "communications-library-room-122": {
+   "name": "Communications Library \u2013 Room 122",
+   "noise": "Level 2",
+   "features": [],
+   "capacity": 40,
+   "library_name": "Communications Library",
+   "building": "Gregory Hall",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/communications-library-room-122/",
+   "area": true
+  },
+  "communications-library-room-39": {
+   "name": "Communications Library \u2013 Room 39",
+   "noise": "Level 3",
+   "features": [],
+   "capacity": 51,
+   "library_name": "Communications Library",
+   "building": "Gregory Hall",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/communications-library-room-39/",
+   "area": true
+  },
+  "funk-aces-library": {
+   "name": "Funk ACES Library",
+   "noise": "Level 2",
+   "features": [],
+   "capacity": 350,
+   "library_name": "Funk ACES Library",
+   "building": "Funk Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/funk-aces-library/",
+   "area": true
+  },
+  "grainger-1st-floor-cafe": {
+   "name": "Grainger Engineering Library \u2013 1st Floor Cafe",
+   "noise": "Level 4",
+   "features": [],
+   "capacity": 55,
+   "library_name": "Grainger Engineering Library",
+   "building": "Grainger Engineering Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/grainger-1st-floor-cafe/",
+   "area": true
+  },
+  "grainger-engineering-library-2nd-floor-east-gallery": {
+   "name": "Grainger Engineering Library \u2013 2nd Floor East Gallery",
+   "noise": "Level 1",
+   "features": [],
+   "capacity": 207,
+   "library_name": "Grainger Engineering Library",
+   "building": "Grainger Engineering Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/grainger-engineering-library-2nd-floor-east-gallery/",
+   "area": true
+  },
+  "grainger-engineering-library-2nd-floor-grand-gallery": {
+   "name": "Grainger Engineering Library \u2013 2nd Floor Grand Gallery",
+   "noise": "Level 1",
+   "features": [],
+   "capacity": 142,
+   "library_name": "Grainger Engineering Library",
+   "building": "Grainger Engineering Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/grainger-engineering-library-2nd-floor-grand-gallery/",
+   "area": true
+  },
+  "grainger-engineering-library-2nd-floor-west-gallery": {
+   "name": "Grainger Engineering Library \u2013 2nd Floor West Gallery",
+   "noise": "Level 1",
+   "features": [],
+   "capacity": 215,
+   "library_name": "Grainger Engineering Library",
+   "building": "Grainger Engineering Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/grainger-engineering-library-2nd-floor-west-gallery/",
+   "area": true
+  },
+  "grainger-engineering-library-3rd-floor-central": {
+   "name": "Grainger Engineering Library \u2013 3rd Floor Central",
+   "noise": "Level 1",
+   "features": [],
+   "capacity": 14,
+   "library_name": "Grainger Engineering Library",
+   "building": "Grainger Engineering Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/grainger-engineering-library-3rd-floor-central/",
+   "area": true
+  },
+  "grainger-engineering-library-3rd-floor-east": {
+   "name": "Grainger Engineering Library \u2013 3rd Floor East",
+   "noise": "Level 1",
+   "features": [],
+   "capacity": 32,
+   "library_name": "Grainger Engineering Library",
+   "building": "Grainger Engineering Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/grainger-engineering-library-3rd-floor-east/",
+   "area": true
+  },
+  "grainger-engineering-library-3rd-floor-west": {
+   "name": "Grainger Engineering Library \u2013 3rd Floor West",
+   "noise": "Level 1",
+   "features": [],
+   "capacity": 35,
+   "library_name": "Grainger Engineering Library",
+   "building": "Grainger Engineering Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/grainger-engineering-library-3rd-floor-west/",
+   "area": true
+  },
+  "grainger-engineering-library-4th-floor-central": {
+   "name": "Grainger Engineering Library \u2013 4th Floor Central",
+   "noise": "Level 4",
+   "features": [],
+   "capacity": null,
+   "library_name": "Grainger Engineering Library",
+   "building": "Grainger Engineering Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/grainger-engineering-library-4th-floor-central/",
+   "area": true
+  },
+  "grainger-engineering-library-4th-floor-west": {
+   "name": "Grainger Engineering Library \u2013 4th Floor West",
+   "noise": "Level 4",
+   "features": [],
+   "capacity": 93,
+   "library_name": "Grainger Engineering Library",
+   "building": "Grainger Engineering Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/grainger-engineering-library-4th-floor-west/",
+   "area": true
+  },
+  "grainger-engineering-library-lower-level": {
+   "name": "Grainger Engineering Library \u2013 Lower Level",
+   "noise": "Level 4",
+   "features": [],
+   "capacity": 95,
+   "library_name": "Grainger Engineering Library",
+   "building": "Grainger Engineering Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/grainger-engineering-library-lower-level/",
+   "area": true
+  },
+  "grainger-library-1-west-design-space": {
+   "name": "Grainger Engineering Library \u2013 1 West Design Space",
+   "noise": "Level 4",
+   "features": [],
+   "capacity": 120,
+   "library_name": "Grainger Engineering Library",
+   "building": "Grainger Engineering Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/grainger-library-1-west-design-space/",
+   "area": true
+  },
+  "grainger-library-1st-floor-computer-cluster": {
+   "name": "Grainger Engineering Library \u2013 1st Floor Computer Cluster",
+   "noise": "Level 4",
+   "features": [],
+   "capacity": null,
+   "library_name": "Grainger Engineering Library",
+   "building": "Grainger Engineering Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/grainger-library-1st-floor-computer-cluster/",
+   "area": true
+  },
+  "hpnl-study-space": {
+   "name": "History, Philosophy, and Newspaper Library Reading Room",
+   "noise": "Level 2",
+   "features": [],
+   "capacity": 38,
+   "library_name": "History, Philosophy, and Newspaper Library Reading Room",
+   "building": "Main Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/hpnl-study-space/",
+   "area": true
+  },
+  "international-area-studies-library-main-library": {
+   "name": "International & Area Studies Library \u2013 Main Library",
+   "noise": "Level 3",
+   "features": [],
+   "capacity": 30,
+   "library_name": "International & Area Studies Library",
+   "building": "Main Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/international-area-studies-library-main-library/",
+   "area": true
+  },
+  "main-library-room-101": {
+   "name": "Main Library \u2013 Room 101",
+   "noise": "Level 2",
+   "features": [],
+   "capacity": 51,
+   "library_name": "Main Library",
+   "building": "Main Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/main-library-room-101/",
+   "area": true
+  },
+  "main-library-room-123": {
+   "name": "Main Library \u2013 Room 123",
+   "noise": "Level 1",
+   "features": [],
+   "capacity": 26,
+   "library_name": "Main Library",
+   "building": "Main Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/main-library-room-123/",
+   "area": true
+  },
+  "main-library-room-200": {
+   "name": "Main Library \u2013 Shebik Family Reading Room (Rm 200)",
+   "noise": "Level 1",
+   "features": [],
+   "capacity": 320,
+   "library_name": "Main Library",
+   "building": "Main Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/main-library-room-200/",
+   "area": true
+  },
+  "main-library-room-204": {
+   "name": "Main Library \u2013 Room 204",
+   "noise": "Level 3",
+   "features": [],
+   "capacity": 67,
+   "library_name": "Main Library",
+   "building": "Main Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/main-library-room-204/",
+   "area": true
+  },
+  "main-library-room-225": {
+   "name": "Main Library \u2013 Room 225",
+   "noise": "Level 1",
+   "features": [],
+   "capacity": 20,
+   "library_name": "Main Library",
+   "building": "Main Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/main-library-room-225/",
+   "area": true
+  },
+  "map-library-reading-room": {
+   "name": "Map Library Reading Room",
+   "noise": "Level 3",
+   "features": [],
+   "capacity": 4,
+   "library_name": "Map Library Reading Room",
+   "building": "Main Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/map-library-reading-room/",
+   "area": true
+  },
+  "the-orange-room": {
+   "name": "The Orange Room",
+   "noise": "Level 4",
+   "features": [],
+   "capacity": 340,
+   "library_name": "The Orange Room",
+   "building": "Main Library",
+   "url": "https://www.library.illinois.edu/using-library-spaces/study-space-directory/the-orange-room/",
+   "area": true
+  }
+ }
+}

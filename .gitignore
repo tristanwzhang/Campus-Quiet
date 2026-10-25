@@ -22,3 +22,4 @@ data/osu/.cache/
 data/umd/.cache/
 data/utsg/.cache/
 utsg-demo.html
+*-demo.html
