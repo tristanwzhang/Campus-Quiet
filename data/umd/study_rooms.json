@@ -1,0 +1,1017 @@
+{
+ "built_at": "2026-10-25T00:40:02.795Z",
+ "source": "https://umd.libcal.com/space/<id> (the libraries' own booking pages)",
+ "note": "Static details only. Whether a room is free is live, from /api/rooms.",
+ "rooms": {
+  "86389": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Room 2100A",
+   "floor": "2nd Floor",
+   "capacity": 8,
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": null
+  },
+  "86390": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Room 2100B",
+   "floor": "2nd Floor",
+   "capacity": 8,
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": null
+  },
+  "86391": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Room 2100C",
+   "floor": "2nd Floor",
+   "capacity": 8,
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": null
+  },
+  "86392": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Room 2100E",
+   "floor": "2nd Floor",
+   "capacity": 8,
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": null
+  },
+  "86393": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Room 2100F",
+   "floor": "2nd Floor",
+   "capacity": 8,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86394": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Room 2100G",
+   "floor": "2nd Floor",
+   "capacity": 8,
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": null
+  },
+  "86395": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Room 2100H",
+   "floor": "2nd Floor",
+   "capacity": 8,
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": null
+  },
+  "86396": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Room 2100L",
+   "floor": "2nd Floor",
+   "capacity": 8,
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": null
+  },
+  "86397": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Room 2100K",
+   "floor": "2nd Floor",
+   "capacity": 8,
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": null
+  },
+  "86398": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Room 2100M",
+   "floor": "2nd Floor",
+   "capacity": 8,
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": null
+  },
+  "86399": {
+   "building": "William E. Kirwan Hall",
+   "where": "STEM Library",
+   "name": "Tesla Room 3403 H",
+   "floor": "3rd Floor",
+   "capacity": 10,
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": "https://libapps.s3.amazonaws.com/accounts/180605/images/tesla.jpg"
+  },
+  "86400": {
+   "building": "William E. Kirwan Hall",
+   "where": "STEM Library",
+   "name": "Carver Room 3403 G",
+   "floor": "3rd Floor",
+   "capacity": 10,
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": "https://libapps.s3.amazonaws.com/accounts/180605/images/carver.jpg"
+  },
+  "86401": {
+   "building": "William E. Kirwan Hall",
+   "where": "STEM Library",
+   "name": "Chatelet Room 3403 F",
+   "floor": "3rd Floor",
+   "capacity": 6,
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": "https://libapps.s3.amazonaws.com/accounts/180605/images/chatelet.jpg"
+  },
+  "86402": {
+   "building": "William E. Kirwan Hall",
+   "where": "STEM Library",
+   "name": "Einstein Room 3403 E",
+   "floor": "3rd Floor",
+   "capacity": 5,
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": "https://libapps.s3.amazonaws.com/accounts/180605/images/einstein.jpg"
+  },
+  "86403": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7209",
+   "floor": "7th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86405": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7211",
+   "floor": "7th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86406": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7213",
+   "floor": "7th Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86407": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7215",
+   "floor": "7th Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86409": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7217",
+   "floor": "7th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86411": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7219",
+   "floor": "7th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86412": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7221",
+   "floor": "7th Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86414": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7223",
+   "floor": "7th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86416": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7225",
+   "floor": "7th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86418": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7227",
+   "floor": "7th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86420": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7229",
+   "floor": "7th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86422": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7231",
+   "floor": "7th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86424": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7235",
+   "floor": "7th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86426": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7237",
+   "floor": "7th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86428": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7239",
+   "floor": "7th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86430": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7241",
+   "floor": "7th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86432": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7243",
+   "floor": "7th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86434": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7245",
+   "floor": "7th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86435": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7247",
+   "floor": "7th Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86437": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7249",
+   "floor": "7th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86439": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7251",
+   "floor": "7th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86440": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7253",
+   "floor": "7th Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86441": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7255",
+   "floor": "7th Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86443": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7257",
+   "floor": "7th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86445": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7259",
+   "floor": "7th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86446": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7261",
+   "floor": "7th Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86448": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6223",
+   "floor": "6th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86450": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6225",
+   "floor": "6th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86452": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6227",
+   "floor": "6th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86454": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6229",
+   "floor": "6th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86456": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6231",
+   "floor": "6th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86457": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6235",
+   "floor": "6th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86459": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6237",
+   "floor": "6th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86461": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6239",
+   "floor": "6th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86463": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6241",
+   "floor": "6th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86465": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6243",
+   "floor": "6th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86467": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6245",
+   "floor": "6th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86468": {
+   "building": "Parren J. Mitchell Art-Sociology Bldg.",
+   "where": "Art Library",
+   "name": "Seminar Room M2213A",
+   "floor": null,
+   "capacity": 20,
+   "features": null,
+   "tags": [
+    "Power Available"
+   ],
+   "photo": null
+  },
+  "86472": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Room 7233",
+   "floor": "7th Floor",
+   "capacity": 4,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86478": {
+   "building": "Clarice Smith Performing Arts Center",
+   "where": "Michelle Smith Performing Arts Library",
+   "name": "Seminar Room 2515C",
+   "floor": null,
+   "capacity": 12,
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": null
+  },
+  "86479": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Whoops!",
+   "floor": null,
+   "capacity": null,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86480": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Room 2100J",
+   "floor": "2nd Floor",
+   "capacity": 8,
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": null
+  },
+  "86481": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Whoops!",
+   "floor": null,
+   "capacity": null,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86485": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Whoops!",
+   "floor": null,
+   "capacity": null,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86486": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Room 2102 Podcasting Lab",
+   "floor": "2nd Floor",
+   "capacity": 5,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86487": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Family Study Room 3233 Right Side",
+   "floor": null,
+   "capacity": null,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86488": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Family Study Room 3233 Left Side",
+   "floor": "3rd Floor",
+   "capacity": 5,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86490": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "4213",
+   "floor": "4th Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86491": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "4219",
+   "floor": "4th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86496": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "4215",
+   "floor": "4th Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86498": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "4217",
+   "floor": "4th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86501": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "4211",
+   "floor": "4th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86505": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6251",
+   "floor": "6th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86506": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6253",
+   "floor": "6th Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86507": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6255",
+   "floor": "6th Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86509": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6257",
+   "floor": "6th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86511": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6259",
+   "floor": "6th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86517": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6211",
+   "floor": "6th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86518": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6213",
+   "floor": "6th Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86519": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6215",
+   "floor": "6th Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86521": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6217",
+   "floor": "6th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86522": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6219",
+   "floor": "6th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86523": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6221",
+   "floor": "6th Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86524": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6247",
+   "floor": "6th Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86526": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "6249",
+   "floor": "6th Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "86528": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "7207",
+   "floor": "7th Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "114267": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Whoops!",
+   "floor": null,
+   "capacity": null,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "115831": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Whoops!",
+   "floor": null,
+   "capacity": null,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "122587": {
+   "building": "William E. Kirwan Hall",
+   "where": "STEM Library",
+   "name": "Glowforge Laser Cutter",
+   "floor": "1st Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "122591": {
+   "building": "William E. Kirwan Hall",
+   "where": "STEM Library",
+   "name": "3D Printing",
+   "floor": null,
+   "capacity": null,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "122599": {
+   "building": "William E. Kirwan Hall",
+   "where": "STEM Library",
+   "name": "3D Printing - Bambu Lab X1-Carbon 2",
+   "floor": "1st Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "124146": {
+   "building": "William E. Kirwan Hall",
+   "where": "STEM Library",
+   "name": "AR Sandbox",
+   "floor": "1st Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "124147": {
+   "building": "William E. Kirwan Hall",
+   "where": "STEM Library",
+   "name": "3D Printing - Bambu Lab P1S",
+   "floor": "1st Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "141046": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Focus Room",
+   "floor": "1st Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "159076": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Conversation Room",
+   "floor": "1st Floor",
+   "capacity": 2,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "170482": {
+   "building": "William E. Kirwan Hall",
+   "where": "STEM Library",
+   "name": "USCutter SC Plotter Vinyl Cutter",
+   "floor": "1st Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "171487": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "4253",
+   "floor": "4th Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "171488": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "4255",
+   "floor": "4th Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "184064": {
+   "building": "William E. Kirwan Hall",
+   "where": "STEM Library",
+   "name": "3D Printing - Bambu Lab X1-Carbon 1",
+   "floor": "1st Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "199066": {
+   "building": "William E. Kirwan Hall",
+   "where": "STEM Library",
+   "name": "Glowforge Laser Cutter",
+   "floor": "1st Floor",
+   "capacity": 1,
+   "features": null,
+   "tags": [],
+   "photo": null
+  },
+  "217010": {
+   "building": "Clarice Smith Performing Arts Center",
+   "where": "Michelle Smith Performing Arts Library",
+   "name": "Reservable Office 1515B",
+   "floor": null,
+   "capacity": 3,
+   "features": null,
+   "tags": [
+    "Accessible Seat/Space",
+    "Power Available"
+   ],
+   "photo": "https://d68g328n4ug0e.cloudfront.net/misc/219/eq/item/2025_11_05_14_46_03.jpg"
+  },
+  "219564": {
+   "building": "McKeldin Library",
+   "where": "McKeldin Library",
+   "name": "Idea Forum",
+   "floor": "1st Floor",
+   "capacity": 25,
+   "features": null,
+   "tags": [],
+   "photo": null
+  }
+ }
+}

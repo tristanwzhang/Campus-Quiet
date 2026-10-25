@@ -1,14 +1,16 @@
 #!/usr/bin/env node
-// Build data/utsg/study_rooms.json: one record per bookable U of T study room, read from the
+// Build data/<campus>/study_rooms.json: one record per bookable library study room, read from the
 // libraries' own booking pages (libcal.library.utoronto.ca/space/<id>): name, floor, seats,
 // features. Availability is NOT here -- that is live, from /api/rooms. Re-run once a term, or
 // when the Libraries add rooms.
 //
-//   node scripts/build_utsg_study_rooms.mjs
+//   node scripts/build_utsg_study_rooms.mjs [utsg|umd|osu]   (default utsg)
 import fs from 'node:fs';
 import { CAMPUSES } from '../api/rooms.mjs';
 
-const campus = CAMPUSES.utsg;
+const campusId = process.argv[2] ?? 'utsg';
+const campus = CAMPUSES[campusId];
+const outDir = `data/${campusId}`;
 const day = n => new Date(Date.now() + n * 86400000).toISOString().slice(0, 10);
 const decode = s => s.replace(/&amp;/g, '&').replace(/&#0?39;|&apos;/g, "'").replace(/&quot;/g, '"')
   .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/\s+/g, ' ').trim();
@@ -41,6 +43,9 @@ async function tagsFor(loc) {
     out[eid] = {
       tags: ids.map(i => names[i]).filter(Boolean),
       photo: (b.match(/thumbnail:\s*"([^"]+)"/) ?? [])[1] ?? null,
+      // "Room 2100A (Capacity 8)": the fallback when a room's own page has no info box.
+      title: JSON.parse(`"${(b.match(/title:\s*"((?:[^"\\]|\\.)*)"/) ?? [, ''])[1]}"`).replace(/\s*\(Capacity \d+\)\s*$/, ''),
+      capacity: +((b.match(/capacity:\s*(\d+)/) ?? [])[1] ?? 0) || null,
     };
   }
   return out;
@@ -60,7 +65,15 @@ for (const loc of campus.locations) {
     const text = info ? strip(info[1]) : '';
     // "2241 Group Study Room 2A (Robarts Library and Robarts Common: 02nd Floor - Robarts Common) Capacity: 5 Description ..."
     const m = text.match(/^(.*?)\s*\((.*?)\)\s*Capacity:\s*(\d+)\s*(.*)$/);
-    if (!m) { console.log(`  !! ${id}: could not read "${text.slice(0, 80)}"`); continue; }
+    if (!m) {
+      // Some rooms have no info box; the location page's own record still names them.
+      const page = decode((html.match(/<title>([\s\S]*?)<\/title>/) ?? [, ''])[1]).split(' - ')[0];
+      const t = tags[id] ?? (page ? { title: page, capacity: null, tags: [], photo: null } : null);
+      if (!t?.title) { console.log(`  !! ${id}: could not read "${text.slice(0, 80)}"`); continue; }
+      rooms[id] = { building: loc.building, where: loc.label, name: t.title, floor: null, capacity: t.capacity,
+        features: null, tags: t.tags, photo: t.photo };
+      continue;
+    }
     const floor = (m[2].match(/(\d+\w*\s+Floor|Ground Floor|Basement|Lower Level)/i) ?? [])[0] ?? null;
     const feat = (m[4].match(/Features:\s*(.*)$/) ?? [, ''])[1];
     rooms[id] = {
@@ -73,8 +86,8 @@ for (const loc of campus.locations) {
     await new Promise(r => setTimeout(r, 120));
   }
 }
-fs.mkdirSync('data/utsg', { recursive: true });
-fs.writeFileSync('data/utsg/study_rooms.json', JSON.stringify({
+fs.mkdirSync(outDir, { recursive: true });
+fs.writeFileSync(`${outDir}/study_rooms.json`, JSON.stringify({
   built_at: new Date().toISOString(), source: `${campus.host}/space/<id> (the libraries' own booking pages)`,
   note: 'Static details only. Whether a room is free is live, from /api/rooms.', rooms }, null, 1) + '\n');
-console.log(`${Object.keys(rooms).length} rooms -> data/utsg/study_rooms.json`);
+console.log(`${Object.keys(rooms).length} rooms -> ${outDir}/study_rooms.json`);

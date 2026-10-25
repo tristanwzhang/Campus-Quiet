@@ -1,0 +1,351 @@
+{
+ "built_at": "2026-10-25T00:43:20+00:00",
+ "source": "University of Maryland Libraries space pages (lib.umd.edu/visit/libraries/...)",
+ "spaces": {
+  "art-study-area": {
+   "name": "Art Library Study Area",
+   "noise": "Collaborative",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "1st",
+    "2nd"
+   ],
+   "capacity": 56,
+   "library_name": "Art Library",
+   "building": "Parren J. Mitchell Art-Sociology Bldg.",
+   "url": "https://www.lib.umd.edu/visit/libraries/art/study-area",
+   "area": true
+  },
+  "hornbake-1st-floor-lobby": {
+   "name": "Hornbake 1st Floor Lobby",
+   "noise": "Quiet",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "1st"
+   ],
+   "capacity": 50,
+   "library_name": "Hornbake Library",
+   "building": "Undergraduate Library",
+   "url": "https://www.lib.umd.edu/visit/libraries/hornbake/1st-floor-lobby",
+   "area": true
+  },
+  "hornbake-2nd-floor-lobby": {
+   "name": "Hornbake 2nd Floor Lobby",
+   "noise": "Quiet",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "2nd"
+   ],
+   "capacity": 30,
+   "library_name": "Hornbake Library",
+   "building": "Undergraduate Library",
+   "url": "https://www.lib.umd.edu/visit/libraries/hornbake/2nd-floor-lobby",
+   "area": true
+  },
+  "hornbake-3rd-floor-lobby": {
+   "name": "Hornbake 3rd Floor Lobby",
+   "noise": "Quiet",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "3rd"
+   ],
+   "capacity": 90,
+   "library_name": "Hornbake Library",
+   "building": "Undergraduate Library",
+   "url": "https://www.lib.umd.edu/visit/libraries/hornbake/3rd-floor-lobby",
+   "area": true
+  },
+  "hornbake-maryland-room": {
+   "name": "Maryland Room",
+   "noise": "Quiet",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "1st"
+   ],
+   "capacity": 20,
+   "library_name": "Hornbake Library",
+   "building": "Undergraduate Library",
+   "url": "https://www.lib.umd.edu/visit/libraries/hornbake/maryland-room",
+   "area": true
+  },
+  "mckeldin-alcoves": {
+   "name": "McKeldin Alcoves",
+   "noise": "Quiet",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "6th",
+    "7th"
+   ],
+   "capacity": 2,
+   "library_name": "McKeldin Library",
+   "building": "McKeldin Library",
+   "url": "https://www.lib.umd.edu/visit/libraries/mckeldin/alcoves",
+   "area": true
+  },
+  "mckeldin-carrels-open": {
+   "name": "Carrels (Open)",
+   "noise": "Quiet",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "3rd"
+   ],
+   "capacity": 1,
+   "library_name": "McKeldin Library",
+   "building": "McKeldin Library",
+   "url": "https://www.lib.umd.edu/visit/libraries/mckeldin/carrels-open",
+   "area": true
+  },
+  "mckeldin-computer-area": {
+   "name": "McKeldin Computer Area",
+   "noise": "Collaborative",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "1st"
+   ],
+   "capacity": 119,
+   "library_name": "McKeldin Library",
+   "building": "McKeldin Library",
+   "url": "https://www.lib.umd.edu/visit/libraries/mckeldin/computer-area",
+   "area": true
+  },
+  "mckeldin-elevator-lobbies-back-wing": {
+   "name": "McKeldin Elevator Lobbies (Back Wing)",
+   "noise": "Quiet",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "6th",
+    "7th"
+   ],
+   "capacity": 1,
+   "library_name": "McKeldin Library",
+   "building": "McKeldin Library",
+   "url": "https://www.lib.umd.edu/visit/libraries/mckeldin/elevator-lobbies-back-wing",
+   "area": true
+  },
+  "mckeldin-elevator-lobbies-front-wing": {
+   "name": "McKeldin Elevator Lobbies (Front Wing)",
+   "noise": "Quiet",
+   "features": [],
+   "floors": [
+    "6th",
+    "7th"
+   ],
+   "capacity": 8,
+   "library_name": "McKeldin Library",
+   "building": "McKeldin Library",
+   "url": "https://www.lib.umd.edu/visit/libraries/mckeldin/elevator-lobbies-front-wing",
+   "area": true
+  },
+  "mckeldin-graduate": {
+   "name": "Graduate Student Study Area",
+   "noise": "Quiet",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "3rd"
+   ],
+   "capacity": 13,
+   "library_name": "McKeldin Library",
+   "building": "McKeldin Library",
+   "url": "https://www.lib.umd.edu/visit/libraries/mckeldin/graduate",
+   "area": true
+  },
+  "mckeldin-idea-forum": {
+   "name": "Idea Forum",
+   "noise": "Collaborative",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "1st"
+   ],
+   "capacity": 26,
+   "library_name": "McKeldin Library",
+   "building": "McKeldin Library",
+   "url": "https://www.lib.umd.edu/visit/libraries/mckeldin/idea-forum",
+   "area": true
+  },
+  "mckeldin-periodicals-room": {
+   "name": "Periodicals Room",
+   "noise": "Collaborative",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "1st"
+   ],
+   "capacity": null,
+   "library_name": "McKeldin Library",
+   "building": "McKeldin Library",
+   "url": "https://www.lib.umd.edu/visit/libraries/mckeldin/periodicals-room",
+   "area": true
+  },
+  "mckeldin-portico": {
+   "name": "Portico",
+   "noise": "Collaborative",
+   "features": [],
+   "floors": [
+    "2nd"
+   ],
+   "capacity": 29,
+   "library_name": "McKeldin Library",
+   "building": "McKeldin Library",
+   "url": "https://www.lib.umd.edu/visit/libraries/mckeldin/portico",
+   "area": true
+  },
+  "mckeldin-quiet-study-room": {
+   "name": "Quiet Study Room",
+   "noise": "Silent",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "1st"
+   ],
+   "capacity": 15,
+   "library_name": "McKeldin Library",
+   "building": "McKeldin Library",
+   "url": "https://www.lib.umd.edu/visit/libraries/mckeldin/quiet-study-room",
+   "area": true
+  },
+  "mckeldin-reading": {
+   "name": "Reading Room",
+   "noise": "Quiet",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "4th"
+   ],
+   "capacity": 116,
+   "library_name": "McKeldin Library",
+   "building": "McKeldin Library",
+   "url": "https://www.lib.umd.edu/visit/libraries/mckeldin/reading",
+   "area": true
+  },
+  "mckeldin-spaces-portico-room": {
+   "name": "Portico Room",
+   "noise": "Collaborative",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "2nd"
+   ],
+   "capacity": 32,
+   "library_name": "McKeldin Library",
+   "building": "McKeldin Library",
+   "url": "https://www.lib.umd.edu/visit/libraries/mckeldin/spaces/portico-room",
+   "area": true
+  },
+  "mckeldin-tlc": {
+   "name": "Terrapin Learning Commons",
+   "noise": "Collaborative",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "2nd"
+   ],
+   "capacity": null,
+   "library_name": "McKeldin Library",
+   "building": "McKeldin Library",
+   "url": "https://www.lib.umd.edu/visit/libraries/mckeldin/tlc",
+   "area": true
+  },
+  "mspal-group-study": {
+   "name": "MSPAL Group Study Room",
+   "noise": "Collaborative",
+   "features": [],
+   "floors": [
+    "2nd"
+   ],
+   "capacity": 4,
+   "library_name": "Michelle Smith Performing Arts Library",
+   "building": "Clarice Smith Performing Arts Center",
+   "url": "https://www.lib.umd.edu/visit/libraries/mspal/group-study",
+   "area": true
+  },
+  "stem-computer-area": {
+   "name": "STEM Computer Area",
+   "noise": "Quiet",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "1st"
+   ],
+   "capacity": 34,
+   "library_name": "STEM Library",
+   "building": "William E. Kirwan Hall",
+   "url": "https://www.lib.umd.edu/visit/libraries/stem/computer-area",
+   "area": true
+  },
+  "stem-group-study-areas": {
+   "name": "STEM Group Study Areas",
+   "noise": "Collaborative",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "Ground",
+    "3rd"
+   ],
+   "capacity": 75,
+   "library_name": "STEM Library",
+   "building": "William E. Kirwan Hall",
+   "url": "https://www.lib.umd.edu/visit/libraries/stem/group-study-areas",
+   "area": true
+  },
+  "stem-individual-study-areas": {
+   "name": "STEM Individual Study Areas",
+   "noise": "Quiet",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "1st",
+    "2nd"
+   ],
+   "capacity": 209,
+   "library_name": "STEM Library",
+   "building": "William E. Kirwan Hall",
+   "url": "https://www.lib.umd.edu/visit/libraries/stem/individual-study-areas",
+   "area": true
+  },
+  "stem-multi-purpose-room": {
+   "name": "STEM Multi-purpose Room",
+   "noise": "Collaborative",
+   "features": [
+    "Power Available"
+   ],
+   "floors": [
+    "1st"
+   ],
+   "capacity": 30,
+   "library_name": "STEM Library",
+   "building": "William E. Kirwan Hall",
+   "url": "https://www.lib.umd.edu/visit/libraries/stem/multi-purpose-room",
+   "area": true
+  }
+ }
+}
