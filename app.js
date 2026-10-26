@@ -88,11 +88,24 @@ function startAnalytics() {
     });
     analyticsReady = true;
     for (const [event, props] of analyticsQueue.splice(0)) track(event, props);
-    // After the survey definitions arrive, or PostHog's event trigger has nothing to match against.
+    // Sent once the survey definitions AND feature flags have arrived: the survey's
+    // own targeting flag (PostHog's "not answered yet" check) is a flag, and this
+    // posthog-js only fetches flags on request -- without them the survey matches
+    // nothing. Only lapsed visitors pay for the extra /flags call.
     if (lapsedGapDays >= LAPSED_DAYS) {
-      let sent = false;
-      const send = () => { if (!sent) { sent = true; track('lapsed_return', { gap_days: lapsedGapDays, device: deviceKind() }); } };
-      try { window.posthog.onSurveysLoaded ? window.posthog.onSurveysLoaded(send) : setTimeout(send, 3000); } catch (e) { send(); }
+      const ph = window.posthog;
+      let sent = false, flags = false, surveys = false;
+      const send = () => {
+        if (sent || !flags || !surveys) return;
+        sent = true;
+        track('lapsed_return', { gap_days: lapsedGapDays, device: deviceKind() });
+      };
+      try {
+        ph.onFeatureFlags(() => { flags = true; send(); });
+        ph.onSurveysLoaded ? ph.onSurveysLoaded(() => { surveys = true; send(); }) : (surveys = true);
+        ph.reloadFeatureFlags();
+      } catch (e) { /* never break the map */ }
+      setTimeout(() => { flags = surveys = true; send(); }, 8000);   // a slow network still gets counted
     }
   };
   script.onerror = () => { analyticsQueue.length = 0; };
