@@ -2279,12 +2279,11 @@ function renderBrowse({ seatWheels = true } = {}) {
       + '</div>';
   }
   if (q && !names.length) html += `<div class="browse-foot">No building matches \u201c${escapeHtml(browseQuery.trim())}\u201d.</div>`;
-  // Study rooms sidebar: buildings we have no hours for sink to the bottom of their group (still A-Z).
+  // Study rooms sidebar: open buildings first, then closed, then "probably closed", then the ones we
+  // have no hours for, each tier still A-Z inside its group (the sort is stable).
   if (roomsMode()) {
-    for (const list of Object.values(groups)) {
-      const noHours = n => hoursStatus(n, date, time).state === 'unknown';
-      list.sort((x, y) => noHours(x) - noHours(y));   // stable: keeps the A-Z order inside each half
-    }
+    const tier = n => { const st = hoursStatus(n, date, time); return st.state === 'open' ? 0 : st.state === 'unknown' ? 3 : st.assumed ? 2 : 1; };
+    for (const list of Object.values(groups)) list.sort((x, y) => tier(x) - tier(y));
   }
   for (const [label, list] of Object.entries(groups)) {
     if (!list.length) continue;
