@@ -2224,6 +2224,13 @@ function renderBrowse({ seatWheels = true } = {}) {
       + '</div>';
   }
   if (q && !names.length) html += `<div class="browse-foot">No building matches \u201c${escapeHtml(browseQuery.trim())}\u201d.</div>`;
+  // Study rooms sidebar: buildings we have no hours for sink to the bottom of their group (still A-Z).
+  if (roomsMode()) {
+    for (const list of Object.values(groups)) {
+      const noHours = n => hoursStatus(n, date, time).state === 'unknown';
+      list.sort((x, y) => noHours(x) - noHours(y));   // stable: keeps the A-Z order inside each half
+    }
+  }
   for (const [label, list] of Object.entries(groups)) {
     if (!list.length) continue;
     html += `<div class="browse-group">${label}</div>`;
