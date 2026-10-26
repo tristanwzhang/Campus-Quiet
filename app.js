@@ -841,20 +841,28 @@ function assumedStatus(id, date, time) {
   if ((data.hours?.classesOutDates || []).includes(date)) {
     // U of T: a study-break weekday is still a working day -- the buildings that publish hours
     // (OISE, Woodsworth, Innis, Rotman, Student Commons, Athletic Centre) list the same hours
-    // through it. So a building that holds classes in an ordinary week reads "probably open"
-    // in the weekday window (buildingDay), labelled as a campus default; venues are excluded.
-    const floor = !configFor(id)?.noCampusDefault && CAMPUS_CONTENT.buildingDay?.[weekdayOf(date)];
-    const week = data.classActivity?.buildings?.[id]?.hours;
-    if (floor && week && Object.values(week).some(g => g.some(v => v > 0))) {
-      const isOpen = time >= floor[0] && time < floor[1];
-      return {
-        state: isOpen ? 'open' : 'closed',
-        source: 'assumed from published hours of similar buildings',
-        assumed: true,
-        campusDefault: isOpen,
-        defaultWhy: 'no classes this week, but the U of T buildings that publish hours stay open about 8:30am\u20139pm on weekdays',
-        closedNote: 'Probably closed \u00b7 outside about 8:30am\u20139pm, when weekday buildings here are usually open',
-      };
+    // through it. So each building gets exactly what the SAME weekday of an ordinary week would
+    // give it (its class window widened to buildingDay), and "probably closed" where nothing
+    // normally meets on that weekday. Never more generous than a class week. Venues excluded.
+    if (CAMPUS_CONTENT.buildingDay && !configFor(id)?.noCampusDefault) {
+      const usual = assumedHours(id, weekdayOf(date));
+      if (usual) {
+        const isOpen = time >= usual[0] && time < usual[1];
+        return {
+          state: isOpen ? 'open' : 'closed',
+          source: 'assumed from an ordinary week',
+          assumed: true,
+          campusDefault: isOpen,
+          defaultWhy: 'no classes this week, so this is its estimate for an ordinary '
+            + weekdayOf(date).replace(/^./, c => c.toUpperCase()) + ' (buildings that publish hours keep them through study break)',
+          closedNote: 'Probably closed \u00b7 outside the hours it is usually in use on this weekday',
+        };
+      }
+      const week = data.classActivity?.buildings?.[id]?.hours;
+      if (week && Object.values(week).some(g => g.some(v => v > 0))) {
+        return { state: 'closed', source: 'assumed from an ordinary week', assumed: true,
+                 closedNote: 'Probably closed \u00b7 nothing is normally timetabled here on this weekday' };
+      }
     }
     return { state: 'unknown' };
   }

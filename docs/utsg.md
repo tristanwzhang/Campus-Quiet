@@ -399,8 +399,12 @@ Only ~22 of 69 buildings were lit during reading week. Two causes, both fixed:
 
 1. **Study-break days went blank.** `assumedStatus` returned "unknown" for every building on a
    `classesOutDates` day. U of T's reading week is a working week (the buildings that publish hours
-   list the same hours through it), so a building that holds classes in an ordinary week now reads
-   "Probably open" in the weekday window (`buildingDay`, 8:30am-9pm), labelled as a campus default.
+   list the same hours through it). **Tightened the same day at the owner's request ("don't swing too
+   far the other way"):** each building gets exactly what the SAME weekday of an ordinary week gives it
+   (its own class window widened to `buildingDay`; "probably closed" where nothing normally meets on
+   that weekday). Checked: reading-week Tue/Fri match ordinary Tue/Fri building for building, except
+   the three venues (stay unknown) and Innis (its published hours close it). Never more generous
+   than a class week, which is what the harness measures (84.7%).
    Panel headline says "Probably open" for any campus-default open (it used to say "Open now").
 2. **Library buildings with no classes were never on the map** (the register comes from the timetable).
    Added from map.utoronto.ca's own building records (`EXTRA_IDS` in build_utsg_buildings.py):
@@ -415,7 +419,8 @@ Only ~22 of 69 buildings were lit during reading week. Two causes, both fixed:
    -> Earth Sciences Centre added on the owner's confirmation (addresses differ).
    `codeFor()` finds these by register name (`registerByName`, U of T only).
 
-Result (demo clock): 77 buildings; Tue Oct 27 2pm 73 lit (was ~22); a class weekday 2pm 73/77.
+Result (demo clock): 77 buildings; Tue Oct 27 2pm 70 lit (was ~22), Fri 3pm 65; a class weekday 2pm 74/77.
+All 8 added libraries list public access (Massey, Dentistry, Law partly restricted; Fisher is a rare-book reading room).
 Harness U of T 84.6% -> 84.7% all day. Other campuses unchanged by this (their small drift since
 last week is data refreshes, identical with and without these edits).
 Still dark, honestly: First Nations House (Borden North) publishes no hours anywhere.
