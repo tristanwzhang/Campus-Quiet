@@ -2202,11 +2202,6 @@ function renderBrowse({ seatWheels = true } = {}) {
   if (roomsMode() && noiseFilter.size) {
     names = names.filter(n => areasIn(n).some(a => noiseFilter.has(a.noise)));
   }
-  // "Outlets" on the first screen: buildings where a study room or an open study area is
-  // tagged "Power Available" by the libraries. Carries into the building's room list.
-  const hasPower = n => studyRoomsIn(n).some(([, r]) => (r.tags ?? []).includes('Power Available'))
-    || areasIn(n).some(a => (a.features ?? []).includes('Power Available'));
-  if (roomsMode() && roomFilter.has('Power Available')) names = names.filter(hasPower);
   const groups = { Library: [], Academic: [] };
   for (const n of names) {
     (BUILDINGS[n]?.type === 'library' || /librar/i.test(pickLabel(n)) ? groups.Library : groups.Academic).push(n);
@@ -2226,10 +2221,6 @@ function renderBrowse({ seatWheels = true } = {}) {
         + `style="font:inherit;font-size:11.5px;padding:4px 10px;border-radius:999px;cursor:pointer;`
         + `border:1px solid ${noiseFilter.has(k) ? '#58c047' : 'rgba(255,255,255,0.15)'};`
         + `background:${noiseFilter.has(k) ? 'rgba(88,192,71,0.15)' : 'transparent'};color:#c9d1de">${label}</button>`).join('')
-      + (() => { const on = roomFilter.has('Power Available'); return `<button type="button" class="power-chip" aria-pressed="${on}" `
-        + `style="font:inherit;font-size:11.5px;padding:4px 10px;border-radius:999px;cursor:pointer;`
-        + `border:1px solid ${on ? '#58c047' : 'rgba(255,255,255,0.15)'};`
-        + `background:${on ? 'rgba(88,192,71,0.15)' : 'transparent'};color:#c9d1de">Outlets</button>`; })()
       + '</div>';
   }
   if (q && !names.length) html += `<div class="browse-foot">No building matches \u201c${escapeHtml(browseQuery.trim())}\u201d.</div>`;
@@ -2291,7 +2282,7 @@ function renderStudyRoomList(body, title, sub, back) {
   const live = roomAvailability?.[n]?.rooms ?? {};
   const allRows = studyRoomsIn(n).map(([id, r]) => ({ id, r, st: live[id] }));
   // Only offer a filter this building can actually satisfy.
-  const offered = ROOM_TAGS.filter(([tag]) => allRows.some(x => (x.r.tags ?? []).includes(tag)));
+  const offered = ROOM_TAGS.filter(([tag]) => tag !== 'Power Available' && allRows.some(x => (x.r.tags ?? []).includes(tag)));
   for (const t of [...roomFilter]) if (!offered.some(([tag]) => tag === t)) roomFilter.delete(t);
   const rows = allRows.filter(x => [...roomFilter].every(t => (x.r.tags ?? []).includes(t)));
   const rank = x => !x.st ? 3 : x.st.free ? 0 : x.st.next !== undefined ? 1 : 2;
@@ -2477,7 +2468,8 @@ function renderRooms(name) {
   if (areas.length) {
     rooms += `<div style="margin-top:${rooms ? 10 : 0}px"><span class="rooms-where" style="margin:0 0 4px">Study areas (the library\u2019s own noise levels)</span>`
       + areas.map(a => `<div style="font-size:12px;padding:1px 0"><span style="color:${NOISE_COLOUR[a.noise]};font-weight:600">${NOISE_LABEL[a.noise]}</span>`
-        + ` \u00b7 <a href="${escapeHtml(a.url)}" target="_blank" rel="noopener" style="color:#c9d1de">${escapeHtml(areaName(a))}</a></div>`).join('')
+        + ` \u00b7 <a href="${escapeHtml(a.url)}" target="_blank" rel="noopener" style="color:#c9d1de">${escapeHtml(areaName(a))}</a>`
+        + `${(a.floors ?? []).length ? ` \u00b7 ${escapeHtml(a.floors.join('/'))} fl` : ''}${(a.features ?? []).includes('Power Available') ? ' \u00b7 \u26a1 outlets' : ''}</div>`).join('')
       + '</div>';
   }
   if (!rooms && !inside) { box.hidden = true; return; }
@@ -4770,12 +4762,6 @@ document.getElementById('browse-back')?.addEventListener('click', () => {
   renderBrowse();
 });
 document.getElementById('browse-body')?.addEventListener('click', ev => {
-  if (ev.target.closest('.power-chip')) {
-    roomFilter.has('Power Available') ? roomFilter.delete('Power Available') : roomFilter.add('Power Available');
-    renderBrowse({ seatWheels: false });
-    track('room_filter', { tag: 'Power Available', on: roomFilter.has('Power Available'), level: 'list', device: deviceKind() });
-    return;
-  }
   const chip = ev.target.closest('.noise-chip');
   if (chip) {
     const k = chip.dataset.noise;
@@ -4913,7 +4899,7 @@ function hubRooms() {
   const head = `<div style="font-size:13px;color:#aab4c6;padding:2px 2px 8px">${anyBookable
     ? `<b style="color:#8fd4a8">${freeTotal}</b> room${freeTotal === 1 ? '' : 's'} free to book right now${need.length ? ' with your filters' : ''}`
     : 'Booking is closed right now — rooms open when the libraries do'}</div>`;
-  const present = ROOM_TAGS.filter(([tag]) => Object.values(studyRooms ?? {}).some(r => (r.tags ?? []).includes(tag)));
+  const present = ROOM_TAGS.filter(([tag]) => tag !== 'Power Available' && Object.values(studyRooms ?? {}).some(r => (r.tags ?? []).includes(tag)));
   const chips = !present.length ? '' : '<div style="display:flex;flex-wrap:wrap;gap:7px;padding:0 0 8px">'
     + present.map(([tag, label]) => hubChip(label, roomFilter.has(tag), `data-hub-tag="${escapeHtml(tag)}"`)).join('') + '</div>';
   const list = rows.map(r => hubRow(
@@ -4927,18 +4913,17 @@ function hubRooms() {
 }
 
 function hubQuiet() {
-  const need = roomFilter.has('Power Available');
   const outlets = studyAreas.some(a => (a.features ?? []).includes('Power Available'));
   let html = '<div style="font-size:13px;color:#aab4c6;padding:2px 2px 8px">Walk-in study areas, by the library’s own noise level</div>'
-    + (outlets ? '<div style="display:flex;gap:7px;padding:0 0 6px">' + hubChip('Has outlets', need, 'data-hub-tag="Power Available"') + '</div>' : '');
+    + (outlets ? '<div style="font-size:11.5px;color:#7b8498;padding:0 2px 4px">\u26a1 = the library lists outlets in that area</div>' : '');
   for (const [key, label, colour] of QUIET_LEVELS) {
-    const rows = studyAreas.filter(a => a.noise === key && (!need || !outlets || (a.features ?? []).includes('Power Available')))
+    const rows = studyAreas.filter(a => a.noise === key)
       .sort((a, b) => pickLabel(a.building).localeCompare(pickLabel(b.building)) || a.name.localeCompare(b.name));
     if (!rows.length) continue;
     html += `<div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:${colour};font-weight:700;padding:12px 2px 2px">${label} · ${rows.length}</div>`;
     html += rows.map(a => hubRow(escapeHtml(areaName(a)),
       [pickLabel(a.building), ...(a.floors ?? []).map(f => `${f} floor`).slice(0, 1), a.capacity > 1 ? `${a.capacity} seats` : null,
-       (a.features ?? []).includes('Power Available') ? 'outlets' : null].filter(Boolean).map(escapeHtml).join(' · '),
+       (a.features ?? []).includes('Power Available') ? '\u26a1 outlets' : null].filter(Boolean).map(escapeHtml).join(' · '),
       '<span style="flex:none;color:#6b7589;font-size:18px">›</span>', `data-hub-go="${encodeURIComponent(a.building)}"`)).join('');
   }
   return html + `<div class="pick-note" style="padding:8px 2px 0">${escapeHtml(CAMPUS_CONTENT.quietSource ?? '')}</div>`;

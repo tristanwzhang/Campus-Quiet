@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-20T06:46:45+00:00",
+ "built_at": "2026-10-25T13:46:33+00:00",
  "campus": "Maryland \u2014 College Park",
  "term": "2026/fall",
  "campusClosedDates": [
@@ -23,48 +23,6 @@
    "sourceUrl": "https://www.lib.umd.edu/visit/hours",
    "code": "MCK",
    "dates": {
-    "2026-10-18": [
-     [
-      11.0,
-      24.0
-     ]
-    ],
-    "2026-10-19": [
-     [
-      0.0,
-      24.0
-     ]
-    ],
-    "2026-10-20": [
-     [
-      0.0,
-      24.0
-     ]
-    ],
-    "2026-10-21": [
-     [
-      0.0,
-      24.0
-     ]
-    ],
-    "2026-10-22": [
-     [
-      0.0,
-      24.0
-     ]
-    ],
-    "2026-10-23": [
-     [
-      0.0,
-      20.0
-     ]
-    ],
-    "2026-10-24": [
-     [
-      11.0,
-      20.0
-     ]
-    ],
     "2026-10-25": [
      [
       11.0,
@@ -412,11 +370,18 @@
      ]
     ],
     "2026-12-25": [],
-    "2026-12-26": []
+    "2026-12-26": [],
+    "2026-12-27": [],
+    "2026-12-28": [],
+    "2026-12-29": [],
+    "2026-12-30": [],
+    "2026-12-31": [],
+    "2027-01-01": [],
+    "2027-01-02": []
    },
    "valid": [
-    "2026-10-18",
-    "2026-12-26"
+    "2026-10-25",
+    "2027-01-02"
    ]
   },
   "Undergraduate Library": {
@@ -424,38 +389,6 @@
    "sourceUrl": "https://www.lib.umd.edu/visit/hours",
    "code": "HBK",
    "dates": {
-    "2026-10-18": [],
-    "2026-10-19": [
-     [
-      7.0,
-      22.0
-     ]
-    ],
-    "2026-10-20": [
-     [
-      7.0,
-      22.0
-     ]
-    ],
-    "2026-10-21": [
-     [
-      7.0,
-      22.0
-     ]
-    ],
-    "2026-10-22": [
-     [
-      7.0,
-      22.0
-     ]
-    ],
-    "2026-10-23": [
-     [
-      7.0,
-      22.0
-     ]
-    ],
-    "2026-10-24": [],
     "2026-10-25": [],
     "2026-10-26": [
      [
@@ -723,11 +656,23 @@
      ]
     ],
     "2026-12-25": [],
-    "2026-12-26": []
+    "2026-12-26": [],
+    "2026-12-27": [],
+    "2026-12-28": [],
+    "2026-12-29": [
+     [
+      7.0,
+      22.0
+     ]
+    ],
+    "2026-12-30": [],
+    "2026-12-31": [],
+    "2027-01-01": [],
+    "2027-01-02": []
    },
    "valid": [
-    "2026-10-18",
-    "2026-12-26"
+    "2026-10-25",
+    "2027-01-02"
    ]
   },
   "Stamp Student Union": {
@@ -3568,12 +3513,6 @@
     "sunday": []
    },
    "dates": {
-    "2026-09-20": [
-     [
-      12.0,
-      15.0
-     ]
-    ],
     "2026-09-25": [
      [
       16.0,
@@ -3639,10 +3578,15 @@
       12.0,
       15.0
      ]
+    ],
+    "2026-09-20": [
+     [
+      12.0,
+      15.0
+     ]
     ]
    },
    "events": {
-    "2026-09-20": "Maryland Field Hockey vs Wake Forest \u00b7 12pm",
     "2026-09-25": "Maryland Field Hockey vs Rutgers \u00b7 4pm",
     "2026-10-02": "Maryland Women's Lacrosse vs Navy (Exh.) \u00b7 6pm ; Maryland Women's Lacrosse vs Georgetown (Exh.) \u00b7 8:30pm",
     "2026-10-04": "Maryland Field Hockey vs Delaware \u00b7 12pm",
@@ -3653,7 +3597,8 @@
     "2026-10-25": "Maryland Women's Lacrosse vs San Diego State (Exh.) \u00b7 10am ; Maryland Women's Lacrosse vs James Madison (Exh.) \u00b7 12pm ; Maryland Women's Lacrosse vs Temple (Exh.) \u00b7 3pm",
     "2026-10-30": "Maryland Field Hockey vs Iowa \u00b7 1pm",
     "2026-09-11": "Maryland Field Hockey vs Towson \u00b7 6pm",
-    "2026-09-13": "Maryland Field Hockey vs Saint Joseph's \u00b7 12pm"
+    "2026-09-13": "Maryland Field Hockey vs Saint Joseph's \u00b7 12pm",
+    "2026-09-20": "Maryland Field Hockey vs Wake Forest \u00b7 12pm"
    },
    "unknownDuring": [],
    "valid": [
@@ -3676,12 +3621,6 @@
     "sunday": []
    },
    "dates": {
-    "2026-09-24": [
-     [
-      18.0,
-      20.0
-     ]
-    ],
     "2026-09-25": [
      [
       19.0,
@@ -3769,10 +3708,15 @@
       12.0,
       14.0
      ]
+    ],
+    "2026-09-24": [
+     [
+      18.0,
+      20.0
+     ]
     ]
    },
    "events": {
-    "2026-09-24": "Maryland Women's Soccer vs #14 Wisconsin \u00b7 6pm",
     "2026-09-25": "Maryland Men's Soccer vs UCLA \u00b7 7pm",
     "2026-09-27": "Maryland Women's Soccer vs #12 UCLA \u00b7 12pm",
     "2026-10-08": "Maryland Women's Soccer vs Nebraska \u00b7 7pm",
@@ -3786,7 +3730,8 @@
     "2026-09-07": "Maryland Men's Soccer vs Georgetown \u00b7 7pm",
     "2026-09-18": "Maryland Men's Soccer vs Wisconsin \u00b7 8pm ; Maryland Women's Soccer vs Penn State \u00b7 5pm",
     "2026-09-03": "Maryland Women's Soccer vs Old Dominion \u00b7 7pm",
-    "2026-09-06": "Maryland Women's Soccer vs Binghamton - Senior Day \u00b7 12pm"
+    "2026-09-06": "Maryland Women's Soccer vs Binghamton - Senior Day \u00b7 12pm",
+    "2026-09-24": "Maryland Women's Soccer vs #14 Wisconsin \u00b7 6pm"
    },
    "unknownDuring": [],
    "valid": [
@@ -3973,6 +3918,12 @@
       14.0
      ]
     ],
+    "2026-11-22": [
+     [
+      13.0,
+      20.0
+     ]
+    ],
     "2026-11-24": [
      [
       19.0,
@@ -3985,6 +3936,12 @@
       20.5
      ]
     ],
+    "2026-12-03": [
+     [
+      19.0,
+      22.0
+     ]
+    ],
     "2026-12-07": [
      [
       19.0,
@@ -3995,6 +3952,12 @@
      [
       19.0,
       21.0
+     ]
+    ],
+    "2026-12-12": [
+     [
+      13.0,
+      16.0
      ]
     ],
     "2026-12-13": [
@@ -4021,10 +3984,34 @@
       22.0
      ]
     ],
+    "2027-01-10": [
+     [
+      13.0,
+      16.0
+     ]
+    ],
+    "2027-01-15": [
+     [
+      19.0,
+      22.0
+     ]
+    ],
+    "2027-01-17": [
+     [
+      16.0,
+      19.0
+     ]
+    ],
     "2027-01-21": [
      [
       19.0,
       21.0
+     ]
+    ],
+    "2027-01-22": [
+     [
+      19.5,
+      22.5
      ]
     ],
     "2027-01-24": [
@@ -4033,10 +4020,34 @@
       14.0
      ]
     ],
+    "2027-01-31": [
+     [
+      16.0,
+      19.0
+     ]
+    ],
     "2027-02-01": [
      [
       19.0,
       21.0
+     ]
+    ],
+    "2027-02-06": [
+     [
+      18.0,
+      21.0
+     ]
+    ],
+    "2027-02-07": [
+     [
+      13.0,
+      16.0
+     ]
+    ],
+    "2027-02-12": [
+     [
+      19.5,
+      22.5
      ]
     ],
     "2027-02-14": [
@@ -4056,6 +4067,12 @@
       12.0,
       14.0
      ]
+    ],
+    "2027-03-14": [
+     [
+      13.0,
+      16.0
+     ]
     ]
    },
    "events": {
@@ -4074,46 +4091,37 @@
     "2026-11-15": "Maryland Women's Basketball vs Columbia \u00b7 1pm",
     "2026-11-18": "Maryland Women's Basketball vs Coppin State \u00b7 6pm",
     "2026-11-21": "Maryland Women's Basketball vs Morgan State \u00b7 12pm",
+    "2026-11-22": "Maryland Wrestling vs Virginia \u00b7 1pm ; Maryland Wrestling vs Ohio \u00b7 3pm ; Maryland Wrestling vs Morgan State \u00b7 5pm",
     "2026-11-24": "Maryland Women's Basketball vs Monmouth \u00b7 7pm",
     "2026-12-01": "Maryland Women's Basketball vs Ball State \u00b7 6:30pm",
+    "2026-12-03": "Maryland Wrestling vs American \u00b7 7pm",
     "2026-12-07": "Maryland Women's Basketball vs Lehigh \u00b7 7pm",
     "2026-12-11": "Maryland Women's Basketball vs Michigan \u00b7 7pm",
+    "2026-12-12": "Maryland Gymnastics vs Red vs. Black \u00b7 1pm",
     "2026-12-13": "Maryland Women's Basketball vs Mount St. Mary's \u00b7 12pm",
     "2026-12-18": "Maryland Women's Basketball vs UMBC \u00b7 11am",
     "2026-12-30": "Maryland Women's Basketball vs Minnesota \u00b7 4pm",
     "2027-01-08": "Maryland Women's Basketball vs USC \u00b7 8pm",
-    "2027-01-15": "Maryland Wrestling vs Michigan State \u00b7 start time not announced yet",
+    "2027-01-10": "Maryland Gymnastics vs Centenary College (Louisiana) \u00b7 1pm ; Maryland Gymnastics vs Temple University \u00b7 1pm ; Maryland Gymnastics vs LIU \u00b7 1pm",
+    "2027-01-15": "Maryland Wrestling vs Michigan State \u00b7 7pm",
+    "2027-01-17": "Maryland Gymnastics vs University of Michigan \u00b7 4pm",
     "2027-01-21": "Maryland Women's Basketball vs Ohio State \u00b7 7pm",
-    "2027-01-22": "Maryland Wrestling vs Nebraska \u00b7 start time not announced yet",
+    "2027-01-22": "Maryland Wrestling vs #3 Nebraska \u00b7 7:30pm",
     "2027-01-24": "Maryland Women's Basketball vs UCLA \u00b7 12pm",
+    "2027-01-31": "Maryland Gymnastics vs Penn State University \u00b7 4pm",
     "2027-02-01": "Maryland Women's Basketball vs Michigan State \u00b7 7pm",
-    "2027-02-07": "Maryland Wrestling vs Northwestern \u00b7 start time not announced yet",
-    "2027-02-12": "Maryland Wrestling vs Rutgers \u00b7 start time not announced yet",
+    "2027-02-06": "Maryland Gymnastics vs University of Iowa \u00b7 6pm",
+    "2027-02-07": "Maryland Wrestling vs Northwestern \u00b7 1pm",
+    "2027-02-12": "Maryland Wrestling vs #16 Rutgers \u00b7 7:30pm",
     "2027-02-14": "Maryland Women's Basketball vs Nebraska \u00b7 12pm",
     "2027-02-17": "Maryland Women's Basketball vs Illinois \u00b7 7pm",
-    "2027-02-28": "Maryland Women's Basketball vs Rutgers \u00b7 12pm"
+    "2027-02-28": "Maryland Women's Basketball vs Rutgers \u00b7 12pm",
+    "2027-03-14": "Maryland Gymnastics vs Towson University \u00b7 1pm ; Maryland Gymnastics vs Bowling Green \u00b7 1pm ; Maryland Gymnastics vs George Washington University \u00b7 1pm"
    },
-   "unknownDuring": [
-    [
-     "2027-01-15",
-     "2027-01-15"
-    ],
-    [
-     "2027-01-22",
-     "2027-01-22"
-    ],
-    [
-     "2027-02-07",
-     "2027-02-07"
-    ],
-    [
-     "2027-02-12",
-     "2027-02-12"
-    ]
-   ],
+   "unknownDuring": [],
    "valid": [
     "2026-08-31",
-    "2027-02-28"
+    "2027-03-14"
    ],
    "noExtension": true
   },
@@ -4138,6 +4146,12 @@
      ]
     ],
     "2026-10-18": [
+     [
+      13.0,
+      16.0
+     ]
+    ],
+    "2026-11-08": [
      [
       13.0,
       16.0
@@ -4300,7 +4314,7 @@
     "2026-10-29": "Maryland Baseball vs Fall WS Game 1 \u00b7 start time not announced yet",
     "2026-10-30": "Maryland Baseball vs Fall WS Game 2 \u00b7 start time not announced yet",
     "2026-10-31": "Maryland Baseball vs Fall WS Game 3 \u00b7 start time not announced yet",
-    "2026-11-08": "Maryland Baseball vs Navy \u00b7 start time not announced yet",
+    "2026-11-08": "Maryland Baseball vs Navy \u00b7 1pm",
     "2027-03-02": "Maryland Baseball vs Georgetown \u00b7 4pm",
     "2027-03-09": "Maryland Baseball vs UMBC \u00b7 4pm",
     "2027-03-12": "Maryland Baseball vs Michigan State \u00b7 6pm",
@@ -4339,10 +4353,6 @@
     [
      "2026-10-31",
      "2026-10-31"
-    ],
-    [
-     "2026-11-08",
-     "2026-11-08"
     ]
    ],
    "valid": [
