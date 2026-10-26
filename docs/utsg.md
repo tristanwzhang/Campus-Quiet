@@ -424,3 +424,11 @@ All 8 added libraries list public access (Massey, Dentistry, Law partly restrict
 Harness U of T 84.6% -> 84.7% all day. Other campuses unchanged by this (their small drift since
 last week is data refreshes, identical with and without these edits).
 Still dark, honestly: First Nations House (Borden North) publishes no hours anywhere.
+
+**Trinity / Graham Library looked mottled (fixed 2026-10-26).** The OSM tiles name 1 Devonshire Place
+"Munk School of Global Affairs & Public Policy" (the Munk School's Trinity site), which IS a known
+building (register MK, 315 Bloor). So the tiles took Munk's colour while the app drew its own Graham
+Library shape on the same spot: two colours z-fighting. claimTileBuildings now gives a named tile to
+the drawn building it stands in when the tile's own name belongs to a building whose official point
+is over 150 m away (U of T only, coverByHull). Also hand-checked aliases (MANUAL_ALIASES in
+build_utsg_buildings.py): MU "Devonshire House", IR "Centre for Industrial Relations and Human Resources".

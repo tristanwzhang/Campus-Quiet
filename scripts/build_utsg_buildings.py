@@ -44,6 +44,14 @@ KEY = "0001085cc708b9cef47080f064612ca5"          # the map site's own public ke
 MAP_ID = 1809
 NEAR_M = 30.0
 NO_OUTLINE = {"RC"}
+# A footprint whose OSM name shares no word with the map's name is not aliased automatically (that
+# guard stopped Lawson taking Larkin's name). These were checked by hand: the map record's point lies
+# INSIDE the named OSM building. Without the alias the tile is never claimed and the app's own copy
+# z-fights it (Graham looked mottled, 2026-10-26).
+MANUAL_ALIASES = {
+    "MU": ["Devonshire House"],   # OSM way 10334994, 1 Devonshire Pl, college=Trinity College, M5S 3K7 (= Graham's postcode)
+    "IR": ["Centre for Industrial Relations and Human Resources"],   # the occupant of 121 St. George St
+}
 BBOX = (43.650, -79.415, 43.675, -79.375)          # S, W, N, E
 
 # Codes whose own map id 404s. Name: Wikipedia's list of U of T buildings AND the
@@ -242,6 +250,7 @@ def main():
         rec["aliases"] = [osm_name] if (osm_name and rec["outline"] and code not in NO_OUTLINE
                                         and osm_name != rec["name"]
                                         and shares_a_name(osm_name, rec["name"])) else []
+        rec["aliases"] += [a for a in MANUAL_ALIASES.get(code, []) if rec["outline"] and a not in rec["aliases"]]
         records[code] = rec
 
     # A building added only for its hours must not take over a class building's footprint

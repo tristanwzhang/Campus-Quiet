@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-26T20:19:30+00:00",
+ "built_at": "2026-10-26T20:32:35+00:00",
  "campus": "University of Toronto \u2014 St. George",
  "source": "map.utoronto.ca (names, numbers, coordinates); OpenStreetMap (footprints)",
  "sourceUrl": "https://map.utoronto.ca/",
@@ -2182,7 +2182,9 @@
   "IR": {
    "name": "121 St. George Street",
    "code": "IR",
-   "aliases": [],
+   "aliases": [
+    "Centre for Industrial Relations and Human Resources"
+   ],
    "lat": 43.666702,
    "lon": -79.399094,
    "outline": [
@@ -3545,7 +3547,9 @@
   "MU": {
    "name": "John W. Graham Library",
    "code": "MU",
-   "aliases": [],
+   "aliases": [
+    "Devonshire House"
+   ],
    "lat": 43.665127,
    "lon": -79.396423,
    "outline": [

@@ -3778,6 +3778,18 @@ function claimTileBuildings(tile) {
     // A block carrying no name of its own can't contradict one: if it stands
     // inside a footprint the university publishes, that is what it is.
     if (!name && !tileName && lon != null) name = footprintAt(lon, lat) ?? complexAt(lon, lat);
+    // A tile named for a building whose official location is far away, standing inside a building
+    // we draw from the university's own record, is that building. U of T: the OSM tiles call
+    // Trinity's 1 Devonshire Place "Munk School" (its second site), while the register places
+    // the Munk School at 315 Bloor, ~300 m off; left alone, the tile took Munk's colour under our
+    // Graham Library shape and the two flickered. Needs BOTH conditions, so it cannot steal a
+    // neighbour's tile just for standing in a courtyard.
+    if (name && lon != null && CAMPUS_CONTENT.coverByHull) {
+      const cover = overlayCovering(lon, lat);
+      const home = gisFor(name);
+      if (cover && cover !== name && overlays.get(cover)?.fromGis && home
+          && Math.hypot((home.lon - lon) * 80500, (home.lat - lat) * 111000) > 150) name = cover;
+    }
 
     if (!name) {
       // Still nothing, and it stands where we are drawing our own shape. Hide
