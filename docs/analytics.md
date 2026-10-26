@@ -62,6 +62,19 @@ Four master tiles name campuses in their SQL (Visitors by campus, Daily visitors
 Check-ins per day, Where visitors come from): add a `school = '<id>'` column to each when a campus launches.
 Maryland's are empty until `/umd` is public. The steps below are the manual route.
 
+**U of T added (2026-10-25):** "UofT Spaces" (2259536) and "UofT Spaces — launch health" (2259538), made by
+duplicating the Maryland pair and swapping `umd` for `utsg` in every tile. They stay empty until `/utsg` is
+public. The launch-health one has an extra tile, "Find a study spot: which tab do people open?" (`hub_tab`).
+The master tiles now carry a `utsg` column too: Visitors by campus, Daily visitors and page loads, Check-ins
+per day, Where visitors come from, Did they leave straight away? (which also gained `umd`), and the browser-type
+return-rate filter. Per-school tiles that group by `school` pick up new campuses on their own.
+
+**Number tiles (2026-10-25):** the Active users / Sessions / Pageviews tiles were 2x2 grid cells with their long
+descriptions showing, so the digits were squeezed. On the five overview dashboards (UIUC, OSU, UMD, UofT, All
+schools) they are now a row of three 4x3 tiles, Active users first, descriptions hidden, with the rest of the
+tiles in two columns below. Layout is set through the dashboard API (`tiles[].layouts`, `show_description`);
+re-run that if a dashboard is duplicated.
+
 **Per-school dashboard** (do this one for UIUC now, if you want it before school #2):
 1. Open the existing "UIUC Spaces KPIs" dashboard → **Filters** → **+ Add filter** →
    Event property → `school` → `is` → `uiuc` → Save.
