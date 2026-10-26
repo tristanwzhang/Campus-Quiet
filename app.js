@@ -75,7 +75,10 @@ function startAnalytics() {
       // landing and no rage-clicking -- so it is off again. Turning it back on
       // needs a question it can answer.
       disable_session_recording: true,
-      disable_surveys: true,
+      // On for one survey only: "what would make you use this more often?", shown to
+      // visitors back after 7+ days away (the lapsed_return event below triggers it in
+      // PostHog). Survey state is kept in localStorage like everything else, no cookies.
+      disable_surveys: false,
       respect_dnt: true,
       capture_pageview: true,
       capture_pageleave: true,       // gives time-on-site
@@ -85,10 +88,36 @@ function startAnalytics() {
     });
     analyticsReady = true;
     for (const [event, props] of analyticsQueue.splice(0)) track(event, props);
+    // After the survey definitions arrive, or PostHog's event trigger has nothing to match against.
+    if (lapsedGapDays >= LAPSED_DAYS) {
+      let sent = false;
+      const send = () => { if (!sent) { sent = true; track('lapsed_return', { gap_days: lapsedGapDays, device: deviceKind() }); } };
+      try { window.posthog.onSurveysLoaded ? window.posthog.onSurveysLoaded(send) : setTimeout(send, 3000); } catch (e) { send(); }
+    }
   };
   script.onerror = () => { analyticsQueue.length = 0; };
   document.head.append(script);
 }
+
+/**
+ * Days since this browser was last here, read once at load before anything
+ * overwrites it: the later of our own record and PostHog's last-activity time
+ * (its `$sesid`, also in localStorage), so visitors from before this existed
+ * count too. 0 for a first visit or one earlier the same day. A visitor back
+ * after LAPSED_DAYS or more is who the "use it more often?" survey is for.
+ */
+const LAST_VISIT_KEY = 'cq:lastVisit';
+const LAPSED_DAYS = 7;
+const lapsedGapDays = (() => {
+  try {
+    let last = Number(localStorage.getItem(LAST_VISIT_KEY)) || 0;
+    const ph = JSON.parse(localStorage.getItem(`ph_${ANALYTICS.key}_posthog`) || '{}');
+    if (Array.isArray(ph.$sesid) && Number(ph.$sesid[0]) > last) last = Number(ph.$sesid[0]);
+    localStorage.setItem(LAST_VISIT_KEY, String(Date.now()));
+    if (!last || new Date(last).toDateString() === new Date().toDateString()) return 0;
+    return Math.floor((Date.now() - last) / 86400000);
+  } catch (e) { return 0; }
+})();
 
 /**
  * How this visit is being viewed, registered on every event so retention can be
@@ -1805,6 +1834,9 @@ const CAMPUS_CONTENT = {
   uiuc: { buildings: BUILDINGS_UIUC, studySpots: STUDY_SPOTS_UIUC,
           pickLabels: PICK_LABELS_UIUC, calendar: ACADEMIC_CALENDAR_UIUC,
           gisAliases: GIS_ALIASES_UIUC, sayWhenShut: false, assumeShutWithoutClasses: false,
+          // Exam-season banner. registrar.illinois.edu/fall-2026-academic-calendar/, read 2026-10-25:
+          // "Final examination period" December 11-17 (reading day December 10). No campus-wide midterm dates exist.
+          exams: [{ id: 'fa26-finals', name: 'Finals', start: '2026-12-11', end: '2026-12-17' }],
           // The study sheet's tabs. No Rooms tab here, by the owner's choice (2026-10-24): it would
           // compete with Illini Spots. Quiet = the Library's Study Spaces Directory, which rates each
           // space on its own four-step "Expected Volume" scale (data/library_spaces.json).
@@ -1817,6 +1849,9 @@ const CAMPUS_CONTENT = {
   osu:  { buildings: BUILDINGS_OSU,  studySpots: STUDY_SPOTS_OSU,
           pickLabels: PICK_LABELS_OSU,  calendar: ACADEMIC_CALENDAR_OSU,
           gisAliases: GIS_ALIASES_OSU, sayWhenShut: true, assumeShutWithoutClasses: false,
+          // registrar.osu.edu/academic-calendar/academic-calendar-5-year-view-2023-2028/, read 2026-10-25:
+          // semester finals "Friday, December 11, 2026" to "Thursday, December 17, 2026".
+          exams: [{ id: 'au26-finals', name: 'Finals', start: '2026-12-11', end: '2026-12-17' }],
           // No study-spot tabs: Ohio State publishes no noise ratings, and the owner dropped the Rooms
           // tab on every campus (2026-10-25). Its library rooms still show on the Prior Hall panel.
           // ttm.osu.edu/ride-smart, read 2026-10-24: Lyft, $4 off per ride, 7 p.m.-7 a.m., service area.
@@ -1828,6 +1863,9 @@ const CAMPUS_CONTENT = {
           // timetable -- so an empty-looking evening map needs the same
           // explanation Columbus gets.
           gisAliases: GIS_ALIASES_UMD, sayWhenShut: true, assumeShutWithoutClasses: true,
+          // academiccatalog.umd.edu/about-university/academic-calendar/semester-calendar/, read 2026-10-25:
+          // "Final Exams December 14-21 (Monday-Monday)", reading day December 12.
+          exams: [{ id: 'fa26-finals', name: 'Finals', start: '2026-12-14', end: '2026-12-21' }],
           // Name every building the register holds, not only the ones with data.
           // Off for the two live campuses: Ohio State's register has 534 records and
           // turning this on there would change a launched map.
@@ -1879,6 +1917,10 @@ const CAMPUS_CONTENT = {
           // timetable, so an evening map needs the same explanation Maryland gets.
           // The timetable lists no Saturday or Sunday classes at all.
           gisAliases: GIS_ALIASES_UTSG, sayWhenShut: true, assumeShutWithoutClasses: true,
+          // undergrad.engineering.utoronto.ca/event/2026-fall-final-exam-period/ ("December 10 - December 22")
+          // and kpe.calendar.utoronto.ca/sessional-dates ("Examination period for KPE and A&S academic
+          // courses", December 10-22), read 2026-10-25. Faculties differ slightly (Law starts Dec 4); A&S is the bulk.
+          exams: [{ id: 'f26-exams', name: 'Exams', start: '2026-12-10', end: '2026-12-22' }],
           // Weekday doors, from the six U of T buildings that publish hours AND hold
           // classes (OISE 7-21, Woodsworth 8:30-20, Innis 8-21, Rotman 6:30-21, Student
           // Commons 9-21, Athletic Centre 7-23). The class window alone shut every
@@ -4385,6 +4427,8 @@ function scheduleAsk(delay) {
 function maybeShowSurvey() {
   // Opting out of stats means opting out of this too — same signal either way.
   if (analyticsExcluded() || askDone()) return;
+  // A lapsed returner gets the PostHog survey this visit; one question at a time.
+  if (lapsedGapDays >= LAPSED_DAYS) return;
   if (isReturningVisitor()) {
     // They are the proof that coming back is possible, so skip the intent
     // question and ask straight out what almost cost us the visit.
@@ -5303,6 +5347,84 @@ function showInstallNudge(state) {
   track('install_nudge_shown', { kind, device: deviceKind() });
 }
 
+// ─── Exam-season banner ───────────────────────────────────────────────────────
+// Study demand comes in waves, so the reason to come back is the next exam
+// period, not tomorrow. A small line at the top of the study sheet in the two
+// weeks before and during exams (CAMPUS_CONTENT.exams: official dates only, a
+// campus with none simply never shows it). At most once a day, and gone for the
+// rest of that exam period once dismissed.
+const EXAM_LEAD_DAYS = 14;
+const EXAM_KEY = `cq:exam:${CAMPUS.id}`;
+
+function examState() {
+  try { return JSON.parse(localStorage.getItem(EXAM_KEY) || '{}'); } catch (e) { return {}; }
+}
+function setExamState(state) {
+  try { localStorage.setItem(EXAM_KEY, JSON.stringify(state)); } catch (e) { /* storage blocked */ }
+}
+
+/** Whole days from a to b, both YYYY-MM-DD. */
+function daysBetween(a, b) {
+  const t = d => Date.UTC(+d.slice(0, 4), +d.slice(5, 7) - 1, +d.slice(8, 10));
+  return Math.round((t(b) - t(a)) / 86400000);
+}
+
+function fmtExamDay(d) {
+  return new Date(Date.UTC(+d.slice(0, 4), +d.slice(5, 7) - 1, +d.slice(8, 10)))
+    .toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' });
+}
+
+function renderExamBanner() {
+  if (!pickCard || pickCard.hidden || document.getElementById('exam-banner')) return;
+  const { date } = campusNow();
+  const period = (CAMPUS_CONTENT.exams ?? []).find(p => date <= p.end && daysBetween(date, p.start) <= EXAM_LEAD_DAYS);
+  if (!period) return;
+  const state = examState();
+  if ((state.dismissed ?? []).includes(period.id) || state.shownOn === date) return;
+  const daysLeft = daysBetween(date, period.start);
+  const phase = daysLeft > 0 ? 'before' : 'during';
+  const words = phase === 'during'
+    ? `${period.name} are on. Find a study spot that’s open now`
+    : `${period.name} start ${daysLeft === 1 ? 'tomorrow' : fmtExamDay(period.start)}. Find a study spot that’s open now`;
+  const props = { period: period.id, phase, days_left: daysLeft, device: deviceKind() };
+
+  const el = document.createElement('div');
+  el.id = 'exam-banner';
+  el.style.cssText = 'display:flex;align-items:center;gap:6px;margin:2px 0 8px;padding:4px 4px 4px 10px;border-radius:8px;'
+    + 'background:rgba(253,230,138,0.10);border:1px solid rgba(253,230,138,0.30)';
+  const go = document.createElement('button');
+  go.type = 'button';
+  go.style.cssText = 'flex:1;min-height:36px;background:none;border:0;padding:0;font:inherit;font-size:13px;line-height:1.35;'
+    + 'color:#fde68a;text-align:left;cursor:pointer';
+  go.textContent = `${words} →`;
+  const close = document.createElement('button');
+  close.type = 'button';
+  close.setAttribute('aria-label', 'Dismiss');
+  close.style.cssText = 'flex:none;width:36px;height:36px;background:none;border:0;font:inherit;font-size:18px;color:#a8a08a;cursor:pointer';
+  close.textContent = '×';
+  const remove = () => { el.remove(); publishSheetHeight(); };
+  go.addEventListener('click', () => {
+    track('exam_banner_clicked', props);
+    remove();
+    setPicksCollapsed(false);
+    hubTab = 'now';
+    renderHub();
+    pickCard.scrollIntoView?.({ block: 'nearest', behavior: 'smooth' });
+  });
+  close.addEventListener('click', () => {
+    track('exam_banner_dismissed', props);
+    const s = examState();
+    setExamState({ ...s, dismissed: [...(s.dismissed ?? []), period.id].slice(-6) });
+    remove();
+  });
+  el.append(go, close);
+  // Outside #pick-body, so a collapsed sheet still shows it.
+  pickToggle.after(el);
+  setExamState({ ...state, shownOn: date });
+  track('exam_banner_shown', props);
+  publishSheetHeight();
+}
+
 // ─── Start ────────────────────────────────────────────────────────────────────
 (async function start() {
   // Buildings take longest, so start them first; they're coloured once our
@@ -5339,6 +5461,7 @@ function showInstallNudge(state) {
   labelRegisterBuildings();
   claimPendingTiles();
   refresh();
+  renderExamBanner();
   // Before awaiting the buildings: neither of these needs the 3D map, and
   // queueing them behind it meant the room list arrived seconds late — or not
   // at all on a page where the tileset fails.

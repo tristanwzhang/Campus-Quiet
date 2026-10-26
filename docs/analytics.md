@@ -105,6 +105,43 @@ building panel, stored in `cq:spots:<campus>` on the device), and `install_nudge
 once in the panel after a second building is opened, phones only, at most 3 times and 14 days apart.
 Each campus has its own `manifest-<id>.webmanifest`, written by `scripts/build_campus_pages.py`.
 
+## U of T success scorecard (2026-10-25)
+
+Retention, not reach, is the goal now. Study demand comes in waves (midterms, finals), so success means
+people coming back the next time they need to study, not daily use.
+
+**Targets, written before looking at any data** (judge them at week 4, ~2026-11-22, and after U of T exams,
+Dec 10–22):
+
+1. **Week-1 return** for the U of T launch cohort (first seen from 2026-10-25) is above Illinois, Ohio State and
+   Maryland at the same age. Only the `installed` row is a trustworthy figure; `browser` and `in-app` understate
+   it because their storage is wiped or kept separately.
+2. **Study-sheet users return measurably more than map-only users**: at least 1.5x the map-only return rate,
+   on at least 30 sheet users.
+3. **Launch-week users reappear during U of T exams in December** (Dec 10–22) without a new Reddit post:
+   at least 5% of the launch-week cohort seen again in that window.
+4. **Direct / no-referrer share of U of T pageviews rises week over week** after the launch week (habit
+   replacing the Reddit spike).
+5. **Hours reports are mostly "correct"**: at least 80% `correct` overall, and no `basis` below 60% on 10+ reports.
+
+New events in this round:
+
+| Event | When | Properties |
+|---|---|---|
+| `exam_banner_shown` / `_clicked` / `_dismissed` | Exam-season line at the top of the study sheet, 14 days before and during finals | `period`, `phase` (before / during), `days_left`, `device` |
+| `lapsed_return` | A visitor back after 7+ days away (last visit from `cq:lastVisit` or PostHog's own `$sesid` timestamp) | `gap_days`, `device` |
+
+**Exam banner:** dates live in `CAMPUS_CONTENT.<campus>.exams` in app.js, each with its official source in a
+comment. Finals only: no campus publishes campus-wide midterm dates. Fall 2026: Illinois Dec 11–17, Ohio State
+Dec 11–17, Maryland Dec 14–21, U of T Dec 10–22. Shown at most once a day, and never again in a period once
+dismissed (`cq:exam:<campus>` in localStorage). Clicking expands the sheet on its Open now tab. **Add the Winter
+2027 dates in January** or it goes quiet until then.
+
+**Lapsed-returner survey:** surveys are on in posthog init (`disable_surveys: false`); session recording stays
+off and persistence stays `localStorage`, so still no cookies. The PostHog survey is triggered by the
+`lapsed_return` event, shown once per person, and the site's own return-intent prompt stands down on that visit
+so nobody gets two questions.
+
 ## Notes
 
 - Watch events arrive live under **Activity** in the left sidebar.
