@@ -137,10 +137,33 @@ Dec 11–17, Maryland Dec 14–21, U of T Dec 10–22. Shown at most once a day,
 dismissed (`cq:exam:<campus>` in localStorage). Clicking expands the sheet on its Open now tab. **Add the Winter
 2027 dates in January** or it goes quiet until then.
 
-**Lapsed-returner survey:** surveys are on in posthog init (`disable_surveys: false`); session recording stays
-off and persistence stays `localStorage`, so still no cookies. The PostHog survey is triggered by the
-`lapsed_return` event, shown once per person, and the site's own return-intent prompt stands down on that visit
-so nobody gets two questions.
+**Lapsed-returner survey:** surveys are on in posthog init (`disable_surveys: false`) and in the project
+(`surveys_opt_in`); session recording stays off and persistence stays `localStorage`, so still no cookies (checked:
+`document.cookie` empty after the survey showed; its state is `seenSurvey_<id>` / `lastSeenSurveyDate` in
+localStorage). Survey `01a17694-dff2-0000-6f66-a10c8afd3527` ("Lapsed returners: what would make you use it
+more?", popover, one single-choice question with an open "Other", shuffled), triggered by `lapsed_return`, once per
+person, phones and desktop. The site's own return-intent prompt stands down on that visit so nobody gets two
+questions. Trap: this posthog-js only fetches flags when asked, and the survey's built-in "not answered yet"
+targeting flag is a flag, so app.js calls `reloadFeatureFlags()` and waits for flags + surveys before sending
+`lapsed_return`; without that the survey activated and never showed. The event only starts firing 7 days after
+someone's last visit, so expect the first responses around 2026-11-01, mostly from installed or Chrome visitors
+(Safari wipes the storage it relies on after 7 days).
+
+**Scorecard tiles** (all SQL tables on "UofT Spaces — launch health", 2259538, each verified to return rows on
+2026-10-26):
+
+| Tile | Insight | Answers target |
+|---|---|---|
+| Scorecard 1: launch-week return, week 1 and week 4, by campus and browser | `LyzfaBne` (13289070) | 1 |
+| Scorecard 2: do study-sheet users come back more than map-only? | `f4xf7lt0` (13289071) | 2 |
+| Scorecard 3: direct / no-referrer share of pageviews, by week | `xcucqQdj` (13289072) | 4 |
+| Scorecard 4: hours reports, how often was the map right? (by basis) | `1SqBkpsk` (13289073) | 5 |
+| Scorecard 5: do UofT launch-week visitors come back for December exams? | `0kluHSH9` (13289085) | 3 |
+
+Launch days used for "same age": Illinois 2026-09-23 (ids persisted from then), Maryland 2026-10-21, U of T
+2026-10-25, Ohio State 2026-10-26 (planned). Pageviews before mid-October carry no `school` and count as Illinois;
+`browser_kind` only exists from 2026-10-22, so Illinois' and most of Maryland's launch cohorts read "untagged".
+Days are in the project timezone (Chicago), an hour off Toronto.
 
 ## Notes
 
