@@ -839,6 +839,23 @@ function assumedStatus(id, date, time) {
   // that anything is shut, so it says nothing. Campuses that publish no such
   // list are unaffected.
   if ((data.hours?.classesOutDates || []).includes(date)) {
+    // U of T: a study-break weekday is still a working day -- the buildings that publish hours
+    // (OISE, Woodsworth, Innis, Rotman, Student Commons, Athletic Centre) list the same hours
+    // through it. So a building that holds classes in an ordinary week reads "probably open"
+    // in the weekday window (buildingDay), labelled as a campus default; venues are excluded.
+    const floor = !configFor(id)?.noCampusDefault && CAMPUS_CONTENT.buildingDay?.[weekdayOf(date)];
+    const week = data.classActivity?.buildings?.[id]?.hours;
+    if (floor && week && Object.values(week).some(g => g.some(v => v > 0))) {
+      const isOpen = time >= floor[0] && time < floor[1];
+      return {
+        state: isOpen ? 'open' : 'closed',
+        source: 'assumed from published hours of similar buildings',
+        assumed: true,
+        campusDefault: isOpen,
+        defaultWhy: 'no classes this week, but the U of T buildings that publish hours stay open about 8:30am\u20139pm on weekdays',
+        closedNote: 'Probably closed \u00b7 outside about 8:30am\u20139pm, when weekday buildings here are usually open',
+      };
+    }
     return { state: 'unknown' };
   }
 
@@ -1775,6 +1792,16 @@ const BUILDINGS_UTSG = {
   'Warren Stevens Building': { type: 'rec', label: 'Athletic Centre', labelPriority: 1 },
   // No classes, so it is known only through its published hours and the map's record.
   'Hart House':             { label: 'Hart House', labelPriority: 1 },
+  // Added 2026-10-26: no classes, placed for their libraries' published hours (LibCal). The first
+  // two ARE library buildings; the rest are open at least while the library inside is.
+  'Thomas Fisher Rare Book Library': { type: 'library', label: 'Fisher Library' },
+  'John W. Graham Library':          { type: 'library', label: 'Graham Library (Trinity)' },
+  'Jackman Law Building & Flavelle House': { label: 'Jackman Law Building' },
+  'Dentistry Building':              {},
+  'Canadiana Gallery':               {},
+  '121 St. George Street':           {},
+  'Knox College':                    {},
+  'Massey College':                  {},
   // Venues, not buildings people walk into: unlocked for what is scheduled in them,
   // so the weekday campus default (buildingDay) does not apply.
   'Convocation Hall':        { noCampusDefault: true },
@@ -1949,6 +1976,9 @@ const CAMPUS_CONTENT = {
           coverByHull: true,
           // A "Study rooms free now" list in the picks sheet, from /api/rooms.
           roomsList: true,
+          // Buildings placed only for the library inside them have no hours or class record, so
+          // codeFor() finds their register entry by its name. U of T only.
+          registerByName: true,
           // One sheet with Open now / Rooms / Quiet / Computers tabs (replaces the separate rooms box).
           hubTabs: ['now', 'quiet', 'computers'],   // no Rooms tab: the Study rooms sidebar has them (owner, 2026-10-25)
           quietSource: 'From library.utoronto.ca. Walk-in areas only; bookable rooms are under Rooms.',
@@ -3573,6 +3603,9 @@ function gisByCode() {
 function codeFor(name) {
   return data.hours?.buildings?.[name]?.code
       ?? data.classActivity?.buildings?.[name]?.code
+      // A building known only for the library inside it (U of T: the Law and Dentistry
+      // buildings, Knox, Massey...) has no hours or class record; the register names it itself.
+      ?? (CAMPUS_CONTENT.registerByName ? Object.entries(data.gis?.buildings ?? {}).find(([, b]) => b.name === name)?.[0] : undefined)
       ?? null;
 }
 
@@ -4167,7 +4200,8 @@ function openPanel(name, keepThanks = false) {
     : occ.source === 'event' ? 'Event in progress'
     : occ.venue ? (occ.headline ?? 'Event day')
     : occ.source === 'unknown' ? 'Hours not published — no estimate right now'
-    : occ.source === 'open' ? 'Open now \u00b7 no classes in session'
+    // An assumption (U of T's campus default) says so; a published hour or an open library inside does not need to.
+    : occ.source === 'open' ? (occ.assumed ? 'Probably open \u00b7 no classes on now' : 'Open now \u00b7 no classes in session')
     : isDefaultEstimate(occ.source) ? `About ${Math.round(occ.value * 100)}% full`
     : `${SOURCE_LABELS[occ.source]} · ${Math.round(occ.value * 100)}% full`;
   panelQ.hidden = closed || unmapped;
@@ -5214,7 +5248,7 @@ function spotStatus(name) {
   }
   if (occ.source === 'unknown') return 'Hours not published';
   if (occ.source === 'event') return 'Event in progress';
-  const base = occ.source === 'open' ? 'Open · no classes in session' : busyWord(occ);
+  const base = occ.source === 'open' ? (occ.assumed ? 'Probably open · no classes on now' : 'Open · no classes in session') : busyWord(occ);
   const until = closingHour(name, date, time);
   return until == null ? base : `${base} · until ${fmtHour(until)}`;
 }

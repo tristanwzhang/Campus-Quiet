@@ -100,7 +100,7 @@ def official(map_id):
         return None
     return {"name": name, "lat": d["lat"], "lon": d["lng"],
             "number": num.group(1) if num else None,
-            "address": unescape(re.sub(r"<br>", ", ", addr.group(1))).strip() if addr else None}
+            "address": re.sub(r"<[^>]+>", "", unescape(re.sub(r"<br>", ", ", addr.group(1)))).strip() if addr else None}
 
 
 # ── geometry (metres, local plane) ──
@@ -187,11 +187,21 @@ def main():
     # id is read from the map itself (Hart House: 494521, "Hart House | HH", category 48654).
     EXTRA_IDS = {"HH": "494521",      # "Hart House | HH"
                  "KL": "959669",      # "John M. Kelly Library | KL"
-                 "PR": "959687"}      # "E.J. Pratt Library | PR"
+                 "PR": "959687",      # "E.J. Pratt Library | PR"
+                 # 2026-10-26: buildings with no classes, placed for the library in or of them
+                 # (build_utsg_hours.py LIBRARIES / TENANTS). Each id is the map's BUILDING record.
+                 "RB": "959691",      # "Thomas Fisher Rare Book Library | RB"
+                 "MU": "506347",      # "John W. Graham Library | MU"
+                 "LW": "494544",      # "Jackman Law Building & Flavelle House | LW"
+                 "DN": "494449",      # "Dentistry Building | DN"
+                 "CG": "494505",      # "Canadiana Gallery | CG"
+                 "IR": "494551",      # "121 St. George Street | IR"
+                 "KX": "985710",      # "Knox College | KX"
+                 "MA": "1055911"}     # "Massey College | MA"
     hours_file = DATA / "building_hours.json"
-    extra = (sorted({e["code"] for e in json.loads(hours_file.read_text())["buildings"].values()
-                    if e.get("code") in EXTRA_IDS or e.get("code") in FALLBACKS})
-             if hours_file.exists() else [])
+    extra = sorted(set(EXTRA_IDS) | (
+        {e["code"] for e in json.loads(hours_file.read_text())["buildings"].values() if e.get("code") in FALLBACKS}
+        if hours_file.exists() else set()))
     for c in extra:
         if c in EXTRA_IDS:
             ids.setdefault(c, set()).add(EXTRA_IDS[c])

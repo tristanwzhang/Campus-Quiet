@@ -53,6 +53,11 @@ LIBRARIES = {
     8321: ("Sigmund Samuel Library Building", "SM", "Gerstein Science Information Centre"),
     8438: ("E.J. Pratt Library", "PR", "E.J. Pratt Library"),
     8454: ("John M. Kelly Library", "KL", "John M. Kelly Library"),
+    # Added 2026-10-26: libraries that are buildings of their own on the map but hold no classes.
+    # The map's records: 959691 "Thomas Fisher Rare Book Library | RB"; 506347 "John W. Graham
+    # Library | MU" (the map relabelled the 1 Devonshire building to the library's name).
+    8353: ("Thomas Fisher Rare Book Library", "RB", "Thomas Fisher Rare Book Library"),
+    8347: ("John W. Graham Library", "MU", "John W. Graham Library (Trinity College)"),
 }
 
 # Libraries INSIDE a building with no published hours of its own. A library that is
@@ -77,11 +82,29 @@ TENANTS = {
     # and the map says 22 Ursula Franklin, so the addresses alone do not match; the owner said they are
     # the same building. Not provable from our sources, so treat as owner-confirmed.
     8324: ("Earth Sciences Centre", "Earth Sciences Library (Noranda)"),
+    # Added 2026-10-26: buildings with no classes, placed only for the library inside. Each link
+    # is the map's own record of the library carrying the building's code: 491353 "Bora Laskin
+    # Law Library | LW", 491322 "Dentistry Library | DN", 491333 "Centre for Criminology Library
+    # | CG", 491359 "Jean & Dorothy Newman Industrial Relations & Human Resources Library | IR",
+    # 491330 "Knox College Caven Library | KX", 491346 "Robertson Davies Library | MA | Massey College".
+    8434: ("Dentistry Building", "Dentistry Library"),
+    8352: ("Canadiana Gallery", "Centre for Criminology Library"),
+    8351: ("121 St. George Street", "Newman Industrial Relations Library"),
+    8441: ("Knox College", "Knox College Library (Caven)"),
+    8444: ("Massey College", "Robertson Davies Library (Massey College)"),
+}
+
+# Libraries inside a building whose LibCal entry only says "visit our site for hours". The site's
+# own statement, read 2026-10-26, applied Mon-Fri across the same window as the feed, minus the
+# campus closure days. Evidence of "open at least then", like TENANTS.
+WEEKLY_TENANTS = {
+    # library.law.utoronto.ca: "Open Monday - Friday | 9 a.m. to 5 p.m." (LibCal lid 8355 defers to it)
+    "Jackman Law Building & Flavelle House": ("Bora Laskin Law Library", "https://library.law.utoronto.ca/", (9, 17)),
 }
 
 # Locations whose LibCal dates carry no closures at all (checked 2026-10-21: Kelly
 # lists every one of 84 days as open, Christmas included).
-NO_HOLIDAYS_IN_FEED = {8454}
+NO_HOLIDAYS_IN_FEED = {8454, 8347}   # Graham (Trinity), checked 2026-10-26: open on Dec 25 in the feed
 
 CAMPUS_CLOSED = (["2026-09-07", "2026-10-12", "2027-02-15"] +
                  [(date(2026, 12, 24) + timedelta(days=i)).isoformat() for i in range(13)])  # to Jan 5
@@ -258,6 +281,14 @@ def main():
         if dates:
             tenants.setdefault(building, []).append(
                 {"label": label, "sourceUrl": "https://libcal.library.utoronto.ca/hours/", "dates": dates})
+    today = date.today()
+    for building, (label, url, (o, c)) in WEEKLY_TENANTS.items():
+        dates = {}
+        for i in range(84):
+            d = today + timedelta(days=i)
+            if d.weekday() < 5 and d.isoformat() not in CAMPUS_CLOSED:
+                dates[d.isoformat()] = [[o, c]]
+        tenants.setdefault(building, []).append({"label": label, "sourceUrl": url, "dates": dates})
     print(f"library-inside evidence for {len(tenants)} buildings")
 
     buildings.update(WEEKLY)
