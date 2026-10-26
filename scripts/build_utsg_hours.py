@@ -61,7 +61,7 @@ LIBRARIES = {
 # "probably closed"). Each link is the library's own address on library.utoronto.ca
 # matching the map's address for the building, or the map's own record naming the
 # library inside it. Earth Sciences (5 Bancroft Ave vs the map's 22 Ursula Franklin)
-# did not match and is left out.
+# did not match by address; added later on the owner's say-so (see its entry).
 TENANTS = {
     8400: ("Sandford Fleming Building", "Engineering & Computer Science Library"),  # 10 King's College Rd; map record names it
     8322: ("Lash Miller Chemical Laboratories", "Chemistry Library"),               # 80 St. George
@@ -73,6 +73,10 @@ TENANTS = {
     8416: ("Emmanuel College", "Emmanuel College Library"),                         # 75 Queen's Park Cres E
     8442: ("Wilson Hall", "D.G. Ivey Library (New College)"),                       # 40 Willcocks St
     8163: ("Daniels Building", "Eberhard Zeidler Library"),                          # 1 Spadina Crescent
+    # Added 2026-10-26 on the owner's confirmation: the library page says "5 Bancroft Avenue, 2nd floor"
+    # and the map says 22 Ursula Franklin, so the addresses alone do not match; the owner said they are
+    # the same building. Not provable from our sources, so treat as owner-confirmed.
+    8324: ("Earth Sciences Centre", "Earth Sciences Library (Noranda)"),
 }
 
 # Locations whose LibCal dates carry no closures at all (checked 2026-10-21: Kelly
