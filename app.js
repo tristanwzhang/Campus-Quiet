@@ -1276,7 +1276,7 @@ function estimateFor(name) {
   if (hours.state === 'open' && hours.viaTenant) {
     const inside = `the ${hours.viaTenant} inside is open now (its published hours)`;
     if (estimate) return { ...estimate, note: addToNote(estimate.note, inside) };
-    return { value: 0, source: 'open', note: `Open \u00b7 ${inside}` };
+    return { value: 0, source: 'open', viaTenant: hours.viaTenant, note: `Open \u00b7 ${inside}` };
   }
   if (hours.state === 'open' && hours.campusDefault) {
     const why = hours.defaultWhy ?? 'most U of T buildings that publish hours are open about 8:30am\u20139pm on weekdays';
@@ -1813,6 +1813,9 @@ const BUILDINGS_UTSG = {
   '121 St. George Street':           {},
   'Knox College':                    {},
   'Massey College':                  {},
+  // 2026-10-26: no classes and no building hours; known through the dining hall / pub inside.
+  'Morrison Hall':                   {},   // residence; Howard Ferguson Dining Hall (official hours) on the first floor
+  'Goldring Student Centre':         {},   // Victoria; the Cat's Eye pub (its own site's hours) on the first floor
   // Venues, not buildings people walk into: unlocked for what is scheduled in them,
   // so the weekday campus default (buildingDay) does not apply.
   'Convocation Hall':        { noCampusDefault: true },
@@ -4230,6 +4233,8 @@ function openPanel(name, keepThanks = false) {
     : occ.venue ? (occ.headline ?? 'Event day')
     : occ.source === 'unknown' ? 'Hours not published — no estimate right now'
     // An assumption (U of T's campus default) says so; a published hour or an open library inside does not need to.
+    // Open only because a library/dining hall/pub inside publishes hours: say so, since that is all it proves.
+    : occ.source === 'open' && occ.viaTenant ? `Open now \u00b7 the ${occ.viaTenant} inside is open`
     : occ.source === 'open' ? (occ.assumed ? 'Probably open \u00b7 no classes on now' : 'Open now \u00b7 no classes in session')
     : isDefaultEstimate(occ.source) ? `About ${Math.round(occ.value * 100)}% full`
     : `${SOURCE_LABELS[occ.source]} · ${Math.round(occ.value * 100)}% full`;
@@ -5277,7 +5282,7 @@ function spotStatus(name) {
   }
   if (occ.source === 'unknown') return 'Hours not published';
   if (occ.source === 'event') return 'Event in progress';
-  const base = occ.source === 'open' ? (occ.assumed ? 'Probably open · no classes on now' : 'Open · no classes in session') : busyWord(occ);
+  const base = occ.source === 'open' ? (occ.viaTenant ? `Open · the ${occ.viaTenant} inside is open` : occ.assumed ? 'Probably open · no classes on now' : 'Open · no classes in session') : busyWord(occ);
   const until = closingHour(name, date, time);
   return until == null ? base : `${base} · until ${fmtHour(until)}`;
 }

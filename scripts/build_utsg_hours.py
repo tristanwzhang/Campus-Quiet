@@ -97,9 +97,34 @@ TENANTS = {
 # Libraries inside a building whose LibCal entry only says "visit our site for hours". The site's
 # own statement, read 2026-10-26, applied Mon-Fri across the same window as the feed, minus the
 # campus closure days. Evidence of "open at least then", like TENANTS.
+def _law(d):
+    return [[9, 17]] if d.weekday() < 5 else None
+
+
+def _ferguson(d):
+    # uc.utoronto.ca/students-current-students-food-howard-ferguson-dining-hall, read 2026-10-26:
+    # Academic year (Sep 6 2026 - Apr 30 2027) Mon-Fri 7:30am-7:30pm, Sat-Sun 9am-7:30pm, both closed 3-4pm;
+    # holiday (Dec 24 2026 - Jan 5 2027) every day 9am-7:30pm.
+    if date(2026, 12, 24) <= d <= date(2027, 1, 5):
+        return [[9, 19.5]]
+    return [[7.5, 15], [16, 19.5]] if d.weekday() < 5 else [[9, 15], [16, 19.5]]
+
+
+def _cats_eye(d):
+    # thecatseye.ca, read 2026-10-26: "open from 9AM to 11PM from Monday to Friday starting in September".
+    # A volunteer-run pub, so not offered on study-break or campus-closed days (nothing says it opens then).
+    return [[9, 23]] if d.weekday() < 5 and d.isoformat() not in CLASSES_OUT else None
+
+
+# building -> (what is inside, source, rule(date) -> ranges or None)
 WEEKLY_TENANTS = {
     # library.law.utoronto.ca: "Open Monday - Friday | 9 a.m. to 5 p.m." (LibCal lid 8355 defers to it)
-    "Jackman Law Building & Flavelle House": ("Bora Laskin Law Library", "https://library.law.utoronto.ca/", (9, 17)),
+    "Jackman Law Building & Flavelle House": ("Bora Laskin Law Library", "https://library.law.utoronto.ca/", _law),
+    # Morrison Hall is a residence; its first floor holds the dining hall, which takes cash and cards.
+    "Morrison Hall": ("Howard Ferguson Dining Hall", "https://www.uc.utoronto.ca/students-current-students-food-howard-ferguson-dining-hall", _ferguson),
+    # No official building hours exist (Apple Maps' 8am-11pm is third party). The Cat's Eye pub is on the
+    # first floor, so the building is open at least while the pub is.
+    "Goldring Student Centre": ("Cat's Eye pub", "https://www.thecatseye.ca/", _cats_eye),
 }
 
 # Locations whose LibCal dates carry no closures at all (checked 2026-10-21: Kelly
@@ -282,12 +307,16 @@ def main():
             tenants.setdefault(building, []).append(
                 {"label": label, "sourceUrl": "https://libcal.library.utoronto.ca/hours/", "dates": dates})
     today = date.today()
-    for building, (label, url, (o, c)) in WEEKLY_TENANTS.items():
+    for building, (label, url, rule) in WEEKLY_TENANTS.items():
         dates = {}
         for i in range(84):
             d = today + timedelta(days=i)
-            if d.weekday() < 5 and d.isoformat() not in CAMPUS_CLOSED:
-                dates[d.isoformat()] = [[o, c]]
+            # Skip a campus closure unless the source states hours for that very day (Ferguson's holiday hours).
+            if d.isoformat() in CAMPUS_CLOSED and not (date(2026, 12, 24) <= d <= date(2027, 1, 5) and rule is _ferguson):
+                continue
+            r = rule(d)
+            if r is not None:
+                dates[d.isoformat()] = r
         tenants.setdefault(building, []).append({"label": label, "sourceUrl": url, "dates": dates})
     print(f"library-inside evidence for {len(tenants)} buildings")
 

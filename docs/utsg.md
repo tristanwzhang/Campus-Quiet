@@ -463,3 +463,18 @@ cap, so Robarts (rooms + computers + study areas + survey + wish buttons) overfl
 to the window (desktop: 100dvh - 96 - 56px; phone: 100dvh - 32 - 170px) and scrolling inside; room
 sources shown as two names + "+N more"; at most 4 study areas listed ("+N more, see the Quiet tab").
 Applies to every campus (CSS lives in the shared template); only buildings with a lot to say scroll.
+
+**Morrison Hall and Goldring Student Centre added (2026-10-26, from the Reddit critique).** Neither has
+building hours anywhere official, so each is known only through a tenant whose OWN official page
+publishes hours ("open at least then", never "closed outside"; WEEKLY_TENANTS in build_utsg_hours.py):
+- Morrison Hall (MO, 75 St. George, a University College residence): Howard Ferguson Dining Hall on its
+  first floor (it takes cash and cards), from uc.utoronto.ca: academic year Mon-Fri 7:30am-7:30pm,
+  Sat-Sun 9am-7:30pm, both closed 3-4pm; Dec 24-Jan 5 daily 9am-7:30pm.
+- Goldring Student Centre (GC, 150 Charles St W, Victoria): the Cat's Eye pub on its first floor,
+  thecatseye.ca: "open 9AM to 11PM Monday to Friday starting in September". A volunteer-run pub, so it
+  is not offered on study-break or campus-closed days. NOT used: Apple Maps' 8am-11pm and a 2021 student
+  blog (third-party, old); the Registrar's and Writing Centre hours are offices, not the building.
+Outside those hours both read "No hours" (not "closed"). The panel now says what the evidence is:
+"Open now - the Howard Ferguson Dining Hall inside is open" (same for the 10 library-inside buildings).
+Map records: Morrison Hall 985707, Goldring Student Centre 506453. Not yet seen rendered in 3D (app window
+was not visible); both have register footprints, drawn by the app's own path if the tiles do not name them.

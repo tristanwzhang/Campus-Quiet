@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-27T00:11:50+00:00",
+ "built_at": "2026-10-27T00:26:47+00:00",
  "source": "map.utoronto.ca",
  "codes": {
   "AB": "Astronomy & Astrophysics Building",
@@ -22,6 +22,7 @@
   "ES": "Earth Sciences Centre",
   "FE": "371 Bloor Street West",
   "GB": "Galbraith Building",
+  "GC": "Goldring Student Centre",
   "GI": "George Ignatieff Theatre",
   "HA": "Haultain Building",
   "HH": "Hart House",
@@ -42,6 +43,7 @@
   "MB": "Lassonde Mining Building",
   "MC": "Mechanical Engineering Building",
   "MK": "Munk School of Global Affairs & Public Policy",
+  "MO": "Morrison Hall",
   "MP": "McLennan Physical Laboratories",
   "MS": "Medical Sciences Building",
   "MU": "John W. Graham Library",

@@ -209,7 +209,10 @@ def main():
                  "CG": "494505",      # "Canadiana Gallery | CG"
                  "IR": "494551",      # "121 St. George Street | IR"
                  "KX": "985710",      # "Knox College | KX"
-                 "MA": "1055911"}     # "Massey College | MA"
+                 "MA": "1055911",     # "Massey College | MA"
+                 # 2026-10-26: no classes and no building hours; placed for the dining hall / pub inside
+                 "MO": "985707",      # "Morrison Hall | MO" (75 St. George; Howard Ferguson Dining Hall)
+                 "GC": "506453"}      # "Goldring Student Centre | GC" (150 Charles St W; Cat's Eye pub)
     hours_file = DATA / "building_hours.json"
     extra = sorted(set(EXTRA_IDS) | (
         {e["code"] for e in json.loads(hours_file.read_text())["buildings"].values() if e.get("code") in FALLBACKS}
