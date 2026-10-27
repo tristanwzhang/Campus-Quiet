@@ -4890,7 +4890,9 @@
   "RT": {
    "name": "Rotman School of Management",
    "code": "RT",
-   "aliases": [],
+   "aliases": [
+    "Joseph L. Rotman Faculty of Management"
+   ],
    "lat": 43.66534,
    "lon": -79.398384,
    "outline": [

@@ -55,6 +55,7 @@ MANUAL_ALIASES = {
     # university and they stayed no-data grey on the map (found 2026-10-26 while looking at "lag").
     "SM": ["Gerstein Science Information Centre"],   # the library inside; 9 King's College Circle = Sigmund Samuel's address
     "TC": ["Trinity College"],                        # the tiles' name for the college's main building
+    "RT": ["Joseph L. Rotman Faculty of Management"],   # the tiles' name for 105 St. George (Rotman School of Management); clicked 4x on launch day and read "no data"
 }
 BBOX = (43.650, -79.415, 43.675, -79.375)          # S, W, N, E
 
