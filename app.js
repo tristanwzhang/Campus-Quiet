@@ -5070,7 +5070,11 @@ function hubComputers() {
   const shut = b => { const st = hoursStatus(b, date, time); return st.state === 'closed' && !st.assumed; };
   const rows = Object.entries(libraryComputers ?? {}).filter(([b, c]) => c.total && !shut(b))
     .sort((a, b) => (b[1].free - a[1].free) || pickLabel(a[0]).localeCompare(pickLabel(b[0])));
-  if (!rows.length) return '<div class="pick-note">Computer availability isn’t loading right now.</div>';
+  if (!rows.length) {
+    const all = Object.entries(libraryComputers ?? {}).filter(([, c]) => c.total);
+    return all.length ? '<div class="pick-note">The libraries with computers are closed right now, so there\u2019s nothing to show. Their computers come back here when they open.</div>'
+      : '<div class="pick-note">Computer availability isn\u2019t loading right now.</div>';
+  }
   const free = rows.reduce((n, [, c]) => n + c.free, 0), total = rows.reduce((n, [, c]) => n + c.total, 0);
   return `<div style="font-size:13px;color:#aab4c6;padding:2px 2px 8px"><b style="color:#8fd4a8">${free}</b> of ${total} library computers free right now</div>`
     + rows.map(([b, c]) => hubRow(escapeHtml(pickLabel(b)), escapeHtml(c.sources.join(' · ')),
