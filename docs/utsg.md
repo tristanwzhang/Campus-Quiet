@@ -447,3 +447,12 @@ and replaced yesterday's Munk/Graham special case with a general rule: a tile wh
 building the register puts more than 150 m away (U of T only) falls back to the register footprint it
 stands in, or is hidden under our own shape. Robarts Common is the only known building with no shape
 (label only, on purpose).
+
+**Study break no longer discounts libraries (2026-10-26, owner on the live site: "Robarts is 'empty' with 44 computers in use").**
+Fall Study Break (Oct 26-30) was kind 'break', whose CALENDAR_EFFECTS multiply libraries and study spaces
+by 0.3 -- a judgement call inherited from Illinois' Fall Break, when students leave town. Robarts read
+10% full at Monday 8pm; Google's typical Monday 8pm is 34%. U of T's is a reading week and students stay,
+so it is now kind 'studybreak': library and study = 1 (the usual curve, not boosted, since nothing
+measures a boost); union/dining/rec/atrium keep the old discount, which is unchanged and still a guess.
+Robarts Tue 8pm now reads 42%. Busyness is still the typical curve, not today's reality: the live
+computer count (e.g. 24-44 of 210 in use) is the real-time signal and is shown beside it.

@@ -533,6 +533,9 @@ const CALENDAR_EFFECTS = {
   holiday: { library: 0.8, study: 0.9, union: 0.6, dining: 0.8, rec: 1,   atrium: 0.3 },
   break:   { library: 0.3, study: 0.3, union: 0.3, dining: 0.3, rec: 0.4, atrium: 0.1 },
   reading: { library: 1.2, study: 1.2, union: 1,   dining: 1,   rec: 0.8, atrium: 1.1 },
+  // A reading week where students stay: places people STUDY keep their usual curve (1, not boosted --
+  // nothing measures a boost); the rest keep the generic break discount, which nothing here changes.
+  studybreak: { library: 1, study: 1, union: 0.3, dining: 0.3, rec: 0.4, atrium: 0.1 },
   finals:  { library: 1.3, study: 1.3, union: 1,   dining: 1,   rec: 0.7, atrium: 1.1 },
   offterm: { library: 0.2, study: 0.2, union: 0.2, dining: 0.2, rec: 0.3, atrium: 0.1 },
 };
@@ -1866,7 +1869,11 @@ const ACADEMIC_CALENDAR_UTSG = {
   periods: [
     { start: '2026-09-07', end: '2026-09-07', kind: 'holiday', label: 'Labour Day \u2014 university closed' },
     { start: '2026-10-12', end: '2026-10-12', kind: 'holiday', label: 'Thanksgiving \u2014 university closed' },
-    { start: '2026-10-26', end: '2026-10-30', kind: 'break',   label: 'Fall Study Break \u2014 no classes' },
+    // 'studybreak', not 'break': this is a reading week, students stay in Toronto and the libraries
+    // fill with people studying for midterms. The generic 'break' discount (libraries x0.3) came from
+    // Illinois' Fall Break, when students leave town, and read Robarts as 10% full while 44 of its
+    // computers were in use (owner, 2026-10-26).
+    { start: '2026-10-26', end: '2026-10-30', kind: 'studybreak', label: 'Fall Study Break \u2014 no classes' },
     { start: '2026-12-24', end: '2027-01-05', kind: 'break',   label: 'Winter break \u2014 university closed' },
   ],
 };
