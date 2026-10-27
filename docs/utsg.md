@@ -432,3 +432,18 @@ Library shape on the same spot: two colours z-fighting. claimTileBuildings now g
 the drawn building it stands in when the tile's own name belongs to a building whose official point
 is over 150 m away (U of T only, coverByHull). Also hand-checked aliases (MANUAL_ALIASES in
 build_utsg_buildings.py): MU "Devonshire House", IR "Centre for Industrial Relations and Human Resources".
+
+**"3D lag" check (2026-10-26, a critic said the downtown models lag and some campus buildings do not load).**
+Measured on the home view against Illinois: U of T loads 17.4k buildings / 324k triangles / 28 MB across 18
+tiles (Illinois 10.1k / 179k / 15 MB); 62% of U of T's loaded buildings are outside the visible area
+(Illinois 15%). Frame time here is about 7 ms; a tighter visible zone did not make it faster (hidden
+buildings are still processed), and dynamic/coarser detail changed nothing at this view (it is already
+coarse). The tile-naming code costs 24 ms for ALL tiles. So no fix to the geometry was warranted, and the
+lag could not be reproduced on a fast laptop; it may be a slower device.
+What the check DID find is the "campus buildings not loaded" half: Gerstein and Trinity College had 3D
+buildings (OSM names "Gerstein Science Information Centre", "Trinity College") that never joined to
+the register's names, so they stayed no-data grey. Added MANUAL_ALIASES SM and TC (no outline needed),
+and replaced yesterday's Munk/Graham special case with a general rule: a tile whose name belongs to a
+building the register puts more than 150 m away (U of T only) falls back to the register footprint it
+stands in, or is hidden under our own shape. Robarts Common is the only known building with no shape
+(label only, on purpose).

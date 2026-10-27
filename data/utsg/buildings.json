@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-26T20:32:35+00:00",
+ "built_at": "2026-10-27T00:11:50+00:00",
  "campus": "University of Toronto \u2014 St. George",
  "source": "map.utoronto.ca (names, numbers, coordinates); OpenStreetMap (footprints)",
  "sourceUrl": "https://map.utoronto.ca/",
@@ -5166,7 +5166,9 @@
   "SM": {
    "name": "Sigmund Samuel Library Building",
    "code": "SM",
-   "aliases": [],
+   "aliases": [
+    "Gerstein Science Information Centre"
+   ],
    "lat": 43.662251,
    "lon": -79.39402,
    "outline": null,
@@ -5387,7 +5389,9 @@
   "TC": {
    "name": "Trinity College & Residence",
    "code": "TC",
-   "aliases": [],
+   "aliases": [
+    "Trinity College"
+   ],
    "lat": 43.665138,
    "lon": -79.395538,
    "outline": null,

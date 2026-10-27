@@ -51,6 +51,10 @@ NO_OUTLINE = {"RC"}
 MANUAL_ALIASES = {
     "MU": ["Devonshire House"],   # OSM way 10334994, 1 Devonshire Pl, college=Trinity College, M5S 3K7 (= Graham's postcode)
     "IR": ["Centre for Industrial Relations and Human Resources"],   # the occupant of 121 St. George St
+    # No footprint within 30 m, so no automatic alias; the tiles name these two differently from the
+    # university and they stayed no-data grey on the map (found 2026-10-26 while looking at "lag").
+    "SM": ["Gerstein Science Information Centre"],   # the library inside; 9 King's College Circle = Sigmund Samuel's address
+    "TC": ["Trinity College"],                        # the tiles' name for the college's main building
 }
 BBOX = (43.650, -79.415, 43.675, -79.375)          # S, W, N, E
 
@@ -250,7 +254,7 @@ def main():
         rec["aliases"] = [osm_name] if (osm_name and rec["outline"] and code not in NO_OUTLINE
                                         and osm_name != rec["name"]
                                         and shares_a_name(osm_name, rec["name"])) else []
-        rec["aliases"] += [a for a in MANUAL_ALIASES.get(code, []) if rec["outline"] and a not in rec["aliases"]]
+        rec["aliases"] += [a for a in MANUAL_ALIASES.get(code, []) if a not in rec["aliases"]]
         records[code] = rec
 
     # A building added only for its hours must not take over a class building's footprint
