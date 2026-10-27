@@ -490,3 +490,7 @@ closure days are skipped. Third-party listings (Apple Maps 7am-9pm, Waze, Fresha
 ## Unmapped clicks on launch day (2026-10-26)
 
 PostHog `unmapped_building_opened` for /utsg: Rotman (4), Gerstein (3), Soldiers' Tower (3), Central Exams Facility, Trinity College, Simcoe Hall, Royal Ontario Museum, Donnelly Centre (2 each). Gerstein and Trinity were all clicked before the 19:13 fix that aliased their tile names (none since). Rotman's tile is named "Joseph L. Rotman Faculty of Management", which never joined the register's "Rotman School of Management" (105 St. George), so it read "no data" despite having hours: alias added. The rest are research, admin, exam or museum buildings with no published public hours, so they stay unmapped.
+
+## Royal Ontario Museum (2026-10-27)
+
+Added at the owner's request (2 clicks on launch day). It is not a U of T building: the university's map lists it as a point of interest (record 497525, no building code), so it gets the made-up register key `RM`. Hours: rom.on.ca/operating-hours publishes the CURRENT month day by day (10:00-17:30, Mondays closed, 3rd Tuesday 10:00-20:30). `_rom()` in `build_utsg_hours.py` reads only the dates the table states; every other date has no hours (the map says "No hours", never a guess), so on launch it covers just the rest of October and the weekly refresh extends it a month at a time. Closed Mondays also read "No hours", not "Closed" (tenant evidence never causes "closed"). The page's "open today" banner is not used: it said open on a Monday the table lists as closed.

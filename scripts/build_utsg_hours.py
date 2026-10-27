@@ -35,6 +35,7 @@ Winter 2027 Key Dates" and the SGS sessional dates PDF):
 Usage:  python3 scripts/build_utsg_hours.py
 """
 
+import html
 import json
 import re
 import sys
@@ -124,6 +125,38 @@ def _goldring(d):
     return [[7, 23]] if d.weekday() < 5 else [[9, 19]]
 
 
+_ROM_DAYS = None
+
+
+def _rom(d):
+    # rom.on.ca/operating-hours publishes the CURRENT month day by day ("Monday 5 Closed", "Tuesday 6 10:00 - 17:30",
+    # "Tuesday 3rd Tuesday Nights Free 20 10:00 - 20:30"). Only dates the page states are used; any other
+    # date gets no hours, never a guess. The page's own banner is not used (it said "open today" on a Monday
+    # the table lists as closed). A closed day returns None, so the map says "no hours", not "closed".
+    global _ROM_DAYS
+    if _ROM_DAYS is None:
+        _ROM_DAYS = {}
+        try:
+            req = urllib.request.Request("https://www.rom.on.ca/operating-hours",
+                                         headers={"User-Agent": "Mozilla/5.0 (Macintosh) Chrome/130"})
+            page = urllib.request.urlopen(req, timeout=30).read().decode("utf-8", "ignore")
+            text = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", re.sub(r"<script.*?</script>|<style.*?</style>", " ", page, flags=re.S))))
+            head = re.search(r"Operating Hours (January|February|March|April|May|June|July|August|September|October|November|December) (\d{4})", text)
+            table = text[text.find("Day Date Opening Hours"):]
+            if head and "Day Date Opening Hours" in text:
+                month = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+                         "October", "November", "December"].index(head.group(1)) + 1
+                for m in re.finditer(r"(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)(?: [A-Za-z0-9' ]+?)? (\d{1,2}) "
+                                     r"(Closed|(\d{1,2}):(\d{2}) - (\d{1,2}):(\d{2}))", table):
+                    if m.group(2) != "Closed":
+                        _ROM_DAYS[date(int(head.group(2)), month, int(m.group(1))).isoformat()] = \
+                            [[int(m.group(3)) + int(m.group(4)) / 60, int(m.group(5)) + int(m.group(6)) / 60]]
+        except Exception as e:   # noqa: BLE001
+            print(f"!! ROM hours page not read: {e}", file=sys.stderr)
+        print(f"ROM: {len(_ROM_DAYS)} open days published", file=sys.stderr)
+    return _ROM_DAYS.get(d.isoformat())
+
+
 # building -> (what is inside, source, rule(date) -> ranges or None[, own])
 WEEKLY_TENANTS = {
     # library.law.utoronto.ca: "Open Monday - Friday | 9 a.m. to 5 p.m." (LibCal lid 8355 defers to it)
@@ -136,6 +169,9 @@ WEEKLY_TENANTS = {
     # A gym with no classes. Its operator posts building hours itself, so `own`: the panel says "by the hours
     # ... posts", not "inside".
     "Goldring Centre for High Performance Sport": ("Kinesiology & Physical Education", "https://kpe.utoronto.ca/facility/goldring-centre-high-performance-sport", _goldring, True),
+    # Not a U of T building (the university's map lists it as a point of interest at 100 Queen's Park). The
+    # museum posts its own hours, so `own`.
+    "Royal Ontario Museum": ("Royal Ontario Museum", "https://www.rom.on.ca/operating-hours", _rom, True),
 }
 
 # Locations whose LibCal dates carry no closures at all (checked 2026-10-21: Kelly
@@ -323,7 +359,7 @@ def main():
         for i in range(84):
             d = today + timedelta(days=i)
             # Skip a campus closure unless the source states hours for that very day (Ferguson's holiday hours).
-            if d.isoformat() in CAMPUS_CLOSED and not (date(2026, 12, 24) <= d <= date(2027, 1, 5) and rule is _ferguson):
+            if d.isoformat() in CAMPUS_CLOSED and not (date(2026, 12, 24) <= d <= date(2027, 1, 5) and rule in (_ferguson, _rom)):
                 continue
             r = rule(d)
             if r is not None:

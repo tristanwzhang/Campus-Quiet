@@ -1818,6 +1818,7 @@ const BUILDINGS_UTSG = {
   // 2026-10-26: no classes and no building hours; known through the dining hall / pub inside.
   'Morrison Hall':                   {},   // residence; Howard Ferguson Dining Hall (official hours) on the first floor
   'Goldring Student Centre':         {},
+  'Royal Ontario Museum':            {},   // not a U of T building (a point of interest on the university's map); its own page posts the hours
   'Goldring Centre for High Performance Sport': { label: 'Goldring Centre (gym)' },   // KPE's posted building hours   // Victoria; the Cat's Eye pub (its own site's hours) on the first floor
   // Venues, not buildings people walk into: unlocked for what is scheduled in them,
   // so the weekday campus default (buildingDay) does not apply.

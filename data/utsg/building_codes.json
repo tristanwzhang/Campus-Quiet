@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-27T00:33:12+00:00",
+ "built_at": "2026-10-27T04:45:54+00:00",
  "source": "map.utoronto.ca",
  "codes": {
   "AB": "Astronomy & Astrophysics Building",
@@ -60,6 +60,7 @@
   "RB": "Thomas Fisher Rare Book Library",
   "RC": "Robarts Common",
   "RL": "Robarts Library",
+  "RM": "Royal Ontario Museum",
   "RS": "Rosebrugh Building",
   "RT": "Rotman School of Management",
   "RW": "Ramsay Wright Laboratories",

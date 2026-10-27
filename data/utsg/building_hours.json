@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-27T00:33:12+00:00",
+ "built_at": "2026-10-27T04:45:56+00:00",
  "campus": "University of Toronto \u2014 St. George",
  "term": "2026/fall",
  "campusClosedDates": [
@@ -11176,6 +11176,45 @@
       [
        9,
        19
+      ]
+     ]
+    },
+    "own": true
+   }
+  ],
+  "Royal Ontario Museum": [
+   {
+    "label": "Royal Ontario Museum",
+    "sourceUrl": "https://www.rom.on.ca/operating-hours",
+    "dates": {
+     "2026-10-27": [
+      [
+       10.0,
+       17.5
+      ]
+     ],
+     "2026-10-28": [
+      [
+       10.0,
+       17.5
+      ]
+     ],
+     "2026-10-29": [
+      [
+       10.0,
+       17.5
+      ]
+     ],
+     "2026-10-30": [
+      [
+       10.0,
+       17.5
+      ]
+     ],
+     "2026-10-31": [
+      [
+       10.0,
+       17.5
       ]
      ]
     },

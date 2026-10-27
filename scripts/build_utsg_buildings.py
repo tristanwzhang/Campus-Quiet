@@ -214,7 +214,9 @@ def main():
                  # 2026-10-26: no classes and no building hours; placed for the dining hall / pub inside
                  "MO": "985707",      # "Morrison Hall | MO" (75 St. George; Howard Ferguson Dining Hall)
                  "GC": "506453",      # "Goldring Student Centre | GC" (150 Charles St W; Cat's Eye pub)
-                 "GO": "494556"}      # "Goldring Centre for High Performance Sport | GO" (100 Devonshire Pl; the gym)
+                 "GO": "494556",      # "Goldring Centre for High Performance Sport | GO" (100 Devonshire Pl; the gym)
+                 # 2026-10-27: clicked 2x on launch day; the map lists it as a point of interest (no building code)
+                 "RM": "497525"}      # "Royal Ontario Museum" (100 Queen's Park)
     hours_file = DATA / "building_hours.json"
     extra = sorted(set(EXTRA_IDS) | (
         {e["code"] for e in json.loads(hours_file.read_text())["buildings"].values() if e.get("code") in FALLBACKS}
