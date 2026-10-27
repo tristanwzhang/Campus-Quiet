@@ -116,7 +116,15 @@ def _cats_eye(d):
     return [[9, 23]] if d.weekday() < 5 and d.isoformat() not in CLASSES_OUT else None
 
 
-# building -> (what is inside, source, rule(date) -> ranges or None)
+def _goldring(d):
+    # kpe.utoronto.ca, read 2026-10-26. Three KPE pages give the Goldring Centre's building hours and agree on
+    # weekdays (Mon-Fri 7am-11pm) but not weekends: facility page Sat-Sun 9am-11pm, its notice banner Sat-Sun
+    # 9am-7pm, the contact page Sat-Sun 7am-9pm. Only the span every page says is open is used: 9am-7pm.
+    # Outside it the map says "no hours", never "closed".
+    return [[7, 23]] if d.weekday() < 5 else [[9, 19]]
+
+
+# building -> (what is inside, source, rule(date) -> ranges or None[, own])
 WEEKLY_TENANTS = {
     # library.law.utoronto.ca: "Open Monday - Friday | 9 a.m. to 5 p.m." (LibCal lid 8355 defers to it)
     "Jackman Law Building & Flavelle House": ("Bora Laskin Law Library", "https://library.law.utoronto.ca/", _law),
@@ -125,6 +133,9 @@ WEEKLY_TENANTS = {
     # No official building hours exist (Apple Maps' 8am-11pm is third party). The Cat's Eye pub is on the
     # first floor, so the building is open at least while the pub is.
     "Goldring Student Centre": ("Cat's Eye pub", "https://www.thecatseye.ca/", _cats_eye),
+    # A gym with no classes. Its operator posts building hours itself, so `own`: the panel says "by the hours
+    # ... posts", not "inside".
+    "Goldring Centre for High Performance Sport": ("Kinesiology & Physical Education", "https://kpe.utoronto.ca/facility/goldring-centre-high-performance-sport", _goldring, True),
 }
 
 # Locations whose LibCal dates carry no closures at all (checked 2026-10-21: Kelly
@@ -307,7 +318,7 @@ def main():
             tenants.setdefault(building, []).append(
                 {"label": label, "sourceUrl": "https://libcal.library.utoronto.ca/hours/", "dates": dates})
     today = date.today()
-    for building, (label, url, rule) in WEEKLY_TENANTS.items():
+    for building, (label, url, rule, *rest) in WEEKLY_TENANTS.items():
         dates = {}
         for i in range(84):
             d = today + timedelta(days=i)
@@ -317,7 +328,7 @@ def main():
             r = rule(d)
             if r is not None:
                 dates[d.isoformat()] = r
-        tenants.setdefault(building, []).append({"label": label, "sourceUrl": url, "dates": dates})
+        tenants.setdefault(building, []).append({"label": label, "sourceUrl": url, "dates": dates, **({"own": True} if rest and rest[0] else {})})
     print(f"library-inside evidence for {len(tenants)} buildings")
 
     buildings.update(WEEKLY)

@@ -971,7 +971,7 @@ function tenantOpen(id, date, time) {
     const today = lib.dates?.[date];
     const yesterday = lib.dates?.[shiftDate(date, -1)];
     if ((today && today.some(([o, c]) => time >= o && time < c))
-      || (yesterday && yesterday.some(([, c]) => c > 24 && time < c - 24))) return lib.label;
+      || (yesterday && yesterday.some(([, c]) => c > 24 && time < c - 24))) return lib;
   }
   return null;
 }
@@ -979,7 +979,9 @@ function tenantOpen(id, date, time) {
 function withTenant(status, id, date, time) {
   if (status.state === 'open') return status;
   const lib = tenantOpen(id, date, time);
-  return lib ? { state: 'open', source: lib, viaTenant: lib } : status;
+  // `own`: the evidence is the building's own hours as its operator posts them where sources disagree
+  // on some days (the Goldring Centre), so only the span they all agree on is used.
+  return lib ? { state: 'open', source: lib.label, viaTenant: lib.label, viaOwn: !!lib.own } : status;
 }
 
 function hoursStatus(id, date, time) {
@@ -1274,9 +1276,9 @@ function estimateFor(name) {
   // value is 0 because that is what an empty room is, and the note says
   // exactly where that comes from so it cannot read as a measurement.
   if (hours.state === 'open' && hours.viaTenant) {
-    const inside = `the ${hours.viaTenant} inside is open now (its published hours)`;
+    const inside = hours.viaOwn ? `open now by the hours ${hours.viaTenant} posts for it` : `the ${hours.viaTenant} inside is open now (its published hours)`;
     if (estimate) return { ...estimate, note: addToNote(estimate.note, inside) };
-    return { value: 0, source: 'open', viaTenant: hours.viaTenant, note: `Open \u00b7 ${inside}` };
+    return { value: 0, source: 'open', viaTenant: hours.viaTenant, viaOwn: hours.viaOwn, note: `Open \u00b7 ${inside}` };
   }
   if (hours.state === 'open' && hours.campusDefault) {
     const why = hours.defaultWhy ?? 'most U of T buildings that publish hours are open about 8:30am\u20139pm on weekdays';
@@ -1815,7 +1817,8 @@ const BUILDINGS_UTSG = {
   'Massey College':                  {},
   // 2026-10-26: no classes and no building hours; known through the dining hall / pub inside.
   'Morrison Hall':                   {},   // residence; Howard Ferguson Dining Hall (official hours) on the first floor
-  'Goldring Student Centre':         {},   // Victoria; the Cat's Eye pub (its own site's hours) on the first floor
+  'Goldring Student Centre':         {},
+  'Goldring Centre for High Performance Sport': { label: 'Goldring Centre (gym)' },   // KPE's posted building hours   // Victoria; the Cat's Eye pub (its own site's hours) on the first floor
   // Venues, not buildings people walk into: unlocked for what is scheduled in them,
   // so the weekday campus default (buildingDay) does not apply.
   'Convocation Hall':        { noCampusDefault: true },
@@ -2608,7 +2611,7 @@ function hoursBasis(name) {
   const { date, time } = campusNow();
   const h = hoursStatus(name, date, time);
   if (h.eventVenue) return 'event schedule';
-  if (h.viaTenant) return 'library inside';
+  if (h.viaTenant) return h.viaOwn ? 'posted hours, partly disputed' : 'tenant inside';   // was 'library inside' before dining halls and pubs counted
   if (h.general) return 'campus rule';
   if (h.assumed) return 'class timetable';
   return h.state === 'unknown' ? 'none' : 'published';
@@ -4234,7 +4237,7 @@ function openPanel(name, keepThanks = false) {
     : occ.source === 'unknown' ? 'Hours not published — no estimate right now'
     // An assumption (U of T's campus default) says so; a published hour or an open library inside does not need to.
     // Open only because a library/dining hall/pub inside publishes hours: say so, since that is all it proves.
-    : occ.source === 'open' && occ.viaTenant ? `Open now \u00b7 the ${occ.viaTenant} inside is open`
+    : occ.source === 'open' && occ.viaTenant ? (occ.viaOwn ? `Open now \u00b7 by the hours ${occ.viaTenant} posts` : `Open now \u00b7 the ${occ.viaTenant} inside is open`)
     : occ.source === 'open' ? (occ.assumed ? 'Probably open \u00b7 no classes on now' : 'Open now \u00b7 no classes in session')
     : isDefaultEstimate(occ.source) ? `About ${Math.round(occ.value * 100)}% full`
     : `${SOURCE_LABELS[occ.source]} · ${Math.round(occ.value * 100)}% full`;
@@ -5282,7 +5285,7 @@ function spotStatus(name) {
   }
   if (occ.source === 'unknown') return 'Hours not published';
   if (occ.source === 'event') return 'Event in progress';
-  const base = occ.source === 'open' ? (occ.viaTenant ? `Open · the ${occ.viaTenant} inside is open` : occ.assumed ? 'Probably open · no classes on now' : 'Open · no classes in session') : busyWord(occ);
+  const base = occ.source === 'open' ? (occ.viaTenant ? (occ.viaOwn ? `Open · by the hours ${occ.viaTenant} posts` : `Open · the ${occ.viaTenant} inside is open`) : occ.assumed ? 'Probably open · no classes on now' : 'Open · no classes in session') : busyWord(occ);
   const until = closingHour(name, date, time);
   return until == null ? base : `${base} · until ${fmtHour(until)}`;
 }

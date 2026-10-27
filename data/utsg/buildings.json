@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-27T00:26:47+00:00",
+ "built_at": "2026-10-27T00:33:12+00:00",
  "campus": "University of Toronto \u2014 St. George",
  "source": "map.utoronto.ca (names, numbers, coordinates); OpenStreetMap (footprints)",
  "sourceUrl": "https://map.utoronto.ca/",
@@ -1946,6 +1946,56 @@
    ],
    "number": "603",
    "address": "15 Devonshire Place, Toronto, ON\u00a0M5S 1H8",
+   "source": "map.utoronto.ca"
+  },
+  "GO": {
+   "name": "Goldring Centre for High Performance Sport",
+   "code": "GO",
+   "aliases": [
+    "Goldring Centre"
+   ],
+   "lat": 43.666817,
+   "lon": -79.398293,
+   "outline": [
+    [
+     -79.398439,
+     43.6665963
+    ],
+    [
+     -79.3980534,
+     43.6666788
+    ],
+    [
+     -79.3980685,
+     43.6667157
+    ],
+    [
+     -79.3982419,
+     43.6671392
+    ],
+    [
+     -79.3983178,
+     43.6673245
+    ],
+    [
+     -79.3983312,
+     43.6673574
+    ],
+    [
+     -79.3984501,
+     43.6673319
+    ],
+    [
+     -79.3987167,
+     43.6672749
+    ],
+    [
+     -79.3986276,
+     43.6670573
+    ]
+   ],
+   "number": "042",
+   "address": "100 Devonshire Place, Toronto, ON M5S 2C9",
    "source": "map.utoronto.ca"
   },
   "HA": {

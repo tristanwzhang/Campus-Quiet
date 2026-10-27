@@ -478,3 +478,11 @@ Outside those hours both read "No hours" (not "closed"). The panel now says what
 "Open now - the Howard Ferguson Dining Hall inside is open" (same for the 10 library-inside buildings).
 Map records: Morrison Hall 985707, Goldring Student Centre 506453. Not yet seen rendered in 3D (app window
 was not visible); both have register footprints, drawn by the app's own path if the tiles do not name them.
+
+**Goldring Centre for High Performance Sport added (2026-10-26).** The gym (GO, 100 Devonshire Pl; map record
+494556), no classes. KPE posts its building hours on three official pages that DISAGREE on weekends: facility
+page Mon-Fri 7am-11pm, Sat-Sun 9am-11pm; notice banner Sat-Sun 9am-7pm; contact page Mon-Fri 7am-11pm,
+Sat-Sun 7am-9pm. Weekdays agree, so Mon-Fri 7am-11pm is used; weekends use only the span every page calls
+open, 9am-7pm. It is "open at least then" evidence (`own: true` in tenantLibraries), so outside it the map says
+"No hours", never "closed". Panel: "Open now - by the hours Kinesiology & Physical Education posts". Campus
+closure days are skipped. Third-party listings (Apple Maps 7am-9pm, Waze, Fresha) ignored.
