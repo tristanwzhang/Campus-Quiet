@@ -456,3 +456,10 @@ so it is now kind 'studybreak': library and study = 1 (the usual curve, not boos
 measures a boost); union/dining/rec/atrium keep the old discount, which is unchanged and still a guess.
 Robarts Tue 8pm now reads 42%. Busyness is still the typical curve, not today's reality: the live
 computer count (e.g. 24-44 of 210 in use) is the real-time signal and is shown beside it.
+
+**Building panel ran off the window (2026-10-26, owner screenshot of Robarts).** The card had no height
+cap, so Robarts (rooms + computers + study areas + survey + wish buttons) overflowed both edges of a
+~900px window. Now: a `#panel-scroll` box inside `#panel` (close button outside it, stays put) capped
+to the window (desktop: 100dvh - 96 - 56px; phone: 100dvh - 32 - 170px) and scrolling inside; room
+sources shown as two names + "+N more"; at most 4 study areas listed ("+N more, see the Quiet tab").
+Applies to every campus (CSS lives in the shared template); only buildings with a lot to say scroll.

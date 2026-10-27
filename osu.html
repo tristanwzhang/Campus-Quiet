@@ -1003,6 +1003,17 @@
      first tap can't cast a check-in by accident. */
   #panel.show:not(.armed) { pointer-events: none; }
 
+  /* A building with a lot to say (Robarts: rooms, computers, study areas) ran off both ends of the
+     window. The content scrolls inside the card; the close button stays put. */
+  #panel-scroll {
+    max-height: calc(100vh - 96px - var(--safe-bottom) - 56px);
+    max-height: calc(100dvh - 96px - var(--safe-bottom) - 56px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    margin-right: -6px; padding-right: 6px;
+  }
+
   #panel.show {
     opacity: 1;
     transform: translateY(0);
@@ -1486,6 +1497,8 @@
     /* Tucked into the bottom corner rather than spanning the screen, so the
        map stays visible behind it and there's less of it under your thumb. */
     #panel { right: 12px; left: auto; width: min(270px, calc(100vw - 24px)); bottom: calc(32px + var(--safe-bottom)); }
+    /* Phones: the header and chips use the top ~140px, the card sits 32px from the bottom. */
+    #panel-scroll { max-height: calc(100vh - 32px - var(--safe-bottom) - 170px); max-height: calc(100dvh - 32px - var(--safe-bottom) - 170px); }
     /* The panel lands on top of the legend down here. Once you've opened a
        building you're reading its numbers, not the colour scale. */
     body.panel-open #legend, body.survey-open #legend { opacity: 0; }
@@ -1783,6 +1796,7 @@
 
 <div id="panel">
   <button id="panel-close" aria-label="Close">×</button>
+  <div id="panel-scroll">
   <div id="panel-name"></div>
   <div id="panel-spaces" hidden></div>
   <div id="panel-now"></div>
@@ -1807,6 +1821,7 @@
       <button class="wish-btn" data-feature="friends">Friends here</button>
     </div>
     <div id="wish-thanks"></div>
+  </div>
   </div>
 </div>
 
@@ -1858,6 +1873,6 @@
 </div>
 
 <script defer src="basemap-render.js?v=35"></script>
-<script defer src="app.js?v=193"></script>
+<script defer src="app.js?v=194"></script>
 </body>
 </html>

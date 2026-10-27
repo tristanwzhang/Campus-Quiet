@@ -2544,6 +2544,7 @@ function tenantsHtml(tenants) {
   return `<span class="rooms-where" style="margin:8px 0 0">Inside this building</span>${rows.join('')}`;
 }
 
+const AREAS_SHOWN = 4;   // building panel: the rest live in the Quiet tab
 function renderRooms(name) {
   const box = document.getElementById('panel-rooms');
   if (!box) return;
@@ -2560,7 +2561,9 @@ function renderRooms(name) {
       ? `<span class="rooms-none">Not bookable now</span> · ${total} study ${word} here`
       : `<span class="${free ? 'rooms-count' : 'rooms-none'}">${free} of ${total}</span>`
         + ` study ${word} free to book right now`;
-    rooms = body + (sources.length ? `<span class="rooms-where">${sources.join(' · ')}</span>` : '');
+    // Robarts lists six sources; the names add nothing a reader acts on, so two and a count.
+    const shownSources = sources.length > 2 ? `${sources.slice(0, 2).join(' · ')} · +${sources.length - 2} more` : sources.join(' · ');
+    rooms = body + (sources.length ? `<span class="rooms-where">${shownSources}</span>` : '');
   }
   // Live public computers in the library inside (U of T). Shown as its own fact, never mixed
   // into busyness: most students study on laptops, so computer use says little about crowding.
@@ -2573,9 +2576,10 @@ function renderRooms(name) {
   const areas = areasIn(name);
   if (areas.length) {
     rooms += `<div style="margin-top:${rooms ? 10 : 0}px"><span class="rooms-where" style="margin:0 0 4px">Study areas (the library\u2019s own noise levels)</span>`
-      + areas.map(a => `<div style="font-size:12px;padding:1px 0"><span style="color:${NOISE_COLOUR[a.noise]};font-weight:600">${NOISE_LABEL[a.noise]}</span>`
+      + areas.slice(0, AREAS_SHOWN).map(a => `<div style="font-size:12px;padding:1px 0"><span style="color:${NOISE_COLOUR[a.noise]};font-weight:600">${NOISE_LABEL[a.noise]}</span>`
         + ` \u00b7 <a href="${escapeHtml(a.url)}" target="_blank" rel="noopener" style="color:#c9d1de">${escapeHtml(areaName(a))}</a>`
         + `${(a.floors ?? []).length ? ` \u00b7 ${escapeHtml(a.floors.join('/'))} fl` : ''}${(a.features ?? []).includes('Power Available') ? ' \u00b7 \u26a1 outlets' : ''}</div>`).join('')
+      + (areas.length > AREAS_SHOWN ? `<div style="font-size:11px;color:#6b7589;padding-top:2px">+${areas.length - AREAS_SHOWN} more \u00b7 see the Quiet tab</div>` : '')
       + '</div>';
   }
   if (!rooms && !inside) { box.hidden = true; return; }
