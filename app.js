@@ -5064,7 +5064,11 @@ function hubQuiet() {
 }
 
 function hubComputers() {
-  const rows = Object.entries(libraryComputers ?? {}).filter(([, c]) => c.total)
+  // A building shut by its own published hours has nobody to use its computers; "probably closed" is only
+  // an estimate, so those stay.
+  const { date, time } = campusNow();
+  const shut = b => { const st = hoursStatus(b, date, time); return st.state === 'closed' && !st.assumed; };
+  const rows = Object.entries(libraryComputers ?? {}).filter(([b, c]) => c.total && !shut(b))
     .sort((a, b) => (b[1].free - a[1].free) || pickLabel(a[0]).localeCompare(pickLabel(b[0])));
   if (!rows.length) return '<div class="pick-note">Computer availability isn’t loading right now.</div>';
   const free = rows.reduce((n, [, c]) => n + c.free, 0), total = rows.reduce((n, [, c]) => n + c.total, 0);
