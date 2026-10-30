@@ -54,7 +54,7 @@ def query(layer, fields, where="1=1", geometry=False):
         # footprints read at any zoom this map allows.
         params["maxAllowableOffset"] = 0.00002
     url = f"{BASE}/{layer}/query?" + urllib.parse.urlencode(params)
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (UIUC Spaces build)"})
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (CampusQuiet build)"})
     data = json.loads(urllib.request.urlopen(req, timeout=60).read().decode("utf-8", "replace"))
     if "error" in data:
         raise RuntimeError(f"{layer}: {data['error']}")

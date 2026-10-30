@@ -1,4 +1,4 @@
--- Automatic cleanup of old check-ins for UIUC Spaces.
+-- Automatic cleanup of old check-ins for CampusQuiet.
 -- Paste into Supabase → SQL Editor → new snippet → Run. Safe to run twice.
 --
 -- The map only ever uses the last 2 hours. Keeping 7 days lets you look back at

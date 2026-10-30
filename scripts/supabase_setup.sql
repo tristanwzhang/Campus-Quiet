@@ -1,4 +1,4 @@
--- Shared student check-ins for UIUC Spaces.
+-- Shared student check-ins for CampusQuiet.
 -- Paste this into Supabase → SQL Editor → New query → Run. Safe to run twice.
 --
 -- Design notes:

@@ -109,7 +109,7 @@ def fetch(subject, page, cache, offline, bucket=None):
             url += f"&subject={urllib.parse.quote(subject)}"
         if bucket:
             url += f"&catalog-number={urllib.parse.quote(bucket)}"
-        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (UIUC Spaces build)"})
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (CampusQuiet build)"})
         raw = None
         for attempt in range(4):
             try:

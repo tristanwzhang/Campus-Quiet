@@ -590,7 +590,7 @@ def build_osm_hours(wanted):
     for mirror in OVERPASS_MIRRORS:
         try:
             body = urllib.parse.urlencode({"data": query}).encode()
-            req = urllib.request.Request(mirror, data=body, headers={"User-Agent": "uiuc-spaces/0.1"})
+            req = urllib.request.Request(mirror, data=body, headers={"User-Agent": "campusquiet/0.1"})
             with urllib.request.urlopen(req, timeout=120) as resp:
                 elements = json.load(resp)["elements"]
             break

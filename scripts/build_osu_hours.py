@@ -226,7 +226,7 @@ def parse_calendar(lines):
 
 
 def page_lines(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (UIUC Spaces hours build)"})
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (CampusQuiet hours build)"})
     raw = urllib.request.urlopen(req, timeout=40).read().decode("utf-8", "replace")
     raw = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", raw, flags=re.S | re.I)
     text = html.unescape(re.sub(r"<[^>]+>", "\n", raw))
@@ -278,7 +278,7 @@ def parse_library_cell(value):
 
 def library_hours():
     """-> ({code: {date: ranges}}, [notes]) for libraries that are buildings."""
-    req = urllib.request.Request(LIB_URL, headers={"User-Agent": "Mozilla/5.0 (UIUC Spaces hours build)"})
+    req = urllib.request.Request(LIB_URL, headers={"User-Agent": "Mozilla/5.0 (CampusQuiet hours build)"})
     raw = urllib.request.urlopen(req, timeout=40).read().decode("utf-8", "replace")
     rows = re.findall(r"<tr[^>]*>(.*?)</tr>", raw, re.S | re.I)
 
@@ -349,7 +349,7 @@ def fetch_retrying(url, attempts=5, timeout=15):
     last = None
     for attempt in range(attempts):
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (UIUC Spaces hours build)"})
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (CampusQuiet hours build)"})
             return urllib.request.urlopen(req, timeout=timeout).read().decode("utf-8", "replace")
         except Exception as err:          # timeout, reset, 5xx — all worth another go
             last = err

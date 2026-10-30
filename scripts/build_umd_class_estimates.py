@@ -148,7 +148,7 @@ def fetch(url, name, offline, timeout=PAGE_TIMEOUT, cool_off=PAGE_COOL_OFF):
     if offline:
         FAILED[name] = "not cached"
         return None
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (UIUC Spaces build)"})
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (CampusQuiet build)"})
     for attempt in range(len(cool_off) + 1):
         try:
             body = urllib.request.urlopen(req, timeout=timeout).read().decode("utf-8", "replace")

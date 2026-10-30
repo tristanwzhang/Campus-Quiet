@@ -1,9 +1,11 @@
-# UIUC Spaces
+# CampusQuiet
 
-A 3D map of the University of Illinois Urbana-Champaign campus showing how busy
-buildings are, for finding somewhere to study.
+A 3D map of how busy campus buildings are, for finding somewhere to study.
+Live at [campusquiet.com](https://campusquiet.com/) for the University of Illinois
+Urbana-Champaign, Ohio State, the University of Maryland and the University of
+Toronto (St. George).
 
-*A student project · not affiliated with the University of Illinois.*
+*A student project · not affiliated with any university.*
 
 ## How it works
 

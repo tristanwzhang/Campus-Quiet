@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "uiuc-spaces",
+      "name": "campusquiet",
       "runtimeExecutable": "sh",
       "runtimeArgs": [
         "-c",

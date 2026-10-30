@@ -5,8 +5,10 @@
 
 /* SITE */
   CampusQuiet — how busy is your campus right now
-  Illinois: https://campusquiet.com/
+  Illinois: https://campusquiet.com/uiuc
   Ohio State: https://campusquiet.com/osu
+  Maryland: https://campusquiet.com/umd
+  Toronto: https://campusquiet.com/utsg
 
   A student project. Not affiliated with any university.
 

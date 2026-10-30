@@ -1,4 +1,4 @@
-// ─── UIUC Spaces ──────────────────────────────────────────────────────────────
+// ─── CampusQuiet ──────────────────────────────────────────────────────────────
 // Busyness comes from several sources, best first:
 //   1. reported  — student check-ins from the last couple of hours
 //   2. measured  — Google popular times (data/popular_times.json, via SerpApi)

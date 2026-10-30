@@ -61,7 +61,7 @@ def query(geometry):
         params["outSR"] = 4326           # WGS84, what Cesium wants
         params["maxAllowableOffset"] = OFFSET
     url = f"{LAYER}/query?" + urllib.parse.urlencode(params)
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (UIUC Spaces build)"})
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (CampusQuiet build)"})
     data = json.loads(urllib.request.urlopen(req, timeout=90).read().decode("utf-8", "replace"))
     if "error" in data:
         raise RuntimeError(data["error"])
