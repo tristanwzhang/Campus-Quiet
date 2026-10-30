@@ -494,3 +494,9 @@ PostHog `unmapped_building_opened` for /utsg: Rotman (4), Gerstein (3), Soldiers
 ## Royal Ontario Museum (2026-10-27)
 
 Added at the owner's request (2 clicks on launch day). It is not a U of T building: the university's map lists it as a point of interest (record 497525, no building code), so it gets the made-up register key `RM`. Hours: rom.on.ca/operating-hours publishes the CURRENT month day by day (10:00-17:30, Mondays closed, 3rd Tuesday 10:00-20:30). `_rom()` in `build_utsg_hours.py` reads only the dates the table states; every other date has no hours (the map says "No hours", never a guess), so on launch it covers just the rest of October and the weekly refresh extends it a month at a time. Closed Mondays also read "No hours", not "Closed" (tenant evidence never causes "closed"). The page's "open today" banner is not used: it said open on a Monday the table lists as closed.
+
+## Retention changes (2026-10-29)
+
+Launch-week data: 183 devices, 10 (5%) returned on a second day; 74% of survey answerers said they'd return. Two changes:
+- **Computers first on phones.** The Computers tab now carries the free-computer count as a green badge, and on a phone it is the tab shown first, once, while any library has a free computer (otherwise Open now stays first; a list of closed libraries is a worse first screen). Choosing a tab, or the exam banner, ends the default. Event `hub_default_computers` counts how often it applied.
+- **Install tracking.** The "Got it" button on the iPhone/in-app nudge, the only button those visitors get, now fires `install_nudge_acknowledged` (only the Android prompt's "Not now" is still `install_nudge_dismissed`). Installed visits were already separable: every event carries `browser_kind: installed`, and `app_installed` fires on install.

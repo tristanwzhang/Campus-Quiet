@@ -5000,6 +5000,7 @@ function scarcityNote() {
 // a long building list; the sheet is the first thing on screen on every device, so they live
 // here. Each tab is a plain list with 44px+ rows, readable at 375px.
 let hubTab = 'now';
+let hubTabPicked = false;   // the visitor chose a tab, or the phone default has been applied
 
 function hubChip(label, on, attrs) {
   return `<button type="button" ${attrs} aria-pressed="${on}" style="font:inherit;font-size:12.5px;min-height:34px;padding:0 13px;`
@@ -5064,13 +5065,17 @@ function hubQuiet() {
   return html + `<div class="pick-note" style="padding:8px 2px 0">${escapeHtml(CAMPUS_CONTENT.quietSource ?? '')}</div>`;
 }
 
-function hubComputers() {
-  // A building shut by its own published hours has nobody to use its computers; "probably closed" is only
-  // an estimate, so those stay.
+// Library computers worth listing, most free first. A building shut by its own published hours has nobody
+// to use its computers; "probably closed" is only an estimate, so those stay.
+function computerRows() {
   const { date, time } = campusNow();
   const shut = b => { const st = hoursStatus(b, date, time); return st.state === 'closed' && !st.assumed; };
-  const rows = Object.entries(libraryComputers ?? {}).filter(([b, c]) => c.total && !shut(b))
+  return Object.entries(libraryComputers ?? {}).filter(([b, c]) => c.total && !shut(b))
     .sort((a, b) => (b[1].free - a[1].free) || pickLabel(a[0]).localeCompare(pickLabel(b[0])));
+}
+
+function hubComputers() {
+  const rows = computerRows();
   if (!rows.length) {
     const all = Object.entries(libraryComputers ?? {}).filter(([, c]) => c.total);
     return all.length ? '<div class="pick-note">The libraries with computers are closed right now, so there\u2019s nothing to show. Their computers come back here when they open.</div>'
@@ -5105,6 +5110,7 @@ function renderHub() {
       const t = ev.target.closest('[data-tab]');
       if (!t) return;
       hubTab = t.dataset.tab;
+      hubTabPicked = true;
       track('hub_tab', { tab: hubTab, device: deviceKind() });
       renderHub();
     };
@@ -5124,9 +5130,18 @@ function renderHub() {
   }
   const live = roomAvailability ?? {};
   const freeRooms = Object.values(live).reduce((n, b) => n + (b.bookable > 0 ? b.free : 0), 0);
+  // On a phone the question that has a live answer is "is there a free computer", so lead with it, once,
+  // and only while some are free (a list of closed libraries is a worse first screen than Open now).
+  if (!hubTabPicked && CAMPUS_CONTENT.hubTabs.includes('computers') && deviceKind() === 'phone' && computerRows().some(([, c]) => c.free > 0)) {
+    hubTab = 'computers';
+    hubTabPicked = true;
+    track('hub_default_computers', { device: deviceKind() });
+  }
   const allNames = { now: 'Open now', rooms: 'Rooms', quiet: 'Quiet', computers: 'Computers' };
   const names = Object.fromEntries(CAMPUS_CONTENT.hubTabs.map(k => [k, allNames[k]]));
-  const badge = { rooms: freeRooms > 0 ? ` <span style="color:#8fd4a8">${freeRooms}</span>` : '' };
+  const freePcs = CAMPUS_CONTENT.hubTabs.includes('computers') ? computerRows().reduce((n, [, c]) => n + c.free, 0) : 0;
+  const badge = { rooms: freeRooms > 0 ? ` <span style="color:#8fd4a8">${freeRooms}</span>` : '',
+                  computers: freePcs > 0 ? ` <span style="color:#8fd4a8">${freePcs}</span>` : '' };
   tabs.innerHTML = Object.entries(names).map(([k, label]) => {
     const on = hubTab === k;
     return `<button type="button" role="tab" aria-selected="${on}" data-tab="${k}" style="flex:1;font:inherit;font-size:13px;min-height:44px;`
@@ -5416,7 +5431,9 @@ function showInstallNudge(state) {
   later.addEventListener('click', () => {
     nudgeEl.hidden = true;
     setNudgeState({ ...nudgeState(), last: Date.now() });
-    track('install_nudge_dismissed', { kind, device: deviceKind() });
+    // "Got it" is the only button for iPhone and in-app visitors (no install prompt exists there), so it is
+    // the closest thing to a yes; only the prompt's "Not now" is a no.
+    track(kind === 'prompt' ? 'install_nudge_dismissed' : 'install_nudge_acknowledged', { kind, device: deviceKind() });
   });
   if (kind === 'prompt') {
     const add = document.createElement('button');
@@ -5500,6 +5517,7 @@ function renderExamBanner() {
     remove();
     setPicksCollapsed(false);
     hubTab = 'now';
+    hubTabPicked = true;
     renderHub();
     pickCard.scrollIntoView?.({ block: 'nearest', behavior: 'smooth' });
   });
