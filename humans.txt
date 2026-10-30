@@ -1,7 +1,7 @@
 /* TEAM */
   Built by: Tristan Zhang
   Contact: tristanwzhang@gmail.com
-  Source: https://github.com/tristanwzhang/uiuc-spaces
+  Source: https://github.com/tristanwzhang/Campus-Quiet
 
 /* SITE */
   CampusQuiet — how busy is your campus right now
