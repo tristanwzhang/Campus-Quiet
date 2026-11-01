@@ -405,6 +405,99 @@ const BUILDINGS_UIUC = {
     },
   },
 
+  // The four dining places below (asked for in feedback, 2026-10-27) are each one floor or one wing
+  // of a residence hall. `footprint` is not drawn: the 3D building standing on it takes the place's
+  // name and colour (claimTileBuildings), so it keeps its real shape and outline. A one-storey
+  // coloured base was tried and dropped by the owner: hidden under taller blocks, hard to read.
+  // Illinois Street Dining Center: University Housing's dining locations page gives 1010 W. Illinois,
+  // Urbana, and OSM's "Food Service Building" (way 899305029, 2 levels) carries exactly that address.
+  // Asked for in a feedback report (2026-10-27: "Add how busy LAR, PAR, FAR Cafe, and ISR are").
+  "ISR Dining Center": {
+    type: "dining",
+    peakFullness: 0.90,
+    label: "ISR Dining",
+    footprint: [
+      [-88.2214339, 40.1095315], [-88.2214333, 40.1094913], [-88.2214073, 40.1094914],
+      [-88.2213545, 40.1094919], [-88.2213034, 40.1094923], [-88.2212598, 40.1094926],
+      [-88.2212602, 40.109533], [-88.2212608, 40.1095729], [-88.221263, 40.1097795],
+      [-88.221264, 40.1098341], [-88.2212645, 40.1098709], [-88.2212659, 40.1099631],
+      [-88.2212664, 40.1099995], [-88.2212673, 40.1100508], [-88.221268, 40.1101126],
+      [-88.2212685, 40.1101484], [-88.2212716, 40.1103922], [-88.221484, 40.1103906],
+      [-88.2219793, 40.1103868], [-88.2219789, 40.1103578], [-88.2219779, 40.1102827],
+      [-88.2219775, 40.110251], [-88.2220459, 40.1102504], [-88.2220464, 40.1102823],
+      [-88.2222276, 40.1102809], [-88.2222234, 40.109962], [-88.2220454, 40.1099633],
+      [-88.2220458, 40.1099937], [-88.2219741, 40.1099942], [-88.2219704, 40.1096998],
+      [-88.2219394, 40.1097001], [-88.2215524, 40.1097029], [-88.221551, 40.1095961],
+      [-88.2215234, 40.1095963], [-88.2215232, 40.1095805], [-88.2215226, 40.1095308],
+    ],
+  },
+
+  // Lincoln Avenue Dining Hall (LAR), "located downstairs with access from either Allen Hall or LAR"
+  // (University Housing). OSM draws it by that name (way 1374194691) as layer -1, i.e. below ground,
+  // so the building over it (Allen Hall's wing) is what carries the colour.
+  // The name is the one Housing's dining schedule uses, which is what the hours join on.
+  "Lincoln/Allen Dining Hall": {
+    type: "dining",
+    peakFullness: 0.90,
+    label: "LAR Dining",
+    footprint: [
+      [-88.2208061, 40.1039582], [-88.2207068, 40.1039592], [-88.2207062, 40.1039278],
+      [-88.2204078, 40.103931], [-88.2204057, 40.1038134], [-88.2205695, 40.1037703],
+      [-88.2205705, 40.1037472], [-88.2205691, 40.103648], [-88.2204405, 40.1036495],
+      [-88.2204416, 40.1037505], [-88.2204014, 40.1037504], [-88.2204013, 40.1037452],
+      [-88.2202089, 40.1037474], [-88.2202101, 40.1038052], [-88.2202626, 40.1038046],
+      [-88.2202646, 40.1039059], [-88.2202674, 40.1040486], [-88.2202706, 40.1042172],
+      [-88.2201712, 40.1042184], [-88.2201747, 40.1043962], [-88.22004, 40.1043977],
+      [-88.2200416, 40.104464], [-88.2202192, 40.1044614], [-88.2202211, 40.1045349],
+      [-88.2202536, 40.1045346], [-88.2202626, 40.1045348], [-88.2202723, 40.1045346],
+      [-88.220412, 40.104534], [-88.2204119, 40.1045264], [-88.2204108, 40.1044036],
+      [-88.2205092, 40.1044022], [-88.2205096, 40.1043776], [-88.2205097, 40.1043698],
+      [-88.2205092, 40.1043338], [-88.2207078, 40.1043331], [-88.220707, 40.1043019],
+      [-88.2207689, 40.1043011], [-88.22081, 40.1043003], [-88.2208087, 40.1042072],
+      [-88.2208074, 40.1040546],
+    ],
+  },
+
+  // Pennsylvania Avenue Dining Hall: Housing says "the bottom floor of Pennsylvania Avenue Residence
+  // Halls" (906 W. College Ct.). The footprint is the unnamed central block between Babcock, Blaisdell,
+  // Carr and Saunders (OSM way 151319707). That it is THIS block is inferred, not stated anywhere.
+  "PAR Dining Hall": {
+    type: "dining",
+    peakFullness: 0.90,
+    label: "PAR Dining",
+    footprint: [
+      [-88.2206858, 40.0998264], [-88.2206929, 40.1001753], [-88.2200756, 40.1001826],
+      [-88.2200731, 40.1000591], [-88.2200685, 40.0998333], [-88.2202424, 40.0998312],
+      [-88.2202405, 40.0997364], [-88.2202786, 40.099736], [-88.2203214, 40.0997354],
+      [-88.2203222, 40.0997737], [-88.2205181, 40.0997713], [-88.2205193, 40.0998284],
+    ],
+  },
+
+  // Corner Café, "inside Florida Avenue Residence Halls" (University Housing). The University
+  // Library's UIHistories page says Oglesby and Trelease share "a central building for offices,
+  // special service rooms and dining rooms": the block between the towers (OSM way 227830853).
+  // That the café is in that central building, rather than a tower's ground floor, is inferred.
+  "Corner Café": {
+    type: "dining",
+    peakFullness: 0.80,
+    label: "FAR Corner Café",
+    footprint: [
+      [-88.2206121, 40.0989236], [-88.2206413, 40.0989235], [-88.220673, 40.0989234],
+      [-88.2206714, 40.0986605], [-88.2206283, 40.0986607], [-88.2206287, 40.0987298],
+      [-88.2204187, 40.0987306], [-88.2204178, 40.0985701], [-88.220628, 40.0985693],
+      [-88.2206283, 40.0986274], [-88.2206717, 40.0986272], [-88.2206705, 40.0984296],
+      [-88.2211907, 40.0984279], [-88.2211918, 40.0986181], [-88.2212292, 40.0986179],
+      [-88.2212288, 40.0985571], [-88.2214434, 40.0985563], [-88.2214444, 40.0987213],
+      [-88.2212302, 40.098722], [-88.2212299, 40.098664], [-88.2211916, 40.0986642],
+      [-88.2211929, 40.0988768], [-88.2212173, 40.0988768], [-88.2212557, 40.0988766],
+      [-88.2212564, 40.0990022], [-88.2211932, 40.0990025], [-88.2211937, 40.0990892],
+      [-88.2209778, 40.09909], [-88.2209781, 40.0991396], [-88.2210266, 40.0991395],
+      [-88.2210272, 40.0992321], [-88.2208365, 40.0992327], [-88.220836, 40.0991405],
+      [-88.2208775, 40.0991404], [-88.2208772, 40.0990903], [-88.2206735, 40.099091],
+      [-88.220673, 40.0990128], [-88.2206127, 40.099013],
+    ],
+  },
+
   // Cesium's building tileset is missing Morrill Hall entirely — its neighbours
   // and the corridor to Burrill Hall are there, then a hole — so we draw it.
   // The outline is the real footprint from OpenStreetMap (way 137759342), the
@@ -3781,6 +3874,19 @@ function complexAt(lon, lat) {
   return hit ? hit.name : null;
 }
 
+// Places given a `footprint` in BUILDINGS (Illinois' dining halls inside residence halls): any
+// block whose centre stands on it is that place, whatever name the tiles gave it.
+let claimedFootprints = null;
+function claimedFootprintAt(lon, lat) {
+  claimedFootprints ??= Object.entries(BUILDINGS).filter(([, cfg]) => cfg.footprint)
+    .map(([name, cfg]) => ({ name, outline: cfg.footprint, box: boundingBox(cfg.footprint) }));
+  for (const { name, outline, box } of claimedFootprints) {
+    if (lon < box.west || lon > box.east || lat < box.south || lat > box.north) continue;
+    if (pointInOutline(lon, lat, outline)) return name;
+  }
+  return null;
+}
+
 function claimTileBuildings(tile) {
   if (!data.classActivity && !data.hours) {   // data not here yet — do it later
     pendingTiles.push(tile);
@@ -3803,6 +3909,7 @@ function claimTileBuildings(tile) {
     // A block carrying no name of its own can't contradict one: if it stands
     // inside a footprint the university publishes, that is what it is.
     if (!name && !tileName && lon != null) name = footprintAt(lon, lat) ?? complexAt(lon, lat);
+    if (!name && lon != null) name = claimedFootprintAt(lon, lat);
     // A tile whose name belongs to a building the register puts far away is not that building.
     // U of T: the OSM tiles call Trinity's 1 Devonshire Place "Munk School", but the register
     // (the university's own map) puts the Munk School at 315 Bloor and files this building as the

@@ -155,7 +155,10 @@ LIBRARY_UNITS = {
 # Housing dining option id -> map name.
 DINING_OPTIONS = {
     "1": "Ikenberry Dining Hall",
-    "3": "ISR Dining Center",   # not drawn on the map yet
+    "3": "ISR Dining Center",
+    "5": "Lincoln/Allen Dining Hall",   # Housing's "Lincoln Avenue Dining Hall (LAR Dining Hall)"
+    "2": "PAR Dining Hall",
+    "6": "Corner Café",                 # retail, inside Florida Avenue Residence Halls (FAR)
 }
 
 # Museum hours from https://www.spurlock.illinois.edu/visit/ (current term table).
