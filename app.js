@@ -2103,6 +2103,9 @@ const CAMPUS_CONTENT = {
           registerByName: true,
           // One sheet with Open now / Rooms / Quiet / Computers tabs (replaces the separate rooms box).
           hubTabs: ['now', 'quiet', 'computers'],   // no Rooms tab: the Study rooms sidebar has them (owner, 2026-10-25)
+          // The check-in question says when nobody has reported on this building yet. U of T opened
+          // 33% of buildings at launch but took 3 check-ins in its first week, against 8-10 elsewhere.
+          checkinPrompt: true,
           quietSource: 'From library.utoronto.ca. Walk-in areas only; bookable rooms are under Rooms.',
           // Weekend doors, [open, close]. From the four U of T buildings that publish weekend
           // hours: Athletic Centre 9-17, OISE 9-21, Woodsworth 10-18 are open, Rotman is fob-only
@@ -4292,6 +4295,8 @@ const checkinRow  = document.getElementById('checkin-row');
 const wishThanks  = document.getElementById('wish-thanks');
 let panelBuilding = null;
 let panelSpace = null;
+// Places whose question carried the "nobody has reported" line this visit, so a check-in can say it was prompted.
+const promptedFor = new Set();
 
 // The id check-ins are stored under: the space if one is picked, else the building.
 function panelTarget() {
@@ -4358,6 +4363,14 @@ function openPanel(name, keepThanks = false) {
     : `${SOURCE_LABELS[occ.source]} · ${Math.round(occ.value * 100)}% full`;
   panelQ.hidden = closed || unmapped;
   checkinRow.hidden = closed || unmapped;
+  // Where this campus asks: a building nobody has reported on lately says so, which is true and is
+  // the reason to tap. One that has fresh reports keeps the plain question.
+  const unreported = !!CAMPUS_CONTENT.checkinPrompt && !closed && !unmapped && !freshCheckin(panelTarget(), null);
+  panelQ.textContent = unreported ? 'Nobody has reported on this one lately. Are you here? How busy is it?' : 'How busy is it right now?';
+  if (unreported && freshOpen) {
+    promptedFor.add(panelTarget());
+    track('checkin_prompt_shown', { building: panelTarget(), device: deviceKind() });
+  }
   renderRooms(name);
   renderHoursReport(name, occ);
   renderPin(name);
@@ -4419,7 +4432,7 @@ async function submitCheckin(level) {
     panelThanks.textContent = 'You just reported this one — try again in a minute.';
     return;
   }
-  track('checkin_submitted', { building: report.building, level, device: deviceKind(), shared: result === 'ok' });
+  track('checkin_submitted', { building: report.building, level, device: deviceKind(), shared: result === 'ok', prompted: promptedFor.has(report.building) });
   panelThanks.textContent = result === 'ok' ? 'Thanks — everyone sees this now.'
     : sharedCheckins() ? 'Thanks — saved here (could not reach the server).'
     : 'Thanks — the map has been updated.';

@@ -500,3 +500,11 @@ Added at the owner's request (2 clicks on launch day). It is not a U of T buildi
 Launch-week data: 183 devices, 10 (5%) returned on a second day; 74% of survey answerers said they'd return. Two changes:
 - **Computers first on phones.** The Computers tab now carries the free-computer count as a green badge, and on a phone it is the tab shown first, once, while any library has a free computer (otherwise Open now stays first; a list of closed libraries is a worse first screen). Choosing a tab, or the exam banner, ends the default. Event `hub_default_computers` counts how often it applied.
 - **Install tracking.** The "Got it" button on the iPhone/in-app nudge, the only button those visitors get, now fires `install_nudge_acknowledged` (only the Android prompt's "Not now" is still `install_nudge_dismissed`). Installed visits were already separable: every event carries `browser_kind: installed`, and `app_installed` fires on install.
+
+## Check-in prompt (2026-10-31)
+U of T opened a building in 33% of visits but took 3 check-ins in its first week (UIUC 10, OSU 8, UMD 8).
+When a building is open and nobody has reported on it lately, the panel's question now reads "Nobody has
+reported on this one lately. Are you here? How busy is it?" (otherwise the plain "How busy is it right now?").
+`CAMPUS_CONTENT.checkinPrompt` turns it on, U of T only. Events: `checkin_prompt_shown` {building, device}
+and `checkin_submitted` now carries `prompted`. Read it as check-ins per `checkin_prompt_shown` (and
+building_opened) against the 3-per-week baseline; judge after ~2 weeks, not on a day's numbers.
