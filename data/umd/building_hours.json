@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-26T16:12:14+00:00",
+ "built_at": "2026-11-01T16:08:52+00:00",
  "campus": "Maryland \u2014 College Park",
  "term": "2026/fall",
  "campusClosedDates": [
@@ -23,48 +23,6 @@
    "sourceUrl": "https://www.lib.umd.edu/visit/hours",
    "code": "MCK",
    "dates": {
-    "2026-10-25": [
-     [
-      11.0,
-      24.0
-     ]
-    ],
-    "2026-10-26": [
-     [
-      0.0,
-      24.0
-     ]
-    ],
-    "2026-10-27": [
-     [
-      0.0,
-      24.0
-     ]
-    ],
-    "2026-10-28": [
-     [
-      0.0,
-      24.0
-     ]
-    ],
-    "2026-10-29": [
-     [
-      0.0,
-      24.0
-     ]
-    ],
-    "2026-10-30": [
-     [
-      0.0,
-      20.0
-     ]
-    ],
-    "2026-10-31": [
-     [
-      11.0,
-      20.0
-     ]
-    ],
     "2026-11-01": [
      [
       11.0,
@@ -377,11 +335,43 @@
     "2026-12-30": [],
     "2026-12-31": [],
     "2027-01-01": [],
-    "2027-01-02": []
+    "2027-01-02": [],
+    "2027-01-03": [],
+    "2027-01-04": [
+     [
+      8.0,
+      17.0
+     ]
+    ],
+    "2027-01-05": [
+     [
+      8.0,
+      17.0
+     ]
+    ],
+    "2027-01-06": [
+     [
+      8.0,
+      17.0
+     ]
+    ],
+    "2027-01-07": [
+     [
+      8.0,
+      17.0
+     ]
+    ],
+    "2027-01-08": [
+     [
+      8.0,
+      17.0
+     ]
+    ],
+    "2027-01-09": []
    },
    "valid": [
-    "2026-10-25",
-    "2027-01-02"
+    "2026-11-01",
+    "2027-01-09"
    ]
   },
   "Undergraduate Library": {
@@ -389,38 +379,6 @@
    "sourceUrl": "https://www.lib.umd.edu/visit/hours",
    "code": "HBK",
    "dates": {
-    "2026-10-25": [],
-    "2026-10-26": [
-     [
-      7.0,
-      22.0
-     ]
-    ],
-    "2026-10-27": [
-     [
-      7.0,
-      22.0
-     ]
-    ],
-    "2026-10-28": [
-     [
-      7.0,
-      22.0
-     ]
-    ],
-    "2026-10-29": [
-     [
-      7.0,
-      22.0
-     ]
-    ],
-    "2026-10-30": [
-     [
-      7.0,
-      22.0
-     ]
-    ],
-    "2026-10-31": [],
     "2026-11-01": [],
     "2026-11-02": [
      [
@@ -668,11 +626,43 @@
     "2026-12-30": [],
     "2026-12-31": [],
     "2027-01-01": [],
-    "2027-01-02": []
+    "2027-01-02": [],
+    "2027-01-03": [],
+    "2027-01-04": [
+     [
+      7.0,
+      22.0
+     ]
+    ],
+    "2027-01-05": [
+     [
+      7.0,
+      22.0
+     ]
+    ],
+    "2027-01-06": [
+     [
+      7.0,
+      22.0
+     ]
+    ],
+    "2027-01-07": [
+     [
+      7.0,
+      22.0
+     ]
+    ],
+    "2027-01-08": [
+     [
+      7.0,
+      22.0
+     ]
+    ],
+    "2027-01-09": []
    },
    "valid": [
-    "2026-10-25",
-    "2027-01-02"
+    "2026-11-01",
+    "2027-01-09"
    ]
   },
   "Stamp Student Union": {
@@ -3499,209 +3489,6 @@
    ],
    "noExtension": true
   },
-  "SECU Stadium": {
-   "source": "Maryland Athletics schedule",
-   "sourceUrl": "https://umterps.com/sports/football/schedule",
-   "eventVenue": true,
-   "weekly": {
-    "monday": [],
-    "tuesday": [],
-    "wednesday": [],
-    "thursday": [],
-    "friday": [],
-    "saturday": [],
-    "sunday": []
-   },
-   "dates": {
-    "2026-09-26": [
-     [
-      13.5,
-      16.5
-     ]
-    ],
-    "2026-10-17": [
-     [
-      12.5,
-      15.5
-     ]
-    ],
-    "2026-10-31": [
-     [
-      12.0,
-      15.0
-     ]
-    ],
-    "2026-09-05": [
-     [
-      20.0,
-      23.0
-     ]
-    ],
-    "2026-09-19": [
-     [
-      19.5,
-      22.5
-     ]
-    ]
-   },
-   "events": {
-    "2026-09-26": "Maryland Football vs UCLA - FAMILY WEEKEND \u00b7 1:30pm",
-    "2026-10-17": "Maryland Football vs Rutgers - HOMECOMING \u00b7 12:30pm",
-    "2026-10-31": "Maryland Football vs Illinois \u00b7 12pm",
-    "2026-11-14": "Maryland Football vs Wisconsin - MILITARY APPRECIATION \u00b7 start time not announced yet",
-    "2026-11-28": "Maryland Football vs Penn State \u00b7 start time not announced yet",
-    "2026-09-05": "Maryland Football vs Hampton \u00b7 8pm",
-    "2026-09-19": "Maryland Football vs Virginia Tech \u00b7 7:30pm"
-   },
-   "unknownDuring": [
-    [
-     "2026-11-14",
-     "2026-11-14"
-    ],
-    [
-     "2026-11-28",
-     "2026-11-28"
-    ]
-   ],
-   "valid": [
-    "2026-08-31",
-    "2026-11-28"
-   ],
-   "noExtension": true
-  },
-  "Kehoe Track at Ludwig Field": {
-   "source": "Maryland Athletics schedule",
-   "sourceUrl": "https://umterps.com/sports/football/schedule",
-   "eventVenue": true,
-   "weekly": {
-    "monday": [],
-    "tuesday": [],
-    "wednesday": [],
-    "thursday": [],
-    "friday": [],
-    "saturday": [],
-    "sunday": []
-   },
-   "dates": {
-    "2026-09-27": [
-     [
-      12.0,
-      14.0
-     ]
-    ],
-    "2026-10-08": [
-     [
-      19.0,
-      21.0
-     ]
-    ],
-    "2026-10-09": [
-     [
-      19.5,
-      21.5
-     ]
-    ],
-    "2026-10-11": [
-     [
-      12.0,
-      14.0
-     ]
-    ],
-    "2026-10-16": [
-     [
-      17.0,
-      19.0
-     ]
-    ],
-    "2026-10-20": [
-     [
-      19.0,
-      21.0
-     ]
-    ],
-    "2026-10-24": [
-     [
-      19.0,
-      21.0
-     ]
-    ],
-    "2026-11-04": [
-     [
-      19.0,
-      21.0
-     ]
-    ],
-    "2026-09-04": [
-     [
-      19.5,
-      21.5
-     ]
-    ],
-    "2026-09-07": [
-     [
-      19.0,
-      21.0
-     ]
-    ],
-    "2026-09-18": [
-     [
-      17.0,
-      19.0
-     ],
-     [
-      20.0,
-      22.0
-     ]
-    ],
-    "2026-09-25": [
-     [
-      19.0,
-      21.0
-     ]
-    ],
-    "2026-09-03": [
-     [
-      19.0,
-      21.0
-     ]
-    ],
-    "2026-09-06": [
-     [
-      12.0,
-      14.0
-     ]
-    ],
-    "2026-09-24": [
-     [
-      18.0,
-      20.0
-     ]
-    ]
-   },
-   "events": {
-    "2026-09-27": "Maryland Women's Soccer vs #12 UCLA \u00b7 12pm",
-    "2026-10-08": "Maryland Women's Soccer vs Nebraska \u00b7 7pm",
-    "2026-10-09": "Maryland Men's Soccer vs Michigan State \u00b7 7:30pm",
-    "2026-10-11": "Maryland Women's Soccer vs Northwestern \u00b7 12pm",
-    "2026-10-16": "Maryland Women's Soccer vs Iowa \u00b7 5pm",
-    "2026-10-20": "Maryland Men's Soccer vs St. John's \u00b7 7pm",
-    "2026-10-24": "Maryland Men's Soccer vs Ohio State \u00b7 7pm",
-    "2026-11-04": "Maryland Men's Soccer vs Penn State \u00b7 7pm",
-    "2026-09-04": "Maryland Men's Soccer vs Delaware \u00b7 7:30pm",
-    "2026-09-07": "Maryland Men's Soccer vs Georgetown \u00b7 7pm",
-    "2026-09-18": "Maryland Men's Soccer vs Wisconsin \u00b7 8pm ; Maryland Women's Soccer vs Penn State \u00b7 5pm",
-    "2026-09-25": "Maryland Men's Soccer vs UCLA \u00b7 7pm",
-    "2026-09-03": "Maryland Women's Soccer vs Old Dominion \u00b7 7pm",
-    "2026-09-06": "Maryland Women's Soccer vs Binghamton - Senior Day \u00b7 12pm",
-    "2026-09-24": "Maryland Women's Soccer vs #14 Wisconsin \u00b7 6pm"
-   },
-   "unknownDuring": [],
-   "valid": [
-    "2026-08-31",
-    "2026-11-04"
-   ],
-   "noExtension": true
-  },
   "XFINITY Center": {
    "source": "Maryland Athletics schedule",
    "sourceUrl": "https://umterps.com/sports/football/schedule",
@@ -4008,7 +3795,7 @@
     "2027-02-14": "Maryland Women's Basketball vs Nebraska \u00b7 12pm",
     "2027-02-17": "Maryland Women's Basketball vs Illinois \u00b7 7pm",
     "2027-02-28": "Maryland Women's Basketball vs Rutgers \u00b7 12pm",
-    "2027-03-14": "Maryland Gymnastics vs Towson University \u00b7 1pm ; Maryland Gymnastics vs Bowling Green \u00b7 1pm ; Maryland Gymnastics vs George Washington University \u00b7 1pm"
+    "2027-03-14": "Maryland Gymnastics vs George Washington University \u00b7 1pm ; Maryland Gymnastics vs Towson University \u00b7 1pm ; Maryland Gymnastics vs Bowling Green \u00b7 1pm"
    },
    "unknownDuring": [],
    "valid": [
@@ -4075,8 +3862,8 @@
     ],
     "2026-10-30": [
      [
-      13.0,
-      16.0
+      13.5,
+      16.5
      ]
     ],
     "2026-09-11": [
@@ -4112,7 +3899,7 @@
     "2026-10-18": "Maryland Field Hockey vs Ohio State \u00b7 12pm",
     "2026-10-24": "Maryland Women's Lacrosse vs Virginia (Exh.) \u00b7 12pm ; Maryland Women's Lacrosse vs Virginia Tech (Exh.) \u00b7 1:20pm",
     "2026-10-25": "Maryland Women's Lacrosse vs San Diego State (Exh.) \u00b7 10am ; Maryland Women's Lacrosse vs James Madison (Exh.) \u00b7 12pm ; Maryland Women's Lacrosse vs Temple (Exh.) \u00b7 3pm",
-    "2026-10-30": "Maryland Field Hockey vs Iowa \u00b7 1pm",
+    "2026-10-30": "Maryland Field Hockey vs Iowa \u00b7 1:30pm",
     "2026-09-11": "Maryland Field Hockey vs Towson \u00b7 6pm",
     "2026-09-13": "Maryland Field Hockey vs Saint Joseph's \u00b7 12pm",
     "2026-09-20": "Maryland Field Hockey vs Wake Forest \u00b7 12pm",
@@ -4122,6 +3909,139 @@
    "valid": [
     "2026-08-31",
     "2026-10-30"
+   ],
+   "noExtension": true
+  },
+  "Kehoe Track at Ludwig Field": {
+   "source": "Maryland Athletics schedule",
+   "sourceUrl": "https://umterps.com/sports/football/schedule",
+   "eventVenue": true,
+   "weekly": {
+    "monday": [],
+    "tuesday": [],
+    "wednesday": [],
+    "thursday": [],
+    "friday": [],
+    "saturday": [],
+    "sunday": []
+   },
+   "dates": {
+    "2026-10-08": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-10-09": [
+     [
+      19.5,
+      21.5
+     ]
+    ],
+    "2026-10-11": [
+     [
+      12.0,
+      14.0
+     ]
+    ],
+    "2026-10-16": [
+     [
+      17.0,
+      19.0
+     ]
+    ],
+    "2026-10-20": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-10-24": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-11-04": [
+     [
+      20.0,
+      22.0
+     ]
+    ],
+    "2026-09-04": [
+     [
+      19.5,
+      21.5
+     ]
+    ],
+    "2026-09-07": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-09-18": [
+     [
+      17.0,
+      19.0
+     ],
+     [
+      20.0,
+      22.0
+     ]
+    ],
+    "2026-09-25": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-09-03": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-09-06": [
+     [
+      12.0,
+      14.0
+     ]
+    ],
+    "2026-09-24": [
+     [
+      18.0,
+      20.0
+     ]
+    ],
+    "2026-09-27": [
+     [
+      12.0,
+      14.0
+     ]
+    ]
+   },
+   "events": {
+    "2026-10-08": "Maryland Women's Soccer vs Nebraska \u00b7 7pm",
+    "2026-10-09": "Maryland Men's Soccer vs Michigan State \u00b7 7:30pm",
+    "2026-10-11": "Maryland Women's Soccer vs Northwestern \u00b7 12pm",
+    "2026-10-16": "Maryland Women's Soccer vs Iowa \u00b7 5pm",
+    "2026-10-20": "Maryland Men's Soccer vs St. John's \u00b7 7pm",
+    "2026-10-24": "Maryland Men's Soccer vs Ohio State \u00b7 7pm",
+    "2026-11-04": "Maryland Men's Soccer vs Penn State \u00b7 8pm",
+    "2026-09-04": "Maryland Men's Soccer vs Delaware \u00b7 7:30pm",
+    "2026-09-07": "Maryland Men's Soccer vs Georgetown \u00b7 7pm",
+    "2026-09-18": "Maryland Men's Soccer vs Wisconsin \u00b7 8pm ; Maryland Women's Soccer vs Penn State \u00b7 5pm",
+    "2026-09-25": "Maryland Men's Soccer vs UCLA \u00b7 7pm",
+    "2026-09-03": "Maryland Women's Soccer vs Old Dominion \u00b7 7pm",
+    "2026-09-06": "Maryland Women's Soccer vs Binghamton - Senior Day \u00b7 12pm",
+    "2026-09-24": "Maryland Women's Soccer vs #14 Wisconsin \u00b7 6pm",
+    "2026-09-27": "Maryland Women's Soccer vs #12 UCLA \u00b7 12pm"
+   },
+   "unknownDuring": [],
+   "valid": [
+    "2026-08-31",
+    "2026-11-04"
    ],
    "noExtension": true
   },
@@ -4149,6 +4069,24 @@
      [
       13.0,
       16.0
+     ]
+    ],
+    "2026-10-29": [
+     [
+      15.233333333333333,
+      18.233333333333334
+     ]
+    ],
+    "2026-10-30": [
+     [
+      15.25,
+      18.25
+     ]
+    ],
+    "2026-10-31": [
+     [
+      9.0,
+      12.0
      ]
     ],
     "2026-11-08": [
@@ -4311,9 +4249,9 @@
    "events": {
     "2026-10-10": "Maryland Baseball vs Towson \u00b7 1pm",
     "2026-10-18": "Maryland Baseball vs Georgetown \u00b7 1pm",
-    "2026-10-29": "Maryland Baseball vs Fall WS Game 1 \u00b7 start time not announced yet",
-    "2026-10-30": "Maryland Baseball vs Fall WS Game 2 \u00b7 start time not announced yet",
-    "2026-10-31": "Maryland Baseball vs Fall WS Game 3 \u00b7 start time not announced yet",
+    "2026-10-29": "Maryland Baseball vs Fall WS Game 1 \u00b7 3:14pm",
+    "2026-10-30": "Maryland Baseball vs Fall WS Game 2 \u00b7 3:15pm",
+    "2026-10-31": "Maryland Baseball vs Fall WS Game 3 \u00b7 9am",
     "2026-11-08": "Maryland Baseball vs Navy \u00b7 1pm",
     "2027-03-02": "Maryland Baseball vs Georgetown \u00b7 4pm",
     "2027-03-09": "Maryland Baseball vs UMBC \u00b7 4pm",
@@ -4341,23 +4279,80 @@
     "2027-05-15": "Maryland Baseball vs Winthrop \u00b7 3pm",
     "2027-05-16": "Maryland Baseball vs Winthrop \u00b7 1pm"
    },
+   "unknownDuring": [],
+   "valid": [
+    "2026-08-31",
+    "2027-05-16"
+   ],
+   "noExtension": true
+  },
+  "SECU Stadium": {
+   "source": "Maryland Athletics schedule",
+   "sourceUrl": "https://umterps.com/sports/football/schedule",
+   "eventVenue": true,
+   "weekly": {
+    "monday": [],
+    "tuesday": [],
+    "wednesday": [],
+    "thursday": [],
+    "friday": [],
+    "saturday": [],
+    "sunday": []
+   },
+   "dates": {
+    "2026-10-17": [
+     [
+      12.5,
+      15.5
+     ]
+    ],
+    "2026-10-31": [
+     [
+      12.0,
+      15.0
+     ]
+    ],
+    "2026-09-05": [
+     [
+      20.0,
+      23.0
+     ]
+    ],
+    "2026-09-19": [
+     [
+      19.5,
+      22.5
+     ]
+    ],
+    "2026-09-26": [
+     [
+      13.5,
+      16.5
+     ]
+    ]
+   },
+   "events": {
+    "2026-10-17": "Maryland Football vs Rutgers - HOMECOMING \u00b7 12:30pm",
+    "2026-10-31": "Maryland Football vs Illinois \u00b7 12pm",
+    "2026-11-14": "Maryland Football vs Wisconsin - MILITARY APPRECIATION \u00b7 start time not announced yet",
+    "2026-11-28": "Maryland Football vs Penn State \u00b7 start time not announced yet",
+    "2026-09-05": "Maryland Football vs Hampton \u00b7 8pm",
+    "2026-09-19": "Maryland Football vs Virginia Tech \u00b7 7:30pm",
+    "2026-09-26": "Maryland Football vs UCLA - FAMILY WEEKEND \u00b7 1:30pm"
+   },
    "unknownDuring": [
     [
-     "2026-10-29",
-     "2026-10-29"
+     "2026-11-14",
+     "2026-11-14"
     ],
     [
-     "2026-10-30",
-     "2026-10-30"
-    ],
-    [
-     "2026-10-31",
-     "2026-10-31"
+     "2026-11-28",
+     "2026-11-28"
     ]
    ],
    "valid": [
     "2026-08-31",
-    "2027-05-16"
+    "2026-11-28"
    ],
    "noExtension": true
   },
