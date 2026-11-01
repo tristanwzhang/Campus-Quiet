@@ -37,7 +37,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 OUT_FILE = ROOT / "data" / "building_hours.json"
 
-SHEET_URL = "https://financeadmin.illinois.edu/wp-content/uploads/2026/09/Fall-2026-Schedule-Updated-9-10-26.xlsx"
+SHEET_URL = "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Fall-2026-Schedule-Updated-10.14.26.xlsx"
 SHEET_VALID = ("2026-08-17", "2026-12-10")
 # Stated at the top of the spreadsheet. The script checks the text is still there.
 SHEET_CLOSED_DATES = ["2026-09-07", "2026-11-26", "2026-11-27"]
