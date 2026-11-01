@@ -1765,9 +1765,16 @@ const ACADEMIC_CALENDAR_UMD = {
   classesEnd:   '2026-12-11',
   termEnd:      '2026-12-21',   // last day of final examinations
   periods: [
-    { start: '2026-09-07', end: '2026-09-07', kind: 'holiday', label: 'Labor Day — no classes' },
-    { start: '2026-10-12', end: '2026-10-13', kind: 'break',   label: 'Fall Break — no classes' },
-    { start: '2026-11-25', end: '2026-11-29', kind: 'break',   label: 'Thanksgiving Recess — no classes' },
+    // "University closed" only on the days the HR holiday calendar shuts the university (the build's
+    // campusClosedDates); the rest of a break is "no classes", offices open. A visitor said in the
+    // return survey (2026-10-23) that during holidays it was hard to tell which buildings were open.
+    { start: '2026-09-07', end: '2026-09-07', kind: 'holiday', label: 'Labor Day — university closed' },
+    { start: '2026-10-12', end: '2026-10-12', kind: 'break',   label: 'Fall Break — university closed' },
+    { start: '2026-10-13', end: '2026-10-13', kind: 'break',   label: 'Fall Break — no classes' },
+    { start: '2026-11-25', end: '2026-11-25', kind: 'break',   label: 'Thanksgiving Recess — no classes' },
+    { start: '2026-11-26', end: '2026-11-27', kind: 'break',   label: 'Thanksgiving — university closed' },
+    { start: '2026-11-28', end: '2026-11-29', kind: 'break',   label: 'Thanksgiving Recess — no classes' },
+    { start: '2026-12-25', end: '2026-12-31', kind: 'break',   label: 'Winter break — university closed' },
   ],
 };
 

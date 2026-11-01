@@ -56,6 +56,7 @@ MANUAL_ALIASES = {
     "SM": ["Gerstein Science Information Centre"],   # the library inside; 9 King's College Circle = Sigmund Samuel's address
     "TC": ["Trinity College"],                        # the tiles' name for the college's main building
     "RT": ["Joseph L. Rotman Faculty of Management"],   # the tiles' name for 105 St. George (Rotman School of Management); clicked 4x on launch day and read "no data"
+    "MY": ["Myhal Centre Loading Dock"],   # OSM way 639848940, 55 St George Street = Myhal's own address; the dock read "no data" when clicked (2026-10-30)
 }
 BBOX = (43.650, -79.415, 43.675, -79.375)          # S, W, N, E
 
