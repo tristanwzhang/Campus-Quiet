@@ -1,9 +1,21 @@
 {
- "built_at": "2026-11-01T00:43:25+00:00",
+ "built_at": "2026-11-01T00:49:31+00:00",
  "campusClosedDates": [
   "2026-09-07",
   "2026-11-26",
-  "2026-11-27"
+  "2026-11-27",
+  "2026-12-24",
+  "2026-12-25",
+  "2026-12-26",
+  "2026-12-27",
+  "2026-12-28",
+  "2026-12-29",
+  "2026-12-30",
+  "2026-12-31",
+  "2027-01-01",
+  "2027-01-02",
+  "2027-01-03",
+  "2027-01-18"
  ],
  "buildings": {
   "Activities and Recreation Center": {
@@ -121,6 +133,130 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "saturday": [
+       [
+        13.0,
+        17.0
+       ]
+      ],
+      "sunday": [
+       [
+        13.0,
+        17.0
+       ]
+      ]
+     }
     }
    ],
    "weekly": {
@@ -167,6 +303,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Altgeld Hall": {
@@ -215,6 +355,95 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [],
+      "tuesday": [],
+      "wednesday": [],
+      "thursday": [],
+      "friday": [],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "weekly": {
@@ -251,6 +480,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Animal Sciences Laboratory": {
@@ -299,6 +532,44 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "weekly": {
@@ -340,6 +611,9 @@
     ],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Architecture Building": {
@@ -388,6 +662,130 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        6.5,
+        22.0
+       ]
+      ],
+      "tuesday": [
+       [
+        6.5,
+        22.0
+       ]
+      ],
+      "wednesday": [
+       [
+        6.5,
+        22.0
+       ]
+      ],
+      "thursday": [
+       [
+        6.5,
+        22.0
+       ]
+      ],
+      "friday": [
+       [
+        6.5,
+        17.0
+       ]
+      ],
+      "saturday": [
+       [
+        6.5,
+        17.0
+       ]
+      ],
+      "sunday": [
+       [
+        6.5,
+        22.0
+       ]
+      ]
+     }
     }
    ],
    "cardAccess": true,
@@ -435,6 +833,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Armory": {
@@ -478,6 +880,150 @@
        [
         5.0,
         21.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "sunday": [
+       [
+        7.0,
+        21.0
+       ]
+      ]
+     }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        5.0,
+        22.0
+       ]
+      ],
+      "tuesday": [
+       [
+        5.0,
+        22.0
+       ]
+      ],
+      "wednesday": [
+       [
+        5.0,
+        22.0
+       ]
+      ],
+      "thursday": [
+       [
+        5.0,
+        22.0
+       ]
+      ],
+      "friday": [
+       [
+        5.0,
+        22.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "sunday": [
+       [
+        7.0,
+        21.0
+       ]
+      ]
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        5.0,
+        21.0
+       ]
+      ],
+      "tuesday": [
+       [
+        5.0,
+        21.0
+       ]
+      ],
+      "wednesday": [
+       [
+        5.0,
+        21.0
+       ]
+      ],
+      "thursday": [
+       [
+        5.0,
+        21.0
+       ]
+      ],
+      "friday": [
+       [
+        5.0,
+        21.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "sunday": [
+       [
+        7.0,
+        21.0
+       ]
+      ]
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        5.0,
+        22.0
+       ]
+      ],
+      "tuesday": [
+       [
+        5.0,
+        22.0
+       ]
+      ],
+      "wednesday": [
+       [
+        5.0,
+        22.0
+       ]
+      ],
+      "thursday": [
+       [
+        5.0,
+        22.0
+       ]
+      ],
+      "friday": [
+       [
+        5.0,
+        22.0
        ]
       ],
       "saturday": [
@@ -539,6 +1085,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Art and Design Building": {
@@ -587,6 +1137,130 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        6.0,
+        22.0
+       ]
+      ],
+      "tuesday": [
+       [
+        6.0,
+        22.0
+       ]
+      ],
+      "wednesday": [
+       [
+        6.0,
+        22.0
+       ]
+      ],
+      "thursday": [
+       [
+        6.0,
+        22.0
+       ]
+      ],
+      "friday": [
+       [
+        6.0,
+        22.0
+       ]
+      ],
+      "saturday": [
+       [
+        9.0,
+        17.0
+       ]
+      ],
+      "sunday": [
+       [
+        12.0,
+        22.0
+       ]
+      ]
+     }
     }
    ],
    "cardAccess": true,
@@ -634,6 +1308,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Astronomy Building": {
@@ -682,6 +1360,146 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-19",
+     "end": "2027-01-03",
+     "weekly": {
+      "monday": [],
+      "tuesday": [],
+      "wednesday": [],
+      "thursday": [],
+      "friday": [],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-04",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        8.0,
+        17.0
+       ]
+      ],
+      "tuesday": [
+       [
+        8.0,
+        17.0
+       ]
+      ],
+      "wednesday": [
+       [
+        8.0,
+        17.0
+       ]
+      ],
+      "thursday": [
+       [
+        8.0,
+        17.0
+       ]
+      ],
+      "friday": [
+       [
+        8.0,
+        17.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": null,
+      "tuesday": null,
+      "wednesday": null,
+      "thursday": null,
+      "friday": null,
+      "saturday": null,
+      "sunday": null
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        8.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        8.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        8.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        8.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        8.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        8.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        8.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        8.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        8.0,
+        19.0
+       ]
+      ],
+      "thursday": [
+       [
+        8.0,
+        19.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "weekly": {
@@ -718,6 +1536,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Beckman Institute": {
@@ -826,6 +1648,120 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "weekly": {
@@ -862,6 +1798,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Burrill Hall": {
@@ -910,6 +1850,120 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "weekly": {
@@ -946,6 +2000,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Business Instructional Facility": {
@@ -1042,6 +2100,130 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        6.0,
+        24
+       ]
+      ],
+      "tuesday": [
+       [
+        6.0,
+        24
+       ]
+      ],
+      "wednesday": [
+       [
+        6.0,
+        24
+       ]
+      ],
+      "thursday": [
+       [
+        6.0,
+        24
+       ]
+      ],
+      "friday": [
+       [
+        6.0,
+        20.0
+       ]
+      ],
+      "saturday": [
+       [
+        6.0,
+        20.0
+       ]
+      ],
+      "sunday": [
+       [
+        10.0,
+        24
+       ]
+      ]
+     }
     }
    ],
    "cardAccess": true,
@@ -1091,6 +2273,18 @@
    },
    "openDates": [
     "2026-09-07"
+   ],
+   "dates": {
+    "2027-01-18": [
+     [
+      7.0,
+      18.0
+     ]
+    ]
+   },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
    ],
    "extendedThrough": "2026-12-17"
   },
@@ -1163,6 +2357,131 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-10",
+     "weekly": {
+      "monday": [],
+      "tuesday": [],
+      "wednesday": [],
+      "thursday": [],
+      "friday": [],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-11",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": null,
+      "tuesday": null,
+      "wednesday": null,
+      "thursday": null,
+      "friday": null,
+      "saturday": null,
+      "sunday": null
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [],
+      "tuesday": [],
+      "wednesday": [],
+      "thursday": [],
+      "friday": [],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "saturday": [
+       [
+        9.0,
+        21.0
+       ]
+      ],
+      "sunday": [
+       [
+        12.0,
+        23.0
+       ]
+      ]
+     }
     }
    ],
    "cardAccess": true,
@@ -1210,6 +2529,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Campus Recreation Center East": {
@@ -1327,6 +2650,120 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "weekly": {
@@ -1363,6 +2800,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Chemistry Annex": {
@@ -1411,6 +2852,130 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "saturday": [
+       [
+        11.0,
+        21.0
+       ]
+      ],
+      "sunday": [
+       [
+        11.0,
+        21.0
+       ]
+      ]
+     }
     }
    ],
    "cardAccess": true,
@@ -1458,6 +3023,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Civil and Environmental Engineering Building": {
@@ -1506,6 +3075,120 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "cardAccess": true,
@@ -1543,6 +3226,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Coordinated Science Laboratory": {
@@ -1591,6 +3278,120 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "cardAccess": true,
@@ -1628,6 +3429,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Davenport Hall": {
@@ -1676,6 +3481,120 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "cardAccess": true,
@@ -1713,6 +3632,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "David Kinley Hall": {
@@ -1761,6 +3684,130 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "sunday": [
+       [
+        9.5,
+        24
+       ]
+      ]
+     }
     }
    ],
    "weekly": {
@@ -1807,6 +3854,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Digital Computer Laboratory": {
@@ -1865,6 +3916,150 @@
        ]
       ]
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.5,
+        21.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.5,
+        21.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.5,
+        21.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.5,
+        21.5
+       ]
+      ],
+      "friday": [
+       [
+        7.5,
+        21.5
+       ]
+      ],
+      "saturday": [
+       [
+        11.75,
+        17.5
+       ]
+      ],
+      "sunday": [
+       [
+        11.75,
+        17.5
+       ]
+      ]
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        6.75,
+        22.0
+       ]
+      ],
+      "tuesday": [
+       [
+        6.75,
+        22.0
+       ]
+      ],
+      "wednesday": [
+       [
+        6.75,
+        22.0
+       ]
+      ],
+      "thursday": [
+       [
+        6.75,
+        22.0
+       ]
+      ],
+      "friday": [
+       [
+        6.75,
+        22.0
+       ]
+      ],
+      "saturday": [
+       [
+        11.75,
+        17.5
+       ]
+      ],
+      "sunday": [
+       [
+        11.75,
+        17.5
+       ]
+      ]
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        6.75,
+        22.0
+       ]
+      ],
+      "tuesday": [
+       [
+        6.75,
+        22.0
+       ]
+      ],
+      "wednesday": [
+       [
+        6.75,
+        22.0
+       ]
+      ],
+      "thursday": [
+       [
+        6.75,
+        22.0
+       ]
+      ],
+      "friday": [
+       [
+        6.75,
+        22.0
+       ]
+      ],
+      "saturday": [
+       [
+        11.0,
+        22.0
+       ]
+      ],
+      "sunday": [
+       [
+        11.0,
+        22.0
+       ]
+      ]
+     }
     }
    ],
    "weekly": {
@@ -1911,6 +4106,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Doris Kelley Christopher Hall": {
@@ -1959,6 +4158,125 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        20.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        20.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        20.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        20.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "saturday": [
+       [
+        8.0,
+        14.5
+       ]
+      ],
+      "sunday": []
+     }
     }
    ],
    "weekly": {
@@ -2000,6 +4318,10 @@
     ],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Education Building": {
@@ -2048,6 +4370,125 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "sunday": []
+     }
     }
    ],
    "cardAccess": true,
@@ -2090,6 +4531,10 @@
     ],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Electrical and Computer Engineering Building": {
@@ -2138,6 +4583,125 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.5,
+        22.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.5,
+        22.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.5,
+        22.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.5,
+        22.0
+       ]
+      ],
+      "friday": [
+       [
+        7.5,
+        22.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.5,
+        17.0
+       ]
+      ],
+      "sunday": []
+     }
     }
    ],
    "cardAccess": true,
@@ -2180,6 +4744,10 @@
     ],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Engineering Hall": {
@@ -2228,6 +4796,120 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "cardAccess": true,
@@ -2265,6 +4947,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "English Building": {
@@ -2313,6 +4999,130 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "sunday": [
+       [
+        12.0,
+        24
+       ]
+      ]
+     }
     }
    ],
    "weekly": {
@@ -2359,6 +5169,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Everitt Laboratory": {
@@ -2407,6 +5221,120 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "cardAccess": true,
@@ -2444,6 +5372,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Flagg Hall": {
@@ -2492,6 +5424,130 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        6.0,
+        18.0
+       ]
+      ],
+      "tuesday": [
+       [
+        6.0,
+        18.0
+       ]
+      ],
+      "wednesday": [
+       [
+        6.0,
+        18.0
+       ]
+      ],
+      "thursday": [
+       [
+        6.0,
+        18.0
+       ]
+      ],
+      "friday": [
+       [
+        6.0,
+        18.0
+       ]
+      ],
+      "saturday": [
+       [
+        9.0,
+        18.0
+       ]
+      ],
+      "sunday": [
+       [
+        12.0,
+        18.0
+       ]
+      ]
+     }
     }
    ],
    "cardAccess": true,
@@ -2539,6 +5595,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Funk Library": {
@@ -2703,6 +5763,120 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.5,
+        18.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.5,
+        18.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.5,
+        18.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.5,
+        18.5
+       ]
+      ],
+      "friday": [
+       [
+        7.5,
+        18.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.5,
+        18.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.5,
+        18.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.5,
+        18.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.5,
+        18.5
+       ]
+      ],
+      "friday": [
+       [
+        7.5,
+        18.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "weekly": {
@@ -2739,6 +5913,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Grainger Engineering Library": {
@@ -2903,6 +6081,130 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "sunday": [
+       [
+        7.0,
+        24
+       ]
+      ]
+     }
     }
    ],
    "weekly": {
@@ -2949,6 +6251,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Harding Band Building": {
@@ -2969,6 +6275,121 @@
       "wednesday": [],
       "thursday": [],
       "friday": [],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-10",
+     "weekly": {
+      "monday": [],
+      "tuesday": [],
+      "wednesday": [],
+      "thursday": [],
+      "friday": [],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-11",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": null,
+      "tuesday": null,
+      "wednesday": null,
+      "thursday": null,
+      "friday": null,
+      "saturday": null,
+      "sunday": null
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [],
+      "tuesday": [],
+      "wednesday": [],
+      "thursday": [],
+      "friday": [],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.5,
+        20.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.5,
+        20.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.5,
+        20.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.5,
+        22.0
+       ]
+      ],
+      "friday": [
+       [
+        7.5,
+        19.0
+       ]
+      ],
       "saturday": [],
       "sunday": []
      }
@@ -3008,6 +6429,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Henry Administration Building": {
@@ -3056,6 +6481,120 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "cardAccess": true,
@@ -3093,6 +6632,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Huff Hall": {
@@ -3141,6 +6684,130 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        5.0,
+        22.0
+       ]
+      ],
+      "tuesday": [
+       [
+        5.0,
+        22.0
+       ]
+      ],
+      "wednesday": [
+       [
+        5.0,
+        22.0
+       ]
+      ],
+      "thursday": [
+       [
+        5.0,
+        22.0
+       ]
+      ],
+      "friday": [
+       [
+        5.0,
+        18.0
+       ]
+      ],
+      "saturday": [
+       [
+        10.0,
+        18.0
+       ]
+      ],
+      "sunday": [
+       [
+        6.0,
+        22.0
+       ]
+      ]
+     }
     }
    ],
    "cardAccess": true,
@@ -3188,6 +6855,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "ISR Dining Center": {
@@ -3705,6 +7376,67 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": null,
+      "tuesday": null,
+      "wednesday": null,
+      "thursday": null,
+      "friday": null,
+      "saturday": null,
+      "sunday": null
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "sunday": [
+       [
+        7.0,
+        23.0
+       ]
+      ]
+     }
     }
    ],
    "weekly": {
@@ -3759,6 +7491,9 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Illini Union Bookstore": {
@@ -3801,6 +7536,120 @@
        [
         7,
         17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        8.0,
+        17.0
+       ]
+      ],
+      "tuesday": [
+       [
+        8.0,
+        17.0
+       ]
+      ],
+      "wednesday": [
+       [
+        8.0,
+        17.0
+       ]
+      ],
+      "thursday": [
+       [
+        8.0,
+        17.0
+       ]
+      ],
+      "friday": [
+       [
+        8.0,
+        17.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        8.0,
+        17.0
+       ]
+      ],
+      "tuesday": [
+       [
+        8.0,
+        17.0
+       ]
+      ],
+      "wednesday": [
+       [
+        8.0,
+        17.0
+       ]
+      ],
+      "thursday": [
+       [
+        8.0,
+        17.0
+       ]
+      ],
+      "friday": [
+       [
+        8.0,
+        17.0
        ]
       ],
       "saturday": [],
@@ -3852,6 +7701,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Krannert Center for the Performing Arts": {
@@ -3900,6 +7753,130 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "sunday": [
+       [
+        7.0,
+        23.0
+       ]
+      ]
+     }
     }
    ],
    "weekly": {
@@ -3946,6 +7923,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Lincoln Hall": {
@@ -3994,6 +7975,130 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "sunday": [
+       [
+        12.0,
+        23.0
+       ]
+      ]
+     }
     }
    ],
    "cardAccess": true,
@@ -4041,6 +8146,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Literatures, Cultures & Linguistics Building": {
@@ -4089,6 +8198,130 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "sunday": [
+       [
+        12.0,
+        22.0
+       ]
+      ]
+     }
     }
    ],
    "weekly": {
@@ -4135,6 +8368,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Loomis Laboratory of Physics": {
@@ -4149,6 +8386,120 @@
     {
      "start": "2026-11-21",
      "end": "2026-11-29",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
      "weekly": {
       "monday": [
        [
@@ -4220,6 +8571,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Louise Freer Hall": {
@@ -4268,6 +8623,143 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-23",
+     "end": "2027-01-03",
+     "weekly": {
+      "monday": [],
+      "tuesday": [],
+      "wednesday": [],
+      "thursday": [],
+      "friday": [],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        6.0,
+        18.0
+       ]
+      ],
+      "tuesday": [
+       [
+        6.0,
+        18.0
+       ]
+      ],
+      "wednesday": [
+       [
+        6.0,
+        18.0
+       ]
+      ],
+      "thursday": [
+       [
+        6.0,
+        18.0
+       ]
+      ],
+      "friday": [
+       [
+        6.0,
+        18.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        6.0,
+        22.0
+       ]
+      ],
+      "tuesday": [
+       [
+        6.0,
+        22.0
+       ]
+      ],
+      "wednesday": [
+       [
+        6.0,
+        22.0
+       ]
+      ],
+      "thursday": [
+       [
+        6.0,
+        22.0
+       ]
+      ],
+      "friday": [
+       [
+        6.0,
+        18.0
+       ]
+      ],
+      "saturday": [
+       [
+        8.0,
+        16.0
+       ]
+      ],
+      "sunday": [
+       [
+        8.0,
+        16.0
+       ]
+      ]
+     }
     }
    ],
    "cardAccess": true,
@@ -4315,6 +8807,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Main Library": {
@@ -4479,6 +8975,125 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        12.0
+       ]
+      ],
+      "sunday": []
+     }
     }
    ],
    "weekly": {
@@ -4520,6 +9135,10 @@
     ],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Mechanical Engineering Lab": {
@@ -4568,6 +9187,120 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        6.0,
+        17.0
+       ]
+      ],
+      "tuesday": [
+       [
+        6.0,
+        17.0
+       ]
+      ],
+      "wednesday": [
+       [
+        6.0,
+        17.0
+       ]
+      ],
+      "thursday": [
+       [
+        6.0,
+        17.0
+       ]
+      ],
+      "friday": [
+       [
+        6.0,
+        17.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "cardAccess": true,
@@ -4605,6 +9338,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Medical Sciences Building": {
@@ -4653,6 +9390,120 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.5,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "cardAccess": true,
@@ -4690,6 +9541,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Morrill Hall": {
@@ -4738,6 +9593,120 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "weekly": {
@@ -4774,6 +9743,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Mumford Hall": {
@@ -4822,6 +9795,130 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "sunday": [
+       [
+        12.0,
+        18.0
+       ]
+      ]
+     }
     }
    ],
    "weekly": {
@@ -4868,6 +9965,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Music Building": {
@@ -4926,6 +10027,150 @@
        ]
       ]
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "sunday": [
+       [
+        7.0,
+        21.0
+       ]
+      ]
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "sunday": [
+       [
+        7.0,
+        21.0
+       ]
+      ]
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        6.5,
+        24
+       ]
+      ],
+      "tuesday": [
+       [
+        6.5,
+        24
+       ]
+      ],
+      "wednesday": [
+       [
+        6.5,
+        24
+       ]
+      ],
+      "thursday": [
+       [
+        6.5,
+        24
+       ]
+      ],
+      "friday": [
+       [
+        6.5,
+        24
+       ]
+      ],
+      "saturday": [
+       [
+        6.5,
+        24
+       ]
+      ],
+      "sunday": [
+       [
+        6.5,
+        24
+       ]
+      ]
+     }
     }
    ],
    "weekly": {
@@ -4972,6 +10217,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "National Soybean Research Center": {
@@ -5020,6 +10269,120 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "weekly": {
@@ -5056,6 +10419,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Natural History Building": {
@@ -5104,6 +10471,130 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "sunday": [
+       [
+        12.0,
+        22.0
+       ]
+      ]
+     }
     }
    ],
    "cardAccess": true,
@@ -5151,6 +10642,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Newmark Civil Engineering Laboratory": {
@@ -5199,6 +10694,82 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        6.0,
+        18.0
+       ]
+      ],
+      "tuesday": [
+       [
+        6.0,
+        18.0
+       ]
+      ],
+      "wednesday": [
+       [
+        6.0,
+        18.0
+       ]
+      ],
+      "thursday": [
+       [
+        6.0,
+        18.0
+       ]
+      ],
+      "friday": [
+       [
+        6.0,
+        18.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "cardAccess": true,
@@ -5236,6 +10807,9 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Noyes Laboratory": {
@@ -5379,6 +10953,87 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        20.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        20.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        20.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        20.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "sunday": []
+     }
     }
    ],
    "cardAccess": true,
@@ -5421,6 +11076,9 @@
     ],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Roger Adams Laboratory": {
@@ -5469,6 +11127,120 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        18.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "weekly": {
@@ -5505,6 +11277,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "School of Labor & Employment Relations": {
@@ -5525,6 +11301,121 @@
       "wednesday": [],
       "thursday": [],
       "friday": [],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2026-12-19",
+     "end": "2027-01-10",
+     "weekly": {
+      "monday": [],
+      "tuesday": [],
+      "wednesday": [],
+      "thursday": [],
+      "friday": [],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-11",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.5,
+        16.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.5,
+        16.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.5,
+        16.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.5,
+        16.5
+       ]
+      ],
+      "friday": [
+       [
+        7.5,
+        16.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": null,
+      "tuesday": null,
+      "wednesday": null,
+      "thursday": null,
+      "friday": null,
+      "saturday": null,
+      "sunday": null
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [],
+      "tuesday": [],
+      "wednesday": [],
+      "thursday": [],
+      "friday": [],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.5,
+        16.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.5,
+        16.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.5,
+        16.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.5,
+        16.5
+       ]
+      ],
+      "friday": [
+       [
+        7.5,
+        16.5
+       ]
+      ],
       "saturday": [],
       "sunday": []
      }
@@ -5565,6 +11456,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Sidney Lu Mechanical Engineering Building": {
@@ -5697,6 +11592,150 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        21.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        21.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        21.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        21.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        21.5
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        21.5
+       ]
+      ],
+      "sunday": [
+       [
+        7.0,
+        21.5
+       ]
+      ]
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        21.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        21.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        21.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        21.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        21.5
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        21.5
+       ]
+      ],
+      "sunday": [
+       [
+        7.0,
+        21.5
+       ]
+      ]
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        21.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        21.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        21.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        21.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        21.5
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        21.5
+       ]
+      ],
+      "sunday": [
+       [
+        7.0,
+        21.5
+       ]
+      ]
+     }
     }
    ],
    "weekly": {
@@ -5743,6 +11782,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Siebel Center for Design": {
@@ -5765,6 +11808,141 @@
       "friday": [],
       "saturday": [],
       "sunday": []
+     }
+    },
+    {
+     "start": "2026-12-20",
+     "end": "2027-01-11",
+     "weekly": {
+      "monday": [],
+      "tuesday": [],
+      "wednesday": [],
+      "thursday": [],
+      "friday": [],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-12",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "sunday": [
+       [
+        7.0,
+        24
+       ]
+      ]
+     }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": null,
+      "tuesday": null,
+      "wednesday": null,
+      "thursday": null,
+      "friday": null,
+      "saturday": null,
+      "sunday": null
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [],
+      "tuesday": [],
+      "wednesday": [],
+      "thursday": [],
+      "friday": [],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        24
+       ]
+      ],
+      "sunday": [
+       [
+        7.0,
+        24
+       ]
+      ]
      }
     }
    ],
@@ -5813,6 +11991,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Smith Memorial Hall": {
@@ -5871,6 +12053,150 @@
        ]
       ]
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "sunday": [
+       [
+        7.0,
+        21.0
+       ]
+      ]
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "sunday": [
+       [
+        7.0,
+        21.0
+       ]
+      ]
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        6.5,
+        24
+       ]
+      ],
+      "tuesday": [
+       [
+        6.5,
+        24
+       ]
+      ],
+      "wednesday": [
+       [
+        6.5,
+        24
+       ]
+      ],
+      "thursday": [
+       [
+        6.5,
+        24
+       ]
+      ],
+      "friday": [
+       [
+        6.5,
+        24
+       ]
+      ],
+      "saturday": [
+       [
+        6.5,
+        24
+       ]
+      ],
+      "sunday": [
+       [
+        6.5,
+        24
+       ]
+      ]
+     }
     }
    ],
    "cardAccess": true,
@@ -5918,6 +12244,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Speech and Hearing Science Building": {
@@ -5966,6 +12296,120 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        5.5,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        5.5,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        5.5,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        5.5,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        5.5,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        5.5,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        5.5,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        5.5,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        5.5,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        5.5,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "cardAccess": true,
@@ -6003,6 +12447,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Spurlock Museum": {
@@ -6106,6 +12554,130 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        22.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        20.0
+       ]
+      ],
+      "saturday": [
+       [
+        9.0,
+        20.0
+       ]
+      ],
+      "sunday": [
+       [
+        12.0,
+        20.0
+       ]
+      ]
+     }
     }
    ],
    "cardAccess": true,
@@ -6153,6 +12725,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Stock Pavilion": {
@@ -6201,6 +12777,130 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        6.0,
+        19.0
+       ]
+      ],
+      "tuesday": [
+       [
+        6.0,
+        19.0
+       ]
+      ],
+      "wednesday": [
+       [
+        6.0,
+        19.0
+       ]
+      ],
+      "thursday": [
+       [
+        6.0,
+        19.0
+       ]
+      ],
+      "friday": [
+       [
+        6.0,
+        19.0
+       ]
+      ],
+      "saturday": [
+       [
+        6.0,
+        18.0
+       ]
+      ],
+      "sunday": [
+       [
+        6.0,
+        18.0
+       ]
+      ]
+     }
     }
    ],
    "weekly": {
@@ -6247,6 +12947,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Student Dining and Residential Programs (SDRP)": {
@@ -6365,6 +13069,120 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "cardAccess": true,
@@ -6402,6 +13220,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Temple Hoyne Buell Hall": {
@@ -6535,6 +13357,135 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": [
+       [
+        7.0,
+        21.0
+       ]
+      ]
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "sunday": [
+       [
+        7.0,
+        21.0
+       ]
+      ]
+     }
     }
    ],
    "cardAccess": true,
@@ -6582,6 +13533,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Turner Hall": {
@@ -6630,6 +13585,120 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "weekly": {
@@ -6666,6 +13735,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "University of Illinois College of Law": {
@@ -6714,6 +13787,120 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.5,
+        18.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.5,
+        18.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.5,
+        18.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.5,
+        18.0
+       ]
+      ],
+      "friday": [
+       [
+        7.5,
+        18.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
     }
    ],
    "cardAccess": true,
@@ -6751,6 +13938,10 @@
     "saturday": [],
     "sunday": []
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   },
   "Veterinary Medicine Basic Sciences Building": {
@@ -6765,6 +13956,82 @@
     {
      "start": "2026-11-21",
      "end": "2026-11-29",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        19.0
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
      "weekly": {
       "monday": [
        [
@@ -6835,6 +14102,43 @@
     ],
     "saturday": [],
     "sunday": []
+   },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx"
+   ],
+   "dates": {
+    "2026-12-24": [
+     [
+      8,
+      12
+     ]
+    ],
+    "2026-12-25": [],
+    "2026-12-26": [
+     [
+      8,
+      12
+     ]
+    ],
+    "2026-12-29": [
+     [
+      8,
+      19
+     ]
+    ],
+    "2026-12-30": [
+     [
+      8,
+      19
+     ]
+    ],
+    "2026-12-31": [
+     [
+      8,
+      19
+     ]
+    ],
+    "2027-01-01": []
    },
    "extendedThrough": "2026-12-17"
   },
@@ -6884,6 +14188,130 @@
       "saturday": [],
       "sunday": []
      }
+    },
+    {
+     "start": "2026-12-18",
+     "end": "2027-01-17",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-03-13",
+     "end": "2027-03-21",
+     "weekly": {
+      "monday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "tuesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "wednesday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "thursday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "friday": [
+       [
+        7,
+        17.5
+       ]
+      ],
+      "saturday": [],
+      "sunday": []
+     }
+    },
+    {
+     "start": "2027-01-18",
+     "end": "2027-05-06",
+     "weekly": {
+      "monday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "tuesday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "wednesday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "thursday": [
+       [
+        7.0,
+        23.0
+       ]
+      ],
+      "friday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "saturday": [
+       [
+        7.0,
+        21.0
+       ]
+      ],
+      "sunday": [
+       [
+        12.0,
+        23.0
+       ]
+      ]
+     }
     }
    ],
    "weekly": {
@@ -6930,6 +14358,10 @@
      ]
     ]
    },
+   "laterSources": [
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx",
+    "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+   ],
    "extendedThrough": "2026-12-17"
   }
  }

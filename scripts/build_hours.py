@@ -18,7 +18,8 @@ Usage:
   python3 scripts/build_hours.py --sheet-url <newer .xlsx link>
 
 Rerun weekly (library and dining hours only cover the next seven days) and
-whenever a new building hours spreadsheet is posted.
+whenever a new building hours spreadsheet is posted. The Winter Break and Spring 2027
+sheets (WINTER_URL, SPRING_URL) are read too and added as dated periods.
 """
 
 import argparse
@@ -46,6 +47,25 @@ FALL_BREAK = ("2026-11-21", "2026-11-29")
 FALL_BREAK_TEXT = "Fall Break: Nov 21-29, Building Hours Mon-Fri 7am-530pm, Sat & Sun Closed"
 FALL_BREAK_DEFAULT = {"weekday": [[7, 17.5]], "saturday": [], "sunday": []}
 AUG_17_23 = ("2026-08-17", "2026-08-23")
+
+# The next two sheets, posted 2026-10-29 on the same Daily Event Summaries page. Same columns as
+# the fall sheet; their exceptions are written into the building name instead ("Astronomy Building:
+# Locked Dec 19 - Jan 3", "Huff Hall (All Doors) (Spring Break)"). Each header line used below is
+# checked, like the fall one, so a reworded sheet warns rather than being read the old way.
+WINTER_URL = "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Winter-Break-Building-Schedule-2026-27.xlsx"
+WINTER = ("2026-12-18", "2027-01-17")   # the sheet runs to Jan 18, which is MLK Day: spring's sheet has it
+WINTER_TEXT = ["Buildings hours from Dec 18 - 23 & Jan 4 - 17 unless exceptions noted below",
+               "All buildings closed Thurs, Dec 24 - Sun, Jan 3 & Mon, Jan 18 (MLK Day) unless noted below"]
+WINTER_CLOSED = [f"2026-12-{d}" for d in range(24, 32)] + [f"2027-01-0{d}" for d in range(1, 4)]
+SPRING_URL = "https://financeadmin.illinois.edu/wp-content/uploads/2026/10/Spring-2027-Building-Hours.xlsx"
+SPRING = ("2027-01-18", "2027-05-06")
+SPRING_TEXT = ["Spring 2027 Building Hours: January 18, 2027 - May 6, 2027",
+               "All buildings locked on January 18 (MLK Day) unless exceptions noted below",
+               "Building Hours for Spring Break (March 13 - 21) unless noted below: Mon - Fri: 7am-530pm, Sat & Sun: Closed"]
+SPRING_CLOSED = ["2027-01-18"]
+SPRING_BREAK = ("2027-03-13", "2027-03-21")
+SPRING_BREAK_DEFAULT = {**{d: [[7, 17.5]] for d in ("monday", "tuesday", "wednesday", "thursday", "friday")},
+                        "saturday": [], "sunday": []}
 
 LIBRARY_API = "https://libdirectory.library.illinois.edu/Api/UnitsInGateway"
 OVERPASS_MIRRORS = [
@@ -316,11 +336,64 @@ def parse_hours(text, applies_to):
     return result
 
 
+WEEKDAY_LETTERS = ["m", "t", "w", "th", "f"]
+
+
+def expand_weekdays(token):
+    """'M-Th' / 'MWF' / 'T/Th' / 'F' -> weekday names, or None."""
+    days = []
+    for part in token.lower().replace(" ", "").split("/"):
+        m = re.fullmatch(r"(th|m|t|w|f)-(th|m|t|w|f)", part)
+        if m:
+            a, b = WEEKDAY_LETTERS.index(m.group(1)), WEEKDAY_LETTERS.index(m.group(2))
+            if b < a:
+                return None
+            days += WEEKDAYS[a:b + 1]
+            continue
+        letters = re.findall(r"th|m|t|w|f", part)
+        if not letters or "".join(letters) != part:
+            return None
+        days += [WEEKDAYS[WEEKDAY_LETTERS.index(x)] for x in letters]
+    return days
+
+
+def parse_weekday_segments(text):
+    """
+    The spring sheet's weekday cell: 'M-Th: 7am-10pm; F: 5pm' -- the first segment gives opening
+    and closing, each later one only a closing time for its days ("F: 5pm" = Friday 7am-5pm).
+    'MWF: 8am-530pm; T/Th: 7pm', 'M-W: 730am-8pm; Th: 10pm; F: 7pm'. Every weekday must be
+    covered exactly once, or the cell is unreadable.
+    """
+    segments = [x.strip() for x in re.sub(r"\s+", " ", text.strip().lower()).split(";")]
+    m = re.fullmatch(r"([a-z/\-]+): ?(\d{1,4}(?:am|pm)) ?- ?(\d{1,4}(?:am|pm))", segments[0])
+    if not m:
+        return None
+    days, start = expand_weekdays(m.group(1)), parse_clock(m.group(2))
+    end = parse_clock(m.group(3), is_close=True)
+    if not days or start is None or end is None or end <= start:
+        return None
+    out = {d: [[start, end]] for d in days}
+    for seg in segments[1:]:
+        m = re.fullmatch(r"([a-z/\-]+): ?(\d{1,4}(?:am|pm))", seg)
+        more = m and expand_weekdays(m.group(1))
+        close = m and parse_clock(m.group(2), is_close=True)
+        if not more or close is None or close <= start or any(d in out for d in more):
+            return None
+        out.update({d: [[start, close]] for d in more})
+    return out if sorted(out) == sorted(WEEKDAYS) else None
+
+
 def row_hours(cells):
     """Weekly hours for one spreadsheet row, or None if any cell is unreadable."""
     weekly = {}
     for column, days in (("E", WEEKDAYS), ("F", ["saturday"]), ("G", ["sunday"])):
-        parsed = parse_hours(cells.get(column, ""), days)
+        cell = cells.get(column, "")
+        if column == "E" and re.match(r"^\s*[MTWFmtwf][A-Za-z/\-]*\s*:", cell):
+            parsed = parse_weekday_segments(cell)
+        elif cell.strip() == "-":
+            parsed = {d: None for d in days}   # "not applicable" (a one-day row on a Monday): unknown
+        else:
+            parsed = parse_hours(cell, days)
         if parsed is None:
             return None
         weekly.update(parsed)
@@ -428,6 +501,122 @@ def build_from_sheet(url):
 
     buildings = {k: v for k, v in buildings.items() if not v.get("unknown")}
     return buildings, unreadable, warnings
+
+
+MONTHS = {"dec": (2026, 12), "jan": (2027, 1)}   # the winter sheet's two months
+
+
+def winter_dates(qual):
+    """'Locked Dec 19 - Jan 3' / 'Jan 4 - 17' / 'Jan 18' -> (start, end) ISO, or None if anything else."""
+    q = re.sub(r"^(locked|open)\s+", "", qual.strip().lower())
+    m = re.fullmatch(r"(dec|jan) (\d{1,2})(?:\s*-\s*(?:(dec|jan) )?(\d{1,2}))?", q)
+    if not m:
+        return None
+    y1, m1 = MONTHS[m.group(1)]
+    start = date(y1, m1, int(m.group(2)))
+    if not m.group(4):
+        return start.isoformat(), start.isoformat()
+    y2, m2 = MONTHS[m.group(3) or m.group(1)]
+    return start.isoformat(), date(y2, m2, int(m.group(4))).isoformat()
+
+
+def read_term_sheet(url, texts, warnings):
+    """Rows of a winter/spring sheet, as (map name, kind, dates or None, weekly or None, raw)."""
+    rows = read_xlsx_rows(get(url))
+    header = re.sub(r"\s+", " ", " ".join(r.get("A", "") for r in rows[:5])).lower()
+    for text in texts:
+        if text.lower() not in header:
+            warnings.append(f"Header of {url.rsplit('/', 1)[1]} changed (no longer says \"{text}\") -- check it.")
+    out = []
+    for cells in rows[5:]:
+        name = re.sub(r"\s+", " ", cells.get("C", "")).strip()
+        if not name:
+            continue
+        head, _, qual = name.partition(":")
+        base = re.split(r"\s*\(", head, maxsplit=1)[0].strip()
+        map_name = SHEET_NAMES.get(base)
+        if not map_name:
+            continue
+        lower = name.lower()
+        weekly = row_hours(cells)
+        raw = f"{name}: {cells.get('E','')} | {cells.get('F','')} | {cells.get('G','')}"
+        if qual.strip():
+            span = winter_dates(qual)
+            out.append((map_name, "dated" if span else "unreadable", span, weekly, raw))
+        elif "spring break" in lower:
+            out.append((map_name, "springbreak", None, weekly, raw))
+        elif "(january 18)" in lower:
+            out.append((map_name, "dated", ("2027-01-18", "2027-01-18"), weekly, raw))
+        elif re.search(r"\b(dec|jan|january|march|mar)\b", lower):
+            out.append((map_name, "unreadable", None, weekly, raw))   # dates in a form not read above
+        else:
+            out.append((map_name, "regular", None, weekly, raw))
+    return out
+
+
+def add_later_terms(buildings, unreadable, warnings):
+    """
+    Winter break and spring 2027, folded into each building's entry as dated periods, so the
+    fall `valid` window and the finals carry-over are untouched. A row that can't be read leaves
+    its span UNKNOWN rather than falling back to the term's default.
+    """
+    unknown_week = {d: None for d in DAYS}
+    for url, (start, end), texts in ((WINTER_URL, WINTER, WINTER_TEXT), (SPRING_URL, SPRING, SPRING_TEXT)):
+        try:
+            rows = read_term_sheet(url, texts, warnings)
+        except Exception as e:
+            warnings.append(f"{url.rsplit('/', 1)[1]} not read: {e}")
+            continue
+        regular, special, breaks = {}, defaultdict(list), {}
+        for map_name, kind, span, weekly, raw in rows:
+            if weekly is None or kind == "unreadable":
+                unreadable.append(raw)
+                weekly = None
+            if kind == "regular":
+                if weekly is None:
+                    regular[map_name] = None          # one unreadable door: the whole term is unknown
+                elif regular.get(map_name, {}) is not None:
+                    prev = regular.get(map_name)
+                    regular[map_name] = union_weekly(prev, weekly) if prev else weekly
+            elif kind == "springbreak":
+                if weekly is None:
+                    breaks[map_name] = None
+                elif breaks.get(map_name, {}) is not None:
+                    prev = breaks.get(map_name)
+                    breaks[map_name] = union_weekly(prev, weekly) if prev else weekly
+            elif kind == "dated" and span:
+                special[map_name].append({"start": span[0], "end": span[1], "weekly": weekly or unknown_week})
+        for map_name in set(regular) | set(special) | set(breaks):
+            entry = buildings.get(map_name)
+            if entry is None:
+                entry = buildings[map_name] = {
+                    "source": "Campus building hours spreadsheet", "sourceUrl": url,
+                    "valid": [start, start], "followsCampusClosures": True, "periods": []}
+            entry.setdefault("periods", [])
+            for p in special.get(map_name, []):
+                if p["start"] == p["end"]:   # one day (MLK Day exceptions): beats the campus closure
+                    ranges = p["weekly"][DAYS[date.fromisoformat(p["start"]).weekday()]]
+                    entry.setdefault("dates", {})[p["start"]] = ranges
+                else:
+                    entry["periods"].append(p)
+            if url == SPRING_URL:
+                week = breaks.get(map_name, SPRING_BREAK_DEFAULT)
+                entry["periods"].append({"start": SPRING_BREAK[0], "end": SPRING_BREAK[1],
+                                         "weekly": week or unknown_week})
+            week = regular.get(map_name)
+            entry["periods"].append({"start": start, "end": end, "weekly": week or unknown_week})
+            entry["laterSources"] = sorted(set(entry.get("laterSources", [])) | {url})
+        print(f"{url.rsplit('/', 1)[1]}: {len(set(regular) | set(special) | set(breaks))} map buildings")
+
+    # The winter sheet's Vet Med rows put their dates in a form read_term_sheet does not take
+    # ("(W Orange door)(Dec 24 & 26; Locked Dec 25 & Jan 1) 8am-12pm", "(Dec 29, 30, 31) 8am-7pm").
+    # Typed from those rows, because otherwise the campus closure would call it locked on days
+    # the sheet says the west door opens.
+    vet = buildings.get("Veterinary Medicine Basic Sciences Building")
+    if vet is not None:
+        vet.setdefault("dates", {}).update({
+            "2026-12-24": [[8, 12]], "2026-12-25": [], "2026-12-26": [[8, 12]],
+            "2026-12-29": [[8, 19]], "2026-12-30": [[8, 19]], "2026-12-31": [[8, 19]], "2027-01-01": []})
 
 
 # ─── Libraries ────────────────────────────────────────────────────────────────
@@ -655,6 +844,7 @@ def main():
 
     buildings, unreadable, warnings = build_from_sheet(args.sheet_url)
     print(f"Spreadsheet: {len(buildings)} map buildings")
+    add_later_terms(buildings, unreadable, warnings)
 
     for label, builder in (("Libraries", build_libraries), ("Dining", build_dining)):
         try:
@@ -733,7 +923,7 @@ def main():
 
     out = {
         "built_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "campusClosedDates": SHEET_CLOSED_DATES,
+        "campusClosedDates": SHEET_CLOSED_DATES + WINTER_CLOSED + SPRING_CLOSED,
         "buildings": dict(sorted(buildings.items())),
     }
     OUT_FILE.parent.mkdir(parents=True, exist_ok=True)
