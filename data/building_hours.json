@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-01T16:08:39+00:00",
+ "built_at": "2026-11-02T19:36:25+00:00",
  "campusClosedDates": [
   "2026-09-07",
   "2026-11-26",
@@ -3439,12 +3439,6 @@
    "source": "University Housing dining schedule",
    "sourceUrl": "https://web.housing.illinois.edu/diningmenus",
    "dates": {
-    "2026-11-01": [
-     [
-      7.0,
-      18.0
-     ]
-    ],
     "2026-11-02": [
      [
       7.0,
@@ -3464,6 +3458,12 @@
      ]
     ],
     "2026-11-05": [
+     [
+      7.0,
+      18.0
+     ]
+    ],
+    "2026-11-08": [
      [
       7.0,
       18.0
@@ -5641,12 +5641,6 @@
    "source": "University Library hours",
    "sourceUrl": "https://www.library.illinois.edu/library-hours/",
    "dates": {
-    "2026-11-01": [
-     [
-      12.0,
-      26.0
-     ]
-    ],
     "2026-11-02": [
      [
       8.5,
@@ -5681,6 +5675,12 @@
      [
       10.0,
       20.0
+     ]
+    ],
+    "2026-11-08": [
+     [
+      12.0,
+      26.0
      ]
     ]
    },
@@ -5959,12 +5959,6 @@
    "source": "University Library hours",
    "sourceUrl": "https://www.library.illinois.edu/library-hours/",
    "dates": {
-    "2026-11-01": [
-     [
-      10.0,
-      24.0
-     ]
-    ],
     "2026-11-02": [
      [
       0,
@@ -5996,6 +5990,12 @@
      ]
     ],
     "2026-11-07": [
+     [
+      10.0,
+      24.0
+     ]
+    ],
+    "2026-11-08": [
      [
       10.0,
       24.0
@@ -6901,16 +6901,6 @@
    "source": "University Housing dining schedule",
    "sourceUrl": "https://web.housing.illinois.edu/diningmenus",
    "dates": {
-    "2026-11-01": [
-     [
-      9.0,
-      14.0
-     ],
-     [
-      16.5,
-      20.0
-     ]
-    ],
     "2026-11-02": [
      [
       7.0,
@@ -6990,10 +6980,8 @@
       16.5,
       20.0
      ]
-    ]
-   },
-   "weekly": {
-    "sunday": [
+    ],
+    "2026-11-08": [
      [
       9.0,
       14.0
@@ -7002,7 +6990,9 @@
       16.5,
       20.0
      ]
-    ],
+    ]
+   },
+   "weekly": {
     "monday": [
      [
       7.0,
@@ -7074,6 +7064,16 @@
      ]
     ],
     "saturday": [
+     [
+      9.0,
+      14.0
+     ],
+     [
+      16.5,
+      20.0
+     ]
+    ],
+    "sunday": [
      [
       9.0,
       14.0
@@ -7183,16 +7183,6 @@
    "source": "University Housing dining schedule",
    "sourceUrl": "https://web.housing.illinois.edu/diningmenus",
    "dates": {
-    "2026-11-01": [
-     [
-      9.0,
-      14.0
-     ],
-     [
-      16.5,
-      20.0
-     ]
-    ],
     "2026-11-02": [
      [
       7.0,
@@ -7272,10 +7262,8 @@
       16.5,
       20.0
      ]
-    ]
-   },
-   "weekly": {
-    "sunday": [
+    ],
+    "2026-11-08": [
      [
       9.0,
       14.0
@@ -7284,7 +7272,9 @@
       16.5,
       20.0
      ]
-    ],
+    ]
+   },
+   "weekly": {
     "monday": [
      [
       7.0,
@@ -7356,6 +7346,16 @@
      ]
     ],
     "saturday": [
+     [
+      9.0,
+      14.0
+     ],
+     [
+      16.5,
+      20.0
+     ]
+    ],
+    "sunday": [
      [
       9.0,
       14.0
@@ -8192,16 +8192,6 @@
    "source": "University Housing dining schedule",
    "sourceUrl": "https://web.housing.illinois.edu/diningmenus",
    "dates": {
-    "2026-11-01": [
-     [
-      10.5,
-      13.5
-     ],
-     [
-      16.5,
-      19.0
-     ]
-    ],
     "2026-11-02": [
      [
       10.5,
@@ -8261,10 +8251,8 @@
       16.5,
       19.0
      ]
-    ]
-   },
-   "weekly": {
-    "sunday": [
+    ],
+    "2026-11-08": [
      [
       10.5,
       13.5
@@ -8273,7 +8261,9 @@
       16.5,
       19.0
      ]
-    ],
+    ]
+   },
+   "weekly": {
     "monday": [
      [
       10.5,
@@ -8325,6 +8315,16 @@
      ]
     ],
     "saturday": [
+     [
+      10.5,
+      13.5
+     ],
+     [
+      16.5,
+      19.0
+     ]
+    ],
+    "sunday": [
      [
       10.5,
       13.5
@@ -9025,12 +9025,6 @@
    "source": "University Library hours",
    "sourceUrl": "https://www.library.illinois.edu/library-hours/",
    "dates": {
-    "2026-11-01": [
-     [
-      13.0,
-      24.0
-     ]
-    ],
     "2026-11-02": [
      [
       8.5,
@@ -9065,6 +9059,12 @@
      [
       10.0,
       17.0
+     ]
+    ],
+    "2026-11-08": [
+     [
+      13.0,
+      24.0
      ]
     ]
    },
@@ -11119,16 +11119,6 @@
    "source": "University Housing dining schedule",
    "sourceUrl": "https://web.housing.illinois.edu/diningmenus",
    "dates": {
-    "2026-11-01": [
-     [
-      10.5,
-      14.5
-     ],
-     [
-      16.5,
-      20.0
-     ]
-    ],
     "2026-11-02": [
      [
       7.0,
@@ -11208,10 +11198,8 @@
       16.5,
       20.0
      ]
-    ]
-   },
-   "weekly": {
-    "sunday": [
+    ],
+    "2026-11-08": [
      [
       10.5,
       14.5
@@ -11220,7 +11208,9 @@
       16.5,
       20.0
      ]
-    ],
+    ]
+   },
+   "weekly": {
     "monday": [
      [
       7.0,
@@ -11292,6 +11282,16 @@
      ]
     ],
     "saturday": [
+     [
+      10.5,
+      14.5
+     ],
+     [
+      16.5,
+      20.0
+     ]
+    ],
+    "sunday": [
      [
       10.5,
       14.5

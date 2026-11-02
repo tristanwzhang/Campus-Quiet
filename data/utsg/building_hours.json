@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-01T16:08:57+00:00",
+ "built_at": "2026-11-02T19:36:14+00:00",
  "campus": "University of Toronto \u2014 St. George",
  "term": "2026/fall",
  "campusClosedDates": [
@@ -9566,16 +9566,6 @@
     "label": "Howard Ferguson Dining Hall",
     "sourceUrl": "https://www.uc.utoronto.ca/students-current-students-food-howard-ferguson-dining-hall",
     "dates": {
-     "2026-11-01": [
-      [
-       9,
-       15
-      ],
-      [
-       16,
-       19.5
-      ]
-     ],
      "2026-11-02": [
       [
        7.5,
@@ -10353,6 +10343,16 @@
        16,
        19.5
       ]
+     ],
+     "2027-01-24": [
+      [
+       9,
+       15
+      ],
+      [
+       16,
+       19.5
+      ]
      ]
     }
    }
@@ -10676,12 +10676,6 @@
     "label": "Kinesiology & Physical Education",
     "sourceUrl": "https://kpe.utoronto.ca/facility/goldring-centre-high-performance-sport",
     "dates": {
-     "2026-11-01": [
-      [
-       9,
-       19
-      ]
-     ],
      "2026-11-02": [
       [
        7,
@@ -11101,6 +11095,12 @@
        9,
        19
       ]
+     ],
+     "2027-01-24": [
+      [
+       9,
+       19
+      ]
      ]
     },
     "own": true
@@ -11111,12 +11111,6 @@
     "label": "Royal Ontario Museum",
     "sourceUrl": "https://www.rom.on.ca/operating-hours",
     "dates": {
-     "2026-11-01": [
-      [
-       10.0,
-       17.5
-      ]
-     ],
      "2026-11-03": [
       [
        10.0,
