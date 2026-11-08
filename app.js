@@ -2153,10 +2153,12 @@ async function loadRoomSchedule() {
   }
   try {
     const r = await fetch(`${CAMPUS.dataDir}/rooms.json`);
-    if (!r.ok) return;
-    roomSchedule = (await r.json()).buildings ?? null;
-    if (roomSchedule) showEntry();
+    if (r.ok) {
+      roomSchedule = (await r.json()).buildings ?? null;
+      if (roomSchedule) showEntry();
+    }
   } catch (e) { /* no room data for this campus */ }
+  maybeDockBrowse();   // after the 404 too: U of T has no rooms.json but shows the entry above
 }
 
 // Static details of each bookable study room (name, floor, seats, features), from
@@ -2177,6 +2179,7 @@ async function loadStudyRooms() {
   for (const [feature, has] of Object.entries(built))
     if (has) document.querySelector(`#wishlist .wish-btn[data-feature="${feature}"]`)?.remove();
   renderHub();
+  if (browseIsOpen() && !browseBuilding) renderBrowse({ seatWheels: false });   // the drawer may have opened before these arrived
 }
 
 // Open study areas with the libraries' own noise level (Silent / Quiet / Collaborative),
@@ -2592,7 +2595,7 @@ function renderBrowseRooms(body, title, sub, back, seatWheels = true) {
   body.scrollTop = 0;
 }
 
-function openBrowse() {
+function openBrowse({ docked = false } = {}) {
   browseBuilding = null;
   browseStudy = false;
   browseQuery = '';
@@ -2603,6 +2606,12 @@ function openBrowse() {
   browseAt = null;          // always open on now, not on whatever was last picked
   renderBrowse();
   document.getElementById('browse')?.classList.add('is-open');
+  if (docked) {
+    // Beside the map, not over it: no dimming backdrop, the map stays usable, and focus stays where it was.
+    document.body.classList.add('browse-docked');
+    track('browse_auto_opened', { campus: CAMPUS.id });
+    return;
+  }
   document.getElementById('browse-backdrop')?.classList.add('is-open');
   // Move focus into the panel so a keyboard or screen reader follows it, and
   // so Escape has somewhere sensible to come from.
@@ -2623,6 +2632,26 @@ function openRoomList(building) {
 function closeBrowse() {
   document.getElementById('browse')?.classList.remove('is-open');
   document.getElementById('browse-backdrop')?.classList.remove('is-open');
+  document.body.classList.remove('browse-docked');
+}
+
+// On a laptop the Study rooms / Buildings drawer opens by itself, once per person: closing it with its
+// X, Escape or the backdrop remembers that, and it stays shut on later visits. Phones and tablets (and
+// any window under 900px) are left exactly as they were, because there it would cover the map and the
+// sheet that is already the first screen. Only campuses that show the drawer's entry button get it.
+const BROWSE_DISMISSED_KEY = 'cq:browse-dismissed';
+function maybeDockBrowse() {
+  const entry = document.getElementById('browse-all');
+  if (!entry || entry.hidden || browseIsOpen()) return;
+  if (deviceKind() !== 'computer' || window.innerWidth < 900) return;
+  try { if (localStorage.getItem(BROWSE_DISMISSED_KEY)) return; } catch (e) { /* storage blocked: it opens each visit */ }
+  openBrowse({ docked: true });
+}
+function dismissBrowse() {
+  const wasDocked = document.body.classList.contains('browse-docked');
+  closeBrowse();
+  try { localStorage.setItem(BROWSE_DISMISSED_KEY, '1'); } catch (e) { /* just won't be remembered */ }
+  if (wasDocked) track('browse_auto_dismissed', { campus: CAMPUS.id });
 }
 function browseIsOpen() {
   return !!document.getElementById('browse')?.classList.contains('is-open');
@@ -5011,14 +5040,14 @@ document.getElementById('browse-now')?.addEventListener('click', () => {
   browseAt = null;
   renderBrowse();
 });
-document.getElementById('browse-backdrop')?.addEventListener('click', closeBrowse);
+document.getElementById('browse-backdrop')?.addEventListener('click', dismissBrowse);
 // Escape backs out one level: out of a building to the list, then out entirely.
 document.addEventListener('keydown', ev => {
   if (ev.key !== 'Escape' || !browseIsOpen()) return;
   if (browseBuilding) { browseBuilding = null; browseStudy = false; renderBrowse(); }
-  else closeBrowse();
+  else dismissBrowse();
 });
-document.getElementById('browse-close')?.addEventListener('click', closeBrowse);
+document.getElementById('browse-close')?.addEventListener('click', dismissBrowse);
 document.getElementById('browse-back')?.addEventListener('click', () => {
   browseBuilding = null; browseStudy = false;
   renderBrowse();

@@ -508,3 +508,11 @@ reported on this one lately. Are you here? How busy is it?" (otherwise the plain
 `CAMPUS_CONTENT.checkinPrompt` turns it on, U of T only. Events: `checkin_prompt_shown` {building, device}
 and `checkin_submitted` now carries `prompted`. Read it as check-ins per `checkin_prompt_shown` (and
 building_opened) against the 3-per-week baseline; judge after ~2 weeks, not on a day's numbers.
+
+## Study rooms drawer opens by itself on laptops (2026-11-07)
+On a laptop (deviceKind 'computer' and a window of 900px or more) the Study rooms / Buildings drawer opens
+once on load at U of T, Ohio State and Maryland (Illinois has no drawer). It sits beside the map with no
+backdrop and the header, chips, picks sheet and legend shift right by 340px. Closing it (X, Escape or the
+backdrop) sets `cq:browse-dismissed` and it stays shut on later visits. Phones, tablets and narrow windows
+are unchanged. Events: `browse_auto_opened` and `browse_auto_dismissed` {campus}; compare dismissals against
+opens to see whether it helps or annoys. Revert by removing the `maybeDockBrowse()` call in loadRoomSchedule.
