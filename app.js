@@ -4466,6 +4466,7 @@ async function submitCheckin(level) {
     : sharedCheckins() ? 'Thanks — saved here (could not reach the server).'
     : 'Thanks — the map has been updated.';
   if (result === 'ok') fetchSharedCheckins();
+  maybeNudge('checkin');
 }
 
 document.querySelectorAll('#panel .checkin-btn').forEach(button => {
@@ -5514,6 +5515,7 @@ function renderPin(name) {
       // Newest first, and the oldest drops off rather than refusing the save.
       saveSpots([name, ...spots]);
       track('spot_saved', { building: name, count: Math.min(spots.length + 1, MAX_SPOTS), device: deviceKind() });
+      maybeNudge('spot_saved');
     }
     renderSpots();
     renderPin(name);
@@ -5521,8 +5523,11 @@ function renderPin(name) {
 }
 
 // ─── Add to home screen ───────────────────────────────────────────────────────
-// Offered once, in the panel, after someone has looked at a second building in
-// a visit, and only on a phone that has not installed it. Installing matters
+// Offered once a visit, in the panel, at a moment the site has just been useful:
+// right after a check-in, right after saving a spot, or once someone has looked
+// at a second building. Phones that have not installed it only. During the
+// two weeks before and during finals it may come back after 3 days instead of
+// 14, because that is when people need a spot again soon. Installing matters
 // beyond convenience: an installed app keeps its own storage, so it is the one
 // way a returning visitor is reliably recognised as the same person.
 const NUDGE_KEY = 'cq:install';
@@ -5559,18 +5564,33 @@ function installKind() {
 function noteBuildingForNudge(name) {
   if (!nudgeEl || !name) return;
   buildingsLookedAt.add(name);
-  if (nudgeShownThisVisit || buildingsLookedAt.size < 2) return;
+  if (buildingsLookedAt.size >= 2) maybeNudge('second_building');
+}
+
+function inExamWindow() {
+  const { date } = campusNow();
+  return (CAMPUS_CONTENT.exams ?? []).some(p => date <= p.end && daysBetween(date, p.start) <= EXAM_LEAD_DAYS);
+}
+
+function maybeNudge(trigger) {
+  if (!nudgeEl || nudgeShownThisVisit) return;
   if (deviceKind() !== 'phone' || isStandalone()) return;
   const state = nudgeState();
   const DAY = 86400000;
+  const gapDays = inExamWindow() ? 3 : 14;
   if ((state.shown || 0) >= 3) return;
-  if (state.last && Date.now() - state.last < 14 * DAY) return;
-  showInstallNudge(state);
+  if (state.last && Date.now() - state.last < gapDays * DAY) return;
+  showInstallNudge(state, trigger);
 }
 
-function showInstallNudge(state) {
+const NUDGE_LEAD = {
+  checkin:    'Thanks for checking in. ',
+  spot_saved: 'Saved. ',
+};
+
+function showInstallNudge(state, trigger) {
   const kind = installKind();
-  const words = {
+  const words = (NUDGE_LEAD[trigger] ?? '') + {
     'prompt':       `Add ${document.querySelector('h1')?.textContent || 'this'} to your home screen to check it in one tap.`,
     'ios':          'To check this in one tap, tap the Share button, then “Add to Home Screen”.',
     'in-app':       'To check this in one tap, open it in your browser (⋯ menu), then add it to your home screen.',
@@ -5609,7 +5629,7 @@ function showInstallNudge(state) {
   nudgeEl.hidden = false;
   nudgeShownThisVisit = true;
   setNudgeState({ shown: (state.shown || 0) + 1, last: Date.now() });
-  track('install_nudge_shown', { kind, device: deviceKind() });
+  track('install_nudge_shown', { kind, trigger, exam_window: inExamWindow(), device: deviceKind() });
 }
 
 // ─── Exam-season banner ───────────────────────────────────────────────────────
