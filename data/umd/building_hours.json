@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-08T16:05:45+00:00",
+ "built_at": "2026-11-09T19:54:43+00:00",
  "campus": "Maryland \u2014 College Park",
  "term": "2026/fall",
  "campusClosedDates": [
@@ -746,7 +746,7 @@
     ],
     "2026-11-26": [],
     "2026-11-27": [],
-    "2026-11-30": [
+    "2026-11-29": [
      [
       11.0,
       24.0
@@ -3479,139 +3479,6 @@
    ],
    "noExtension": true
   },
-  "Kehoe Track at Ludwig Field": {
-   "source": "Maryland Athletics schedule",
-   "sourceUrl": "https://umterps.com/sports/football/schedule",
-   "eventVenue": true,
-   "weekly": {
-    "monday": [],
-    "tuesday": [],
-    "wednesday": [],
-    "thursday": [],
-    "friday": [],
-    "saturday": [],
-    "sunday": []
-   },
-   "dates": {
-    "2026-10-08": [
-     [
-      19.0,
-      21.0
-     ]
-    ],
-    "2026-10-09": [
-     [
-      19.5,
-      21.5
-     ]
-    ],
-    "2026-10-11": [
-     [
-      12.0,
-      14.0
-     ]
-    ],
-    "2026-10-16": [
-     [
-      17.0,
-      19.0
-     ]
-    ],
-    "2026-10-20": [
-     [
-      19.0,
-      21.0
-     ]
-    ],
-    "2026-10-24": [
-     [
-      19.0,
-      21.0
-     ]
-    ],
-    "2026-11-04": [
-     [
-      20.0,
-      22.0
-     ]
-    ],
-    "2026-09-04": [
-     [
-      19.5,
-      21.5
-     ]
-    ],
-    "2026-09-07": [
-     [
-      19.0,
-      21.0
-     ]
-    ],
-    "2026-09-18": [
-     [
-      17.0,
-      19.0
-     ],
-     [
-      20.0,
-      22.0
-     ]
-    ],
-    "2026-09-25": [
-     [
-      19.0,
-      21.0
-     ]
-    ],
-    "2026-09-03": [
-     [
-      19.0,
-      21.0
-     ]
-    ],
-    "2026-09-06": [
-     [
-      12.0,
-      14.0
-     ]
-    ],
-    "2026-09-24": [
-     [
-      18.0,
-      20.0
-     ]
-    ],
-    "2026-09-27": [
-     [
-      12.0,
-      14.0
-     ]
-    ]
-   },
-   "events": {
-    "2026-10-08": "Maryland Women's Soccer vs Nebraska \u00b7 7pm",
-    "2026-10-09": "Maryland Men's Soccer vs Michigan State \u00b7 7:30pm",
-    "2026-10-11": "Maryland Women's Soccer vs Northwestern \u00b7 12pm",
-    "2026-10-16": "Maryland Women's Soccer vs Iowa \u00b7 5pm",
-    "2026-10-20": "Maryland Men's Soccer vs St. John's \u00b7 7pm",
-    "2026-10-24": "Maryland Men's Soccer vs Ohio State \u00b7 7pm",
-    "2026-11-04": "Maryland Men's Soccer vs Penn State \u00b7 8pm",
-    "2026-09-04": "Maryland Men's Soccer vs Delaware \u00b7 7:30pm",
-    "2026-09-07": "Maryland Men's Soccer vs Georgetown \u00b7 7pm",
-    "2026-09-18": "Maryland Men's Soccer vs Wisconsin \u00b7 8pm ; Maryland Women's Soccer vs Penn State \u00b7 5pm",
-    "2026-09-25": "Maryland Men's Soccer vs UCLA \u00b7 7pm",
-    "2026-09-03": "Maryland Women's Soccer vs Old Dominion \u00b7 7pm",
-    "2026-09-06": "Maryland Women's Soccer vs Binghamton - Senior Day \u00b7 12pm",
-    "2026-09-24": "Maryland Women's Soccer vs #14 Wisconsin \u00b7 6pm",
-    "2026-09-27": "Maryland Women's Soccer vs #12 UCLA \u00b7 12pm"
-   },
-   "unknownDuring": [],
-   "valid": [
-    "2026-08-31",
-    "2026-11-04"
-   ],
-   "noExtension": true
-  },
   "XFINITY Center": {
    "source": "Maryland Athletics schedule",
    "sourceUrl": "https://umterps.com/sports/football/schedule",
@@ -3902,6 +3769,139 @@
    ],
    "noExtension": true
   },
+  "Kehoe Track at Ludwig Field": {
+   "source": "Maryland Athletics schedule",
+   "sourceUrl": "https://umterps.com/sports/football/schedule",
+   "eventVenue": true,
+   "weekly": {
+    "monday": [],
+    "tuesday": [],
+    "wednesday": [],
+    "thursday": [],
+    "friday": [],
+    "saturday": [],
+    "sunday": []
+   },
+   "dates": {
+    "2026-10-09": [
+     [
+      19.5,
+      21.5
+     ]
+    ],
+    "2026-10-11": [
+     [
+      12.0,
+      14.0
+     ]
+    ],
+    "2026-10-16": [
+     [
+      17.0,
+      19.0
+     ]
+    ],
+    "2026-10-20": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-10-24": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-11-04": [
+     [
+      20.0,
+      22.0
+     ]
+    ],
+    "2026-09-04": [
+     [
+      19.5,
+      21.5
+     ]
+    ],
+    "2026-09-07": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-09-18": [
+     [
+      17.0,
+      19.0
+     ],
+     [
+      20.0,
+      22.0
+     ]
+    ],
+    "2026-09-25": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-09-03": [
+     [
+      19.0,
+      21.0
+     ]
+    ],
+    "2026-09-06": [
+     [
+      12.0,
+      14.0
+     ]
+    ],
+    "2026-09-24": [
+     [
+      18.0,
+      20.0
+     ]
+    ],
+    "2026-09-27": [
+     [
+      12.0,
+      14.0
+     ]
+    ],
+    "2026-10-08": [
+     [
+      19.0,
+      21.0
+     ]
+    ]
+   },
+   "events": {
+    "2026-10-09": "Maryland Men's Soccer vs Michigan State \u00b7 7:30pm",
+    "2026-10-11": "Maryland Women's Soccer vs Northwestern \u00b7 12pm",
+    "2026-10-16": "Maryland Women's Soccer vs Iowa \u00b7 5pm",
+    "2026-10-20": "Maryland Men's Soccer vs St. John's \u00b7 7pm",
+    "2026-10-24": "Maryland Men's Soccer vs Ohio State \u00b7 7pm",
+    "2026-11-04": "Maryland Men's Soccer vs Penn State \u00b7 8pm",
+    "2026-09-04": "Maryland Men's Soccer vs Delaware \u00b7 7:30pm",
+    "2026-09-07": "Maryland Men's Soccer vs Georgetown \u00b7 7pm",
+    "2026-09-18": "Maryland Men's Soccer vs Wisconsin \u00b7 8pm ; Maryland Women's Soccer vs Penn State \u00b7 5pm",
+    "2026-09-25": "Maryland Men's Soccer vs UCLA \u00b7 7pm",
+    "2026-09-03": "Maryland Women's Soccer vs Old Dominion \u00b7 7pm",
+    "2026-09-06": "Maryland Women's Soccer vs Binghamton - Senior Day \u00b7 12pm",
+    "2026-09-24": "Maryland Women's Soccer vs #14 Wisconsin \u00b7 6pm",
+    "2026-09-27": "Maryland Women's Soccer vs #12 UCLA \u00b7 12pm",
+    "2026-10-08": "Maryland Women's Soccer vs Nebraska \u00b7 7pm"
+   },
+   "unknownDuring": [],
+   "valid": [
+    "2026-08-31",
+    "2026-11-04"
+   ],
+   "noExtension": true
+  },
   "Bob \"Turtle\" Smith Stadium": {
    "source": "Maryland Athletics schedule",
    "sourceUrl": "https://umterps.com/sports/football/schedule",
@@ -4180,6 +4180,18 @@
       16.5
      ]
     ],
+    "2026-11-11": [
+     [
+      14.0,
+      17.0
+     ]
+    ],
+    "2026-11-13": [
+     [
+      12.0,
+      17.5
+     ]
+    ],
     "2026-09-11": [
      [
       18.0,
@@ -4229,6 +4241,9 @@
     "2026-10-24": "Maryland Women's Lacrosse vs Virginia (Exh.) \u00b7 12pm ; Maryland Women's Lacrosse vs Virginia Tech (Exh.) \u00b7 1:20pm",
     "2026-10-25": "Maryland Women's Lacrosse vs San Diego State (Exh.) \u00b7 10am ; Maryland Women's Lacrosse vs James Madison (Exh.) \u00b7 12pm ; Maryland Women's Lacrosse vs Temple (Exh.) \u00b7 3pm",
     "2026-10-30": "Maryland Field Hockey vs Iowa \u00b7 1:30pm",
+    "2026-11-11": "Maryland Field Hockey vs Fairfield vs. Wagner \u00b7 2pm",
+    "2026-11-13": "Maryland Field Hockey vs Fairfield or Wagner \u00b7 12pm ; Maryland Field Hockey vs Duke vs. Iowa \u00b7 2:30pm",
+    "2026-11-15": "Maryland Field Hockey vs Quarterfinal Game \u00b7 start time not announced yet",
     "2026-09-11": "Maryland Field Hockey vs Towson \u00b7 6pm",
     "2026-09-13": "Maryland Field Hockey vs Saint Joseph's \u00b7 12pm",
     "2026-09-20": "Maryland Field Hockey vs Wake Forest \u00b7 12pm",
@@ -4237,10 +4252,15 @@
     "2026-10-02": "Maryland Women's Lacrosse vs Navy (Exh.) \u00b7 6pm ; Maryland Women's Lacrosse vs Georgetown (Exh.) \u00b7 8:30pm",
     "2026-10-07": "Maryland Women's Lacrosse vs Loyola (Exh.) \u00b7 7pm"
    },
-   "unknownDuring": [],
+   "unknownDuring": [
+    [
+     "2026-11-15",
+     "2026-11-15"
+    ]
+   ],
    "valid": [
     "2026-08-31",
-    "2026-10-30"
+    "2026-11-15"
    ],
    "noExtension": true
   },
