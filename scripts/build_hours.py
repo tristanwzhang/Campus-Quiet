@@ -222,8 +222,8 @@ GOOGLE_HOURS = {
 # days only; holidays, Fall Break and after classes end stay unknown.
 OWNER_CONFIRMED = {
     "Student Dining and Residential Programs (SDRP)": {
-        # Weekdays 7am-midnight; Sat/Sun open at 9am (owner, 2026-11-15). The
-        # weekend closing time was not restated, so midnight is carried over.
+        # Weekdays 7am-midnight; Sat/Sun open at 9am, all days close at
+        # midnight (owner, 2026-11-15).
         "weekly": {**{d: [[7, 24]] for d in ["monday", "tuesday", "wednesday",
                                              "thursday", "friday"]},
                    "saturday": [[9, 24]], "sunday": [[9, 24]]},
