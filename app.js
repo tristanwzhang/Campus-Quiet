@@ -4360,6 +4360,56 @@ function armPanelLater() {
   armTimer = setTimeout(() => panel.classList.add('armed'), PANEL_ARM_MS);
 }
 
+// ─── Published hours in the panel ───────────────────────────────────────────
+// The panel said open or closed but never what the hours were, so someone looking
+// at a shut building could not tell when it opens. Only hours a source actually
+// publishes are shown, open or closed, and nothing is shown when none are:
+// a class-timetable guess is not hours.
+function fmtRanges(ranges) {
+  if (!ranges?.length) return 'Closed';
+  if (ranges.some(([a, b]) => a <= 0 && b >= 24)) return 'Open 24 hours';
+  return ranges.map(([a, b]) => `${fmtHour(a)}–${fmtHour(b)}`).join(', ');
+}
+
+function hoursLines(id) {
+  const { date, time } = campusNow();
+  const entry = data.hours?.buildings?.[id];
+  const rows = [];
+  const dayOf = (d, tenant) => tenant ? tenant.dates?.[d] : (entry ? publishedRanges(entry, d) : null);
+  const add = (label, tenant) => {
+    const today = dayOf(date, tenant);
+    if (today == null) return;
+    const estimated = !tenant && entry && extendedHours(entry, date);
+    rows.push(`${label ? label + ': ' : ''}${fmtRanges(today)}${estimated ? ' (usual hours)' : ''}`);
+    // Past closing time or shut all day: say when it next opens.
+    const over = !today.length || today.every(([, c]) => time >= c);
+    if (over) {
+      const tomorrow = dayOf(shiftDate(date, 1), tenant);
+      if (tomorrow != null) rows.push(`Tomorrow: ${fmtRanges(tomorrow)}`);
+    }
+  };
+  if (entry) add('Today');
+  for (const lib of data.hours?.tenantLibraries?.[id] ?? []) add(lib.label, lib);
+  return rows;
+}
+
+function renderPanelHours(id) {
+  let el = document.getElementById('panel-hours');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'panel-hours';
+    el.style.cssText = 'margin-top:6px;font-size:12px;line-height:1.5;color:#c9d1de';
+    document.getElementById('panel-now')?.insertAdjacentElement('afterend', el);
+  }
+  const rows = hoursLines(id);
+  el.replaceChildren(...rows.map(r => {
+    const d = document.createElement('div');
+    d.textContent = r;
+    return d;
+  }));
+  el.hidden = !rows.length;
+}
+
 function openPanel(name, keepThanks = false) {
   // Only re-arm when the panel is actually appearing or switching building —
   // not on the background check-in poll, which would keep going inert mid-tap.
@@ -4401,6 +4451,7 @@ function openPanel(name, keepThanks = false) {
     track('checkin_prompt_shown', { building: panelTarget(), device: deviceKind() });
   }
   renderRooms(name);
+  renderPanelHours(panelTarget());
   renderHoursReport(name, occ);
   renderPin(name);
   noteBuildingForNudge(name);
