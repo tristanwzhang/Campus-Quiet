@@ -4145,6 +4145,16 @@ function showTooltip(x, y, name, occ) {
   ttStatus.style.color = inactive ? '#5a6478' : cssColor(occ.value);
   ttSource.textContent = isDefaultEstimate(occ.source) ? '' : (SOURCE_LABELS[occ.source] || '');
   ttNote.textContent = occ.note || '';
+  let ttHours = document.getElementById('tt-hours');
+  if (!ttHours) {
+    ttHours = document.createElement('div');
+    ttHours.id = 'tt-hours';
+    ttHours.style.cssText = 'margin-top:6px;font-size:12px;line-height:1.5;color:#c9d1de';
+    ttNote.insertAdjacentElement('beforebegin', ttHours);
+  }
+  const hourRows = hoursLines(name);
+  ttHours.replaceChildren(...hourRows.map(r => Object.assign(document.createElement('div'), { textContent: r })));
+  ttHours.hidden = !hourRows.length;
   renderSpaces(ttSpaces, occ.spaces);
   ttFill.style.width = (occ.value * 100) + '%';
   ttFill.style.background = cssColor(occ.value);
