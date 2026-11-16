@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-15T16:27:52+00:00",
+ "built_at": "2026-11-16T19:42:03+00:00",
  "campus": "Maryland \u2014 College Park",
  "term": "2026/fall",
  "campusClosedDates": [
@@ -237,12 +237,7 @@
       17.0
      ]
     ],
-    "2026-12-24": [
-     [
-      8.0,
-      17.0
-     ]
-    ],
+    "2026-12-24": [],
     "2026-12-25": [],
     "2026-12-26": [],
     "2026-12-27": [],
@@ -518,12 +513,7 @@
       22.0
      ]
     ],
-    "2026-12-24": [
-     [
-      7.0,
-      22.0
-     ]
-    ],
+    "2026-12-24": [],
     "2026-12-25": [],
     "2026-12-26": [],
     "2026-12-27": [],
@@ -3503,16 +3493,10 @@
       16.5
      ]
     ],
-    "2026-11-11": [
-     [
-      14.0,
-      17.0
-     ]
-    ],
     "2026-11-13": [
      [
       12.0,
-      17.5
+      15.0
      ]
     ],
     "2026-11-15": [
@@ -3570,8 +3554,7 @@
     "2026-10-24": "Maryland Women's Lacrosse vs Virginia (Exh.) \u00b7 12pm ; Maryland Women's Lacrosse vs Virginia Tech (Exh.) \u00b7 1:20pm",
     "2026-10-25": "Maryland Women's Lacrosse vs San Diego State (Exh.) \u00b7 10am ; Maryland Women's Lacrosse vs James Madison (Exh.) \u00b7 12pm ; Maryland Women's Lacrosse vs Temple (Exh.) \u00b7 3pm",
     "2026-10-30": "Maryland Field Hockey vs Iowa \u00b7 1:30pm",
-    "2026-11-11": "Maryland Field Hockey vs Fairfield vs. Wagner \u00b7 2pm",
-    "2026-11-13": "Maryland Field Hockey vs Wagner \u00b7 12pm ; Maryland Field Hockey vs Duke vs. Iowa \u00b7 2:30pm",
+    "2026-11-13": "Maryland Field Hockey vs Wagner \u00b7 12pm",
     "2026-11-15": "Maryland Field Hockey vs Duke \u00b7 1pm",
     "2026-09-11": "Maryland Field Hockey vs Towson \u00b7 6pm",
     "2026-09-13": "Maryland Field Hockey vs Saint Joseph's \u00b7 12pm",
@@ -3624,6 +3607,12 @@
      [
       20.0,
       22.0
+     ]
+    ],
+    "2026-11-22": [
+     [
+      13.0,
+      15.0
      ]
     ],
     "2026-09-04": [
@@ -3702,6 +3691,7 @@
     "2026-10-20": "Maryland Men's Soccer vs St. John's \u00b7 7pm",
     "2026-10-24": "Maryland Men's Soccer vs Ohio State \u00b7 7pm",
     "2026-11-04": "Maryland Men's Soccer vs Penn State \u00b7 8pm",
+    "2026-11-22": "Maryland Men's Soccer vs College of Charleston/NC State \u00b7 1pm",
     "2026-09-04": "Maryland Men's Soccer vs Delaware \u00b7 7:30pm",
     "2026-09-07": "Maryland Men's Soccer vs Georgetown \u00b7 7pm",
     "2026-09-18": "Maryland Men's Soccer vs Wisconsin \u00b7 8pm ; Maryland Women's Soccer vs Penn State \u00b7 5pm",
@@ -3717,7 +3707,7 @@
    "unknownDuring": [],
    "valid": [
     "2026-08-31",
-    "2026-11-04"
+    "2026-11-22"
    ],
    "noExtension": true
   },
@@ -3753,6 +3743,12 @@
       15.0
      ]
     ],
+    "2026-11-28": [
+     [
+      15.5,
+      18.5
+     ]
+    ],
     "2026-09-05": [
      [
       20.0,
@@ -3776,17 +3772,12 @@
     "2026-10-17": "Maryland Football vs Rutgers - HOMECOMING \u00b7 12:30pm",
     "2026-10-31": "Maryland Football vs Illinois \u00b7 12pm",
     "2026-11-14": "Maryland Football vs Wisconsin - MILITARY APPRECIATION \u00b7 12pm",
-    "2026-11-28": "Maryland Football vs Penn State \u00b7 start time not announced yet",
+    "2026-11-28": "Maryland Football vs Penn State \u00b7 3:30pm",
     "2026-09-05": "Maryland Football vs Hampton \u00b7 8pm",
     "2026-09-19": "Maryland Football vs Virginia Tech \u00b7 7:30pm",
     "2026-09-26": "Maryland Football vs UCLA - FAMILY WEEKEND \u00b7 1:30pm"
    },
-   "unknownDuring": [
-    [
-     "2026-11-28",
-     "2026-11-28"
-    ]
-   ],
+   "unknownDuring": [],
    "valid": [
     "2026-08-31",
     "2026-11-28"
